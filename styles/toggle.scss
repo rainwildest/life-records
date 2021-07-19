@@ -1,0 +1,102 @@
+label {
+  cursor: default;
+}
+
+.toggle {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  box-sizing: border-box;
+  align-self: center;
+  user-select: none;
+
+  input[type=checkbox] {
+    display: none;
+  }
+
+  input[type=checkbox]:checked{
+    &+.toggle-icon {
+      background: var(--f7-toggle-active-color,var(--f7-theme-color));
+    }
+    &+.toggle-icon:before {
+      transform: scale(0);
+    }
+    &+.toggle-icon:after {
+      transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height)));
+    }
+  }
+}
+
+.toggle, .toggle-icon {
+  width: var(--f7-toggle-width);
+  height: var(--f7-toggle-height);
+  border-radius: var(--f7-toggle-height);
+}
+
+.toggle-icon{
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  border: none;
+  position: relative;
+  transition: .3s;
+  box-sizing: border-box;
+  display: block;
+  cursor: pointer;
+}
+
+.toggle-icon{
+  background: var(--f7-toggle-border-color);
+  &::after, &::before {
+    content: '';
+  }
+
+  &::before {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: calc(var(--f7-toggle-width) - 4px);
+    height: calc(var(--f7-toggle-height) - 4px);
+    border-radius: var(--f7-toggle-height);
+    box-sizing: border-box;
+    background: var(--f7-toggle-inactive-color);
+    z-index: 1;
+    transition-duration: .3s;
+    transform: scale(1);
+  }
+
+  &::after{
+    height: calc(var(--f7-toggle-height) - 4px);
+    width: calc(var(--f7-toggle-height) - 4px);
+    top: 2px;
+    left: 2px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
+    border-radius: calc(var(--f7-toggle-height) - 4px);
+  }
+  &::after {
+    background: var(--f7-toggle-handle-color);
+    position: absolute;
+    z-index: 2;
+    transform: translateX(0px);
+    transition-duration: .3s;
+  }
+}
+
+.toggle-active-state {
+  input[type=checkbox]:not(:checked) + .toggle-icon {
+    &:before {
+      transform: scale(0);
+    }
+  }
+  input[type=checkbox] + .toggle-icon {
+    &:after {
+      width: calc(var(--f7-toggle-height) + 4px);
+    }
+  }
+  input[type=checkbox]:checked + .toggle-icon {
+    &:after {
+      transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height) - 8px));
+    }
+  }
+}

@@ -1,0 +1,45 @@
+type User {
+  id: ID!
+  seqId: Int
+  username: String
+  birthday: String
+  gender: String
+  email: String
+  githubProviderId: String
+  googleProviderId: String
+  phoneNumber: String
+  password: String
+  avatar: String
+  isAdmin: Boolean
+  isVerify: Boolean
+  jurisdiction: JSON
+  createdAt: Date
+  modifiedAt: Date
+  deletedAt: Date
+}
+
+input SignUpInput {
+  email: String!
+  password: String!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+type SignUpPayload {
+  user: User!
+}
+
+type SignInPayload {
+  user: User!
+}
+
+type Query {
+  currentUser: User
+}
+
+type Mutation {
+  signIn(input: SignInInput!): SignInPayload!
+}
