@@ -1,4 +1,4 @@
-import routes from "../routes/routes";
+import routes from "../routes";
 
 const f7params = {
   theme: "ios",

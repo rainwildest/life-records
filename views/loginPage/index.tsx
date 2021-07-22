@@ -1,14 +1,8 @@
 import React from "react";
 
-import Layout from "components/Layout";
-import Container from "./container";
-
+import { Page } from "framework7-react";
 const Login: React.FC = () => {
-  return (
-    <Layout hasHeader={false}>
-      <Container />
-    </Layout>
-  );
+  return <Page>dsfsd</Page>;
 };
 
 export default Login;

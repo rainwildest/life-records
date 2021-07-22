@@ -1,5 +1,5 @@
 {
-  "name": "blog",
+  "name": "life-records",
   "version": "1.0.0",
   "scripts": {
     "codegen": "graphql-let",
