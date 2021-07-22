@@ -6,6 +6,10 @@ const f7params = {
   name: "My App",
   // App id
   id: "com.myapp.test",
+  view: {
+    stackPages: true, //开启多级缓存
+    iosDynamicNavbar: false
+  },
   routes
 };
 

@@ -4,10 +4,10 @@ import { useApollo } from "../apollo/client";
 import type { AppProps /* , AppContext */ } from "next/app";
 import NextNprogress from "nextjs-progressbar";
 import "styles/index.scss";
-import Framework7 from "framework7/lite";
-import Framework7React from "framework7-react";
+import Framework7 from "framework7/lite-bundle";
+import Framework7React, { App as FrameworkApp } from "framework7-react";
 import "framework7/framework7-bundle.min.css";
-
+import f7params from "lib/configure/f7params";
 // Init plugin
 Framework7.use(Framework7React);
 
@@ -15,10 +15,12 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
   const apolloClient = useApollo(pageProps.initialApolloState);
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <NextNprogress />
-      <Component {...pageProps} />
-    </ApolloProvider>
+    <FrameworkApp {...f7params}>
+      <ApolloProvider client={apolloClient}>
+        <NextNprogress />
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </FrameworkApp>
   );
 }
 // Only uncomment this method if you have blocking data requirements for
