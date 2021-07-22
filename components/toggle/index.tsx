@@ -1,17 +1,22 @@
-import React, { useRef, useImperativeHandle, useEffect, useLayoutEffect } from 'react';
-import { classNames, colorClasses, emit } from 'components/api/uitls';
+import React, {
+  useRef,
+  useImperativeHandle,
+  useEffect,
+  useLayoutEffect
+} from "react";
+import { classNames, colorClasses, emit } from "components/api/uitls";
 
 interface ToggleProps {
-  id?: (string);
+  id?: string;
   className?: string;
   style?: React.CSSProperties;
-  init? : boolean;
-  checked? : boolean;
-  defaultChecked? : boolean;
-  disabled? : boolean;
-  readonly? : boolean;
-  name? : string;
-  value? : (string | number | Array<any>);
+  init?: boolean;
+  checked?: boolean;
+  defaultChecked?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
+  name?: string;
+  value?: string | number | Array<any>;
   color?: string;
   change?: (event?: any) => void;
 }
@@ -24,13 +29,13 @@ function useIsomorphicLayoutEffect(callback, deps) {
 
 const watchProp = (value, callback) => {
   const valueRef = useRef(value);
-  
+
   useIsomorphicLayoutEffect(() => {
     if (value !== valueRef.current && callback) {
       callback(value, valueRef.current);
     }
     valueRef.current = value;
-  }, [ value ]);
+  }, [value]);
 };
 
 const Toggle = React.forwardRef((props: ToggleProps, ref) => {
@@ -61,18 +66,18 @@ const Toggle = React.forwardRef((props: ToggleProps, ref) => {
 
   // 事件改变时执行
   const onChange = (event) => {
-    emit(props, 'change', event);
+    emit(props, "change", event);
   };
 
   // 添加class
   const labelClasses = classNames(
-    'toggle',
+    "toggle",
     className,
     {
       disabled
     },
     colorClasses(props)
-  ); ;
+  );
 
   watchProp(checked, (newValue) => {
     if (!f7Toggle.current) {
@@ -82,17 +87,17 @@ const Toggle = React.forwardRef((props: ToggleProps, ref) => {
   });
 
   const handleTouchStart = () => {
-    if(isTouched.current || disabled) {
+    if (isTouched.current || disabled) {
       return;
     }
     isTouched.current = true;
-    elRef.current.classList.add('toggle-active-state');
+    elRef.current.classList.add("toggle-active-state");
   };
   const handleTouchEnd = () => {
-    if(!isTouched.current || disabled) {
+    if (!isTouched.current || disabled) {
       return;
-    };
-    elRef.current.classList.remove('toggle-active-state');
+    }
+    elRef.current.classList.remove("toggle-active-state");
     isTouched.current = false;
   };
 
@@ -100,16 +105,16 @@ const Toggle = React.forwardRef((props: ToggleProps, ref) => {
     if (!init || !elRef.current) {
       return;
     }
-    
-    elRef.current.addEventListener('mousedown', handleTouchStart);
-    elRef.current.addEventListener('mouseup', handleTouchEnd);
+
+    elRef.current.addEventListener("mousedown", handleTouchStart);
+    elRef.current.addEventListener("mouseup", handleTouchEnd);
     f7Toggle.current = {};
   };
 
   const onDestroy = () => {
     f7Toggle.current = null;
-    elRef.current.removeEventListener('mousedown', handleTouchStart);
-    elRef.current.removeEventListener('mouseup', handleTouchEnd);
+    elRef.current.removeEventListener("mousedown", handleTouchStart);
+    elRef.current.removeEventListener("mouseup", handleTouchEnd);
   };
 
   useIsomorphicLayoutEffect(() => {
