@@ -1,0 +1,64 @@
+.theme-moon,
+.theme-sunlight {
+  opacity: 0;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.theme-moon {
+  animation-name: show-theme-icon;
+  animation-delay: 1.2s;
+}
+
+.theme-sunlight {
+  animation-name: hide-theme-icon;
+  animation-delay: 0s;
+}
+
+.rw-theme-dark {
+  .theme-sunlight {
+    opacity: 0;
+    animation-name: show-theme-icon;
+    animation-delay: 1.2s;
+  }
+
+  .theme-moon {
+    opacity: 0;
+    animation-name: hide-theme-icon;
+    animation-delay: 0s;
+  }
+}
+
+@keyframes hide-theme-icon {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes show-theme-icon {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

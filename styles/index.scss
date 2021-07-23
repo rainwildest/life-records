@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -6,9 +8,68 @@
 @import "./toggle.scss";
 @import "./layout.scss";
 @import "./login.scss";
+@import "./theme-icon.scss";
 
-html,body{
+html,
+body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   user-select: none;
+}
+
+.svg-icon {
+  &.notepad-icon svg {
+    margin-top: 0.2rem;
+    height: math.div(35.2rem, $font-size-base);
+    width: math.div(35.2rem, $font-size-base);
+  }
+
+  &.toolbar-icon svg {
+    height: math.div(32rem, $font-size-base);
+    width: math.div(32rem, $font-size-base);
+  }
+
+  &.toolbar-mine-icon svg {
+    height: math.div(28rem, $font-size-base);
+    width: math.div(28rem, $font-size-base);
+  }
+
+  &.toolbar-icon svg,
+  &.toolbar-mine-icon svg {
+    transform: scale(0.8);
+    transition: 0.3s;
+  }
+
+  svg {
+    height: math.div(40rem, $font-size-base);
+    width: math.div(40rem, $font-size-base);
+  }
+}
+
+.tab-link-active .svg-icon {
+  &.toolbar-icon svg,
+  &.toolbar-mine-icon svg {
+    transform: scale(1);
+  }
+}
+
+.expenditure-today {
+  color: var(--f7-theme-color);
+}
+
+.income-today {
+  color: var(--f7-theme-color);
+}
+
+.tabbar-custom {
+  transform: scale(0.8);
+}
+
+.empty-icon svg {
+  height: math.div(230rem, $font-size-base);
+  width: math.div(230rem, $font-size-base);
+}
+
+.empty-text {
+  color: var(--f7-theme-color);
 }

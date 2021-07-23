@@ -3,7 +3,7 @@ import { Page, Navbar, Link, Swiper, SwiperSlide } from "framework7-react";
 
 const Bookkeeping: React.FC = () => {
   return (
-    <Page>
+    <Page noToolbar>
       <Link back>Back</Link>
       <div>记账页面</div>
 
