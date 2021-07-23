@@ -65,9 +65,14 @@ const Home: React.FC = () => {
             <div>今日收入</div>
             <div>2021-09-10 15:30:29</div>
           </div>
-          <div className="flex mt-2">
-            <div>类型：日用</div>
-            <div>费用：200</div>
+          <div className="flex mt-4">
+            <div className="w-1/2">类型：日用</div>
+            <div className="w-1/2">费用：200</div>
+          </div>
+
+          <div className="mt-4">
+            <div className="">备注</div>
+            <div className="mt-1">jslfjslkjfdsfd</div>
           </div>
         </div>
       </div>
