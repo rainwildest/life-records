@@ -24,7 +24,13 @@ class MyDocument extends Document {
             sizes="96x96"
             href="/icon/favicon.ico"
           />
+
+          <link
+            href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+            rel="stylesheet"
+          />
         </Head>
+
         <body>
           <Main />
           <NextScript />

@@ -1,6 +1,6 @@
-import React from "react";
-import { Page, Link, Button } from "framework7-react";
-import Icons from "views/Icons";
+import React, { useEffect, useRef } from "react";
+import { Page, Link, Button, Block, Fab } from "framework7-react";
+import Icons from "components/Icons";
 
 const Home: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ const Home: React.FC = () => {
       <div
         className="w-full flex justify-end items-center fixed top-0 right-0 px-5 py-3"
         style={{
-          backdropFilter: "blur(10px)"
+          backdropFilter: "saturate(180%) blur(20px)"
           // background: "rgba(255,255,255, 0.8)"
         }}
       >
@@ -26,11 +26,11 @@ const Home: React.FC = () => {
       </div>
 
       {/* <div>
-          <div className="expenditure-today color-orange">
+          <div className="font-color color-orange">
             <span className="text-xs font-semibold pr-2">今日支出</span>
             <span className="text-lg font-bold">￥200</span>
           </div>
-          <div className="income-today color-gray mt-2">
+          <div className="font-color color-gray mt-2">
             <span className="text-xs font-semibold pr-2">今日收入</span>
             <span className="text-lg font-bold">￥200</span>
           </div>
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
 
       {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4">
           <Icons name="cry" className="empty-icon" />
-          <div className="empty-text color-gray">
+          <div className="font-color color-gray">
             今日还没任何记录呦，去<Link href="/bookkeeping/">记一笔</Link>
           </div>
         </div> */}
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
         style={{ height: "1000px", background: "none" }}
       >
         <div
-          className="white rounded-lg p-4 text-right"
+          className="white rounded-lg p-4 text-right "
           style={{ background: "white" }}
         >
           <span>今日收入：200</span>
@@ -61,13 +61,15 @@ const Home: React.FC = () => {
         </div>
 
         <div className="mt-4 rounded-lg p-4" style={{ background: "white" }}>
-          <div className="flex justify-between">
-            <div>今日收入</div>
-            <div>2021-09-10 15:30:29</div>
+          <div className="flex justify-between font-bold">
+            <div className="self-end">今日收入</div>
+            <div className="font-color color-gray text-xs self-end">
+              2021-09-10 15:30:29
+            </div>
           </div>
           <div className="flex mt-4">
             <div className="w-1/2">类型：日用</div>
-            <div className="w-1/2">费用：200</div>
+            <div className="w-1/2">费用：￥200</div>
           </div>
 
           <div className="mt-4">
@@ -75,7 +77,21 @@ const Home: React.FC = () => {
             <div className="mt-1">jslfjslkjfdsfd</div>
           </div>
         </div>
+
+        {/* <wired-card elevation="5">
+          <h1>`wired-elements` dynamic loading</h1>
+        </wired-card> */}
       </div>
+
+      <Fab
+        position="right-bottom"
+        slot="fixed"
+        text=""
+        color="white"
+        href="/bookkeeping/"
+      >
+        <Icons name="sunlight" className="row-span-1-2 col-span-1-2" />
+      </Fab>
     </Page>
   );
 };

@@ -47,17 +47,15 @@ body {
 }
 
 .tab-link-active .svg-icon {
-  &.toolbar-icon svg,
+  &.toolbar-icon svg {
+    transform: scale(1.1);
+  }
   &.toolbar-mine-icon svg {
     transform: scale(1);
   }
 }
 
-.expenditure-today {
-  color: var(--f7-theme-color);
-}
-
-.income-today {
+.font-color {
   color: var(--f7-theme-color);
 }
 
@@ -70,6 +68,27 @@ body {
   width: math.div(230rem, $font-size-base);
 }
 
-.empty-text {
-  color: var(--f7-theme-color);
+.demo-swiper .swiper-slide {
+  font-size: 25px;
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  color: #000;
+}
+
+.demo-swiper .swiper-slide {
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.demo-swiper {
+  margin: 0px 0 35px;
+}
+
+
+.demo-swiper.demo-swiper-auto .swiper-slide {
+  width: 85%;
 }

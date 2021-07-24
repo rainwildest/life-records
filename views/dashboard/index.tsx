@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import Icons from "views/Icons";
+import Icons from "components/Icons";
 // App.jsx
 import { View, Toolbar, Views, Link } from "framework7-react";
 
