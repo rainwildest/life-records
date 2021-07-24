@@ -1,11 +1,19 @@
 import React, { useEffect, useRef } from "react";
-import { Page, Link, Button, Block, Fab } from "framework7-react";
+import {
+  Page,
+  Link,
+  Navbar,
+  NavLeft,
+  NavTitle,
+  NavRight,
+  Fab
+} from "framework7-react";
 import Icons from "components/Icons";
 
 const Home: React.FC = () => {
   return (
     <Page>
-      <div
+      {/* <div
         className="w-full flex justify-end items-center fixed top-0 right-0 px-5 py-3"
         style={{
           backdropFilter: "saturate(180%) blur(20px)"
@@ -23,7 +31,26 @@ const Home: React.FC = () => {
             className="theme-sunlight row-span-1-2 col-span-1-2"
           />
         </div>
-      </div>
+      </div> */}
+
+      <Navbar large transparent>
+        <NavRight>
+          <Link href="/bookkeeping/">
+            <Icons name="notepad-01" className="notepad-icon" />
+          </Link>
+
+          <div className="grid grid-cols-1 pl-4">
+            <Icons
+              name="moon"
+              className="theme-moon row-span-1-2 col-span-1-2"
+            />
+            <Icons
+              name="sunlight"
+              className="theme-sunlight row-span-1-2 col-span-1-2"
+            />
+          </div>
+        </NavRight>
+      </Navbar>
 
       {/* <div>
           <div className="font-color color-orange">
@@ -49,7 +76,7 @@ const Home: React.FC = () => {
           </div>
         </div> */}
       <div
-        className="pt-20 px-6"
+        className="pt-2 px-6"
         style={{ height: "1000px", background: "none" }}
       >
         <div
