@@ -26,6 +26,7 @@ declare global {
       "wired-card": any;
       "wired-calendar": any;
       "wired-button": any;
+      "wired-dialog": any;
     }
   }
 }

@@ -20,9 +20,6 @@ const Statistics: React.FC = () => {
       // window.alert(`Hello ${name.value.trim()}!`);
       console.log("kdjksf", data.detail);
     });
-    setTimeout(() => {
-      console.log(textInput.current);
-    }, 1000 * 5);
   }, []);
 
   return (

@@ -79,32 +79,47 @@ const Home: React.FC = () => {
         className="pt-2 px-6"
         style={{ height: "1000px", background: "none" }}
       >
-        <div
-          className="white rounded-lg p-4 text-right "
+        <wired-card
+          elevation="3"
           style={{ background: "white" }}
+          class="w-full p-4"
         >
-          <span>今日收入：200</span>
-          <span className="pl-4">今日支出：200</span>
-        </div>
+          <div className="rounded-lg text-right">
+            <span>今日收入：200</span>
+            <span className="pl-4">今日支出：200</span>
+          </div>
+        </wired-card>
 
-        <div className="mt-4 rounded-lg p-4" style={{ background: "white" }}>
-          <div className="flex justify-between font-bold">
-            <div className="self-end">今日收入</div>
-            <div className="font-color color-gray text-xs self-end">
-              2021-09-10 15:30:29
+        <wired-card
+          elevation="3"
+          style={{ background: "white" }}
+          class="w-full mt-4 p-4"
+        >
+          <div className=" rounded-lg" style={{ background: "white" }}>
+            <div className="flex justify-between font-bold">
+              <div className="self-end">今日收入</div>
+              <div className="font-color color-gray text-xs self-end">
+                2021-09-10 15:30:29
+              </div>
+            </div>
+            <div className="flex mt-4">
+              <div className="w-1/2">类型：日用</div>
+              <div className="w-1/2">费用：￥200</div>
+            </div>
+
+            <div className="mt-4">
+              <div className="">备注</div>
+              <div className="mt-1">jslfjslkjfdsfd</div>
             </div>
           </div>
-          <div className="flex mt-4">
-            <div className="w-1/2">类型：日用</div>
-            <div className="w-1/2">费用：￥200</div>
-          </div>
+        </wired-card>
 
-          <div className="mt-4">
-            <div className="">备注</div>
-            <div className="mt-1">jslfjslkjfdsfd</div>
+        {/* <wired-dialog open="false">
+          <p>Dialog content here</p>
+          <div>
+            <wired-button id="closeDialog">Close dialog</wired-button>
           </div>
-        </div>
-
+        </wired-dialog> */}
         {/* <wired-card elevation="5">
           <h1>`wired-elements` dynamic loading</h1>
         </wired-card> */}
