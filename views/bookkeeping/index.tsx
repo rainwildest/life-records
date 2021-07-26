@@ -33,14 +33,16 @@ const Bookkeeping: React.FC = () => {
   return (
     <Page noToolbar>
       <Navbar>
-        <NavLeft>
-          <Link back>Left Link</Link>
-        </NavLeft>
-        <NavTitle>My App</NavTitle>
-        <NavRight>
+        <NavLeft backLink></NavLeft>
+        <NavTitle>账 房</NavTitle>
+        {/* <NavRight>
           <Link>Right Link</Link>
-        </NavRight>
+        </NavRight> */}
       </Navbar>
+
+      <wired-card elevation="5">
+        <h1>wired-elements demo</h1>
+      </wired-card>
 
       <Swiper
         className="demo-swiper demo-swiper-auto"
@@ -81,6 +83,7 @@ const Bookkeeping: React.FC = () => {
               <div
                 className="text-center py-2 rounded-lg box-border font-bold"
                 style={{ background: "white", border: "1px solid" }}
+                key={item.code}
               >
                 {item.name}
               </div>

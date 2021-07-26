@@ -5,7 +5,7 @@ const Mine: React.FC = () => {
   return (
     <Page>
       <Navbar title="我的" large titleLarge="我的"></Navbar>
-      <div style={{ height: "1000px" }}></div>
+      <div style={{ height: "1000px" }}>gfdfsd</div>
     </Page>
   );
 };
