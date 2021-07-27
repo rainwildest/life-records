@@ -44,10 +44,7 @@ const Home: React.FC = () => {
               name="moon"
               className="theme-moon row-span-1-2 col-span-1-2"
             />
-            <Icons
-              name="sunlight"
-              className="theme-sunlight row-span-1-2 col-span-1-2"
-            />
+            {/* <Icons name="sunlight" className="row-span-1-2 col-span-1-2" /> */}
           </div>
         </NavRight>
       </Navbar>
@@ -79,28 +76,18 @@ const Home: React.FC = () => {
         className="pt-2 px-6"
         style={{ height: "1000px", background: "none" }}
       >
-        <wired-card
-          elevation="3"
-          style={{ background: "white" }}
-          class="w-full p-4"
-        >
-          <div className="rounded-lg text-right">
+        <wired-card fill="skyblue" elevation="3" class="w-full p-4">
+          <div className="rounded-lg text-xs text-right font-bold">
             <span>今日收入：200</span>
             <span className="pl-4">今日支出：200</span>
           </div>
         </wired-card>
 
-        <wired-card
-          elevation="3"
-          style={{ background: "white" }}
-          class="w-full mt-4 p-4"
-        >
-          <div className=" rounded-lg" style={{ background: "white" }}>
+        <wired-card fill="skyblue" elevation="3" class="w-full mt-4 p-4">
+          <div className="rounded-lg">
             <div className="flex justify-between font-bold">
               <div className="self-end">今日收入</div>
-              <div className="font-color color-gray text-xs self-end">
-                2021-09-10 15:30:29
-              </div>
+              <div className="text-xs self-end">2021-09-10 15:30:29</div>
             </div>
             <div className="flex mt-4">
               <div className="w-1/2">类型：日用</div>
@@ -114,16 +101,17 @@ const Home: React.FC = () => {
           </div>
         </wired-card>
 
-        {/* <wired-dialog open="false">
-          <p>Dialog content here</p>
-          <div>
-            <wired-button id="closeDialog">Close dialog</wired-button>
-          </div>
-        </wired-dialog> */}
         {/* <wired-card elevation="5">
           <h1>`wired-elements` dynamic loading</h1>
         </wired-card> */}
       </div>
+
+      {/* <wired-dialog open="false">
+        <wired-calendar />
+        <div className="text-right">
+          <wired-button id="closeDialog">Close dialog</wired-button>
+        </div>
+      </wired-dialog> */}
 
       <Fab
         position="right-bottom"

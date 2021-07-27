@@ -40,18 +40,65 @@ const Bookkeeping: React.FC = () => {
         </NavRight> */}
       </Navbar>
 
-      <wired-card elevation="5">
-        <h1>wired-elements demo</h1>
-      </wired-card>
-
       <Swiper
-        className="demo-swiper demo-swiper-auto"
+        className="demo-swiper demo-swiper-auto mt-4"
         spaceBetween={10}
         slidesPerView={"auto"}
         centeredSlides
       >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>
+          <div className="grid grid-cols-4 gap-4">
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              11
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              12
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              13
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              14
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              15
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              16
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              17
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              18
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              19
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              20
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              21
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              22
+            </wired-card>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <div className="grid grid-cols-4 gap-4">
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              23
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              24
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              25
+            </wired-card>
+          </div>
+        </SwiperSlide>
       </Swiper>
 
       <div
@@ -60,33 +107,41 @@ const Bookkeeping: React.FC = () => {
           backgroundImage: "linear-gradient(120deg, #2193b0 , #6dd5ed)"
         }}
       >
-        <div
+        {/* <div
           className="truncate py-1 px-2 rounded-lg mb-1"
           style={{ background: "white", border: "1px solid" }}
-        >
-          <span className="pr-3">备注</span>
-          <span></span>
-        </div>
-        <div
-          className="rounded-lg box-border flex justify-between items-center px-2"
-          style={{ height: "40px", background: "white", border: "1px solid" }}
-        >
-          <div className="flex-shrink-0 pr-4 flex items-center">
-            <div className="pr-1">日历</div>
-            <div className="text-xs">2020-09-01</div>
+        > */}
+        <wired-card fill="white" class="w-full  py-1 px-3">
+          <div className="truncate">
+            <span className="pr-3">备注</span>
+            <span></span>
           </div>
-          <div className="truncate font-bold">0</div>
-        </div>
+        </wired-card>
+        {/* </div> */}
+        {/* <div className="rounded-lg box-border overflow-hidden"> */}
+        <wired-card fill="white" class="w-full mt-2">
+          <div className="flex justify-between items-center">
+            <div className="flex-shrink-0 pr-4 flex items-center">
+              <div className="pr-1">日历</div>
+              <div className="text-xs">2020-09-01</div>
+            </div>
+            <div className="truncate font-bold">0</div>
+          </div>
+        </wired-card>
+        {/* </div> */}
         <div className="grid grid-cols-4 gap-1 pb-2 pt-2">
           {calc.map((item) => {
             return (
-              <div
-                className="text-center py-2 rounded-lg box-border font-bold"
-                style={{ background: "white", border: "1px solid" }}
-                key={item.code}
-              >
+              <wired-card elevation="2" class="text-center font-bold py-4">
                 {item.name}
-              </div>
+              </wired-card>
+              // <div
+              //   className="text-center py-2 rounded-lg box-border font-bold"
+              //   style={{ background: "white", border: "1px solid" }}
+              //   key={item.code}
+              // >
+              //   <wired-card>{item.name}</wired-card>
+              // </div>
             );
           })}
         </div>

@@ -68,27 +68,38 @@ body {
   width: math.div(230rem, $font-size-base);
 }
 
-.demo-swiper .swiper-slide {
-  font-size: 25px;
-  font-weight: 300;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  color: #000;
-}
-
-.demo-swiper .swiper-slide {
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  background: #fff;
-}
-
 .demo-swiper {
-  margin: 0px 0 35px;
+  // margin: 0px 0 35px;
+
+  .swiper-slide {
+    font-size: 25px;
+    font-weight: 300;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // background: #fff;
+    color: #000;
+  }
+
+  .swiper-slide {
+    box-sizing: border-box;
+    // border: 1px solid #ddd;
+    // background: #fff;
+  }
+
+  &.demo-swiper-auto .swiper-slide {
+    width: 85%;
+  }
 }
 
 
-.demo-swiper.demo-swiper-auto .swiper-slide {
-  width: 85%;
+.test-calendar {
+  &.dialog {
+    width: auto;
+    margin-left: calc(-1 * 320px / 2);
+  }
+
+  .dialog-inner {
+    padding: 0;
+  }
 }
