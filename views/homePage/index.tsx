@@ -13,26 +13,6 @@ import Icons from "components/Icons";
 const Home: React.FC = () => {
   return (
     <Page>
-      {/* <div
-        className="w-full flex justify-end items-center fixed top-0 right-0 px-5 py-3"
-        style={{
-          backdropFilter: "saturate(180%) blur(20px)"
-          // background: "rgba(255,255,255, 0.8)"
-        }}
-      >
-        <Link href="/bookkeeping/">
-          <Icons name="notepad-01" className="notepad-icon" />
-        </Link>
-
-        <div className="grid grid-cols-1 pl-4">
-          <Icons name="moon" className="theme-moon row-span-1-2 col-span-1-2" />
-          <Icons
-            name="sunlight"
-            className="theme-sunlight row-span-1-2 col-span-1-2"
-          />
-        </div>
-      </div> */}
-
       <Navbar large transparent>
         <NavRight>
           <Link href="/bookkeeping/">
@@ -67,11 +47,11 @@ const Home: React.FC = () => {
         </div> */}
 
       {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4">
-          <Icons name="cry" className="empty-icon" />
-          <div className="font-color color-gray">
-            今日还没任何记录呦，去<Link href="/bookkeeping/">记一笔</Link>
-          </div>
-        </div> */}
+        <Icons name="cry" className="empty-icon" />
+        <div className="font-color color-gray">
+          今日还没任何记录呦，去<Link href="/bookkeeping/">记一笔</Link>
+        </div>
+      </div> */}
       <div
         className="pt-2 px-6"
         style={{ height: "1000px", background: "none" }}

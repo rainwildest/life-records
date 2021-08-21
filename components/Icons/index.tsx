@@ -24,32 +24,8 @@ const Icons: React.FC<IconsProps> = ({
   style,
   onClick
 }) => {
-  let url = "";
   const base = "/svg/";
-
-  switch (name) {
-    case "moon":
-      url = `${base}moon.svg`;
-      break;
-    case "sunlight":
-      url = `${base}sunlight.svg`;
-      break;
-    case "notepad-01":
-      url = `${base}notepad-01.svg`;
-      break;
-    case "notepad-02":
-      url = `${base}notepad-02.svg`;
-      break;
-    case "statistics":
-      url = `${base}statistics.svg`;
-      break;
-    case "mine":
-      url = `${base}mine.svg`;
-      break;
-    case "cry":
-      url = `${base}cry.svg`;
-      break;
-  }
+  const url = `${base}${name}.svg`;
 
   const svgParams = {
     style,

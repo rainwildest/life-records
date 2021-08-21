@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import {
   Page,
   Navbar,
@@ -11,24 +11,197 @@ import {
 } from "framework7-react";
 
 const Bookkeeping: React.FC = () => {
-  const calc = [
+  /* 显示的信息 */
+  const [display, setDisplay] = useState("0");
+  // const [calc, setCalc] = useState(0);
+  /* 运算状态 */
+  const [operationState, setOperationState] = useState(false);
+  const [nextShowPoint, setNextShowPoint] = useState(false);
+
+  const calcParams = [
     { name: 1, code: 1 },
     { name: 2, code: 2 },
     { name: 3, code: 3 },
-    { name: "x", code: "multiplication" },
+    { name: "×", code: "multiplication" },
     { name: 4, code: 4 },
     { name: 5, code: 5 },
     { name: 6, code: 6 },
-    { name: "+", code: "addition" },
+    { name: "＋", code: "addition" },
     { name: 7, code: 7 },
     { name: 8, code: 8 },
     { name: 9, code: 9 },
-    { name: "-", code: "subtraction" },
-    { name: ".", code: "point" },
+    { name: "－", code: "subtraction" },
+    { name: ".", code: "." },
     { name: 0, code: 0 },
-    { name: "清空", code: "clear" },
-    { name: "完成", code: "complete" }
+    { name: "清空", code: "clear" }
+    // { name: "完成", code: "complete" }
   ];
+
+  const type = [
+    { name: "餐饮", code: "", icon: "i" },
+    { name: "旅行", code: "", icon: "i" },
+    { name: "服饰", code: "", icon: "i" },
+    { name: "日用", code: "", icon: "i" },
+    { name: "果蔬", code: "", icon: "i" },
+    { name: "数码", code: "", icon: "i" },
+    { name: "零食", code: "", icon: "i" },
+    { name: "交通", code: "", icon: "i" },
+    { name: "住房", code: "", icon: "i" },
+    { name: "通讯", code: "", icon: "i" }
+  ];
+
+  /**
+   * 判断运算公式对不对
+   * @param {string} value 检查的值
+   * @returns boolean
+   */
+  const correctOperation = (value: string) => {
+    /* 检验最后是否包含运算符 */
+    if (lastOperation(value)) return false;
+    // const isRational = /(×|＋|－)/.test(value);
+    return /(×|＋|－)/.test(value);
+  };
+
+  /* 获取运算符 */
+  const getOperation = (value: string) => value.match(/(×|＋|－)/g)[0];
+
+  /* 替换字符串最后运算符 */
+  const operationReplace = (value: string, operation: "×" | "＋" | "－" | "") =>
+    value.replace(/(×|＋|－){1}$/, operation);
+
+  /* 检验字符串最后是否包含运算符 */
+  const lastOperation = (value: string) => /(×|＋|－)$/.test(value);
+
+  /* 检验数字是否符合格式 */
+  const verifyNumber = (value: string) =>
+    /^([-]{0,1}((0{0,1}\.{0,1})|([1-9]*\.))[0-9]*)$/.test(value);
+
+  /* 运算结果 */
+  const operationResolve = (value: string): number | null => {
+    const operator = getOperation(value);
+    if (correctOperation(value)) {
+      let calc = 0;
+      if (operator) {
+        const values = value.split(operator);
+        switch (operator) {
+          case "＋":
+            calc = parseFloat(
+              (Number(values[0]) + Number(values[1])).toFixed(10)
+            );
+            break;
+          case "－":
+            calc = parseFloat(
+              (Number(values[0]) - Number(values[1])).toFixed(10)
+            );
+            break;
+          case "×":
+            calc = parseFloat(
+              (Number(values[0]) * Number(values[1])).toFixed(10)
+            );
+        }
+      }
+
+      return calc;
+    } else {
+      console.error("请正确运算");
+      return null;
+    }
+  };
+
+  const handleOperator = (display: string, operation: "×" | "＋" | "－") => {
+    let formula = "";
+    if (lastOperation(display)) {
+      const replace = operationReplace(display, operation);
+      formula = `${replace}`;
+    } else {
+      if (correctOperation(display)) {
+        const value = operationResolve(display);
+        if (value !== null) formula = `${value}${operation}`;
+      } else {
+        formula = `${display}${operation}`;
+      }
+    }
+
+    if (!operationState) setOperationState(true);
+    setDisplay(formula);
+  };
+
+  const completeResolve = () => {
+    /* 处理运算 */
+    if (operationState) {
+      let formula = display;
+      if (lastOperation(display)) {
+        const operation = getOperation(display);
+        const values = display.split(operation);
+        formula = `${display}${values[0]}`;
+      }
+      const calc = operationResolve(formula);
+      setDisplay(`${calc}`);
+      setOperationState(false);
+    } else {
+      /* 提交结果 */
+    }
+  };
+
+  const handleNumber = (code: string | number): void => {
+    const operations = [
+      "multiplication",
+      "addition",
+      "subtraction",
+      "clear",
+      "complete"
+    ];
+
+    if (operations.includes(code as string)) {
+      switch (code) {
+        case "addition":
+          handleOperator(display, "＋");
+          break;
+        case "subtraction":
+          handleOperator(display, "－");
+          break;
+        case "multiplication":
+          handleOperator(display, "×");
+          break;
+        case "clear":
+          setDisplay("0");
+          setOperationState(false);
+          setNextShowPoint(false);
+          break;
+        case "complete":
+          completeResolve();
+          break;
+      }
+      return;
+    }
+
+    /* 如果初始化是0，则下一次输入才显示 . */
+    if (display === "0" && code === "0") return;
+    const info =
+      display === "0" && code !== "." ? `${code}` : `${display}${code}`;
+
+    if (lastOperation(info)) {
+      const operator = getOperation(info);
+      const num = operationReplace(operator, "");
+
+      if (!verifyNumber(num)) return;
+    } else {
+      const hasOperator = /(×|＋|－)/.test(info);
+      let param = info;
+
+      /* 校验第二个参数 */
+      if (hasOperator) {
+        const operator = getOperation(info);
+        const values = info.split(operator);
+        param = values[1];
+      }
+
+      if (!verifyNumber(param)) return;
+    }
+
+    setDisplay(info);
+    if (nextShowPoint) setNextShowPoint(false);
+  };
 
   return (
     <Page noToolbar>
@@ -48,9 +221,16 @@ const Bookkeeping: React.FC = () => {
       >
         <SwiperSlide>
           <div className="grid grid-cols-4 gap-4">
-            <wired-card elevation="2" class="text-center font-bold py-4">
+            <wired-card
+              elevation="2"
+              class="text-center font-bold py-4"
+              onClick={() => {
+                console.log("skdjf");
+              }}
+            >
               11
             </wired-card>
+
             <wired-card elevation="2" class="text-center font-bold py-4">
               12
             </wired-card>
@@ -125,25 +305,30 @@ const Bookkeeping: React.FC = () => {
               <div className="pr-1">日历</div>
               <div className="text-xs">2020-09-01</div>
             </div>
-            <div className="truncate font-bold">0</div>
+            <div className="truncate font-bold">{display}</div>
           </div>
         </wired-card>
         {/* </div> */}
         <div className="grid grid-cols-4 gap-1 pb-2 pt-2">
-          {calc.map((item) => {
+          {calcParams.map((item) => {
             return (
-              <wired-card elevation="2" class="text-center font-bold py-4">
+              <wired-card
+                elevation="2"
+                class="text-center font-bold py-4"
+                key={item.code}
+                onClick={() => handleNumber(item.code)}
+              >
                 {item.name}
               </wired-card>
-              // <div
-              //   className="text-center py-2 rounded-lg box-border font-bold"
-              //   style={{ background: "white", border: "1px solid" }}
-              //   key={item.code}
-              // >
-              //   <wired-card>{item.name}</wired-card>
-              // </div>
             );
           })}
+          <wired-card
+            elevation="2"
+            class="text-center font-bold py-4"
+            onClick={() => handleNumber("complete")}
+          >
+            {operationState ? "=" : "完成"}
+          </wired-card>
         </div>
       </div>
     </Page>
