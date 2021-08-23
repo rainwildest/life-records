@@ -26,16 +26,16 @@ const Statistics: React.FC = () => {
 
   useEffect(() => {
     setShow(!!window);
-    // const button = document.querySelector("wired-calendar");
-    // (textInput.current as any).addEventListener("selected", (data: any) => {
-    //   // window.alert(`Hello ${name.value.trim()}!`);
-    //   console.log("kdjksf", data.detail);
+    const button = document.querySelector("wired-calendar");
+    (textInput.current as any).addEventListener("selected", (data: any) => {
+      // window.alert(`Hello ${name.value.trim()}!`);
+      console.log("kdjksf", data.detail);
 
-    //   f7ready((f7) => {
-    //     console.log(calendar.current);
-    //     // f7.popover.close(calendar.current.el);
-    //   });
-    // });
+      f7ready((f7) => {
+        console.log(calendar.current);
+        // f7.popover.close(calendar.current.el);
+      });
+    });
   }, []);
 
   return (

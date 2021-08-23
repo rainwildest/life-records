@@ -11,6 +11,11 @@ const f7params = {
     iosDynamicNavbar: false
     // pushState: true
   },
+  dialog: {
+    // change default "OK" button text
+    buttonOk: "OK",
+    buttonCancel: "Cancel"
+  },
   routes
 };
 

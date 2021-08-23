@@ -92,7 +92,6 @@ body {
   }
 }
 
-
 .test-calendar {
   &.dialog {
     width: auto;
@@ -101,5 +100,12 @@ body {
 
   .dialog-inner {
     padding: 0;
+  }
+}
+
+.calc-calendar {
+  svg {
+    height: 1rem;
+    width: 1rem;
   }
 }

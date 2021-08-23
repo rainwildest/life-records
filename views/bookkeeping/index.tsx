@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Page,
   Navbar,
@@ -7,8 +7,12 @@ import {
   NavRight,
   Link,
   Swiper,
-  SwiperSlide
+  SwiperSlide,
+  f7ready,
+  f7,
+  Popup
 } from "framework7-react";
+import Icons from "components/Icons";
 
 const Bookkeeping: React.FC = () => {
   /* 显示的信息 */
@@ -17,6 +21,8 @@ const Bookkeeping: React.FC = () => {
   /* 运算状态 */
   const [operationState, setOperationState] = useState(false);
   const [nextShowPoint, setNextShowPoint] = useState(false);
+  const [popupOpened, setPopupOpened] = useState(false);
+  const textInput = useRef<HTMLElement | null>(null);
 
   const calcParams = [
     { name: 1, code: 1 },
@@ -34,7 +40,6 @@ const Bookkeeping: React.FC = () => {
     { name: ".", code: "." },
     { name: 0, code: 0 },
     { name: "清空", code: "clear" }
-    // { name: "完成", code: "complete" }
   ];
 
   const type = [
@@ -291,7 +296,24 @@ const Bookkeeping: React.FC = () => {
           className="truncate py-1 px-2 rounded-lg mb-1"
           style={{ background: "white", border: "1px solid" }}
         > */}
-        <wired-card fill="white" class="w-full  py-1 px-3">
+        <wired-card
+          fill="white"
+          class="w-full py-1 px-3"
+          onClick={() => {
+            f7ready((f7) => {
+              f7.dialog.prompt(
+                "",
+                "备注",
+                () => {
+                  console.log("OK");
+                },
+                () => {
+                  console.log("cancel");
+                }
+              );
+            });
+          }}
+        >
           <div className="truncate">
             <span className="pr-3">备注</span>
             <span></span>
@@ -299,10 +321,17 @@ const Bookkeeping: React.FC = () => {
         </wired-card>
         {/* </div> */}
         {/* <div className="rounded-lg box-border overflow-hidden"> */}
-        <wired-card fill="white" class="w-full mt-2">
+        <wired-card fill="white" class="w-full mt-2 py-2">
           <div className="flex justify-between items-center">
-            <div className="flex-shrink-0 pr-4 flex items-center">
-              <div className="pr-1">日历</div>
+            <div
+              className="flex-shrink-0 pr-4 flex items-center"
+              onClick={() => {
+                setPopupOpened(true);
+              }}
+            >
+              <div className="pr-1 pt-1">
+                <Icons name="calendar" className="calc-calendar" />
+              </div>
               <div className="text-xs">2020-09-01</div>
             </div>
             <div className="truncate font-bold">{display}</div>
@@ -331,6 +360,27 @@ const Bookkeeping: React.FC = () => {
           </wired-card>
         </div>
       </div>
+
+      <Popup
+        className="calendar-popup"
+        // style={{ background: "rgba(0,0,0,0.4)" }}
+        opened={popupOpened}
+      >
+        <wired-card>jjkkjlk</wired-card>
+        {/* <div className="flex flex-col justify-center items-center">
+          <wired-card
+            fill="skyblue"
+            class="absolute w-full h-full text-center py-4 flex flex-col justify-center items-center"
+          >
+            <wired-calendar ref={textInput} />
+            <Icons
+              name="close"
+              className="mt-6"
+              onClick={() => setPopupOpened(false)}
+            />
+          </wired-card>
+        </div> */}
+      </Popup>
     </Page>
   );
 };
