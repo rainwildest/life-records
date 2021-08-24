@@ -22,8 +22,6 @@ const Generalization: React.FC = () => {
 
   useEffect(() => {
     setShow(!!window);
-
-    // f7ready((f7) => {});
   }, []);
 
   return (

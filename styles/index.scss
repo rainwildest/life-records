@@ -92,20 +92,13 @@ body {
   }
 }
 
-.test-calendar {
-  &.dialog {
-    width: auto;
-    margin-left: calc(-1 * 320px / 2);
-  }
-
-  .dialog-inner {
-    padding: 0;
-  }
-}
-
 .calc-calendar {
   svg {
     height: 1rem;
     width: 1rem;
   }
+}
+
+.custom-calendar-fontsize .calendar-day-number {
+  font-size: 0.3rem;
 }

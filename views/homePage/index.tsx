@@ -71,8 +71,11 @@ const Home: React.FC = () => {
 
       <CalendarPopup
         popupOpened={popupOpened}
-        setPopupOpened={setPopupOpened}
         onCancel={() => {
+          setPopupOpened(false);
+        }}
+        onConfirm={(time) => {
+          console.log(time);
           setPopupOpened(false);
         }}
       />

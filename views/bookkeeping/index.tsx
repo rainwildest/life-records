@@ -13,6 +13,8 @@ import {
   Popup
 } from "framework7-react";
 import Icons from "components/Icons";
+import CalendarPopup from "components/CalendarPopup";
+import { format } from "lib/api/utils";
 
 const Bookkeeping: React.FC = () => {
   /* 显示的信息 */
@@ -22,7 +24,7 @@ const Bookkeeping: React.FC = () => {
   const [operationState, setOperationState] = useState(false);
   const [nextShowPoint, setNextShowPoint] = useState(false);
   const [popupOpened, setPopupOpened] = useState(false);
-  const textInput = useRef<HTMLElement | null>(null);
+  const [date, setDate] = useState(format(new Date()));
 
   const calcParams = [
     { name: 1, code: 1 },
@@ -332,7 +334,7 @@ const Bookkeeping: React.FC = () => {
               <div className="pr-1 pt-1">
                 <Icons name="calendar" className="calc-calendar" />
               </div>
-              <div className="text-xs">2020-09-01</div>
+              <div className="text-xs">{date}</div>
             </div>
             <div className="truncate font-bold">{display}</div>
           </div>
@@ -361,26 +363,17 @@ const Bookkeeping: React.FC = () => {
         </div>
       </div>
 
-      <Popup
-        className="calendar-popup"
-        // style={{ background: "rgba(0,0,0,0.4)" }}
-        opened={popupOpened}
-      >
-        <wired-card>jjkkjlk</wired-card>
-        {/* <div className="flex flex-col justify-center items-center">
-          <wired-card
-            fill="skyblue"
-            class="absolute w-full h-full text-center py-4 flex flex-col justify-center items-center"
-          >
-            <wired-calendar ref={textInput} />
-            <Icons
-              name="close"
-              className="mt-6"
-              onClick={() => setPopupOpened(false)}
-            />
-          </wired-card>
-        </div> */}
-      </Popup>
+      <CalendarPopup
+        popupOpened={popupOpened}
+        value={date}
+        onCancel={() => {
+          setPopupOpened(false);
+        }}
+        onConfirm={(date) => {
+          setDate(date);
+          setPopupOpened(false);
+        }}
+      />
     </Page>
   );
 };
