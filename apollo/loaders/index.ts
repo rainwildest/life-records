@@ -7,7 +7,6 @@ const createLoaders = {
     const ids = unique(keys);
     return getUserByIdsQuery(ids).then((rows) =>
       keys.map((key) => {
-        console.log(rows);
         return rows.find((x) => x.id === key || x.seq_id.toString() === key);
       })
     );

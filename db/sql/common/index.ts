@@ -13,9 +13,15 @@ export const getDataByIds = async <T>(
 ): Promise<[T]> => {
   const orm = await MikrotOrm(entityName);
 
-  return orm
-    .where("array[seq_id::text, id::text] && array[?]", [ids])
-    .execute("all");
+  if (process.env.SQLType === "sqlite") {
+    return orm.where("id in (?) or seq_id in (?)", [ids, ids]).execute("all");
+  }
+
+  if (process.env.SQLType === "pg") {
+    return orm
+      .where("array[seq_id::text, id::text] && array[?]", [ids])
+      .execute("all");
+  }
 };
 
 /**
