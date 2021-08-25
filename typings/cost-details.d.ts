@@ -3,4 +3,4 @@ declare type CostDetailsOption = {
   expenseID?: string;
   expensePrice?: number;
   purchaseTime?: Date;
-} & SQLFieldOption;
+} & DateSQLOption;

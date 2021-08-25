@@ -3,11 +3,11 @@ declare type UserOptions = {
   birthday?: string;
   gender?: string;
   email?: string;
-  github_provider_id?: string;
-  google_provider_id?: string;
-  phone_number?: string;
+  githubProviderId?: string;
+  googleProviderId?: string;
+  phoneNumber?: string;
   password?: string;
   avatar?: string;
-  is_admin?: boolean;
-  is_verify?: boolean;
-} & SQLFieldOption;
+  isAdmin?: boolean;
+  isVerify?: boolean;
+} & DateSQLOption;

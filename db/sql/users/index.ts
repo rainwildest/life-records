@@ -12,7 +12,7 @@ import { getDataByIds, getDatabyId } from "../common";
  */
 export const addUserBySignUp = async (
   args: UserOptions
-): Promise<UserOptions> => {
+): Promise<UserOptions & IDSQLOption> => {
   const { username, email, password } = args;
   if (!username || !email || !password) {
     return null;
@@ -32,7 +32,7 @@ export const addUserBySignUp = async (
  */
 export const addUserByOauth = async (
   userInfo: UserOptions
-): Promise<UserOptions> => {
+): Promise<UserOptions & IDSQLOption> => {
   const orm = await knex();
 
   return orm("users")
@@ -46,7 +46,9 @@ export const addUserByOauth = async (
  * @memberof UserModel
  * @param {array} ids
  */
-export const getUserByIdsQuery = async (ids = []): Promise<[UserOptions]> => {
+export const getUserByIdsQuery = async (
+  ids = []
+): Promise<[UserOptions & IDSQLOption]> => {
   return getDataByIds(Users, ids);
 };
 
@@ -57,7 +59,7 @@ export const getUserByIdsQuery = async (ids = []): Promise<[UserOptions]> => {
  */
 export const getUserByIdQuery = async (
   userId: string
-): Promise<[UserOptions]> => {
+): Promise<[UserOptions & IDSQLOption]> => {
   return getDatabyId(Users, userId);
 };
 
@@ -68,7 +70,7 @@ export const getUserByIdQuery = async (
  */
 export const getUserByEmailQuery = async (
   email: string
-): Promise<UserOptions> => {
+): Promise<UserOptions & IDSQLOption> => {
   if (!email) {
     return null;
   }
@@ -85,7 +87,7 @@ export const getUserByEmailQuery = async (
  */
 export const verifyUserQuery = async (
   args: UserOptions
-): Promise<UserOptions> => {
+): Promise<UserOptions & IDSQLOption> => {
   const { email, password } = args;
   if (!email && !password) {
     return null;
@@ -109,7 +111,7 @@ export const verifyUserQuery = async (
 export const getUserByIndex = async (
   indexName: string,
   indexValue: string
-): Promise<UserOptions> => {
+): Promise<UserOptions & IDSQLOption> => {
   const orm = await MikrotOrm(Users);
   return orm
     .where({
@@ -128,7 +130,7 @@ export const getUserByIndex = async (
 export const oauthCreateOrFindUser = async (
   userInfo: UserOptions,
   providerMethod: string
-): Promise<UserOptions> => {
+): Promise<UserOptions & IDSQLOption> => {
   //查找是否存在改用户
   return getUserByIndex(providerMethod, userInfo[providerMethod])
     .then((val) => {
