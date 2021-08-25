@@ -1,0 +1,15 @@
+# 费用类型
+type LivingExpenses {
+  id: ID!
+  seqId: Int
+  userId: String
+  # 收入：income; 支出：pay
+  expenseType: String
+  expenseName: String
+  createdAt: Date
+  modifiedAt: Date
+  deletedAt: Date
+
+  # custom date
+  user: User
+}

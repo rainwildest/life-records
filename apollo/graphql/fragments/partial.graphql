@@ -1,5 +1,0 @@
-fragment Partial on User {
-  id
-  username
-  # createdAt
-}

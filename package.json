@@ -30,6 +30,7 @@
     "framework7": "^6.3.0",
     "framework7-react": "^6.3.0",
     "graphql": "^15.5.0",
+    "graphql-date": "^1.0.3",
     "graphql-type-json": "^0.3.2",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",

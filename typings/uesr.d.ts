@@ -1,6 +1,4 @@
-declare type UserOptions = SQLFieldOption & {
-  id: string;
-  seq_id?: number;
+declare type UserOptions = {
   username?: string;
   birthday?: string;
   gender?: string;
@@ -12,5 +10,4 @@ declare type UserOptions = SQLFieldOption & {
   avatar?: string;
   is_admin?: boolean;
   is_verify?: boolean;
-  jurisdiction?: string[];
-};
+} & SQLFieldOption;

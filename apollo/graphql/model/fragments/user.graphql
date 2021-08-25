@@ -1,0 +1,18 @@
+fragment UserOption on User {
+  id
+  seqId
+  username
+  birthday
+  gender
+  email
+  githubProviderId
+  googleProviderId
+  phoneNumber
+  password
+  avatar
+  isAdmin
+  isVerify
+  createdAt
+  modifiedAt
+  deletedAt
+}

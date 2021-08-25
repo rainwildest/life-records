@@ -84,12 +84,6 @@ export default class Users {
   isVerify: boolean;
 
   /**
-   * @param {array} jurisdiction 用户权限
-   */
-  @Property({ nullable: true })
-  jurisdiction?: string;
-
-  /**
    * @param {Date} createdAt 创建时间
    */
   @Property({

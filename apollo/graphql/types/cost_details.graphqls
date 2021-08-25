@@ -1,0 +1,21 @@
+# 消费记录
+type CostDetails {
+  id: ID!
+  seqId: Int
+  userId: String
+  expenseID: String
+  expensePrice: Int
+  remarks: String
+  purchaseTime: Date
+  createdAt: Date
+  modifiedAt: Date
+  deletedAt: Date
+
+  # custom date
+  user: User
+  expense: LivingExpenses
+}
+
+type Query {
+  costDetails(userId: String!): [CostDetails]
+}

@@ -11,8 +11,16 @@ import {
 } from "framework7-react";
 import Icons from "components/Icons";
 import CalendarPopup from "components/CalendarPopup";
+import {
+  useUserQuery,
+  UserDocument
+} from "apollo/graphql/model/queries/user.graphql";
+import { initializeApollo } from "apollo/client";
 
 const Home: React.FC = () => {
+  const kk = useUserQuery().data;
+  console.log(kk, "slkdjfk");
+
   const [popupOpened, setPopupOpened] = useState(false);
   useEffect(() => {
     // setTimeout(() => {
@@ -134,4 +142,17 @@ const Home: React.FC = () => {
   );
 };
 
+export async function getStaticProps() {
+  const apolloClient = initializeApollo();
+
+  await apolloClient.query({
+    query: UserDocument
+  });
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract()
+    }
+  };
+}
 export default Home;
