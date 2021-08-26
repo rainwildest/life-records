@@ -25,7 +25,7 @@ export default class CostDetails {
    * @param {string} expense_id 用费ID
    */
   @Property({ fieldName: "expense_id" })
-  expenseID: string;
+  expenseId: string;
 
   /**
    * @param {string} expense_price 金额

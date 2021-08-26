@@ -1,2 +1,3 @@
-export const mutations = {};
-export const custom = {};
+import { createCostDetail } from "./cost-details";
+
+export const mutations = { createCostDetail };

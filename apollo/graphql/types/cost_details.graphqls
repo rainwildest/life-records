@@ -3,13 +3,13 @@ type CostDetails {
   id: ID!
   seqId: Int
   userId: String
-  expenseID: String
+  expenseId: String
   expensePrice: Int
   remarks: String
-  purchaseTime: Date
-  createdAt: Date
-  modifiedAt: Date
-  deletedAt: Date
+  purchaseTime: String
+  createdAt: String
+  modifiedAt: String
+  deletedAt: String
 
   # custom date
   user: User
@@ -18,4 +18,23 @@ type CostDetails {
 
 type Query {
   costDetails(userId: String!): [CostDetails]
+}
+
+input CreateCoseOption {
+  expenseId: String!
+  expensePrice: Int!
+  remarks: String
+  purchaseTime: Date
+}
+
+input ModifyCostOption {
+  id: String
+  expensePrice: Int
+  remarks: String
+}
+
+type Mutation {
+  createCostDetail(input: CreateCoseOption): CostDetails
+  modifyCostDetail(input: ModifyCostOption): CostDetails
+  removeCostDetail(id: String): CostDetails
 }

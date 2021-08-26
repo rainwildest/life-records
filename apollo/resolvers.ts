@@ -8,12 +8,12 @@ import GraphQLJSON from "graphql-type-json";
 import GraphQLDate from "graphql-date";
 
 const Query: Required<QueryResolvers<ResolverContext>> = queriesHelper;
-// const Mutation: Required<MutationResolvers<ResolverContext>> = mutationsHelper;
+const Mutation: Required<MutationResolvers<ResolverContext>> = mutationsHelper;
 
 export default {
   Query,
   ...queriesCustom,
-  // Mutation,
+  Mutation,
   JSON: GraphQLJSON,
   Date: GraphQLDate
 };

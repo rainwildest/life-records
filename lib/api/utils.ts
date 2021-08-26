@@ -1,3 +1,5 @@
+import { snakeCase } from "lodash";
+
 export const format = (date: Date, fmt = "yyyy-MM-dd"): string => {
   // author: meizz
   const time = new Date(date);
@@ -33,3 +35,12 @@ export const UUID =
     const suffix = `${++i}`.padStart(12, "0");
     return `${prefix}-0000-0000-0000-${suffix}`;
   };
+
+export const tanslateSnake = <T>(feilds: { [P in keyof T]?: any }): any => {
+  const value: any = {};
+  Object.keys(feilds).forEach((key) => {
+    value[snakeCase(key)] = feilds[key];
+  });
+
+  return value;
+};

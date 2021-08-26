@@ -27,6 +27,7 @@ module.exports = {
   ],
 
   rules: {
+    "@typescript-eslint/ban-types": "off",
     "no-var": "warn",
     "prefer-const": "warn", //首选const
     "new-parens": "warn", //new时必须加小括号
