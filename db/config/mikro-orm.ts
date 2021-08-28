@@ -1,11 +1,12 @@
-import entities from "./entities";
+import entities from "../entities";
 import { Options } from "@mikro-orm/core";
 // import path from "path";
 
 // console.log("123456", path.resolve("db/life.db"));
 const config: Options = {
-  dbName: `${process.cwd()}/db/life.db`,
-  type: "sqlite",
+  // dbName: `${process.cwd()}/db/life.db`,
+  dbName: "life-portrayal",
+  type: "postgresql",
   host: "localhost",
   port: 5432,
   user: "postgres",
@@ -14,7 +15,7 @@ const config: Options = {
   debug: process.env.NODE_ENV === "development",
   migrations: {
     // tableName: 'mikro_orm_migrations', // migrations table name
-    path: `${process.cwd()}/db/ormConfig/migrations`, // path to folder with migration files
+    path: `${process.cwd()}/db/migrations`, // path to folder with migration files
     pattern: /^[\w-]+\d+\.[tj]s$/
   }
 };

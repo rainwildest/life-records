@@ -37,7 +37,11 @@ const getApolloServerHandler = async () => {
           : _source[_info.fieldName],
       schema,
       context(_ctx) {
-        return { ..._ctx, loaders: createLoaders };
+        return {
+          ..._ctx,
+          loaders: createLoaders,
+          user: { id: "00000000-0000-0000-0000-000000000001" }
+        };
       }
     }).createHandler({
       path: "/api/graphql"

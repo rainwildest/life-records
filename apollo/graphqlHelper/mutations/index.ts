@@ -1,3 +1,11 @@
-import { createCostDetail } from "./cost-details";
+import {
+  createCostDetail,
+  modifyCostDetail,
+  removeCostDetail
+} from "./cost-details";
 
-export const mutations = { createCostDetail };
+export const mutations = {
+  createCostDetail,
+  modifyCostDetail,
+  removeCostDetail
+};

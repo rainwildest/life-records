@@ -14,12 +14,16 @@ export const getDataByIds = async <T>(
   const orm = await MikrotOrm(entityName);
 
   if (process.env.SQLType === "sqlite") {
-    return orm.where("id in (?) or seq_id in (?)", [ids, ids]).execute("all");
+    return orm
+      .where("id in (?) or seq_id in (?)", [ids, ids])
+      .andWhere("deleted_at is null")
+      .execute("all");
   }
 
   if (process.env.SQLType === "pg") {
     return orm
       .where("array[seq_id::text, id::text] && array[?]", [ids])
+      .andWhere("deleted_at is null")
       .execute("all");
   }
 };
@@ -36,5 +40,8 @@ export const getDatabyId = async <T>(
 ): Promise<[T]> => {
   const orm = await MikrotOrm(entityName);
 
-  return orm.where({ id: userId }).execute("get");
+  return orm
+    .where({ id: userId })
+    .andWhere("deleted_at is null")
+    .execute("get");
 };

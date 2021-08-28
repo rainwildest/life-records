@@ -1,4 +1,4 @@
-import Users from "db/ormConfig/entities/user";
+import Users from "db/entities/user";
 // import { UserOptions } from "typings/uesr";
 import MikrotOrm, { knex } from "db/mikro-orm";
 import { getDataByIds, getDatabyId } from "../common";

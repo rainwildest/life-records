@@ -345,7 +345,7 @@ const Bookkeeping: React.FC = () => {
             return (
               <wired-card
                 elevation="2"
-                class="text-center font-bold py-4"
+                class="text-center font-bold py-3"
                 key={item.code}
                 onClick={() => handleNumber(item.code)}
               >
@@ -355,7 +355,7 @@ const Bookkeeping: React.FC = () => {
           })}
           <wired-card
             elevation="2"
-            class="text-center font-bold py-4"
+            class="text-center font-bold py-3"
             onClick={() => handleNumber("complete")}
           >
             {operationState ? "=" : "完成"}

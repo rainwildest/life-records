@@ -9,7 +9,7 @@ export default class Users {
   /**
    * @param {string} id uuid
    */
-  @Property({ type: "uuid" })
+  @Property({ type: "uuid", defaultRaw: "uuid_generate_v4()" })
   id: string = v4();
   /**
    * @param {number} seqId 自增长id

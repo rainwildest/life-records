@@ -6,10 +6,10 @@ type CostDetails {
   expenseId: String
   expensePrice: Int
   remarks: String
-  purchaseTime: String
-  createdAt: String
-  modifiedAt: String
-  deletedAt: String
+  purchaseTime: Date
+  createdAt: Date
+  modifiedAt: Date
+  deletedAt: Date
 
   # custom date
   user: User
@@ -28,13 +28,12 @@ input CreateCoseOption {
 }
 
 input ModifyCostOption {
-  id: String
   expensePrice: Int
   remarks: String
 }
 
 type Mutation {
   createCostDetail(input: CreateCoseOption): CostDetails
-  modifyCostDetail(input: ModifyCostOption): CostDetails
+  modifyCostDetail(id: String, input: ModifyCostOption): CostDetails
   removeCostDetail(id: String): CostDetails
 }
