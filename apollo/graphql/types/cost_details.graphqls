@@ -35,5 +35,5 @@ input ModifyCostOption {
 type Mutation {
   createCostDetail(input: CreateCoseOption): CostDetails
   modifyCostDetail(id: String, input: ModifyCostOption): CostDetails
-  removeCostDetail(id: String): CostDetails
+  removeCostDetail(id: String!): CostDetails
 }

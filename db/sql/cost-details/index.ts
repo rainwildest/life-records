@@ -1,6 +1,8 @@
 import CostDetails from "db/entities/cost_details";
 import MikrotOrm, { knex } from "db/mikro-orm";
+import { remove } from "../common";
 import { v4 as uuid } from "uuid";
+
 /**
  * 新增用户消费记录
  * @param {Object} options
@@ -59,13 +61,7 @@ export const modifyCostDetail = async (
 export const removeCostDetail = async (
   id: string
 ): Promise<CostDetailsOption & IDSQLOption> => {
-  const orm = await knex();
-
-  return orm("cost_details")
-    .where({ id })
-    .update({ deleted_at: new Date() })
-    .returning("*")
-    .then((rows) => (rows.length ? rows[0] : null));
+  return remove("cost_details", id);
 };
 
 /**

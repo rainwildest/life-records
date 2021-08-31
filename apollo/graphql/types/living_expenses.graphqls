@@ -13,3 +13,23 @@ type LivingExpenses {
   # custom date
   user: User
 }
+
+input CreateLivingExpensesOption {
+  expenseType: String!
+  expenseName: String!
+  isAddUserId: Boolean
+}
+
+input ModifyLivingExpensesOption {
+  expenseType: String!
+  expenseName: String!
+}
+
+type Mutation {
+  createLivingExpenses(input: CreateLivingExpensesOption): LivingExpenses
+  modifyLivingExpenses(
+    id: String
+    input: ModifyLivingExpensesOption
+  ): LivingExpenses
+  removeLivingExpenses(id: String!): LivingExpenses
+}

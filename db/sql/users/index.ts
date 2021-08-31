@@ -59,7 +59,7 @@ export const getUserByIdsQuery = async (
  */
 export const getUserByIdQuery = async (
   userId: string
-): Promise<[UserOptions & IDSQLOption]> => {
+): Promise<UserOptions & IDSQLOption> => {
   return getDatabyId(Users, userId);
 };
 

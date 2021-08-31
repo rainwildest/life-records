@@ -1,4 +1,4 @@
-import MikrotOrm from "db/mikro-orm";
+import MikrotOrm, { knex } from "db/mikro-orm";
 import { EntityName } from "@mikro-orm/core";
 
 /**
@@ -36,12 +36,62 @@ export const getDataByIds = async <T>(
  */
 export const getDatabyId = async <T>(
   entityName: EntityName<unknown>,
-  userId: string
-): Promise<[T]> => {
+  id: string
+): Promise<T> => {
   const orm = await MikrotOrm(entityName);
 
-  return orm
-    .where({ id: userId })
-    .andWhere("deleted_at is null")
-    .execute("get");
+  return orm.where({ id }).andWhere("deleted_at is null").execute("get");
+};
+
+/**
+ * 新增信息
+ * @param {Object} options
+ * @returns Promise
+ */
+export const create = async <T>(
+  tableName: string,
+  options: T
+): Promise<T & IDSQLOption> => {
+  const orm = await knex();
+
+  return orm(tableName)
+    .insert({ ...options })
+    .returning("*")
+    .then((rows) => (rows.length ? rows[0] : null));
+};
+
+/**
+ * 修改记录
+ * @param id
+ * @param options
+ * @returns Promise
+ */
+export const modify = async <T>(
+  tableName: string,
+  id: string,
+  options: T
+): Promise<T & IDSQLOption> => {
+  const orm = await knex();
+
+  return orm(tableName)
+    .where({ id })
+    .update({ ...options, modified_at: new Date() })
+    .returning("*")
+    .then((rows) => (rows.length ? rows[0] : null));
+};
+
+/**
+ * 删除记录
+ * @param tableName 表名
+ * @param id 当前记录id
+ * @returns Promise
+ */
+export const remove = async <T>(tableName: string, id: string): Promise<T> => {
+  const orm = await knex();
+
+  return orm(tableName)
+    .where({ id })
+    .update({ deleted_at: new Date() })
+    .returning("*")
+    .then((rows) => (rows.length ? rows[0] : null));
 };

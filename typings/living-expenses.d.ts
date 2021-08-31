@@ -1,5 +1,5 @@
 declare type LivingExpensesOption = {
-  userId: string;
+  userId?: string;
   expenseType: string;
   expenseName: string;
 } & DateSQLOption;
