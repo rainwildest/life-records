@@ -1,8 +1,9 @@
 import { AuthenticationError } from "apollo-server-micro";
 import { getUserLivingExpense } from "db/sql/living-expenses";
 
-export default (_parent, _args, context): any => {
+export default (_parent, _args: { type: string }, context): any => {
   const { user } = context;
+  const { type = "pay" } = _args;
 
   if (!user?.id) {
     throw new AuthenticationError(
@@ -10,5 +11,5 @@ export default (_parent, _args, context): any => {
     );
   }
 
-  return getUserLivingExpense(user?.id || "");
+  return getUserLivingExpense(user?.id || "", type);
 };

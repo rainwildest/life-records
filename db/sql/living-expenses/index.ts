@@ -48,13 +48,14 @@ export const getLivingExpense = async (
  * @param id 用户id
  */
 export const getUserLivingExpense = async (
-  id: string
+  id: string,
+  type: string
 ): Promise<LivingExpensesOption & IDSQLOption> => {
   const orm = await MikrotOrm(LivingExpenses);
 
   return orm
-    .where({ user_id: id })
-    .orWhere("user_id is null")
+    .where("user_id=? or user_id is null", [id])
+    .andWhere({ expense_type: type })
     .andWhere("deleted_at is null")
     .execute("all");
 };
