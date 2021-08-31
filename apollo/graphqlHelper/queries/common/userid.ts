@@ -1,6 +1,6 @@
-import { snakeCase, keys } from "lodash";
+import { snakeCase } from "lodash";
 
-export default (_parent: CostDetailsOption, _: unknown, _context): any => {
+export default (_parent: unknown, _: unknown, _context): any => {
   const originField = "userId";
   const snakeField = snakeCase(originField);
 

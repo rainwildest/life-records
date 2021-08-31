@@ -25,6 +25,10 @@ input ModifyLivingExpensesOption {
   expenseName: String!
 }
 
+type Query {
+  getLivingExpenses: [LivingExpenses]
+}
+
 type Mutation {
   createLivingExpenses(input: CreateLivingExpensesOption): LivingExpenses
   modifyLivingExpenses(
