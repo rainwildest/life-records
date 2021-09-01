@@ -1,0 +1,10 @@
+fragment LivingExpensesOption on LivingExpenses {
+  id
+  seqId
+  userId
+  expenseType
+  expenseName
+  createdAt
+  modifiedAt
+  deletedAt
+}

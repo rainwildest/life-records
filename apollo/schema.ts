@@ -19,28 +19,28 @@ export const schema = makeExecutableSchema({
 });
 
 /* 每次执行graphql之前都去查询一下 currentUser */
-const rootResolveFunction = async (
-  _parent: any,
-  _args: any,
-  _context: any,
-  info: any
-) => {
-  if (!!info && !!info.operation && !!info.operation.__runAtMostOnce) {
-    delete info.operation.__runAtMostOnce;
-  }
-  const { loaders, req } = _context;
-  const session = await getLoginSession(req);
-  // perform action before any other resolvers
+// const rootResolveFunction = async (
+//   _parent: any,
+//   _args: any,
+//   _context: any,
+//   info: any
+// ) => {
+//   if (!!info && !!info.operation && !!info.operation.__runAtMostOnce) {
+//     delete info.operation.__runAtMostOnce;
+//   }
+//   const { loaders, req } = _context;
+//   const session = await getLoginSession(req);
+//   // perform action before any other resolvers
 
-  _context.currentUser = null;
-  if (!!session && !!session.id) {
-    _context.currentUser = await loaders.user.load(session.id);
-    if (!_context.currentUser) {
-      throw new AuthenticationError(
-        "This account has been deleted or deactivated"
-      );
-    }
-  }
-};
+//   _context.currentUser = null;
+//   if (!!session && !!session.id) {
+//     _context.currentUser = await loaders.user.load(session.id);
+//     if (!_context.currentUser) {
+//       throw new AuthenticationError(
+//         "This account has been deleted or deactivated"
+//       );
+//     }
+//   }
+// };
 
-addSchemaLevelResolveFunction(schema, rootResolveFunction);
+// addSchemaLevelResolveFunction(schema, rootResolveFunction);
