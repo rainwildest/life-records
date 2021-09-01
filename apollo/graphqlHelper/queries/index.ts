@@ -3,12 +3,12 @@ import userid from "./common/userid";
 import costDetails from "./cost-details";
 import expense from "./cost-details/expense";
 
-import getLivingExpenses from "./living-expenses";
+import livingExpenses from "./living-expenses";
 
 export const queries = {
   currentUser,
   costDetails,
-  getLivingExpenses
+  livingExpenses
 };
 
 export const custom = {

@@ -1,0 +1,7 @@
+# import LivingExpensesOption from '../fragments/living-expenses.graphql'
+
+query livingExpenses($type: String) {
+  livingExpenses(type: $type) {
+    ...LivingExpensesOption
+  }
+}

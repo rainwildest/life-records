@@ -1,32 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Page,
-  Link,
-  Navbar,
-  NavLeft,
-  NavTitle,
-  NavRight,
-  Fab,
-  Button
-} from "framework7-react";
+import React, { useEffect, useRef, useState, memo } from "react";
+import { Page, Link, Navbar, NavRight, Fab } from "framework7-react";
 import Icons from "components/Icons";
-import CalendarPopup from "components/CalendarPopup";
-import {
-  useUserQuery,
-  UserDocument
-} from "apollo/graphql/model/queries/user.graphql";
-import { initializeApollo } from "apollo/client";
+import { useUserQuery } from "apollo/graphql/model/user.graphql";
 
 const Home: React.FC = () => {
   const kk = useUserQuery().data;
   console.log(kk, "slkdjfk");
 
-  const [popupOpened, setPopupOpened] = useState(false);
-  useEffect(() => {
-    // setTimeout(() => {
-    //   setPopupOpened(true);
-    // }, 1000 * 3);
-  }, []);
   return (
     <Page>
       <Navbar large transparent>
@@ -68,25 +48,6 @@ const Home: React.FC = () => {
           今日还没任何记录呦，去<Link href="/bookkeeping/">记一笔</Link>
         </div>
       </div> */}
-
-      <Button
-        onClick={() => {
-          setPopupOpened(true);
-        }}
-      >
-        12131
-      </Button>
-
-      <CalendarPopup
-        popupOpened={popupOpened}
-        onCancel={() => {
-          setPopupOpened(false);
-        }}
-        onConfirm={(time) => {
-          console.log(time);
-          setPopupOpened(false);
-        }}
-      />
 
       <div
         className="pt-2 px-6"
@@ -142,17 +103,4 @@ const Home: React.FC = () => {
   );
 };
 
-export async function getStaticProps() {
-  const apolloClient = initializeApollo();
-
-  await apolloClient.query({
-    query: UserDocument
-  });
-
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract()
-    }
-  };
-}
-export default Home;
+export default memo(Home);

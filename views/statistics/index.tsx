@@ -10,6 +10,7 @@ import {
 } from "framework7-react";
 import CalendarPopup from "components/CalendarPopup";
 import { format } from "lib/api/utils";
+
 const Statistics: React.FC = () => {
   const [date, setDate] = useState(format(new Date()));
   const [popupOpened, setPopupOpened] = useState(false);
