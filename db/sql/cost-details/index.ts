@@ -1,6 +1,6 @@
 import CostDetails from "db/entities/cost_details";
 import MikrotOrm, { knex } from "db/mikro-orm";
-import { remove } from "../common";
+import { create, modify, remove } from "../common";
 import { v4 as uuid } from "uuid";
 
 /**
@@ -11,51 +11,14 @@ import { v4 as uuid } from "uuid";
 export const createCostDetail = async (
   options: CostDetailsOption
 ): Promise<CostDetailsOption & IDSQLOption> => {
-  // if (process.env.SQLType === "sqlite") {
-  //   const orm = await knex();
-  //   const primaryKey = await orm("cost_details")
-  //     .insert({ ...options, id: uuid() })
-  //     .then((rows) => (rows.length ? rows[0] : null));
-
-  //   return orm("cost_details")
-  //     .where({ seq_id: primaryKey })
-  //     .then((rows) => (rows.length ? rows[0] : null));
-  // }
-
-  /* 默认使用pgsql */
-  const orm = await knex();
-  return orm("cost_details")
-    .insert({ ...options })
-    .returning("*")
-    .then((rows) => (rows.length ? rows[0] : null));
+  return create("cost_details", options);
 };
 
 export const modifyCostDetail = async (
   id: string,
   options: CostDetailsOption
 ): Promise<CostDetailsOption & IDSQLOption> => {
-  const orm = await knex();
-
-  // if (process.env.SQLType === "sqlite") {
-  //   const updateState = await orm("cost_details")
-  //     .where({ id })
-  //     .update({ ...options })
-  //     .then((rows) => (rows ? rows : null));
-
-  //   if (updateState) {
-  //     return orm("cost_details")
-  //       .where({ id })
-  //       .then((rows) => (rows.length ? rows[0] : null));
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
-  return orm("cost_details")
-    .where({ id })
-    .update({ ...options })
-    .returning("*")
-    .then((rows) => (rows.length ? rows[0] : null));
+  return modify("cost_details", id, options);
 };
 
 export const removeCostDetail = async (
@@ -77,4 +40,44 @@ export const getCostDetails = async (
     .where({ user_id: userId })
     .andWhere("deleted_at is null")
     .execute("all");
+};
+
+/**
+ * 获取用户的消费记录
+ * @param {string} userId 用户id
+ * @param {string} start 开始日期
+ * @param {string} end 结束日期
+ * @returns Promise
+ */
+export const getCostDetailsByDate = async (
+  userId: string,
+  start: string,
+  end: string
+): Promise<CostDetailsOption & IDSQLOption> => {
+  const orm = await MikrotOrm(CostDetails);
+  return orm
+    .where({ user_id: userId })
+    .andWhere("purchase_time >= ? and purchase_time < ?", [start, end])
+    .andWhere("deleted_at is null")
+    .orderBy({ ["purchase_time"]: "DESC" })
+    .execute("all");
+};
+
+export const amountStatisticsByDate = async (
+  start: string,
+  end: string
+): Promise<any> => {
+  const orm = await knex();
+
+  return orm("cost_details AS t1")
+    .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
+    .select(
+      orm.raw(`
+      SUM(CASE WHEN t2.expense_type='pay' THEN t1.expense_price ELSE 0 END) AS pay,
+      SUM(CASE WHEN t2.expense_type='income' THEN t1.expense_price ELSE 0 END) AS income
+    `)
+    )
+    .whereRaw(`t1.purchase_time >= '${start}' AND t1.purchase_time < '${end}'`)
+    .whereNull("t1.deleted_at")
+    .then((rows) => (rows.length ? rows[0] : null));
 };
