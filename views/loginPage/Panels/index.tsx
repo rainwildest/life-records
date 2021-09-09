@@ -32,7 +32,8 @@ const Panels: React.FC<PanelsProps> = ({ container }) => {
         <div className="content">
           <h3>记录新的开始</h3>
           <p className="panel-text">
-            1979年，Bjame Sgoustrup到了Bell实验室，开始从事将C改良为带类的C（C with
+            1979年，Bjame Sgoustrup到了Bell实验室，开始从事将C改良为带类的C（C
+            with
             classes）的工作。1983年该语言被正式命名为C++。自从C++被发明以来，它经历了3次主要的修订，每一次修订都为C++增加了新的特征并作了一些修改。第一次修订是在1985年，第二次修订是在1990年，而第三次修订发生在c++的标准化过程中。在20世纪90年代早期，人们开始为C++建立一个标准，并成立了一个ANSI和ISO（Intemational
             Standards
             Organization）国际标准化组织的联合标准化委员会。该委员会在1994年1月25曰提出了第一个标准化草案。在这个草案中，委员会在保持Stroustrup最初定义的所有特征的同时，还增加了一些新的特征。

@@ -21,7 +21,10 @@ const Container: React.FC = () => {
   }, []);
 
   return (
-    <div className={`login-container${isAnimal ? " animal" : ""}`} ref={container}>
+    <div
+      className={`login-container${isAnimal ? " animal" : ""}`}
+      ref={container}
+    >
       <FormsContainer />
       <Panels container={container} />
     </div>

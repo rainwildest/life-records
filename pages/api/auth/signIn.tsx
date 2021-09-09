@@ -1,1 +1,1 @@
-export { default } from 'lib/routes/auth/signIn';
+export { default } from "lib/routes/auth/signIn";

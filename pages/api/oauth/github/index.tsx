@@ -1,1 +1,1 @@
-export { default } from 'lib/routes/oauth/github'
+export { default } from "lib/routes/oauth/github";

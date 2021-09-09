@@ -1,6 +1,6 @@
-import passport from 'passport';
-import { NextApiRequest, NextApiResponse } from 'next';
-import runMiddleware from 'lib/api/runMiddleware';
+import passport from "passport";
+import { NextApiRequest, NextApiResponse } from "next";
+import runMiddleware from "lib/api/runMiddleware";
 // import session from 'lib/api/session';
 // import trustProxy from 'lib/api/trustProxy';
 

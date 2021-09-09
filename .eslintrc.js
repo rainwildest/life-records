@@ -35,6 +35,7 @@ module.exports = {
     "no-floating-decimal": "error", //禁止省略浮点数中的0 .5 3.
     "init-declarations": "off", //声明时必须赋初值
     "@typescript-eslint/no-var-requires": "off",
+    "no-empty": "off",
     eqeqeq: ["error", "always"]
   }
 };

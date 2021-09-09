@@ -1,8 +1,16 @@
 export function colorClasses(props) {
-  const { color, colorTheme, textColor, bgColor, borderColor, rippleColor, themeDark } = props;
+  const {
+    color,
+    colorTheme,
+    textColor,
+    bgColor,
+    borderColor,
+    rippleColor,
+    themeDark
+  } = props;
 
   return {
-    'theme-dark': themeDark,
+    "theme-dark": themeDark,
     [`color-${color}`]: color,
     [`color-theme-${colorTheme}`]: colorTheme,
     [`text-color-${textColor}`]: textColor,
@@ -12,11 +20,10 @@ export function colorClasses(props) {
   };
 }
 
-
 export function classNames(...args) {
   const classes = [];
   args.forEach((arg) => {
-    if (typeof arg === 'object' && arg.constructor === Object) {
+    if (typeof arg === "object" && arg.constructor === Object) {
       Object.keys(arg).forEach((key) => {
         if (arg[key]) {
           classes.push(key);
@@ -34,18 +41,19 @@ export function classNames(...args) {
       uniqueClasses.push(c);
     }
   });
-  return uniqueClasses.join(' ');
+  return uniqueClasses.join(" ");
 }
 
 export function emit(props, events, ...args) {
-  if (!events || !events.trim().length || typeof events !== 'string') {
+  if (!events || !events.trim().length || typeof events !== "string") {
     return;
   }
 
-  events.trim()
-    .split(' ')
+  events
+    .trim()
+    .split(" ")
     .forEach((event) => {
-      let eventName = (event || '').trim();
+      let eventName = (event || "").trim();
       if (!eventName) {
         return;
       }

@@ -37,7 +37,10 @@ const SignUp: React.FC = () => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values: FormInitialValues, { setSubmitting, setFieldError }: FormikHelpers<FormInitialValues>) => {
+      onSubmit={(
+        values: FormInitialValues,
+        { setSubmitting, setFieldError }: FormikHelpers<FormInitialValues>
+      ) => {
         fetch("/api/auth/signUp", {
           method: "post",
           headers: { "Content-Type": "application/json" },
@@ -82,7 +85,12 @@ const SignUp: React.FC = () => {
             {({ field, form: { touched, errors }, meta }) => (
               <div className="input-field">
                 <FaUser />
-                <input {...field} autoComplete="off" type="text" placeholder="Username" />
+                <input
+                  {...field}
+                  autoComplete="off"
+                  type="text"
+                  placeholder="Username"
+                />
               </div>
             )}
           </Field>
@@ -91,7 +99,12 @@ const SignUp: React.FC = () => {
             {({ field, form: { touched, errors }, meta }) => (
               <div className="input-field">
                 <FaEnvelope />
-                <input {...field} autoComplete="off" type="text" placeholder="Email" />
+                <input
+                  {...field}
+                  autoComplete="off"
+                  type="text"
+                  placeholder="Email"
+                />
               </div>
             )}
           </Field>
@@ -125,7 +138,11 @@ const SignUp: React.FC = () => {
               )}
             />
           </div>
-          <button type="submit" disabled={!!isSubmitting} className={`btn solid ${isSubmitting ? "disabled" : ""}`}>
+          <button
+            type="submit"
+            disabled={!!isSubmitting}
+            className={`btn solid ${isSubmitting ? "disabled" : ""}`}
+          >
             {!isSubmitting && "Sign up"}
             {!!isSubmitting && <ImSpinner2 />}
           </button>
