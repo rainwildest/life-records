@@ -4,9 +4,11 @@ import { Swiper, SwiperSlide, f7ready } from "framework7-react";
 import CalendarPopup from "components/CalendarPopup";
 import Calc from "components/Calc";
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
+import { useCreateCostDetailMutation } from "apollo/graphql/model/cost-details.graphql";
 
 const Pay: React.FC = () => {
   const k = useLivingExpensesQuery().data;
+  const [createCostDetailMutation] = useCreateCostDetailMutation();
 
   const [popupOpened, setPopupOpened] = useState(false);
   const [date, setDate] = useState(format(new Date()));
@@ -94,6 +96,22 @@ const Pay: React.FC = () => {
           }}
           onConfirm={(value) => {
             console.log(value);
+            createCostDetailMutation({
+              variables: {
+                input: {
+                  expenseId: "10000000-0000-0000-0000-000000000004",
+                  expensePrice: 20,
+                  remarks: "",
+                  purchaseTime: new Date()
+                }
+              }
+            })
+              .then((value) => {
+                console.log("我完成了", value);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }}
         />
       </div>

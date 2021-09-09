@@ -4589,22 +4589,22 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-framework7-react@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/framework7-react/-/framework7-react-6.3.0.tgz#a0a8293c14a386b98eec300146babb948b93bffd"
-  integrity sha512-Zjq1kg5PYjQM1Rj8Lfr8voBrVWLPIFYGF0dk5HwvOFnP0gH47TxRqLZZu50xvefSFIc0eth+vwr3zqM6eXBv2g==
+framework7-react@^6.3.3:
+  version "6.3.3"
+  resolved "https://registry.yarnpkg.com/framework7-react/-/framework7-react-6.3.3.tgz#5679699f97e82515d7b9a372555ae5ab29f6f667"
+  integrity sha512-4GGUSKJH6lA1c4nyyDaimZHqg6VQXdn2UGlhuZUc/+zRan2ZqRBF0SoWJRSb1PQJi+H34X/FHZ/gJomzssVvcw==
 
-framework7@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/framework7/-/framework7-6.3.0.tgz#fee0b48a15b41e3380df1c6045471260cedfdce8"
-  integrity sha512-s3sGD5p/CU0oOeB3HPKUMCB2oHViPakxlEpxm7L/PAsOqdIKCatuiqwGxAQBt7tQzM/Z9yMTic7zRoD+Gj0x0A==
+framework7@^6.3.3:
+  version "6.3.3"
+  resolved "https://registry.yarnpkg.com/framework7/-/framework7-6.3.3.tgz#68d7eb0d7a494667cd8aee483bdaaef1ec1a29dc"
+  integrity sha512-4HUYGpmM5JjL7rpAvnsTCM7HANgvaD3M4Ui47uObrtcLH0o8K8oWQFwhDRdSLjS1jpxNd4UYqlaG9hmy0QU7NQ==
   dependencies:
     dom7 "^3.0.0"
-    htm "^3.0.4"
+    htm "^3.1.0"
     path-to-regexp "^6.2.0"
-    skeleton-elements "^3.3.0"
+    skeleton-elements "^3.5.0"
     ssr-window "^3.0.0"
-    swiper "^6.6.2"
+    swiper "^6.8.4"
 
 fs-capacitor@^2.0.4:
   version "2.0.4"
@@ -5122,7 +5122,7 @@ hsla-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/hsla-regex/-/hsla-regex-1.0.0.tgz#c1ce7a3168c8c6614033a4b5f7877f3b225f9c38"
   integrity sha1-wc56MWjIxmFAM6S194d/OyJfnDg=
 
-htm@^3.0.4:
+htm@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/htm/-/htm-3.1.0.tgz#0c305493b60da9f6ed097a2aaf4c994bd85ea022"
   integrity sha512-L0s3Sid5r6YwrEvkig14SK3Emmc+kIjlfLhEGn2Vy3bk21JyDEes4MoDsbJk6luaPp8bugErnxPz86ZuAw6e5Q==
@@ -8298,10 +8298,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-skeleton-elements@^3.3.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/skeleton-elements/-/skeleton-elements-3.4.0.tgz#9ae14c9df42428a5599ddc1eebb62fef7ee409ed"
-  integrity sha512-UC/dExXBOI54sEJgyqOWwokp3BKIIidN5PLd47xwm1N5W8233dSAE1iZZ2mEd8K0hIUp8zjeXUdbRqhQTTMdng==
+skeleton-elements@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/skeleton-elements/-/skeleton-elements-3.5.0.tgz#7deb31e358c9ffc358694d9f26ef57db1ca4b74c"
+  integrity sha512-KOU3wHGyCOtfMWLYF9wn2JzxM/l0Vu4miqqdoz9HeTfd1fwIsEePrcIrZ4+8wbg6yK82UPLLyH7fAZAwhQwZNw==
 
 slash@^3.0.0:
   version "3.0.0"
@@ -8757,10 +8757,10 @@ swap-case@^2.0.2:
   dependencies:
     tslib "^2.0.3"
 
-swiper@^6.6.2:
-  version "6.7.5"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-6.7.5.tgz#8f150c7281919b7d6bea00889e9dc16448e92986"
-  integrity sha512-KaTjO93tZyMpxWHaey+T+H/JeePMZV/joZWhZaor76Xk+rPGmjOz1S8mXSyrRkaW0p0LOJYeWGB8d0gYxSSV/Q==
+swiper@^6.8.4:
+  version "6.8.4"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-6.8.4.tgz#938fed4144f4d7952fbf9c44e5832d133a4de794"
+  integrity sha512-O+buF9Q+sMA0H7luMS8R59hCaJKlpo8PXhQ6ZYu6Rn2v9OsFd4d1jmrv14QvxtQpKAvL/ZiovEeANI/uDGet7g==
   dependencies:
     dom7 "^3.0.0"
     ssr-window "^3.0.0"

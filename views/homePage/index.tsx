@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState, memo } from "react";
 import { Page, Link, Navbar, NavRight, Fab } from "framework7-react";
 import Icons from "components/Icons";
-import { useUserQuery } from "apollo/graphql/model/user.graphql";
+import { useSameDayQuery } from "apollo/graphql/model/same-day.graphql";
 
 const Home: React.FC = () => {
-  const kk = useUserQuery().data;
-  console.log(kk, "slkdjfk");
+  const { loading, data } = useSameDayQuery();
+  const statistics = data?.sameDay || {};
 
   return (
     <Page>
@@ -49,38 +49,42 @@ const Home: React.FC = () => {
         </div>
       </div> */}
 
-      <div
-        className="pt-2 px-6"
-        style={{ height: "1000px", background: "none" }}
-      >
+      <div className="pt-2 px-6" style={{ background: "none" }}>
         <wired-card fill="skyblue" elevation="3" class="w-full p-4">
           <div className="rounded-lg text-xs text-right font-bold">
-            <span>今日收入：200</span>
-            <span className="pl-4">今日支出：200</span>
+            <span>今日收入：{statistics.income}</span>
+            <span className="pl-4">今日支出：{statistics.pay}</span>
           </div>
         </wired-card>
 
-        <wired-card fill="skyblue" elevation="3" class="w-full mt-4 p-4">
-          <div className="rounded-lg">
-            <div className="flex justify-between font-bold">
-              <div className="self-end">今日收入</div>
-              <div className="text-xs self-end">2021-09-10 15:30:29</div>
-            </div>
-            <div className="flex mt-4">
-              <div className="w-1/2">类型：日用</div>
-              <div className="w-1/2">费用：￥200</div>
-            </div>
+        {statistics.details?.map((detail) => {
+          return (
+            <wired-card
+              fill="skyblue"
+              elevation="3"
+              class="w-full mt-4 p-4"
+              key={detail.id}
+            >
+              <div className="rounded-lg">
+                <div className="flex justify-between font-bold">
+                  <div className="self-end">今日收入</div>
+                  <div className="text-xs self-end">{detail.purchaseTime}</div>
+                </div>
+                <div className="flex mt-4">
+                  <div className="w-1/2">
+                    类型：{detail.expense.expenseName}
+                  </div>
+                  <div className="w-1/2">费用：{detail.expensePrice}</div>
+                </div>
 
-            <div className="mt-4">
-              <div className="">备注</div>
-              <div className="mt-1">jslfjslkjfdsfd</div>
-            </div>
-          </div>
-        </wired-card>
-
-        {/* <wired-card elevation="5">
-          <h1>`wired-elements` dynamic loading</h1>
-        </wired-card> */}
+                <div className="mt-4">
+                  <div className="">备注</div>
+                  <div className="mt-1">{detail.remarks}</div>
+                </div>
+              </div>
+            </wired-card>
+          );
+        })}
       </div>
 
       {/* <wired-dialog open="false">

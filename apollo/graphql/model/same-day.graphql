@@ -1,0 +1,15 @@
+# import CostDetailsOptions from '../fragments/cost-details.graphql'
+
+query sameDay {
+  sameDay {
+    pay
+    income
+    details {
+      ...CostDetailsOptions
+      expense {
+        id
+        expenseName
+      }
+    }
+  }
+}

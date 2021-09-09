@@ -43,7 +43,10 @@ const main = (req, res, next) => {
   })(req, res, next);
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> => {
   await middleware(req, res);
   await runMiddleware(req, res, main);
 };

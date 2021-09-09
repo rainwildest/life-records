@@ -1,0 +1,12 @@
+fragment CostDetailsOptions on CostDetails {
+  id
+  seqId
+  userId
+  expenseId
+  expensePrice
+  remarks
+  purchaseTime
+  createdAt
+  modifiedAt
+  deletedAt
+}

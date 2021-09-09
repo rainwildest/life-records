@@ -8,8 +8,8 @@ const f7params = {
   id: "com.myapp.test",
   view: {
     stackPages: true, //开启多级缓存
-    iosDynamicNavbar: false
-    // pushState: true
+    iosDynamicNavbar: false,
+    pushState: true
   },
   dialog: {
     // change default "OK" button text

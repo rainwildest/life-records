@@ -8,24 +8,27 @@ import {
   Segmented,
   Button,
   Tabs,
-  View
+  View,
+  Link
 } from "framework7-react";
 import Pay from "./pay";
 
 const Bookkeeping: React.FC = () => {
   return (
     <Page noToolbar>
-      <Navbar>
-        <NavLeft backLink></NavLeft>
+      <Navbar backLink>
+        {/* <NavLeft>
+          <Link backLink={true}></Link>
+        </NavLeft> */}
         <NavTitle>账房</NavTitle>
-        <Subnavbar>
+        {/* <Subnavbar>
           <Segmented strong>
             <Button tabLink="#pay" tabLinkActive>
               支出
             </Button>
             <Button tabLink="#income">收入</Button>
           </Segmented>
-        </Subnavbar>
+        </Subnavbar> */}
       </Navbar>
 
       <Tabs animated>

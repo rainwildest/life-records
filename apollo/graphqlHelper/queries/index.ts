@@ -20,6 +20,6 @@ export const custom = {
     expense
   },
   SameDay: {
-    data: sameDayData
+    details: sameDayData
   }
 };

@@ -1,7 +1,7 @@
 type SameDay {
   pay: Int
   income: Int
-  data: [CostDetails]
+  details: [CostDetails]
 }
 
 type Query {
