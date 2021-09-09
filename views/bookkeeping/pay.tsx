@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, Fragment, memo } from "react";
 import { format } from "lib/api/utils";
 import { Swiper, SwiperSlide, f7ready } from "framework7-react";
 import CalendarPopup from "components/CalendarPopup";
-import Calc from "components/Calc";
+// import Calc from "components/Calc";
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
 import { useCreateCostDetailMutation } from "apollo/graphql/model/cost-details.graphql";
 
@@ -16,7 +16,7 @@ const Pay: React.FC = () => {
   return (
     <Fragment>
       <Swiper
-        className="demo-swiper demo-swiper-auto mt-4"
+        className="demo-swiper demo-swiper-auto"
         spaceBetween={10}
         slidesPerView={"auto"}
         centeredSlides
@@ -66,6 +66,51 @@ const Pay: React.FC = () => {
             <wired-card elevation="2" class="text-center font-bold py-4">
               22
             </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              18
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              19
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              20
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              21
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              22
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              18
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              19
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              20
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              21
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              22
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              18
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              19
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              20
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              21
+            </wired-card>
+            <wired-card elevation="2" class="text-center font-bold py-4">
+              22
+            </wired-card>
           </div>
         </SwiperSlide>
         <SwiperSlide>
@@ -83,38 +128,39 @@ const Pay: React.FC = () => {
         </SwiperSlide>
       </Swiper>
 
-      <div
-        className="w-full fixed bottom-0 pt-2 px-2"
-        style={{
-          backgroundImage: "linear-gradient(120deg, #2193b0 , #6dd5ed)"
-        }}
-      >
-        <Calc
-          date={date}
-          onClickCalendar={() => {
-            setPopupOpened(true);
+      {/* <div
+          // className="w-full fixed bottom-0 pt-2 px-2"
+          className="pt-2 px-2"
+          style={{
+            backgroundImage: "linear-gradient(120deg, #2193b0 , #6dd5ed)"
           }}
-          onConfirm={(value) => {
-            console.log(value);
-            createCostDetailMutation({
-              variables: {
-                input: {
-                  expenseId: "10000000-0000-0000-0000-000000000004",
-                  expensePrice: 20,
-                  remarks: "",
-                  purchaseTime: new Date()
+        >
+          <Calc
+            date={date}
+            onClickCalendar={() => {
+              setPopupOpened(true);
+            }}
+            onConfirm={(value) => {
+              console.log(value);
+              createCostDetailMutation({
+                variables: {
+                  input: {
+                    expenseId: "10000000-0000-0000-0000-000000000004",
+                    expensePrice: 20,
+                    remarks: "",
+                    purchaseTime: new Date()
+                  }
                 }
-              }
-            })
-              .then((value) => {
-                console.log("我完成了", value);
               })
-              .catch((error) => {
-                console.log(error);
-              });
-          }}
-        />
-      </div>
+                .then((value) => {
+                  console.log("我完成了", value);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }}
+          />
+        </div> */}
 
       <CalendarPopup
         popupOpened={popupOpened}

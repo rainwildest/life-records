@@ -3,7 +3,7 @@ import { f7ready } from "framework7-react";
 import Icons from "../Icons";
 
 type CalcOption = {
-  date: string;
+  date?: string;
   onClickCalendar?: () => void;
   onConfirm?: (value: any) => void;
 };
@@ -212,13 +212,16 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
           });
         }}
       >
-        <div className="truncate">
-          <span className="pr-3">备注</span>
-          <span>{remarks}</span>
+        <div className="h-6 flex justify-between items-center ">
+          <div className="pr-3 flex-shrink-0">备注</div>
+          <div className="overflow-scrolling whitespace-nowrap overflow-x-auto py-8">
+            {remarks}
+          </div>
         </div>
       </wired-card>
+      {/* scrollIntoView 滚到最底部 */}
       <wired-card fill="white" class="w-full mt-2 py-2">
-        <div className="flex justify-between items-center">
+        <div className="h-7 flex justify-between items-center overflow-hidden">
           {!!date && (
             <div
               className="flex-shrink-0 pr-4 flex items-center"
@@ -231,7 +234,9 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
             </div>
           )}
 
-          <div className="truncate font-bold">{display}</div>
+          <div className="overflow-scrolling whitespace-nowrap overflow-x-auto font-bold py-8">
+            {display}
+          </div>
         </div>
       </wired-card>
       <div className="grid grid-cols-4 gap-1 pb-2 pt-2">

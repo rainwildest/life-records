@@ -215,7 +215,7 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
           className="block block-strong no-padding overflow-hidden rounded-xl m-0"
           style={{ width: "95%", maxWidth: "400px" }}
         >
-          <div className="my-2" ref={containerEl}></div>
+          <div className="mb-2" ref={containerEl}></div>
 
           <div className="flex justify-end p-4">
             <Button

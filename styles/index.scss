@@ -100,5 +100,10 @@ body {
 }
 
 .custom-calendar-fontsize .calendar-day-number {
-  font-size: 0.3rem;
+  font-size: 0.7rem;
+}
+
+.overflow-scrolling {
+  /* 解决ios手机页面滑动卡顿问题 */
+  -webkit-overflow-scrolling: touch;
 }

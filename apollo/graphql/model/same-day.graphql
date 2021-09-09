@@ -9,6 +9,7 @@ query sameDay {
       expense {
         id
         expenseName
+        expenseType
       }
     }
   }

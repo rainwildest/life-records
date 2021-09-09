@@ -67,7 +67,13 @@ const Home: React.FC = () => {
             >
               <div className="rounded-lg">
                 <div className="flex justify-between font-bold">
-                  <div className="self-end">今日收入</div>
+                  {detail.expense.expenseType === "incom" && (
+                    <div className="self-end">今日收入</div>
+                  )}
+                  {detail.expense.expenseType === "pay" && (
+                    <div className="self-end">今日支出</div>
+                  )}
+
                   <div className="text-xs self-end">{detail.purchaseTime}</div>
                 </div>
                 <div className="flex mt-4">
