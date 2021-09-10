@@ -31,6 +31,16 @@ const Bookkeeping: React.FC = () => {
     expenseId.current = e.id;
   };
 
+  const toastTip = (text = "") => {
+    f7.toast
+      .create({
+        text,
+        position: "center",
+        closeTimeout: 2000
+      })
+      .open();
+  };
+
   return (
     <Page noToolbar pageContent={false}>
       <Navbar backLink>
@@ -76,31 +86,22 @@ const Bookkeeping: React.FC = () => {
                   remarks: value.remarks
                 });
 
-                setTimeout(() => {
-                  f7.toast
-                    .create({
-                      text: "I'm on center",
-                      position: "center",
-                      closeTimeout: 2000
-                    })
-                    .open();
-                }, 3000);
-                // createCostDetailMutation({
-                //   variables: {
-                //     input: {
-                //       expenseId: "10000000-0000-0000-0000-000000000004",
-                //       expensePrice: 20,
-                //       remarks: "",
-                //       purchaseTime: new Date()
-                //     }
-                //   }
-                // })
-                //   .then((value) => {
-                //     console.log("我完成了", value);
-                //   })
-                //   .catch((error) => {
-                //     console.log(error);
-                //   });
+                createCostDetailMutation({
+                  variables: {
+                    input: {
+                      expenseId: "10000000-0000-0000-0000-000000000004",
+                      expensePrice: 20,
+                      remarks: "",
+                      purchaseTime: new Date()
+                    }
+                  }
+                })
+                  .then(() => {
+                    toastTip("添加成功");
+                  })
+                  .catch(() => {
+                    toastTip("添加失败");
+                  });
               }}
             />
 
