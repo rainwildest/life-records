@@ -5,7 +5,7 @@ import Icons from "../Icons";
 type CalcOption = {
   date?: string;
   onClickCalendar?: () => void;
-  onConfirm?: (value: any) => void;
+  onConfirm?: (value: { amounts: number; remarks: string }) => void;
 };
 const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
   const [remarks, setRemarks] = useState("");
@@ -123,7 +123,8 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
       setOperationState(false);
     } else {
       /* 提交结果 */
-      if (onConfirm) onConfirm({ amounts: display, remarks });
+      const amounts = parseFloat(Number(display).toFixed(10));
+      if (onConfirm) onConfirm({ amounts, remarks });
     }
   };
 

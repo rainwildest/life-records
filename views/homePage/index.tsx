@@ -52,8 +52,8 @@ const Home: React.FC = () => {
       <div className="pt-2 px-6" style={{ background: "none" }}>
         <wired-card fill="skyblue" elevation="3" class="w-full p-4">
           <div className="rounded-lg text-xs text-right font-bold">
-            <span>今日收入：{statistics.income}</span>
-            <span className="pl-4">今日支出：{statistics.pay}</span>
+            <span>今日收入：{statistics.income || 0}</span>
+            <span className="pl-4">今日支出：{statistics.pay || 0}</span>
           </div>
         </wired-card>
 
