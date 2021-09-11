@@ -50,20 +50,15 @@ const Home: React.FC = () => {
       </div> */}
 
       <div className="pt-2 px-6 mb-10">
-        <div className="shadow-3 shadow-color p-4 rounded-lg text-xs text-right font-bold">
+        <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
           <span>今日收入：{statistics.income || 0}</span>
           <span className="pl-4">今日支出：{statistics.pay || 0}</span>
         </div>
-        {/* <wired-card fill="skyblue" elevation="3" class="w-full p-4">
-          <div className="rounded-lg text-xs text-right font-bold">
-            <span>今日收入：{statistics.income || 0}</span>
-            <span className="pl-4">今日支出：{statistics.pay || 0}</span>
-          </div>
-        </wired-card> */}
 
         {statistics.details?.map((detail, index) => (
           <div
             className={`${!index ? "mt-14" : "mt-8"} rounded-lg inset-shadow-3`}
+            key={detail.id}
           >
             <div className="divide-k p-4 flex justify-between font-bold items-center">
               {detail.expense.expenseType === "incom" && (
@@ -87,48 +82,7 @@ const Home: React.FC = () => {
             </div>
           </div>
         ))}
-        {/* {statistics.details?.map((detail) => {
-          return (
-            <wired-card
-              fill="skyblue"
-              elevation="3"
-              class="w-full mt-4 p-4"
-              key={detail.id}
-            >
-              <div className="rounded-lg">
-                <div className="flex justify-between font-bold">
-                  {detail.expense.expenseType === "incom" && (
-                    <div className="self-end">今日收入</div>
-                  )}
-                  {detail.expense.expenseType === "pay" && (
-                    <div className="self-end">今日支出</div>
-                  )}
-
-                  <div className="text-xs self-end">{detail.purchaseTime}</div>
-                </div>
-                <div className="flex mt-4">
-                  <div className="w-1/2">
-                    类型：{detail.expense.expenseName}
-                  </div>
-                  <div className="w-1/2">费用：{detail.expensePrice}</div>
-                </div>
-
-                <div className="mt-4">
-                  <div className="">备注</div>
-                  <div className="mt-1">{detail.remarks}</div>
-                </div>
-              </div>
-            </wired-card>
-          );
-        })} */}
       </div>
-
-      {/* <wired-dialog open="false">
-        <wired-calendar />
-        <div className="text-right">
-          <wired-button id="closeDialog">Close dialog</wired-button>
-        </div>
-      </wired-dialog> */}
 
       <Fab
         position="right-bottom"

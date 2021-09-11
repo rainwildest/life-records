@@ -3,6 +3,7 @@ type LivingExpenses {
   id: ID!
   seqId: Int
   userId: String
+  expenseIcon: String
   # 收入：income; 支出：pay
   expenseType: String
   expenseName: String

@@ -41,6 +41,7 @@ body {
   }
 
   svg {
+    pointer-events: none;
     height: math.div(40rem, $font-size-base);
     width: math.div(40rem, $font-size-base);
   }
@@ -113,13 +114,15 @@ body {
 }
 
 :root {
-  --shadow-color-: #efeff4;
-  --inset-shadow-3-: inset 3px 3px 6px #cbcbcf, inset -3px -3px 6px #ffffff;
-  --shadow-3-: 3px 3px 6px #cbcbcf, -3px -3px 6px #ffffff;
-}
+  // 阴影配色基于 #efeff4;
+  --shadow-before-color-: #cbcbcf;
+  --shadow-after-color-: #ffffff;
 
-.shadow-color {
-  background: var(--shadow-color-);
+  --shadow-3-: 3px 3px 6px var(--shadow-before-color-),
+    -3px -3px 6px var(--shadow-after-color-);
+
+  --inset-shadow-3-: inset 3px 3px 6px var(--shadow-before-color-),
+    inset -3px -3px 6px var(--shadow-after-color-);
 }
 
 .inset-shadow-3 {
@@ -128,4 +131,15 @@ body {
 
 .shadow-3 {
   box-shadow: var(--shadow-3-);
+}
+
+.test-icon {
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.calc-active:active {
+  box-shadow: var(--inset-shadow-3-);
 }

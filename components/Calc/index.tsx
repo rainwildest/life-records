@@ -15,6 +15,8 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
   const [operationState, setOperationState] = useState(false);
   const [nextShowPoint, setNextShowPoint] = useState(false);
 
+  const displayRef = useRef<HTMLDivElement>();
+  const remarksRef = useRef<HTMLDivElement>();
   const calcParams = [
     { name: 1, code: 1 },
     { name: 2, code: 2 },
@@ -185,6 +187,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
     }
 
     setDisplay(info);
+    onScrollLeft(displayRef.current);
     if (nextShowPoint) setNextShowPoint(false);
   };
 
@@ -192,74 +195,82 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
     if (onClickCalendar) onClickCalendar();
   };
 
+  const onShowPrompt = () => {
+    f7ready((f7) => {
+      f7.dialog.prompt(
+        "",
+        "备注",
+        (val) => {
+          setRemarks(val);
+          onScrollLeft(remarksRef.current);
+        },
+        () => {
+          return null;
+        },
+        remarks
+      );
+    });
+  };
+
+  /* 让滚动一直保持在最右边 */
+  const onScrollLeft = (element: HTMLElement) => {
+    const scrollWidth = element.scrollWidth;
+    element.scrollLeft = scrollWidth;
+  };
+
   return (
     <Fragment>
-      <wired-card
-        fill="white"
-        class="w-full py-1 px-3"
-        onClick={() => {
-          f7ready((f7) => {
-            f7.dialog.prompt(
-              "",
-              "备注",
-              (val) => {
-                setRemarks(val);
-              },
-              () => {
-                return null;
-              },
-              remarks
-            );
-          });
-        }}
+      <div
+        className="shadow-3 rounded-lg py-5 px-3 text-xs h-6 flex justify-between items-center overflow-hidden"
+        onClick={onShowPrompt}
       >
-        <div className="h-6 flex justify-between items-center ">
-          <div className="pr-3 flex-shrink-0">备注</div>
-          <div className="overflow-scrolling whitespace-nowrap overflow-x-auto py-8">
-            {remarks}
-          </div>
+        <div className="pr-3 font-bold flex-shrink-0">备注</div>
+        <div
+          className="overflow-scrolling whitespace-nowrap overflow-x-auto py-8"
+          ref={remarksRef}
+        >
+          {remarks}
         </div>
-      </wired-card>
-      {/* scrollIntoView 滚到最底部 */}
-      <wired-card fill="white" class="w-full mt-2 py-2">
-        <div className="h-7 flex justify-between items-center overflow-hidden">
-          {!!date && (
-            <div
-              className="flex-shrink-0 pr-4 flex items-center"
-              onClick={onCalendar}
-            >
-              <div className="pr-1 pt-1">
-                <Icons name="calendar" className="calc-calendar" />
-              </div>
-              <div className="text-xs">{date}</div>
-            </div>
-          )}
+      </div>
 
-          <div className="overflow-scrolling whitespace-nowrap overflow-x-auto font-bold py-8">
-            {display}
+      <div className="shadow-3 rounded-lg mt-2.5 py-6 px-3 h-7 flex justify-between items-center overflow-hidden">
+        {!!date && (
+          <div
+            className="flex-shrink-0 pr-4 flex items-center"
+            onClick={onCalendar}
+          >
+            <div className="pr-1 pt-1">
+              <Icons name="calendar" className="calc-calendar" />
+            </div>
+            <div className="text-xs">{date}</div>
           </div>
+        )}
+
+        <div
+          className="overflow-scrolling whitespace-nowrap overflow-x-auto font-bold py-8"
+          ref={displayRef}
+        >
+          {display}
         </div>
-      </wired-card>
-      <div className="grid grid-cols-4 gap-1 pb-2 pt-2">
+      </div>
+      <div className="grid grid-cols-4 gap-2.5 pb-2 pt-2.5">
         {calcParams.map((item) => {
           return (
-            <wired-card
-              elevation="2"
-              class="text-center font-bold py-3"
+            <div
               key={item.code}
+              className="calc-active shadow-3 rounded-lg text-sm flex items-center justify-center font-bold py-2.5"
               onClick={() => handleNumber(item.code)}
             >
               {item.name}
-            </wired-card>
+            </div>
           );
         })}
-        <wired-card
-          elevation="2"
-          class="text-center font-bold py-3"
+        <div
+          className="calc-active shadow-3 rounded-lg text-sm flex items-center justify-center font-bold py-2.5"
           onClick={() => handleNumber("complete")}
         >
           {operationState ? "=" : "完成"}
-        </wired-card>
+        </div>
       </div>
     </Fragment>
   );

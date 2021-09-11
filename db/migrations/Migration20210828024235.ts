@@ -9,7 +9,7 @@ export class Migration20210828024235 extends Migration {
     );
 
     this.addSql(
-      'create table "living_expenses" ("id" uuid not null default uuid_generate_v4(), "seq_id" serial primary key, "user_id" varchar(255) null, "expense_type" varchar(255) null, "expense_name" varchar(255) null, "created_at" timestamptz(0) not null default current_timestamp, "modified_at" timestamptz(0) null, "deleted_at" timestamptz(0) null);'
+      'create table "living_expenses" ("id" uuid not null default uuid_generate_v4(), "seq_id" serial primary key, "user_id" varchar(255) null, "expense_icon" varchar(255) null, "expense_type" varchar(255) null, "expense_name" varchar(255) null, "created_at" timestamptz(0) not null default current_timestamp, "modified_at" timestamptz(0) null, "deleted_at" timestamptz(0) null);'
     );
 
     this.addSql(

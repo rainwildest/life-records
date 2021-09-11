@@ -2,6 +2,7 @@ fragment LivingExpensesOption on LivingExpenses {
   id
   seqId
   userId
+  expenseIcon
   expenseType
   expenseName
   createdAt

@@ -1,5 +1,6 @@
-import React, { memo } from "react";
+import React, { useState, memo } from "react";
 import { Swiper, SwiperSlide } from "framework7-react";
+import Icons from "components/Icons";
 
 type Options = LivingExpensesOption & IDSQLOption;
 type ExpensesItemOption = {
@@ -8,9 +9,11 @@ type ExpensesItemOption = {
 };
 
 const ExpensesItem: React.FC<ExpensesItemOption> = ({ data, onSelected }) => {
+  const [active, setActive] = useState(null);
+
   return (
     <Swiper
-      className="demo-swiper demo-swiper-auto"
+      className="demo-swiper demo-swiper-auto h-full overflow-y-auto"
       spaceBetween={10}
       slidesPerView={"auto"}
       centeredSlides
@@ -18,16 +21,24 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({ data, onSelected }) => {
       {data.map((detail: Options[], index) => {
         return (
           <SwiperSlide key={index}>
-            <div className="grid grid-cols-4 gap-4">
-              {detail.map((item) => (
-                <wired-card
+            <div className="grid grid-cols-4 gap-4 items-center py-3">
+              {detail.map((item, index) => (
+                <div
                   key={item.id}
-                  elevation="2"
-                  class="text-center font-bold py-4"
-                  onClick={() => onSelected && onSelected(item)}
+                  className={`${
+                    active === index ? "inset-shadow-3" : "shadow-3"
+                  } py-2 rounded-lg flex flex-col items-center`}
+                  data-index={index}
+                  onClick={() => {
+                    setActive(index);
+                    // onSelected && onSelected(item);
+                  }}
                 >
-                  {item.expenseName}
-                </wired-card>
+                  <Icons name="calendar" className="test-icon" />
+                  <p className="text-xs pt-1.5 pointer-events-none">
+                    {item.expenseName}
+                  </p>
+                </div>
               ))}
             </div>
           </SwiperSlide>

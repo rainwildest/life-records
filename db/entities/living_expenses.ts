@@ -23,6 +23,13 @@ export default class LivingExpenses {
   userId?: string;
 
   /**
+   * 图标
+   * @param icon 图标名称
+   */
+  @Property({ nullable: true, fieldName: "expense_icon" })
+  expenseIcon?: string;
+
+  /**
    * @param {string} expense_type 费用类型（收入：income；支出：pay）
    */
   @Property({ nullable: true, fieldName: "expense_type" })

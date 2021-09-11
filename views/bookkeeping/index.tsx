@@ -68,10 +68,10 @@ const Bookkeeping: React.FC = () => {
           </Tabs>
           <div
             // className="w-full fixed bottom-0 pt-2 px-2"
-            className="pt-2 px-2"
-            style={{
-              backgroundImage: "linear-gradient(120deg, #2193b0 , #6dd5ed)"
-            }}
+            className="px-4 pb-2"
+            // style={{
+            //   backgroundImage: "linear-gradient(120deg, #2193b0 , #6dd5ed)"
+            // }}
           >
             <Calc
               date={date}
@@ -79,20 +79,25 @@ const Bookkeeping: React.FC = () => {
                 setPopupOpened(true);
               }}
               onConfirm={(value) => {
-                console.log({
-                  expenseId: expenseId.current,
-                  expensePrice: value.amounts,
-                  purchaseTime: date,
-                  remarks: value.remarks
-                });
+                if (!expenseId.current) {
+                  toastTip("请选择类型");
+                  return;
+                }
+
+                // console.log({
+                //   expenseId: expenseId.current,
+                //   expensePrice: value.amounts,
+                //   purchaseTime: date,
+                //   remarks: value.remarks
+                // });
 
                 createCostDetailMutation({
                   variables: {
                     input: {
-                      expenseId: "10000000-0000-0000-0000-000000000004",
-                      expensePrice: 20,
-                      remarks: "",
-                      purchaseTime: new Date()
+                      expenseId: expenseId.current,
+                      expensePrice: value.amounts,
+                      remarks: value.remarks,
+                      purchaseTime: date
                     }
                   }
                 })
