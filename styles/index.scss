@@ -107,3 +107,25 @@ body {
   /* 解决ios手机页面滑动卡顿问题 */
   -webkit-overflow-scrolling: touch;
 }
+
+.divide-k {
+  border-bottom-width: calc(1px);
+}
+
+:root {
+  --shadow-color-: #efeff4;
+  --inset-shadow-3-: inset 3px 3px 6px #cbcbcf, inset -3px -3px 6px #ffffff;
+  --shadow-3-: 3px 3px 6px #cbcbcf, -3px -3px 6px #ffffff;
+}
+
+.shadow-color {
+  background: var(--shadow-color-);
+}
+
+.inset-shadow-3 {
+  box-shadow: var(--inset-shadow-3-);
+}
+
+.shadow-3 {
+  box-shadow: var(--shadow-3-);
+}
