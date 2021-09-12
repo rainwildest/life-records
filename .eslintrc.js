@@ -30,6 +30,7 @@ module.exports = {
     "@typescript-eslint/ban-types": "off",
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "no-var": "warn",
     "prefer-const": "warn", //首选const
     "new-parens": "warn", //new时必须加小括号

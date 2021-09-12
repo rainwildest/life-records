@@ -11,8 +11,8 @@ const Home: React.FC = () => {
     <Page>
       <Navbar large transparent>
         <NavRight>
-          <Link href="/bookkeeping/">
-            <Icons name="notepad-01" className="notepad-icon" />
+          <Link href="/bill/">
+            <Icons name="bill" className="notepad-icon" />
           </Link>
 
           <div className="grid grid-cols-1 pl-4">
@@ -71,12 +71,12 @@ const Home: React.FC = () => {
               <div className="text-sm">{detail.purchaseTime}</div>
             </div>
 
-            <div className="flex mt-4 px-4">
+            <div className="flex mt-4 px-4 text-xs">
               <div className="w-1/2">类型：{detail.expense.expenseName}</div>
               <div className="w-1/2">费用：{detail.expensePrice}</div>
             </div>
 
-            <div className="mt-4 px-4 pb-4">
+            <div className="mt-4 px-4 pb-4 text-xs">
               <div className="">备注</div>
               <div className="mt-1">{detail.remarks}</div>
             </div>
@@ -91,7 +91,7 @@ const Home: React.FC = () => {
         color="white"
         href="/bookkeeping/"
       >
-        <Icons name="sunlight" className="row-span-1-2 col-span-1-2" />
+        <Icons name="notepad-01" className="row-span-1-2 col-span-1-2" />
       </Fab>
     </Page>
   );
