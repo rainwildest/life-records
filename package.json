@@ -61,7 +61,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.14.5",
     "@graphql-codegen/cli": "^1.21.5",
-    "@graphql-codegen/import-types-preset": "^1.18.4",
+    "@graphql-codegen/import-types-preset": "^2.1.4",
     "@graphql-codegen/plugin-helpers": "^1.18.7",
     "@graphql-codegen/typescript": "^1.22.3",
     "@graphql-codegen/typescript-operations": "^1.18.2",
@@ -80,7 +80,7 @@
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "graphql-let": "^0.18.4",
+    "graphql-let": "^0.18.5",
     "knex": "^0.95.10",
     "postcss": "^8.3.6",
     "postcss-pxtorem": "^6.0.0",
