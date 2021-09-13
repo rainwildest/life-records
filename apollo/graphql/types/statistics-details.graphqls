@@ -1,0 +1,9 @@
+type StatisticalDetails {
+  pay: Int
+  income: Int
+  details(date: String): [CostDetails]
+}
+
+type Query {
+  statisticalDetails(date: String): StatisticalDetails
+}

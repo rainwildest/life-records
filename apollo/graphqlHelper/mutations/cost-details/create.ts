@@ -4,7 +4,7 @@ import { tanslateSnake } from "lib/api/utils";
 
 export default (
   _: unknown,
-  args: { input: CostDetailsOption },
+  args: { input: CostDetailsOptions },
   _context
 ): any => {
   const { expenseId, expensePrice } = args.input;

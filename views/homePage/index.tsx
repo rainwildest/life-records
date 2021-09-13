@@ -7,9 +7,15 @@ import CostCard from "components/CostCard";
 const Home: React.FC = () => {
   const { loading, data } = useSameDayQuery();
   const statistics = data?.sameDay || {};
-
   return (
-    <Page>
+    <Page
+      ptr
+      onPtrRefresh={(done) => {
+        setTimeout(() => {
+          done();
+        }, 2000);
+      }}
+    >
       <Navbar large transparent>
         <NavRight>
           <Link href="/bill/">

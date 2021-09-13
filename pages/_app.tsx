@@ -12,9 +12,7 @@ import "framework7/framework7-bundle.min.css";
 import "styles/index.scss";
 
 import Head from "next/head";
-import dynamic from "next/dynamic";
 
-const WiredElements = dynamic((): any => import("./WiredElements"));
 // Init plugin
 Framework7.use(Framework7React);
 
@@ -33,8 +31,6 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
       </Head>
       <ApolloProvider client={apolloClient}>
         <FrameworkApp {...f7params}>
-          {/* <NextNprogress /> */}
-          <WiredElements></WiredElements>
           <Component {...pageProps} />
         </FrameworkApp>
       </ApolloProvider>

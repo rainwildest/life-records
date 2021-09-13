@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, Fragment } from "react";
+import React, { useRef, useState, Fragment } from "react";
 import { f7ready } from "framework7-react";
 import Icons from "../Icons";
 

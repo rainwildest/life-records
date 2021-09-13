@@ -19,7 +19,7 @@ const Bill: React.FC = () => {
 
   const openPicker = () => picker.open();
   return (
-    <Page noToolbar>
+    <Page noToolbar ptr>
       <Navbar backLink>
         <NavTitle>账单</NavTitle>
         <NavRight>
@@ -29,14 +29,21 @@ const Bill: React.FC = () => {
         </NavRight>
       </Navbar>
 
-      <div style={{ position: "sticky", top: 0, background: "white" }}>
+      <div className="pt-2 px-6 mb-10 mt-10">
+        <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
+          <span>收入：900</span>
+          <span className="pl-4">支出：99</span>
+        </div>
+      </div>
+
+      {/* <div style={{ position: "sticky", top: 0, background: "white" }}>
         dfsfs
       </div>
       <div style={{ height: "1000px" }}></div>
       <div style={{ position: "sticky", top: 0, background: "white" }}>121</div>
       <div style={{ height: "1000px" }}></div>
       <div></div>
-      <div></div>
+      <div></div> */}
     </Page>
   );
 };

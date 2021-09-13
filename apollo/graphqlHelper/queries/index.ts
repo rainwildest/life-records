@@ -7,11 +7,15 @@ import livingExpenses from "./living-expenses";
 import sameDay from "./sameDay";
 import sameDayData from "./sameDay/data";
 
+import statisticalDetails from "./statistical-details";
+import statisticalData from "./statistical-details/details";
+
 export const queries = {
   currentUser,
   costDetails,
   livingExpenses,
-  sameDay
+  sameDay,
+  statisticalDetails
 };
 
 export const custom = {
@@ -21,5 +25,8 @@ export const custom = {
   },
   SameDay: {
     details: sameDayData
+  },
+  StatisticalDetails: {
+    details: statisticalData
   }
 };

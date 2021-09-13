@@ -1,0 +1,16 @@
+# import CostDetailsOptions from '../fragments/cost-details.graphql'
+
+query statisticalDetails($date: String) {
+  statisticalDetails(date: $date) {
+    pay
+    income
+    details(date: $date) {
+      ...CostDetailsOptions
+      expense {
+        id
+        expenseName
+        expenseType
+      }
+    }
+  }
+}
