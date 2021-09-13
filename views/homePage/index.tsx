@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, memo } from "react";
 import { Page, Link, Navbar, NavRight, Fab } from "framework7-react";
 import Icons from "components/Icons";
 import { useSameDayQuery } from "apollo/graphql/model/same-day.graphql";
+import CostCard from "components/CostCard";
 
 const Home: React.FC = () => {
   const { loading, data } = useSameDayQuery();
@@ -56,31 +57,16 @@ const Home: React.FC = () => {
         </div>
 
         {statistics.details?.map((detail, index) => (
-          <div
-            className={`${!index ? "mt-14" : "mt-8"} rounded-lg inset-shadow-3`}
-            key={detail.id}
-          >
-            <div className="divide-k p-4 flex justify-between font-bold items-center">
-              {detail.expense.expenseType === "incom" && (
-                <div className="text-sm">今日收入</div>
-              )}
-              {detail.expense.expenseType === "pay" && (
-                <div className="text-sm">今日支出</div>
-              )}
-
-              <div className="text-sm">{detail.purchaseTime}</div>
-            </div>
-
-            <div className="flex mt-4 px-4 text-xs">
-              <div className="w-1/2">类型：{detail.expense.expenseName}</div>
-              <div className="w-1/2">费用：{detail.expensePrice}</div>
-            </div>
-
-            <div className="mt-4 px-4 pb-4 text-xs">
-              <div className="">备注</div>
-              <div className="mt-1">{detail.remarks}</div>
-            </div>
-          </div>
+          <CostCard
+            incomeTitle="今日收入"
+            payTitle="今日支出"
+            useMarginTop14={!index}
+            type={detail.expense.expenseType}
+            typeName={detail.expense.expenseName}
+            // time={detail.purchaseTime}
+            amount={detail.expensePrice}
+            remarks={detail.remarks}
+          />
         ))}
       </div>
 

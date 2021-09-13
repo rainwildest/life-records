@@ -34,7 +34,7 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({ data, onSelected }) => {
                     // onSelected && onSelected(item);
                   }}
                 >
-                  <Icons name="calendar" className="test-icon" />
+                  <Icons name="calendar" className="expense-icon" />
                   <p className="text-xs pt-1.5 pointer-events-none">
                     {item.expenseName}
                   </p>

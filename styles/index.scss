@@ -109,31 +109,31 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-.divide-k {
+.divide-gray {
   border-bottom-width: calc(1px);
 }
 
 :root {
-  // 阴影配色基于 #efeff4;
-  --shadow-before-color-: #cbcbcf;
-  --shadow-after-color-: #ffffff;
+  // 阴影配色基于 --f7-page-bg-color #efeff4;
+  --shadow-before-color: #cbcbcf;
+  --shadow-after-color: #ffffff;
 
-  --shadow-3-: 3px 3px 6px var(--shadow-before-color-),
-    -3px -3px 6px var(--shadow-after-color-);
+  --shadow-3: 3px 3px 6px var(--shadow-before-color),
+    -3px -3px 6px var(--shadow-after-color);
 
-  --inset-shadow-3-: inset 3px 3px 6px var(--shadow-before-color-),
-    inset -3px -3px 6px var(--shadow-after-color-);
+  --inset-shadow-3: inset 3px 3px 6px var(--shadow-before-color),
+    inset -3px -3px 6px var(--shadow-after-color);
 }
 
 .inset-shadow-3 {
-  box-shadow: var(--inset-shadow-3-);
+  box-shadow: var(--inset-shadow-3);
 }
 
 .shadow-3 {
-  box-shadow: var(--shadow-3-);
+  box-shadow: var(--shadow-3);
 }
 
-.test-icon {
+.expense-icon {
   svg {
     width: 30px;
     height: 30px;
