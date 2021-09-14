@@ -24,7 +24,7 @@ const CostCard: React.FC<CostCardOptions> = ({
   return (
     <div className={`${useMarginTop14 ? "mt-14" : "mt-8"} rounded-lg shadow-3`}>
       <div className="divide-gray p-4 flex justify-between font-bold items-center">
-        {type === "incom" && <div className="text-sm">{incomeTitle}</div>}
+        {type === "income" && <div className="text-sm">{incomeTitle}</div>}
         {type === "pay" && <div className="text-sm">{payTitle}</div>}
 
         <div className="text-sm">{time}</div>

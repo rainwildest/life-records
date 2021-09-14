@@ -1,17 +1,27 @@
-import React, { useEffect, useRef, useState, memo } from "react";
+import React, { memo, useState, useCallback } from "react";
 import { Page, Link, Navbar, NavRight, Fab } from "framework7-react";
 import Icons from "components/Icons";
 import { useSameDayQuery } from "apollo/graphql/model/same-day.graphql";
+import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics-details.graphql";
 import CostCard from "components/CostCard";
-
+import { relative } from "lib/api/dayjs";
 const Home: React.FC = () => {
-  const { loading, data } = useSameDayQuery();
-  const statistics = data?.sameDay || {};
+  // const { loading, data } = useSameDayQuery();
+  const { loading, data, refetch } = useStatisticalDetailsQuery({
+    // fetchPolicy: "no-cache"
+  });
+  const statistics = data?.statisticalDetails || {};
+
+  /* 强制刷新 */
+  const [, updateState] = useState<any>();
+  const forceUpdate = useCallback(() => updateState({}), []);
+
   return (
     <Page
       ptr
       onPtrRefresh={(done) => {
         setTimeout(() => {
+          refetch();
           done();
         }, 2000);
       }}
@@ -64,12 +74,13 @@ const Home: React.FC = () => {
 
         {statistics.details?.map((detail, index) => (
           <CostCard
+            key={detail.id}
             incomeTitle="今日收入"
             payTitle="今日支出"
             useMarginTop14={!index}
             type={detail.expense.expenseType}
             typeName={detail.expense.expenseName}
-            // time={detail.purchaseTime}
+            time={relative(detail.purchaseTime)}
             amount={detail.expensePrice}
             remarks={detail.remarks}
           />

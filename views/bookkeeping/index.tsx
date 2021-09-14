@@ -12,17 +12,16 @@ import {
   PageContent,
   f7
 } from "framework7-react";
-import { format } from "lib/api/utils";
+import { format } from "lib/api/dayjs";
 import { useCreateCostDetailMutation } from "apollo/graphql/model/cost-details.graphql";
 import Pay from "./components/Pay";
 import Income from "./components/Income";
 import Calc from "components/Calc";
 import CalendarPopup from "components/CalendarPopup";
-
 const Bookkeeping: React.FC = () => {
   const expenseId = useRef("");
   const [popupOpened, setPopupOpened] = useState(false);
-  const [date, setDate] = useState(format(new Date()));
+  const [date, setDate] = useState(format(new Date().toISOString()));
 
   /* 新增消费记录 */
   const [createCostDetailMutation] = useCreateCostDetailMutation();
@@ -84,20 +83,25 @@ const Bookkeeping: React.FC = () => {
                   return;
                 }
 
+                const sameDay = format(new Date().toISOString());
+                const purchaseTime =
+                  date === sameDay
+                    ? new Date().toISOString()
+                    : `${date} 00:00:00`;
                 // console.log({
+                //   purchaseTime,
                 //   expenseId: expenseId.current,
                 //   expensePrice: value.amounts,
-                //   purchaseTime: date,
                 //   remarks: value.remarks
                 // });
 
                 createCostDetailMutation({
                   variables: {
                     input: {
+                      purchaseTime,
                       expenseId: expenseId.current,
                       expensePrice: value.amounts,
-                      remarks: value.remarks,
-                      purchaseTime: date
+                      remarks: value.remarks
                     }
                   }
                 })

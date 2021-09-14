@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Page,
+  PageContent,
   Button,
-  Link,
   Navbar,
   NavTitle,
-  NavRight,
-  f7
+  NavRight
 } from "framework7-react";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
+import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics-details.graphql";
+import { format } from "lib/api/dayjs";
+import CostCard from "components/CostCard";
 
 const Bill: React.FC = () => {
-  // useEffect(() => {}, []);
   const picker = DatePicker((e) => {
     setDate(e);
   });
   const [date, setDate] = useState(formatDatePicker(picker.value as string[]));
-
   const openPicker = () => picker.open();
+
+  const { loading, data, refetch } = useStatisticalDetailsQuery({
+    variables: { date }
+  });
+  console.log(data);
+  const statistics = data?.statisticalDetails || {};
+
   return (
-    <Page noToolbar ptr>
+    <Page noToolbar pageContent={false}>
       <Navbar backLink>
         <NavTitle>账单</NavTitle>
         <NavRight>
@@ -28,22 +35,37 @@ const Bill: React.FC = () => {
           </Button>
         </NavRight>
       </Navbar>
-
-      <div className="pt-2 px-6 mb-10 mt-10">
-        <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
-          <span>收入：900</span>
-          <span className="pl-4">支出：99</span>
+      <PageContent
+        ptr
+        onPtrRefresh={(done) => {
+          setTimeout(() => {
+            refetch({ date });
+            done();
+          }, 2000);
+        }}
+        className="pt-14 px-6"
+      >
+        <div className="mb-10 mt-10">
+          <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
+            <span>收入：{statistics.income || 0}</span>
+            <span className="pl-4">支出：{statistics.pay || 0}</span>
+          </div>
         </div>
-      </div>
 
-      {/* <div style={{ position: "sticky", top: 0, background: "white" }}>
-        dfsfs
-      </div>
-      <div style={{ height: "1000px" }}></div>
-      <div style={{ position: "sticky", top: 0, background: "white" }}>121</div>
-      <div style={{ height: "1000px" }}></div>
-      <div></div>
-      <div></div> */}
+        {statistics.details?.map((detail, index) => (
+          <CostCard
+            key={detail.id}
+            incomeTitle="收入"
+            payTitle="支出"
+            useMarginTop14={!index}
+            type={detail.expense.expenseType}
+            typeName={detail.expense.expenseName}
+            time={format(detail.purchaseTime)}
+            amount={detail.expensePrice}
+            remarks={detail.remarks}
+          />
+        ))}
+      </PageContent>
     </Page>
   );
 };

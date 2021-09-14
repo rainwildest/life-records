@@ -31,7 +31,7 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({ data, onSelected }) => {
                   data-index={index}
                   onClick={() => {
                     setActive(index);
-                    // onSelected && onSelected(item);
+                    onSelected && onSelected(item);
                   }}
                 >
                   <Icons name="calendar" className="expense-icon" />
