@@ -1441,11 +1441,6 @@
   resolved "https://registry.yarnpkg.com/@josephg/resolvable/-/resolvable-1.0.1.tgz#69bc4db754d79e1a2f17a650d3466e038d94a5eb"
   integrity sha512-CtzORUwWTTOTqfVtHaKRJ0I1kNQd1bpn3sUh8I3nJDVY+5/M/Oe1DnEWzPQvqq/xPIIkzzzIP7mfCoAjFRvDhg==
 
-"@lit/reactive-element@^1.0.0-rc.2":
-  version "1.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.0.0-rc.2.tgz#f24dba16ea571a08dca70f1783bd2ca5ec8de3ee"
-  integrity sha512-cujeIl5Ei8FC7UHf4/4Q3bRJOtdTe1vpJV/JEBYCggedmQ+2P8A2oz7eE+Vxi6OJ4nc0X+KZxXnBoH4QrEbmEQ==
-
 "@microsoft/fetch-event-source@2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@microsoft/fetch-event-source/-/fetch-event-source-2.0.1.tgz#9ceecc94b49fbaa15666e38ae8587f64acce007d"
@@ -2044,11 +2039,6 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
-
-"@types/trusted-types@^1.0.1":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-1.0.6.tgz#569b8a08121d3203398290d602d84d73c8dcf5da"
-  integrity sha512-230RC8sFeHoT6sSUlRO6a8cAnclO06eeiq1QDfiv2FGCLWFvvERWgwIQD4FWqD9A69BN7Lzee4OXwoMVnnsWDw==
 
 "@types/umzug@2.3.0":
   version "2.3.0"
@@ -3895,6 +3885,11 @@ date-fns@^1.27.2:
   version "1.30.1"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
+
+dayjs@^1.10.7:
+  version "1.10.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
+  integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
 
 debounce@^1.2.0:
   version "1.2.1"
@@ -6324,30 +6319,6 @@ listr@^0.14.3:
     p-map "^2.0.0"
     rxjs "^6.3.3"
 
-lit-element@^3.0.0-rc.2:
-  version "3.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-3.0.0-rc.2.tgz#883d0b6fd7b846226d360699d1b713da5fc7e1b7"
-  integrity sha512-2Z7DabJ3b5K+p5073vFjMODoaWqy5PIaI4y6ADKm+fCGc8OnX9fU9dMoUEBZjFpd/bEFR9PBp050tUtBnT9XTQ==
-  dependencies:
-    "@lit/reactive-element" "^1.0.0-rc.2"
-    lit-html "^2.0.0-rc.3"
-
-lit-html@^2.0.0-rc.3:
-  version "2.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.0.0-rc.3.tgz#1c216e548630e18d3093d97f4e29563abce659af"
-  integrity sha512-Y6P8LlAyQuqvzq6l/Nc4z5/P5M/rVLYKQIRxcNwSuGajK0g4kbcBFQqZmgvqKG+ak+dHZjfm2HUw9TF5N/pkCw==
-  dependencies:
-    "@types/trusted-types" "^1.0.1"
-
-lit@^2.0.0-rc.1:
-  version "2.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/lit/-/lit-2.0.0-rc.2.tgz#724a2d621aa098001d73bf7106f3a72b7b5948ef"
-  integrity sha512-BOCuoJR04WaTV8UqTKk09cNcQA10Aq2LCcBOiHuF7TzWH5RNDsbCBP5QM9sLBSotGTXbDug/gFO08jq6TbyEtw==
-  dependencies:
-    "@lit/reactive-element" "^1.0.0-rc.2"
-    lit-element "^3.0.0-rc.2"
-    lit-html "^2.0.0-rc.3"
-
 loader-utils@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.2.3.tgz#1ff5dc6911c9f0a062531a4c04b609406108c2c7"
@@ -8323,7 +8294,7 @@ rough-viz@^1.0.6:
     lodash.get "^4.4.2"
     roughjs "^4.0.0"
 
-roughjs@^4.0.0, roughjs@^4.3.1, roughjs@^4.4.1:
+roughjs@^4.0.0, roughjs@^4.4.1:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/roughjs/-/roughjs-4.4.1.tgz#3af79db6abdcb0f32764d1138f99dc9e01027736"
   integrity sha512-/RZvyVquID319VDc9HsF8wn8VPpbMBVdr4NMCi7mta9UeBBeqP6h5Hg4GZXG29DL6jwTkfMjyth/MF7Hn6Sq/w==
@@ -9711,14 +9682,6 @@ wide-align@^1.1.0:
   integrity sha512-QGkOQc8XL6Bt5PwnsExKBPuMKBxnGxWWW3fU55Xt4feHozMUhdUMaBCk290qpm/wG5u/RSKzwdAC4i51YigihA==
   dependencies:
     string-width "^1.0.2 || 2"
-
-wired-elements@^3.0.0-rc.6:
-  version "3.0.0-rc.6"
-  resolved "https://registry.yarnpkg.com/wired-elements/-/wired-elements-3.0.0-rc.6.tgz#ac832e58d01dd4452f15630184ddf0ff7c0a4483"
-  integrity sha512-EXEOj3okM38tM6uS6I9rXUg545dLxhAmSoqgH8FTnqjXcH6fvNNbT8tyw5c3D5AY1qoVN7vk8S1n0Ulnly9iQw==
-  dependencies:
-    lit "^2.0.0-rc.1"
-    roughjs "^4.3.1"
 
 word-wrap@^1.2.3:
   version "1.2.3"
