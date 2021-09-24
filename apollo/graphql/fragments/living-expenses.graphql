@@ -1,4 +1,4 @@
-fragment LivingExpensesOption on LivingExpenses {
+fragment LivingExpensesOptions on LivingExpenses {
   id
   seqId
   userId

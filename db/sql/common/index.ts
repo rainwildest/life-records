@@ -48,10 +48,7 @@ export const getDatabyId = async <T>(
  * @param {Object} options
  * @returns Promise
  */
-export const create = async <T>(
-  tableName: string,
-  options: T
-): Promise<T & IDSQLOption> => {
+export const create = async <T>(tableName: string, options: T): Promise<T> => {
   const orm = await knex();
 
   return orm(tableName)
@@ -70,7 +67,7 @@ export const modify = async <T>(
   tableName: string,
   id: string,
   options: T
-): Promise<T & IDSQLOption> => {
+): Promise<T> => {
   const orm = await knex();
 
   return orm(tableName)

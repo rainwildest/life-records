@@ -5,8 +5,8 @@ import { tanslateSnake } from "lib/api/utils";
 export default (
   _: unknown,
   args: { id: string; input: CostDetailsOptions },
-  _context
-): any => {
+  _context: unknown
+): Promise<any> => {
   if (!args.id) {
     throw new UserInputError("Consumption record information cannot be empty");
   }

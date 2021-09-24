@@ -2,7 +2,7 @@ import React, { useState, memo } from "react";
 import { Swiper, SwiperSlide } from "framework7-react";
 import Icons from "components/Icons";
 
-type Options = LivingExpensesOption & IDSQLOption;
+type Options = LivingExpensesOptions & DateAndIdSQLFieldOption;
 type ExpensesItemOption = {
   data: Array<Options[]>;
   onSelected?: (val: Options) => void;

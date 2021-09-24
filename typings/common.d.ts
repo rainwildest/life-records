@@ -1,4 +1,4 @@
-declare type DateSQLOption = {
+declare type DateSQLOptions = {
   createdAt?: Date;
   modifiedAt?: Date;
   deletedAt?: Date;
@@ -10,7 +10,7 @@ declare type DateSQLSnakeOptions = {
   deleted_at?: Date;
 };
 
-declare type IDSQLOption = {
+declare type IDSQLOptions = {
   id?: string;
   seqId?: number;
 };
@@ -20,4 +20,11 @@ declare type IDSQLSnakeOptions = {
   seq_id?: number;
 };
 
-declare type SQLFieldOption = DateSQLOption & IDSQLOption;
+declare type DateAndIdSQLFieldOption = DateSQLOptions & IDSQLOptions;
+declare type DateAndIdSQLFieldSnakeOption = DateSQLSnakeOptions &
+  IDSQLSnakeOptions;
+
+declare type GraphqlContext = {
+  user?: UserSnakeOptions & DateAndIdSQLFieldSnakeOption;
+  loaders?: { user?: any };
+};

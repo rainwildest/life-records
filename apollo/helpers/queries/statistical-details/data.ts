@@ -1,7 +1,7 @@
 import { AuthenticationError } from "apollo-server-micro";
 import {
-  getCostDetailsByDate,
-  getCostDetailsByYearsOrMonth
+  amountStatisticsByDate,
+  amountStatisticsByYearsOrMonth
 } from "db/sql/cost-details";
 
 export default (
@@ -17,17 +17,15 @@ export default (
     );
   }
 
-  /* 按日期搜索 */
   const date = _args?.date || "";
   if (date.length) {
-    return getCostDetailsByYearsOrMonth(
-      user.id,
+    return amountStatisticsByYearsOrMonth(
+      user?.id,
       date,
       date.length > 4 ? "yyyy-mm" : "yyyy"
     );
   }
 
-  /* 获取当日数据 */
   const start = new Date();
   start.setHours(0);
   start.setMinutes(0);
@@ -38,5 +36,9 @@ export default (
   end.setMinutes(59);
   end.setSeconds(59);
 
-  return getCostDetailsByDate(user.id, start.toISOString(), end.toISOString());
+  return amountStatisticsByDate(
+    user.id,
+    start.toISOString(),
+    end.toISOString()
+  );
 };

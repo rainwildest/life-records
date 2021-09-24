@@ -1,6 +1,6 @@
 import { snakeCase } from "lodash";
 
-export default (_parent: unknown, _: unknown, _context): any => {
+export default (_parent: unknown, _: unknown, _context: unknown): any => {
   const originField = "userId";
   const snakeField = snakeCase(originField);
 
@@ -9,6 +9,6 @@ export default (_parent: unknown, _: unknown, _context): any => {
 
   if (!value) return null;
 
-  const { loaders } = _context;
+  const { loaders } = _context as GraphqlContext;
   return loaders.user.load(value);
 };

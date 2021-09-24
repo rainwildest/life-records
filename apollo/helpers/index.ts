@@ -1,7 +1,7 @@
-import { custom as _queriesCustom, queries } from "./queries";
+import { custom, queries } from "./queries";
 import { mutations } from "./mutations";
 
-export const queriesHelper = { ...queries };
-export const queriesCustom = { ..._queriesCustom };
+export const queriesHelpers = { ...queries };
+export const queriesCustom = { ...custom };
 
-export const mutationsHelper = { ...mutations };
+export const mutationsHelpers = { ...mutations };

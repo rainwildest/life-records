@@ -5,10 +5,10 @@ import { tanslateSnake } from "lib/api/utils";
 export default (
   _: unknown,
   args: { input: CostDetailsOptions },
-  _context
-): any => {
+  _context: unknown
+): Promise<any> => {
   const { expenseId, expensePrice } = args.input;
-  const { user } = _context;
+  const { user } = _context as GraphqlContext;
 
   if (!user?.id) {
     throw new AuthenticationError(

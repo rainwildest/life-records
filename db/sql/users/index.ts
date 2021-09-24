@@ -1,5 +1,5 @@
 import Users from "db/entities/user";
-// import { UserOptions } from "typings/uesr";
+// import { UserSnakeOptions } from "typings/uesr";
 import MikrotOrm, { knex } from "db/mikro-orm";
 import { getDataByIds, getDatabyId } from "../common";
 
@@ -11,8 +11,8 @@ import { getDataByIds, getDatabyId } from "../common";
  * @param {string} password 密码（md5）
  */
 export const addUserBySignUp = async (
-  args: UserOptions
-): Promise<UserOptions & IDSQLOption> => {
+  args: UserSnakeOptions
+): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { username, email, password } = args;
   if (!username || !email || !password) {
     return null;
@@ -31,8 +31,8 @@ export const addUserBySignUp = async (
  * @param {string} userInfo 保存所需的数据
  */
 export const addUserByOauth = async (
-  userInfo: UserOptions
-): Promise<UserOptions & IDSQLOption> => {
+  userInfo: UserSnakeOptions
+): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await knex();
 
   return orm("users")
@@ -48,7 +48,7 @@ export const addUserByOauth = async (
  */
 export const getUserByIdsQuery = async (
   ids = []
-): Promise<[UserOptions & IDSQLOption]> => {
+): Promise<[UserSnakeOptions & DateAndIdSQLFieldSnakeOption]> => {
   return getDataByIds(Users, ids);
 };
 
@@ -59,7 +59,7 @@ export const getUserByIdsQuery = async (
  */
 export const getUserByIdQuery = async (
   userId: string
-): Promise<UserOptions & IDSQLOption> => {
+): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return getDatabyId(Users, userId);
 };
 
@@ -70,7 +70,7 @@ export const getUserByIdQuery = async (
  */
 export const getUserByEmailQuery = async (
   email: string
-): Promise<UserOptions & IDSQLOption> => {
+): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   if (!email) {
     return null;
   }
@@ -86,8 +86,8 @@ export const getUserByEmailQuery = async (
  * @param {string} password 密码（md5）
  */
 export const verifyUserQuery = async (
-  args: UserOptions
-): Promise<UserOptions & IDSQLOption> => {
+  args: UserSnakeOptions
+): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { email, password } = args;
   if (!email && !password) {
     return null;
@@ -111,7 +111,7 @@ export const verifyUserQuery = async (
 export const getUserByIndex = async (
   indexName: string,
   indexValue: string
-): Promise<UserOptions & IDSQLOption> => {
+): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm(Users);
   return orm
     .where({
@@ -128,9 +128,9 @@ export const getUserByIndex = async (
  * @param {string} providerMethod 第三方 provider id 的字段名
  */
 export const oauthCreateOrFindUser = async (
-  userInfo: UserOptions,
+  userInfo: UserSnakeOptions,
   providerMethod: string
-): Promise<UserOptions & IDSQLOption> => {
+): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   //查找是否存在改用户
   return getUserByIndex(providerMethod, userInfo[providerMethod])
     .then((val) => {

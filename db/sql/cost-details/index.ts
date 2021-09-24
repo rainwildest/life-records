@@ -9,20 +9,20 @@ import { create, modify, remove } from "../common";
  */
 export const createCostDetail = async (
   options: CostDetailsSnakeOptions
-): Promise<CostDetailsSnakeOptions & IDSQLSnakeOptions> => {
+): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("cost_details", options);
 };
 
 export const modifyCostDetail = async (
   id: string,
   options: CostDetailsSnakeOptions
-): Promise<CostDetailsSnakeOptions & IDSQLSnakeOptions> => {
+): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return modify("cost_details", id, options);
 };
 
 export const removeCostDetail = async (
   id: string
-): Promise<CostDetailsSnakeOptions & IDSQLSnakeOptions> => {
+): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return remove("cost_details", id);
 };
 
@@ -33,7 +33,7 @@ export const removeCostDetail = async (
  */
 export const getCostDetails = async (
   userId: string
-): Promise<CostDetailsSnakeOptions & IDSQLSnakeOptions> => {
+): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm(CostDetails);
   return orm
     .where({ user_id: userId })
@@ -52,7 +52,7 @@ export const getCostDetailsByDate = async (
   userId: string,
   start: string,
   end: string
-): Promise<CostDetailsSnakeOptions & IDSQLSnakeOptions> => {
+): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm(CostDetails);
   return orm
     .where({ user_id: userId })
@@ -73,7 +73,7 @@ export const getCostDetailsByYearsOrMonth = async (
   userId: string,
   date: string,
   format = "yyyy"
-): Promise<CostDetailsSnakeOptions & IDSQLSnakeOptions> => {
+): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm(CostDetails);
   return orm
     .where({ user_id: userId })

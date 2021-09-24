@@ -5,7 +5,7 @@ import { group } from "../tool";
 import ExpensesItems from "./ExpensesItems";
 
 type PayOptions = {
-  onSelected?: (val: LivingExpensesOption & IDSQLOption) => void;
+  onSelected?: (val: LivingExpensesOptions & DateAndIdSQLFieldOption) => void;
 };
 const Pay: React.FC<PayOptions> = ({ onSelected }) => {
   const { loading, data } = useLivingExpensesQuery();
