@@ -1,5 +1,6 @@
 import Users from "./user";
-import LivingExpenses from "./living_expenses";
-import CostDetails from "./cost_details";
+import LivingExpenses from "./living-expenses";
+import CostDetails from "./cost-details";
+import Budgets from "./budgets";
 
-export default [Users, LivingExpenses, CostDetails];
+export default [Users, LivingExpenses, CostDetails, Budgets];

@@ -1,22 +1,11 @@
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import { v4 } from "uuid";
+import { Entity, Property } from "@mikro-orm/core";
+import { SQLCommonField } from "./common";
 
 /**
  * 用户信息
  */
-@Entity()
-export default class Users {
-  /**
-   * @param {string} id uuid
-   */
-  @Property({ type: "uuid", defaultRaw: "uuid_generate_v4()" })
-  id: string = v4();
-  /**
-   * @param {number} seqId 自增长id
-   */
-  @PrimaryKey({ default: false, fieldName: "seq_id" })
-  seqId: number;
-
+@Entity({ comment: "用户信息表" })
+export default class Users extends SQLCommonField {
   /**
    * @param {string} username 账号名称
    */
@@ -84,32 +73,8 @@ export default class Users {
   isVerify: boolean;
 
   /**
-   * @param {Date} createdAt 创建时间
+   * @param {boolean} hasBudget 是否开启预算
    */
-  @Property({
-    onUpdate: () => new Date(),
-    defaultRaw: "current_timestamp",
-    fieldName: "created_at"
-  })
-  createdAt?: Date = new Date();
-
-  /**
-   * @param {Date} modifiedAt 修改时间
-   */
-  @Property({
-    nullable: true,
-    onUpdate: () => new Date(),
-    fieldName: "modified_at"
-  })
-  modifiedAt?: Date = new Date();
-
-  /**
-   * @param {Date} deletedAt 删除时间
-   */
-  @Property({
-    nullable: true,
-    onUpdate: () => new Date(),
-    fieldName: "deleted_at"
-  })
-  deletedAt?: Date = new Date();
+  @Property({ default: false, fieldName: "has_budget" })
+  hasBudget: boolean;
 }

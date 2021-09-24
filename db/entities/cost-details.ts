@@ -1,20 +1,8 @@
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import { v4 } from "uuid";
+import { Entity, Property } from "@mikro-orm/core";
+import { SQLCommonField } from "./common";
 
-@Entity({ tableName: "cost_details" })
-export default class CostDetails {
-  /**
-   * @param {string} id uuid
-   */
-  @Property({ type: "uuid", defaultRaw: "uuid_generate_v4()" })
-  id: string = v4();
-
-  /**
-   * @param {number} seqId 自增长id
-   */
-  @PrimaryKey({ default: false, fieldName: "seq_id" })
-  seqId: number;
-
+@Entity({ tableName: "cost_details", comment: "生活费用记录表" })
+export default class CostDetails extends SQLCommonField {
   /**
    * @param {string} userId 用户 ID
    */
@@ -22,7 +10,7 @@ export default class CostDetails {
   userId?: string;
 
   /**
-   * @param {string} expense_id 用费ID
+   * @param {string} expense_id 费用类型ID
    */
   @Property({ fieldName: "expense_id" })
   expenseId: string;
@@ -47,34 +35,4 @@ export default class CostDetails {
     fieldName: "purchase_time"
   })
   purchaseTime?: Date = new Date();
-
-  /**
-   * @param {Date} createdAt 创建时间
-   */
-  @Property({
-    onUpdate: () => new Date(),
-    defaultRaw: "current_timestamp",
-    fieldName: "created_at"
-  })
-  createdAt?: Date = new Date();
-
-  /**
-   * @param {Date} modifiedAt 修改时间
-   */
-  @Property({
-    nullable: true,
-    onUpdate: () => new Date(),
-    fieldName: "modified_at"
-  })
-  modifiedAt?: Date = new Date();
-
-  /**
-   * @param {Date} deletedAt 删除时间
-   */
-  @Property({
-    nullable: true,
-    onUpdate: () => new Date(),
-    fieldName: "deleted_at"
-  })
-  deletedAt?: Date = new Date();
 }
