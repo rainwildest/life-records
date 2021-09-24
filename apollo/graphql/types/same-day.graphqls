@@ -1,9 +1,0 @@
-type SameDay {
-  pay: Int
-  income: Int
-  details: [CostDetails]
-}
-
-type Query {
-  sameDay: SameDay
-}
