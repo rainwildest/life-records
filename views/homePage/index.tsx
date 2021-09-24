@@ -4,6 +4,7 @@ import Icons from "components/Icons";
 import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import CostCard from "components/CostCard";
 import { relative } from "lib/api/dayjs";
+
 const Home: React.FC = () => {
   // const { loading, data } = useSameDayQuery();
   const { loading, data, refetch } = useStatisticalDetailsQuery({
