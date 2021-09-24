@@ -1,8 +1,6 @@
 import entities from "../entities";
 import { Options } from "@mikro-orm/core";
-// import path from "path";
 
-// console.log("123456", path.resolve("db/life.db"));
 const config: Options = {
   // dbName: `${process.cwd()}/db/life.db`,
   dbName: "life-portrayal",
