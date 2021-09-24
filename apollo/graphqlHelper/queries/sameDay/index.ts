@@ -20,5 +20,9 @@ export default (_parent, _args: { type: string }, context): any => {
   end.setMinutes(59);
   end.setSeconds(59);
 
-  return amountStatisticsByDate(start.toISOString(), end.toISOString());
+  return amountStatisticsByDate(
+    user?.id,
+    start.toISOString(),
+    end.toISOString()
+  );
 };
