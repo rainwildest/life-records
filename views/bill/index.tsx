@@ -8,7 +8,7 @@ import {
   NavRight
 } from "framework7-react";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
-import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics-details.graphql";
+import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import { format } from "lib/api/dayjs";
 import CostCard from "components/CostCard";
 

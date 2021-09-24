@@ -1,8 +1,7 @@
 import React, { memo, useState, useCallback } from "react";
 import { Page, Link, Navbar, NavRight, Fab } from "framework7-react";
 import Icons from "components/Icons";
-import { useSameDayQuery } from "apollo/graphql/model/same-day.graphql";
-import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics-details.graphql";
+import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import CostCard from "components/CostCard";
 import { relative } from "lib/api/dayjs";
 const Home: React.FC = () => {

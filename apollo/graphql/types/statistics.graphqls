@@ -6,4 +6,9 @@ type StatisticalDetails {
 
 type Query {
   statisticalDetails(date: String): StatisticalDetails
+  
+  # statisticalGeneralization(date: String) 概括
+  # statisticalExpenditure(date: String) 支出
+  # statisticalIncome 收入
+  # statisticalBudget 预算
 }
