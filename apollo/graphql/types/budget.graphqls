@@ -1,0 +1,10 @@
+type Budget {
+  id: ID!
+  seqId: Int
+  userId: String
+  expenseId: String
+  amount: Int
+  createdAt: Date
+  modifiedAt: Date
+  deletedAt: Date
+}

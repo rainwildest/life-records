@@ -1,0 +1,10 @@
+fragment BudgetOptions on Budget {
+  id
+  seqId
+  userId
+  expenseId
+  amount
+  createdAt
+  modifiedAt
+  deletedAt
+}
