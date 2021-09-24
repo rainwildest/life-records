@@ -14,7 +14,10 @@ function createIsomorphLink() {
     const { schema } = require("./schema");
     return new SchemaLink({ schema });
   } else {
-    const { HttpLink } = require("@apollo/client/link/http");
+    // const { HttpLink } = require("@apollo/client/link/http");
+    const {
+      BatchHttpLink: HttpLink
+    } = require("@apollo/client/link/batch-http");
     return new HttpLink({
       uri: "/api/graphql",
       credentials: "same-origin"
