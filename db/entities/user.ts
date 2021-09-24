@@ -71,10 +71,4 @@ export default class Users extends SQLCommonField {
    */
   @Property({ default: false, fieldName: "is_verify" })
   isVerify: boolean;
-
-  /**
-   * @param {boolean} hasBudget 是否开启预算
-   */
-  @Property({ default: false, fieldName: "has_budget" })
-  hasBudget: boolean;
 }

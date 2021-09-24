@@ -1,4 +1,4 @@
-fragment UserOption on User {
+fragment UserOptions on User {
   id
   seqId
   username

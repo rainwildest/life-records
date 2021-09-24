@@ -1,7 +1,7 @@
-# import UserOption from '../fragments/user.graphql'
+# import UserOptions from '../fragments/user.graphql'
 
 query User {
   currentUser {
-    ...UserOption
+    ...UserOptions
   }
 }

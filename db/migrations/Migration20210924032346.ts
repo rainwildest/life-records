@@ -20,7 +20,7 @@ export class Migration20210924032346 extends Migration {
     this.addSql("comment on table \"living_expenses\" is '费用类型表';");
 
     this.addSql(
-      'create table "users" ("id" uuid not null default uuid_generate_v4(), "seq_id" serial primary key, "created_at" timestamptz(0) not null default current_timestamp, "modified_at" timestamptz(0) null, "deleted_at" timestamptz(0) null, "username" varchar(255) null, "birthday" varchar(255) null, "gender" varchar(255) null, "email" varchar(255) null, "github_provider_id" varchar(255) null, "google_provider_id" varchar(255) null, "phone_number" varchar(255) null, "password" varchar(255) null, "avatar" varchar(255) null, "is_admin" bool not null default false, "is_verify" bool not null default false, "has_budget" bool not null default false);'
+      'create table "users" ("id" uuid not null default uuid_generate_v4(), "seq_id" serial primary key, "created_at" timestamptz(0) not null default current_timestamp, "modified_at" timestamptz(0) null, "deleted_at" timestamptz(0) null, "username" varchar(255) null, "birthday" varchar(255) null, "gender" varchar(255) null, "email" varchar(255) null, "github_provider_id" varchar(255) null, "google_provider_id" varchar(255) null, "phone_number" varchar(255) null, "password" varchar(255) null, "avatar" varchar(255) null, "is_admin" bool not null default false, "is_verify" bool not null default false);'
     );
     this.addSql("comment on table \"users\" is '用户信息表';");
   }
