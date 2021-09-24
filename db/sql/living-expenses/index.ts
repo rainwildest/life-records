@@ -1,4 +1,4 @@
-import LivingExpenses from "db/entities/living_expenses";
+import LivingExpenses from "db/entities/living-expenses";
 import MikrotOrm, { knex } from "db/mikro-orm";
 import { create, modify, remove, getDatabyId } from "../common";
 

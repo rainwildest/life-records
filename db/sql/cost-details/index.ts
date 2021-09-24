@@ -1,4 +1,4 @@
-import CostDetails from "db/entities/cost_details";
+import CostDetails from "db/entities/cost-details";
 import MikrotOrm, { knex } from "db/mikro-orm";
 import { create, modify, remove } from "../common";
 
