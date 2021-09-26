@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, createRef } from "react";
+import React, { useEffect, useState, useRef, createRef, memo } from "react";
 import {
   Page,
   Navbar,
@@ -66,4 +66,4 @@ const Statistics: React.FC = () => {
   );
 };
 
-export default Statistics;
+export default memo(Statistics);
