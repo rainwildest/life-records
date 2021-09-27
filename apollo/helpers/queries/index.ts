@@ -4,14 +4,18 @@ import { costDetails, expense } from "./cost-details";
 import { livingExpenses } from "./living-expenses";
 import {
   statisticalDetails,
-  details as statisticalData
-} from "./statistical-details";
+  details as statisticalData,
+  statisticalGeneralization,
+  statisticalExpenditure
+} from "./statistical";
 
 export const queries = {
   currentUser,
   costDetails,
   livingExpenses,
-  statisticalDetails
+  statisticalDetails,
+  statisticalGeneralization,
+  statisticalExpenditure
 };
 
 export const custom = {

@@ -1,13 +1,13 @@
 import React, { memo, useState, useCallback } from "react";
 import { Page, Link, Navbar, NavRight, Fab } from "framework7-react";
 import Icons from "components/Icons";
-import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics.graphql";
+import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import CostCard from "components/CostCard";
 import { relative } from "lib/api/dayjs";
 
 const Home: React.FC = () => {
   // const { loading, data } = useSameDayQuery();
-  const { loading, data, refetch } = useStatisticalDetailsQuery({
+  const { loading, data, refetch } = useDetailsQuery({
     // fetchPolicy: "no-cache"
   });
   const statistics = data?.statisticalDetails || {};

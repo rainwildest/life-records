@@ -1,6 +1,6 @@
 # import CostDetailsOptions from '../fragments/cost-details.graphql'
 
-query statisticalDetails($date: String) {
+query details($date: String) {
   statisticalDetails(date: $date) {
     pay
     income
@@ -12,5 +12,14 @@ query statisticalDetails($date: String) {
         expenseType
       }
     }
+  }
+}
+
+
+query generalization($year:String) {
+  statisticalGeneralization(year: $year) {
+    pay
+    income
+    purchaseTime
   }
 }

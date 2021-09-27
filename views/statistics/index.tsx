@@ -10,6 +10,8 @@ import {
 } from "framework7-react";
 import CalendarPopup from "components/CalendarPopup";
 import { format } from "lib/api/utils";
+import Generalization from "./components/Generalization";
+import Expenditure from "./components/Expenditure";
 
 const Statistics: React.FC = () => {
   const [date, setDate] = useState(format(new Date()));
@@ -37,7 +39,7 @@ const Statistics: React.FC = () => {
             <Button tabLink="#generalization" tabLinkActive>
               概览
             </Button>
-            <Button tabLink="#tab2">支出分析</Button>
+            <Button tabLink="#expenditure">支出分析</Button>
             <Button tabLink="#tab3">收入分析</Button>
             <Button tabLink="#tab4">预算统计</Button>
           </Segmented>
@@ -45,8 +47,12 @@ const Statistics: React.FC = () => {
       </Navbar>
 
       <Tabs animated>
-        <View tab id="generalization" tabActive url="/generalization/" />
-        <View tab id="tab2" />
+        <View tab id="generalization" tabActive>
+          <Generalization />
+        </View>
+        <View tab id="expenditure">
+          <Expenditure />
+        </View>
         <View tab id="tab3" />
         <View tab id="tab4" />
       </Tabs>

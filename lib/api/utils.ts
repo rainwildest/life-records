@@ -37,3 +37,22 @@ export const tanslateSnake = <T>(feilds: { [P in keyof T]?: any }): any => {
 
   return value;
 };
+
+/**
+ * 合并 className
+ * @param {string} defaultClassName
+ * @param {string} className
+ * @returns string
+ */
+export const mergeClassName = (
+  className: string,
+  defaultClassName = ""
+): string => {
+  const classNameSplit = className.split(" ");
+  const defaultClassNameSplit = defaultClassName.split(" ");
+
+  /* 去重 */
+  const classNameArray = new Set([...defaultClassNameSplit, ...classNameSplit]);
+
+  return [...classNameArray].join(" ").replace(/^\s+|\s+$/g, "");
+};

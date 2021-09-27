@@ -26,7 +26,7 @@ const Bookkeeping: React.FC = () => {
   /* 新增消费记录 */
   const [createCostDetailMutation] = useCreateCostDetailMutation();
 
-  const onSelected = (e: IDSQLOption) => {
+  const onSelected = (e: IDSQLOptions) => {
     expenseId.current = e.id;
   };
 

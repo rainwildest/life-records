@@ -8,7 +8,7 @@ import {
   NavRight
 } from "framework7-react";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
-import { useStatisticalDetailsQuery } from "apollo/graphql/model/statistics.graphql";
+import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import { format } from "lib/api/dayjs";
 import CostCard from "components/CostCard";
 
@@ -19,7 +19,7 @@ const Bill: React.FC = () => {
   const [date, setDate] = useState(formatDatePicker(picker.value as string[]));
   const openPicker = () => picker.open();
 
-  const { loading, data, refetch } = useStatisticalDetailsQuery({
+  const { loading, data, refetch } = useDetailsQuery({
     variables: { date }
   });
   console.log(data);
