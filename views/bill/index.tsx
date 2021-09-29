@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Page,
   PageContent,
@@ -13,16 +13,23 @@ import { format } from "lib/api/dayjs";
 import CostCard from "components/CostCard";
 
 const Bill: React.FC = () => {
-  const picker = DatePicker((e) => {
-    setDate(e);
-  });
-  const [date, setDate] = useState(formatDatePicker(picker.value as string[]));
+  const [picker, setPicker] = useState(null);
+  const [date, setDate] = useState("");
   const openPicker = () => picker.open();
 
   const { loading, data, refetch } = useDetailsQuery({
     variables: { date }
   });
-  console.log(data);
+
+  useEffect(() => {
+    if (!window) return;
+    const picker = DatePicker({}, (e) => {
+      setDate(e);
+    });
+    setDate(formatDatePicker(picker?.value as string[]));
+    setPicker(picker);
+  }, []);
+
   const statistics = data?.statisticalDetails || {};
 
   return (
