@@ -6,7 +6,7 @@ import {
   statisticalDetails,
   details as statisticalData,
   statisticalGeneralization,
-  statisticalExpenditure
+  statisticalExpenditureOrIncome
 } from "./statistical";
 
 export const queries = {
@@ -15,7 +15,7 @@ export const queries = {
   livingExpenses,
   statisticalDetails,
   statisticalGeneralization,
-  statisticalExpenditure
+  statisticalExpenditureOrIncome
 };
 
 export const custom = {

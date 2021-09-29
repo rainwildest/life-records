@@ -1,12 +1,11 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { memo } from "react";
 import { Page } from "framework7-react";
-// import { Bar, Pie } from "react-roughviz";
 import { useGeneralizationQuery } from "apollo/graphql/model/statistics.graphql";
 import Echarts from "components/Echarts";
 
-const Generalization: React.FC = () => {
-  // const [show, setShow] = useState(false);
-  const { data } = useGeneralizationQuery();
+type GeneralizationOptions = { year: string };
+const Generalization: React.FC<GeneralizationOptions> = ({ year }) => {
+  const { data } = useGeneralizationQuery({ variables: { year } });
   const generalization = data?.statisticalGeneralization || [];
 
   const paySeries = new Array(12).fill(0);
@@ -20,11 +19,12 @@ const Generalization: React.FC = () => {
     incomeSeries[index] = item.income;
   });
 
-  // useEffect(() => {
-  //   setShow(!!window);
-  // }, []);
-
   const option = {
+    title: {
+      // text: 'Referer of a Website',
+      subtext: "单位：元",
+      left: "right"
+    },
     tooltip: {
       trigger: "axis"
     },
@@ -34,8 +34,8 @@ const Generalization: React.FC = () => {
     grid: {
       left: "0%",
       right: "2%",
-      bottom: "4%",
-      top: "20%",
+      bottom: "7%",
+      top: "24%",
       containLabel: true
     },
     xAxis: {
@@ -68,7 +68,7 @@ const Generalization: React.FC = () => {
         data: incomeSeries,
         smooth: true,
         itemStyle: {
-          color: "#a3cf62"
+          color: "#102b6a"
         },
         areaStyle: {}
       },
@@ -78,7 +78,7 @@ const Generalization: React.FC = () => {
         data: paySeries,
         smooth: true,
         itemStyle: {
-          color: "#ef4136"
+          color: "#2a5caa"
         },
         areaStyle: {}
       }
@@ -87,35 +87,9 @@ const Generalization: React.FC = () => {
 
   return (
     <Page>
-      <div className="px-4">
-        <Echarts className="shadow-3 rounded-lg mt-4 p-4" option={option} />
+      <div className="px-6">
+        <Echarts className="shadow-3 rounded-lg mt-7 p-4" option={option} />
       </div>
-
-      {/* {!!show && (
-        <>
-          <h3>Bar</h3>
-          <Bar
-            title="Regions"
-            data={{
-              labels: ["North", "South", "East", "West"],
-              values: [10, 5, 8, 3]
-            }}
-            // labels="flavor"
-            // values="price"
-          />
-          <h3>Pie</h3>
-          <Pie
-            data={{
-              labels: ["North", "South", "East", "West"],
-              values: [10, 5, 8, 3]
-            }}
-            title="Regions"
-            colors={["red", "orange", "blue", "skyblue"]}
-            roughness={4}
-            fillStyle="cross-hatch"
-          />
-        </>
-      )} */}
     </Page>
   );
 };

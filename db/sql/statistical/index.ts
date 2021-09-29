@@ -82,7 +82,12 @@ export const statisticalGeneralization = async (
 /**
  * 统计全年或月份的支出情况
  */
-export const statisticalExpenditure = async (args): Promise<any> => {
+export const statisticalExpenditure = async (args: {
+  userId: string;
+  date?: string;
+  type?: "pay" | "income";
+  format?: string;
+}): Promise<any> => {
   const { userId, date, type = "pay", format = "yyyy" } = args;
 
   const orm = await knex();
@@ -92,6 +97,7 @@ export const statisticalExpenditure = async (args): Promise<any> => {
       orm.raw(`
         SUM(CASE WHEN t2.expense_type='${type}' THEN t1.expense_price ELSE 0 END) AS ${type}, 
         t2.expense_name,
+        t2.expense_icon,
         to_char(purchase_time, 'yyyy-mm') as purchase_time 
       `)
     )
@@ -99,6 +105,6 @@ export const statisticalExpenditure = async (args): Promise<any> => {
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .andWhereRaw(`t2.expense_type = ?`, [type])
     .whereNull("t1.deleted_at")
-    .groupByRaw("t2.expense_name, t1.purchase_time")
+    .groupByRaw("t2.expense_name, t2.expense_icon, t1.purchase_time")
     .orderBy("purchase_time", "ASC");
 };

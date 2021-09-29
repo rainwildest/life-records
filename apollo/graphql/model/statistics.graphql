@@ -16,10 +16,28 @@ query details($date: String) {
 }
 
 
-query generalization($year:String) {
+query generalization($year: String) {
   statisticalGeneralization(year: $year) {
     pay
     income
     purchaseTime
+  }
+}
+
+query expenditure($date: String, $type: String = "pay") {
+  statisticalExpenditureOrIncome(date: $date, type:$type) {
+    pay
+    expenseName
+    purchaseTime
+    expenseIcon
+  }
+}
+
+query income($date:String, $type: String = "income") {
+  statisticalExpenditureOrIncome(date: $date, type:$type) {
+    income
+    expenseName
+    purchaseTime
+    expenseIcon
   }
 }

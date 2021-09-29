@@ -4,21 +4,21 @@ import { format } from "lib/api/dayjs";
 
 export default async (
   _parent: unknown,
-  _args: { year: string },
+  _args: { date: string; type: "pay" | "income" },
   context: unknown
 ): Promise<any> => {
   const { user } = context as GraphqlContext;
-  const { year = format(new Date().toISOString(), "YYYY") } = _args;
-
   if (!user?.id) {
     throw new AuthenticationError(
       "Authentication token is invalid, please log in"
     );
   }
+  const { date = format(new Date().toISOString(), "YYYY"), type } = _args;
 
-  // const year = format(new Date().toISOString(), "YYYY");
   return statisticalExpenditure({
     userId: user.id,
-    date: year
+    date: date,
+    format: date.length > 4 ? "yyyy-mm" : "yyyy",
+    type
   });
 };
