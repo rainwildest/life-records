@@ -70,22 +70,14 @@ body {
 }
 
 .demo-swiper {
-  // margin: 0px 0 35px;
-
   .swiper-slide {
     font-size: 25px;
     font-weight: 300;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // background: #fff;
     color: #000;
   }
 
   .swiper-slide {
     box-sizing: border-box;
-    // border: 1px solid #ddd;
-    // background: #fff;
   }
 
   &.demo-swiper-auto .swiper-slide {
@@ -142,4 +134,11 @@ body {
 
 .calc-active:active {
   box-shadow: var(--inset-shadow-3-);
+}
+
+
+.test-statistics {
+  ul {
+    background: none;
+  }
 }
