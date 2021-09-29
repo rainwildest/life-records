@@ -1,9 +1,9 @@
 import React from "react";
-import ReactEcharts from "echarts-for-react";
+import ReactEcharts, { EChartsOption } from "echarts-for-react";
 import { mergeClassName } from "lib/api/utils";
 
 type EchartsOptions = {
-  option: any;
+  option: EChartsOption;
   renderer?: "svg" | "canvas";
   className?: string;
   style?: React.CSSProperties;
@@ -13,7 +13,7 @@ const Echarts: React.FC<EchartsOptions> = ({
   option,
   renderer = "svg",
   className,
-  style = { width: "calc(100vw - 2rem)", height: "18.75rem" }
+  style = { width: "calc(100vw - 3rem)", height: "17rem" }
 }) => {
   return (
     <ReactEcharts
