@@ -2,7 +2,7 @@ import { AuthenticationError } from "apollo-server-micro";
 import {
   amountStatisticsByDate,
   amountStatisticsByYearsOrMonth
-} from "db/sql/cost-details";
+} from "db/sql/statistical";
 
 export default (
   _parent: unknown,
