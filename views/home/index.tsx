@@ -65,7 +65,7 @@ const Home: React.FC = () => {
           今日还没任何记录呦，去<Link href="/bookkeeping/">记一笔</Link>
         </div>
       </div> */}
-
+      <a href="/login">登录</a>
       <div className="pt-2 px-6 mb-10">
         <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
           <span>今日收入：{statistics.income || 0}</span>

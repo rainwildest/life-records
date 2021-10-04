@@ -15,6 +15,11 @@ const asyncRoutes = [
     path: "/bill",
     asyncComponent: (): React.ReactNode => import("views/bill"),
     options
+  },
+  {
+    path: "/login",
+    asyncComponent: (): React.ReactNode => import("pages/login"),
+    options
   }
 ];
 

@@ -8,8 +8,7 @@ import {
   Tabs,
   Tab,
   PageContent,
-  f7,
-  Link
+  f7
 } from "framework7-react";
 import { format } from "lib/api/dayjs";
 import { useCreateCostDetailMutation } from "apollo/graphql/model/cost-details.graphql";

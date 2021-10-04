@@ -31,23 +31,6 @@ const Login: React.FC = () => {
       .catch((error) => {
         console.log(error);
       });
-    // 验证用户信息
-    // fetch("/api/auth/signIn", {
-    //   signal: controller.signal,
-    //   method: "post",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     email: username.trim(),
-    //     password: md5(password.trim())
-    //   })
-    // })
-    //   .then(async (states) => {
-    //     console.log(states?.json());
-    //   })
-    //   .catch((err) => {
-    //     console.log("> error:", err);
-    //     // setSubmitting(false);
-    //   });
   };
 
   return (
@@ -86,12 +69,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-
-export const getServerSideProps = async ({ req, res, query }) => {
-  console.log(
-    "login============================================================================="
-  );
-  return {
-    props: {}
-  };
-};
