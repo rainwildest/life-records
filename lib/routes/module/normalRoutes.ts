@@ -5,7 +5,7 @@ import Mine from "views/mine";
 const normalRoutes = [
   {
     path: "/",
-    asyncComponent: (): React.ReactNode => import("pages/index"),
+    asyncComponent: (): React.ReactNode => import("pages"),
     tabs: [
       {
         path: "/",
