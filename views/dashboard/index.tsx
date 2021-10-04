@@ -1,30 +1,31 @@
 import React from "react";
 import Icons from "components/Icons";
 // App.jsx
-import { View, Toolbar, Views, Link } from "framework7-react";
+import { Page, Toolbar, Tabs, Tab, Link } from "framework7-react";
 
 const Index: React.FC = () => {
   return (
-    <Views tabs themeDark={false}>
+    <Page pageContent={false}>
       <Toolbar tabbar labels bottom>
-        <Link tabLink="#home" tabLinkActive>
+        <Link tabLink href="/" routeTabId="tab-home">
           <Icons name="notepad-02" className="toolbar-icon" />
           <span className="tabbar-label tabbar-custom">账簿</span>
         </Link>
-        <Link tabLink="#statistics">
+        <Link tabLink href="/statistics" routeTabId="tab-statistics">
           <Icons name="statistics" className="toolbar-icon" />
           <span className="tabbar-label tabbar-custom">统计</span>
         </Link>
-        <Link tabLink="#mine">
+        <Link tabLink href="/mine" routeTabId="tab-mine">
           <Icons name="mine" className="toolbar-mine-icon" />
           <span className="tabbar-label tabbar-custom">我的</span>
         </Link>
       </Toolbar>
-
-      <View tab id="home" main tabActive url="/home/" />
-      <View tab id="statistics" url="/statistics/" />
-      <View tab id="mine" url="/mine/" />
-    </Views>
+      <Tabs routable>
+        <Tab className="page-content" id="tab-home" />
+        <Tab className="page-content" id="tab-statistics" />
+        <Tab className="page-content" id="tab-mine" />
+      </Tabs>
+    </Page>
   );
 };
 
