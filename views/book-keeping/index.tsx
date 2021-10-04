@@ -1,16 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Page,
   Navbar,
-  NavLeft,
   NavTitle,
-  Subnavbar,
   Segmented,
   Button,
   Tabs,
-  View,
+  Tab,
   PageContent,
-  f7
+  f7,
+  Link
 } from "framework7-react";
 import { format } from "lib/api/dayjs";
 import { useCreateCostDetailMutation } from "apollo/graphql/model/cost-details.graphql";
@@ -43,35 +42,26 @@ const Bookkeeping: React.FC = () => {
   return (
     <Page noToolbar pageContent={false}>
       <Navbar backLink>
-        {/* <NavLeft>
-          <Link backLink={true}></Link>
-        </NavLeft> */}
         <NavTitle>
           <Segmented strong className="w-36">
-            <Button tabLink="#pay" tabLinkActive>
+            <Button tabLink="#tab-pay" tabLinkActive>
               支出
             </Button>
-            <Button tabLink="#income">收入</Button>
+            <Button tabLink="#tab-income">收入</Button>
           </Segmented>
         </NavTitle>
       </Navbar>
       <PageContent className="pb-0">
         <div className="flex flex-col h-full">
           <Tabs animated className="my-3">
-            <View tab id="pay" tabActive className="overflow-auto">
+            <Tab id="tab-pay" className="overflow-auto">
               <Pay onSelected={onSelected} />
-            </View>
-            <View tab id="income">
+            </Tab>
+            <Tab id="tab-income">
               <Income onSelected={onSelected} />
-            </View>
+            </Tab>
           </Tabs>
-          <div
-            // className="w-full fixed bottom-0 pt-2 px-2"
-            className="px-4 pb-2"
-            // style={{
-            //   backgroundImage: "linear-gradient(120deg, #2193b0 , #6dd5ed)"
-            // }}
-          >
+          <div className="px-4 pb-2">
             <Calc
               date={date}
               onClickCalendar={() => {
@@ -88,12 +78,6 @@ const Bookkeeping: React.FC = () => {
                   date === sameDay
                     ? new Date().toISOString()
                     : `${date} 00:00:00`;
-                // console.log({
-                //   purchaseTime,
-                //   expenseId: expenseId.current,
-                //   expensePrice: value.amounts,
-                //   remarks: value.remarks
-                // });
 
                 createCostDetailMutation({
                   variables: {

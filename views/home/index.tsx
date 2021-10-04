@@ -28,7 +28,7 @@ const Home: React.FC = () => {
     >
       <Navbar large transparent>
         <NavRight>
-          <Link href="/bill/">
+          <Link href="/bill">
             <Icons name="bill" className="notepad-icon" />
           </Link>
 
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
         slot="fixed"
         text=""
         color="white"
-        href="/bookkeeping/"
+        href="/book-keeping"
       >
         <Icons name="notepad-01" className="row-span-1-2 col-span-1-2" />
       </Fab>
