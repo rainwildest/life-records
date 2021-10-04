@@ -3,7 +3,7 @@ import { schema } from "apollo/schema";
 import createLoaders from "apollo/loaders";
 import { snakeCase } from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-
+import { getLoginSession } from "lib/api/auth";
 // const apolloServer = new ApolloServer({
 //   fieldResolver: (source, args, contextValue, info) =>
 //     typeof source[snakeCase(info.fieldName)] !== "undefined"
@@ -36,11 +36,13 @@ const getApolloServerHandler = async () => {
           ? _source[snakeCase(_info.fieldName)]
           : _source[_info.fieldName],
       schema,
-      context(_ctx) {
+      async context(_ctx) {
+        const user = await getLoginSession(_ctx.req);
+
         return {
           ..._ctx,
           loaders: createLoaders,
-          user: { id: "00000000-0000-0000-0000-000000000001" }
+          user
         };
       }
     }).createHandler({
