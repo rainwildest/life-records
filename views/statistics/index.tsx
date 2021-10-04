@@ -5,8 +5,8 @@ import {
   Subnavbar,
   Segmented,
   Tabs,
-  Button,
-  View
+  Tab,
+  Button
 } from "framework7-react";
 import CalendarPopup from "components/CalendarPopup";
 import Generalization from "./components/Generalization";
@@ -31,7 +31,7 @@ const Statistics: React.FC = () => {
   const openPicker = () => picker.open();
 
   return (
-    <Page pageContent={false}>
+    <Page>
       <Navbar>
         <div
           className="w-full h-full absolute left-0 top-0 flex justify-center items-center font-bold"
@@ -46,22 +46,20 @@ const Statistics: React.FC = () => {
             </Button>
             <Button tabLink="#expenditure">支出分析</Button>
             <Button tabLink="#income">收入分析</Button>
-            {/* <Button tabLink="#tab4">预算统计</Button> */}
           </Segmented>
         </Subnavbar>
       </Navbar>
 
       <Tabs swipeable>
-        <View tab id="generalization" tabActive>
+        <Tab id="generalization" tabActive>
           <Generalization year={date.split("-")[0]} />
-        </View>
-        <View tab id="expenditure">
+        </Tab>
+        <Tab id="expenditure">
           <Expenditure date={date} />
-        </View>
-        <View tab id="income">
+        </Tab>
+        <Tab id="income">
           <Income date={date} />
-        </View>
-        {/* <View tab id="tab4" /> */}
+        </Tab>
       </Tabs>
 
       <CalendarPopup

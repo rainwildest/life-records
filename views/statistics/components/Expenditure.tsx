@@ -60,7 +60,7 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
           </ListItem>
         </List>
 
-        <section className="my-6">
+        <section className="mt-6">
           {percentageDetails.map((item, index) => (
             <PercentageItem
               icon={item.icon}
