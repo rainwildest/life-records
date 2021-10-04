@@ -1,5 +1,5 @@
 import passport from "passport";
-import { format, URL } from "url";
+import { URL } from "url";
 import { NextApiRequest, NextApiResponse } from "next";
 import initPassport from "lib/api/initPassport";
 import { googleInitAuthentication } from "lib/api/initAuthentication";
@@ -21,7 +21,10 @@ const main = (req, res, next) => {
   })(req, res, next);
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> => {
   await runMiddleware(req, res, trustProxy);
   await middleware(req, res);
   await runMiddleware(req, res, main);

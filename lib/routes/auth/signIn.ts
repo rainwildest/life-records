@@ -5,40 +5,51 @@ import { localInitAuthentication } from "lib/api/initAuthentication";
 import middleware from "lib/api/middleware";
 import runMiddleware from "lib/api/runMiddleware";
 import { setLoginSession } from "lib/api/auth";
+import { getTokenCookie } from "lib/api/auth-cookies";
 // import code from 'lib/code-comparison';
 
 initPassport();
 localInitAuthentication();
 
+let token = null;
 const main = (req, res, next) => {
   passport.authenticate("local", async (err, user) => {
     if (err) {
-      return res.end(JSON.stringify({ state: false, error: err.message }));
+      return res.end(
+        JSON.stringify({ code: 4000, data: null, error: err.message })
+      );
     }
 
     /* 如果用户为null 或 没有用户ID 以及创建时间的话则视为没有登录成功 */
     if ((!!user && !user.id && !user.created_at) || !user) {
       return res.end(
         JSON.stringify({
-          state: false,
-          error: {
-            code: 4000
-            // message: code['4000']
-          }
+          code: 4000,
+          data: null,
+          error: {}
         })
       );
     }
 
-    // 设置 session
-    const session = { ...user };
-    await setLoginSession(res, session);
+    try {
+      // 设置 session
+      const session = { ...user };
+      await setLoginSession(res, session);
+      token = await getTokenCookie(req);
+    } catch (error) {
+      return res.end(JSON.stringify({ code: 4000, data: null, error }));
+    }
 
     req.logIn(user, (err) => {
-      if (err) {
-        return next(err);
-      }
+      if (err) return next(err);
 
-      return res.end(JSON.stringify({ state: true }));
+      return res.end(
+        JSON.stringify({
+          code: 2000,
+          data: { token },
+          error: null
+        })
+      );
     });
   })(req, res, next);
 };

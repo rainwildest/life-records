@@ -6,8 +6,8 @@ const options = {
 const asyncRoutes = [
   /* 记账 */
   {
-    path: "/bookkeeping",
-    asyncComponent: (): React.ReactNode => import("views/bookkeeping"),
+    path: "/book-keeping",
+    asyncComponent: (): React.ReactNode => import("pages/book-keeping"),
     options
   },
   /* 账单 */
@@ -15,6 +15,10 @@ const asyncRoutes = [
     path: "/bill",
     asyncComponent: (): React.ReactNode => import("views/bill"),
     options
+  },
+  {
+    path: "/blog/:BlogId",
+    asyncComponent: () => import("pages/blog/[blogId1]")
   }
 ];
 

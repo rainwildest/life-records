@@ -4,7 +4,10 @@ import middleware from "lib/api/middleware";
 import passport from "passport";
 initPassport();
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<any> => {
   await middleware(req, res);
 
   (req as passport).logout();

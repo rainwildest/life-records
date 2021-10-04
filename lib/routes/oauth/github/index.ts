@@ -1,5 +1,4 @@
 import passport from "passport";
-import { URL } from "url";
 import { NextApiRequest, NextApiResponse } from "next";
 import runMiddleware from "lib/api/runMiddleware";
 import initPassport from "lib/api/initPassport";
@@ -18,7 +17,10 @@ const main = (req, res, next) => {
   })(req, res, next);
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> => {
   await middleware(req, res);
   await runMiddleware(req, res, main);
 };

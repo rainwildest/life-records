@@ -1,19 +1,28 @@
-import HomePage from "views/homePage";
+import Home from "views/home";
 import Statistics from "views/statistics";
 import Mine from "views/mine";
 
 const normalRoutes = [
   {
-    path: "/home",
-    component: HomePage
-  },
-  {
-    path: "/statistics",
-    component: Statistics
-  },
-  {
-    path: "/mine",
-    component: Mine
+    path: "/",
+    asyncComponent: (): React.ReactNode => import("pages/index"),
+    tabs: [
+      {
+        path: "/",
+        id: "tab-home",
+        component: Home
+      },
+      {
+        path: "/statistics",
+        id: "tab-statistics",
+        component: Statistics
+      },
+      {
+        path: "/mine",
+        id: "tab-mine",
+        component: Mine
+      }
+    ]
   }
 ];
 export default normalRoutes;

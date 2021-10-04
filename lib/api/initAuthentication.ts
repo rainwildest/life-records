@@ -30,7 +30,6 @@ export const localInitAuthentication = (isSignUp = false): void => {
           /* 确认没有该用户 */
           return cb(null, null);
         }
-
         /* 登录检测该邮箱是否存在 */
         return verifyUserQuery({
           email,

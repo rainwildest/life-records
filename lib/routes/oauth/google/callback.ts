@@ -20,25 +20,26 @@ const main = (req, res, next) => {
       prompt: "select_account"
       // callbackURL: url.toString()
     },
-    function (err, user, info) {
-      if (err) {
-        return next(err);
-      }
+    function (err, user) {
+      if (err) return next(err);
+
       if (!user) {
         return res.redirect("/login");
       }
 
       req.logIn(user, function (err) {
-        if (err) {
-          return next(err);
-        }
+        if (err) return next(err);
+
         return res.redirect("/personal-info");
       });
     }
   )(req, res, next);
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> => {
   await runMiddleware(req, res, trustProxy);
   await middleware(req, res);
   await runMiddleware(req, res, main);
