@@ -57,7 +57,7 @@ export const echartsConfig = (
   };
 };
 
-export const onSelectDate = (date: string, fullYear = false) => {
+export const onSelectDate = (date: string, fullYear = false): string => {
   if (!fullYear) return date;
 
   return date.split("-")[0];
