@@ -35,8 +35,6 @@ export default async (knex: Knex, ctx: CtxOptions): Promise<void> => {
 
   ctx.livingExpenses = {
     docs: [...expenses],
-    obj: _.keyBy(expenses, (o) => {
-      return o.id;
-    })
+    obj: _.keyBy(expenses, (o) => o.id)
   };
 };

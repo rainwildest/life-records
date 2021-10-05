@@ -5,14 +5,18 @@ import { CtxOptions } from "../utils/seed";
 
 const uuid = UUID();
 export default async (knex: Knex, ctx: CtxOptions): Promise<void> => {
-  const users = [{ id: uuid(), username: "rainwildest" }];
+  const users = [
+    {
+      id: uuid(),
+      username: "rainwildest",
+      password: "25d55ad283aa400af464c76d713c07ad"
+    }
+  ];
 
   await knex("users").insert([...users]);
 
   ctx.users = {
     docs: [...users],
-    obj: _.keyBy(users, (o) => {
-      return o.username;
-    })
+    obj: _.keyBy(users, (o) => o.username)
   };
 };
