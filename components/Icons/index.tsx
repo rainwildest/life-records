@@ -9,7 +9,7 @@ type IconsProps = {
 };
 
 const handleClassName = (className: string): string => {
-  const classBase = "svg-icon inline-block pointer-events-none";
+  const classBase = "svg-icon inline-block";
   const classNameSplit = className.split(" ");
   const classBaseSplit = classBase.split(" ");
 

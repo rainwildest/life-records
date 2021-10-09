@@ -15,7 +15,6 @@ $font-size-base: 16;
 // }
 
 :root .theme-dark {
-
 }
 
 // .color-red {
@@ -61,8 +60,8 @@ $font-size-base: 16;
 // }
 
 .disabled {
-  opacity: .55!important;
-  pointer-events: none!important;
+  opacity: 0.55 !important;
+  pointer-events: none !important;
 }
 
 .col-span-1-2 {

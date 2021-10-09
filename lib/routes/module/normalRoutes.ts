@@ -1,4 +1,5 @@
-import Home from "views/home";
+// import Home from "views/home";
+import Home from "pages/login";
 import Statistics from "views/statistics";
 import Mine from "views/mine";
 

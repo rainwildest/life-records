@@ -136,9 +136,77 @@ body {
   box-shadow: var(--inset-shadow-3-);
 }
 
-
 .test-statistics {
   ul {
     background: none;
+  }
+}
+
+.login-btn {
+  bottom: -20px;
+  height: 40px;
+}
+
+.outer {
+  background: linear-gradient(166deg, transparent 81.32px, #ffffff 0) left,
+    linear-gradient(166deg, transparent 42px, #ffffff 0) right;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+.login-container {
+  width: calc(100vw - 50px);
+  height: 350px;
+  &::after {
+    content: "";
+    height: 6.5px;
+    position: absolute;
+    width: calc(100vw - 80px);
+    background: white;
+    z-index: -1;
+    transform: translate(-50%, 0);
+    left: 50%;
+    box-shadow: 0 0 6px rgb(0, 0, 0, 0.6);
+  }
+
+  .input-container {
+    width: calc(100% - 60px);
+    top: 60%;
+  }
+
+  .error-message {
+    color: var(--f7-input-error-text-color);
+  }
+
+  .field-clear-container {
+    min-width: 31px;
+  }
+
+  .field-clear {
+    svg {
+      width: 15px;
+      height: 15px;
+      fill: #4b5563;
+    }
+  }
+}
+
+.third-party {
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.login-page {
+  min-height: 600px;
+  border: 1px solid;
+
+  .login-avatar {
+    background: gray;
+    width: 75px;
+    height: 75px;
   }
 }
