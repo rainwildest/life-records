@@ -2,6 +2,7 @@ import React, { useState, memo } from "react";
 import Icons from "components/Icons";
 
 type FieldOptions = {
+  value?: any;
   label?: string;
   required?: boolean;
   clear?: boolean;
@@ -12,6 +13,7 @@ type FieldOptions = {
   onVerify?: (value: boolean) => void;
 };
 const Field: React.FC<FieldOptions> = ({
+  value,
   label,
   clear,
   required,
@@ -20,7 +22,7 @@ const Field: React.FC<FieldOptions> = ({
 }) => {
   const [verify, setVerify] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [value, setVaule] = useState("");
+  const [inputValue, setInputVaule] = useState(value || "");
 
   return (
     <div className="flex items-center py-1 mb-5">
@@ -30,23 +32,23 @@ const Field: React.FC<FieldOptions> = ({
       <div className="relative bg-gray-200 text-gray-600 h-10 rounded w-full text-xs flex items-center">
         <input
           className={`text-right w-full h-full${
-            clear && !!value ? " !pl-3" : " !px-3"
+            clear && !!inputValue ? " !pl-3" : " !px-3"
           }`}
-          value={value}
+          value={inputValue}
           type={type}
           placeholder={placeholder}
           onInput={(e) => {
             const value = (e.target as HTMLInputElement).value;
-            setVaule(value);
+            setInputVaule(value);
           }}
         />
 
-        {clear && !!value && (
+        {clear && !!inputValue && (
           <Icons
             name="close"
             className="field-clear px-2"
             onClick={() => {
-              setVaule("");
+              setInputVaule("");
             }}
           />
         )}

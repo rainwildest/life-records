@@ -36,7 +36,8 @@ const MyApp = function ({ Component, pageProps }: AppProps): JSX.Element {
       </Head>
       <ApolloProvider client={apolloClient}>
         <FrameworkApp url={url} {...f7params}>
-          <View
+          <Component initialPage {...pageProps} />
+          {/* <View
             main
             browserHistory
             browserHistorySeparator=""
@@ -45,7 +46,7 @@ const MyApp = function ({ Component, pageProps }: AppProps): JSX.Element {
             url="/"
           >
             <Component initialPage {...pageProps} />
-          </View>
+          </View> */}
         </FrameworkApp>
       </ApolloProvider>
     </>

@@ -9,7 +9,9 @@ import {
   ListButton,
   BlockFooter,
   Button,
-  Link
+  Link,
+  Navbar,
+  NavLeft
 } from "framework7-react";
 import request from "lib/api/request";
 import ThirdParty from "./components/ThirdParty";
@@ -41,14 +43,26 @@ const Login: React.FC = () => {
 
   return (
     <Page pageContent={false}>
+      <Navbar noHairline transparent className="h-16">
+        <NavLeft>
+          <Link className="px-4" back>
+            <Icons className="login-back" name="left-arrow" />
+          </Link>
+        </NavLeft>
+      </Navbar>
       <PageContent className="grid">
-        <div className="login-page flex flex-col justify-center items-center">
+        <div className="login-page flex flex-col justify-center items-center mt-10">
           <section className="login-container relative mb-5">
             <div className="login-avatar rounded-full absolute left-1/2 transform -translate-x-1/2 z-50"></div>
 
             <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-              <Field label="邮&nbsp;箱" clear />
-              <Field label="密&nbsp;码" type="password" />
+              <Field label="邮&nbsp;箱" value="rainwildest@163.com" clear />
+              <Field
+                label="密&nbsp;码"
+                type="password"
+                value="12345678"
+                clear
+              />
 
               <div className="text-center mt-6 text-xs">
                 <Link className="text-gray-500" href="/tabs/">

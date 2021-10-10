@@ -202,11 +202,18 @@ body {
 
 .login-page {
   min-height: 600px;
-  border: 1px solid;
 
   .login-avatar {
     background: gray;
     width: 75px;
     height: 75px;
+  }
+}
+
+.login-back {
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: #374151;
   }
 }
