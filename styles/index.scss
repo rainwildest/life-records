@@ -7,7 +7,6 @@
 @import "./common.scss";
 @import "./toggle.scss";
 @import "./layout.scss";
-@import "./login.scss";
 @import "./theme-icon.scss";
 
 html,
@@ -142,7 +141,7 @@ body {
   }
 }
 
-.login-btn {
+.signin-btn {
   bottom: -20px;
   height: 40px;
 }
@@ -156,7 +155,7 @@ body {
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
 }
 
-.login-container {
+.signin-container {
   width: calc(100vw - 50px);
   height: 350px;
   &::after {
@@ -200,7 +199,7 @@ body {
   }
 }
 
-.login-page {
+.signin-signup-page {
   background: linear-gradient(0deg, #d2d2d2 0%, #eef2f3);
   .signup-status {
     width: 250%;
@@ -214,12 +213,20 @@ body {
   .is-signup {
     top: 200%;
   }
+
+  .signin-signup-back {
+    svg {
+      width: 30px;
+      height: 30px;
+      fill: #374151;
+    }
+  }
 }
 
-.login-content {
+.signin-content {
   min-height: 600px;
 
-  .login-avatar {
+  .signin-avatar {
     background: #d1d5db;
     width: 75px;
     height: 75px;
@@ -228,13 +235,5 @@ body {
       width: 60px;
       height: 60px;
     }
-  }
-}
-
-.login-back {
-  svg {
-    width: 30px;
-    height: 30px;
-    fill: #374151;
   }
 }
