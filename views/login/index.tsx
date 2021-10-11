@@ -21,6 +21,7 @@ import Icons from "components/Icons";
 const Login: React.FC = () => {
   const [username, setUsername] = useState("rainwildest@163.com");
   const [password, setPassword] = useState("12345678");
+  const [isSignUp, setIsSignUp] = useState(false);
   const signIn = () => {
     const md5 = require("md5");
 
@@ -42,8 +43,13 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Page pageContent={false}>
-      <Navbar noHairline transparent className="h-16">
+    <Page pageContent={false} className="login-page">
+      <div
+        className={`signup-status absolute left-1/2 transform -translate-x-1/2${
+          isSignUp ? " is-signup" : ""
+        }`}
+      />
+      <Navbar noHairline transparent className="h-14">
         <NavLeft>
           <Link className="px-4" back>
             <Icons className="login-back" name="left-arrow" />
@@ -51,9 +57,11 @@ const Login: React.FC = () => {
         </NavLeft>
       </Navbar>
       <PageContent className="grid">
-        <div className="login-page flex flex-col justify-center items-center mt-10">
+        <div className="login-content flex flex-col justify-center items-center mt-10">
           <section className="login-container relative mb-5">
-            <div className="login-avatar rounded-full absolute left-1/2 transform -translate-x-1/2 z-50"></div>
+            <div className="login-avatar rounded-full overflow-hidden absolute flex justify-center items-center left-1/2 transform -translate-x-1/2 z-50">
+              <Icons name="avatar-05" />
+            </div>
 
             <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
               <Field label="邮&nbsp;箱" value="rainwildest@163.com" clear />
@@ -84,7 +92,14 @@ const Login: React.FC = () => {
             </div>
           </section>
 
-          <Button className="login-btn w-32" round color="black">
+          <Button
+            className="login-btn w-32"
+            round
+            color="black"
+            onClick={() => {
+              setIsSignUp(!isSignUp);
+            }}
+          >
             注&ensp;册
           </Button>
 
