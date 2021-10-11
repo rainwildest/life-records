@@ -141,11 +141,6 @@ body {
   }
 }
 
-.signin-btn {
-  bottom: -20px;
-  height: 40px;
-}
-
 .outer {
   background: linear-gradient(166deg, transparent 81.32px, #ffffff 0) left,
     linear-gradient(166deg, transparent 42px, #ffffff 0) right;
@@ -155,6 +150,7 @@ body {
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
 }
 
+.signup-container,
 .signin-container {
   width: calc(100vw - 50px);
   height: 350px;
@@ -168,6 +164,12 @@ body {
     transform: translate(-50%, 0);
     left: 50%;
     box-shadow: 0 0 6px rgb(0, 0, 0, 0.6);
+  }
+
+  .signup-btn,
+  .signin-btn {
+    bottom: -20px;
+    // height: 40px;
   }
 
   .input-container {
@@ -223,9 +225,11 @@ body {
   }
 }
 
+.signup-content,
 .signin-content {
   min-height: 600px;
 
+  .signup-avatar,
   .signin-avatar {
     background: #d1d5db;
     width: 75px;

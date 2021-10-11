@@ -53,7 +53,7 @@ const SignIn: React.FC<SignInOptions> = ({ onSignUp }) => {
 
         <div className="outer w-full h-full relative">
           <Button
-            className="signin-btn absolute left-2/4 transform -translate-x-2/4 w-32"
+            className="signin-btn h-10 absolute left-2/4 transform -translate-x-2/4 w-32"
             raised
             fill
             round
@@ -65,7 +65,7 @@ const SignIn: React.FC<SignInOptions> = ({ onSignUp }) => {
       </section>
 
       <Button
-        className="signin-btn w-32"
+        className="signin-btn w-32 mt-6 h-10"
         round
         color="black"
         onClick={onSignUp || null}

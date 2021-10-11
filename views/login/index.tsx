@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Page, PageContent, Link, Navbar, NavLeft } from "framework7-react";
 import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 import Icons from "components/Icons";
 
 const signin: React.FC = () => {
@@ -21,11 +22,12 @@ const signin: React.FC = () => {
         </NavLeft>
       </Navbar>
       <PageContent className="grid">
-        <SignIn
+        <SignUp />
+        {/* <SignIn
           onSignUp={() => {
             setIsSignUp(!isSignUp);
           }}
-        />
+        /> */}
       </PageContent>
       {/* <signinScreenTitle>Framework7</signinScreenTitle>
       <List form>

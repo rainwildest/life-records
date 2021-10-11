@@ -15,8 +15,8 @@ const SignUp: React.FC = () => {
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
           <Field label="用户名" clear />
-          <Field label="邮&nbsp;箱" clear />
-          <Field label="密&nbsp;码" type="password" clear />
+          <Field label="邮&emsp;箱" clear />
+          <Field label="密&emsp;码" type="password" clear />
 
           {/* <div className="text-center mt-6 text-xs">
             <Link className="text-gray-500" href="/tabs/">
@@ -27,7 +27,7 @@ const SignUp: React.FC = () => {
 
         <div className="outer w-full h-full relative">
           <Button
-            className="signup-btn absolute left-2/4 transform -translate-x-2/4 w-32"
+            className="signup-btn h-10 absolute left-2/4 transform -translate-x-2/4 w-32"
             raised
             fill
             round
@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
       </section>
 
       <Button
-        className="signup-btn w-32"
+        className="signup-btn w-32 mt-6 h-10"
         round
         color="black"
         // onClick={onSignUp || null}
