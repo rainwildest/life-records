@@ -1,1 +1,1 @@
-export { default } from "lib/routes/oauth/google/callback";
+export { default } from "lib/oauth/google/callback";
