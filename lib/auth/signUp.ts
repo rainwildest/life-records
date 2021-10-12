@@ -6,7 +6,6 @@ import middleware from "lib/api/middleware";
 import runMiddleware from "lib/api/runMiddleware";
 import { addUserBySignUp } from "db/sql/users";
 import { setLoginSession } from "lib/api/auth";
-import { getTokenCookie } from "lib/api/auth-cookies";
 
 initPassport();
 localInitAuthentication(true);
@@ -15,7 +14,7 @@ let token = null;
 const main = (req, res, next) => {
   passport.authenticate("local", async (err, user) => {
     if (err) {
-      return res.end(JSON.stringify({ code: 4000, data: null, error: err }));
+      return res.end(JSON.stringify({ code: 4001, data: null, error: err }));
     }
 
     /* 新增用户 */
@@ -31,8 +30,7 @@ const main = (req, res, next) => {
     try {
       // 设置 session
       const session = { ...user };
-      await setLoginSession(res, session);
-      token = await getTokenCookie(req);
+      token = await setLoginSession(res, session);
     } catch (error) {
       return res.end(JSON.stringify({ code: 4000, data: null, error }));
     }

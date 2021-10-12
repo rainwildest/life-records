@@ -16,7 +16,7 @@ const SignIn: React.FC<SignInOptions> = ({
   isSignIn,
   onSignUp
 }) => {
-  const [username, setUsername] = useState("rainwildest@163.com");
+  const [email, setEmail] = useState("rainwildest@163.com");
   const [password, setPassword] = useState("12345678");
   const [submitting, setSubmitting] = useState(false);
 
@@ -29,7 +29,7 @@ const SignIn: React.FC<SignInOptions> = ({
         url: "/api/auth/signIn",
         method: "POST",
         data: JSON.stringify({
-          email: username.trim(),
+          email: email.trim(),
           password: md5(password.trim())
         })
       })
@@ -56,7 +56,7 @@ const SignIn: React.FC<SignInOptions> = ({
         </div>
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <Field label="邮&nbsp;箱" value={username} clear />
+          <Field label="邮&nbsp;箱" value={email} clear />
           <Field label="密&nbsp;码" type="password" value={password} clear />
 
           <div className="text-center mt-6 text-xs">

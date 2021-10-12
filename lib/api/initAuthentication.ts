@@ -1,4 +1,5 @@
 import passport from "passport";
+import codeComparison from "./code-comparison";
 import { getUserByEmailQuery, verifyUserQuery } from "db/sql/users";
 
 /* 获取用户提交的信息（用于账号和密码登录） */
@@ -18,13 +19,7 @@ export const localInitAuthentication = (isSignUp = false): void => {
 
           /* 用户存在则报错 */
           if (user) {
-            return cb(
-              {
-                code: 4001
-                // message: code['4001']
-              },
-              null
-            );
+            return cb(codeComparison["4001"], null);
           }
 
           /* 确认没有该用户 */
