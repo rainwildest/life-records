@@ -1,7 +1,6 @@
 import React from "react";
 import Icons from "components/Icons";
-// App.jsx
-import { Page, Toolbar, Views, View, Tabs, Tab, Link } from "framework7-react";
+import { Page, Toolbar, Views, View, Link } from "framework7-react";
 
 const Index: React.FC = () => {
   return (
