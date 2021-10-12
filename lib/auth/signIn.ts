@@ -5,7 +5,6 @@ import { localInitAuthentication } from "lib/api/initAuthentication";
 import middleware from "lib/api/middleware";
 import runMiddleware from "lib/api/runMiddleware";
 import { setLoginSession } from "lib/api/auth";
-import { getTokenCookie } from "lib/api/auth-cookies";
 // import code from 'lib/code-comparison';
 
 initPassport();
@@ -34,8 +33,7 @@ const main = (req, res, next) => {
     try {
       // 设置 session
       const session = { ...user };
-      await setLoginSession(res, session);
-      token = await getTokenCookie(req);
+      token = await setLoginSession(res, session);
     } catch (error) {
       return res.end(JSON.stringify({ code: 4000, data: null, error }));
     }

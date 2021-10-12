@@ -8,7 +8,7 @@ const signin: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   return (
-    <Page pageContent={false} className="signin-signup-page">
+    <Page noToolbar pageContent={false} className="signin-signup-page">
       <div
         className={`signup-status absolute left-1/2 transform -translate-x-1/2${
           isSignUp ? " is-signup" : ""
@@ -21,13 +21,21 @@ const signin: React.FC = () => {
           </Link>
         </NavLeft>
       </Navbar>
-      <PageContent className="grid">
-        <SignUp />
-        {/* <SignIn
-          onSignUp={() => {
-            setIsSignUp(!isSignUp);
+      <PageContent className="grid overflow-x-hidden">
+        <SignUp
+          btnText="注&emsp;册"
+          isSignUp={isSignUp}
+          onSignIn={() => {
+            setIsSignUp(false);
           }}
-        /> */}
+        />
+        <SignIn
+          btnText="登&emsp;录"
+          isSignIn={!isSignUp}
+          onSignUp={() => {
+            setIsSignUp(true);
+          }}
+        />
       </PageContent>
       {/* <signinScreenTitle>Framework7</signinScreenTitle>
       <List form>

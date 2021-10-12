@@ -7,34 +7,49 @@ import request from "lib/api/request";
 
 type SignInOptions = {
   className?: string;
+  isSignIn?: boolean;
+  btnText?: string;
   onSignUp?: () => void;
 };
-const SignIn: React.FC<SignInOptions> = ({ onSignUp }) => {
+const SignIn: React.FC<SignInOptions> = ({
+  btnText = "",
+  isSignIn,
+  onSignUp
+}) => {
   const [username, setUsername] = useState("rainwildest@163.com");
   const [password, setPassword] = useState("12345678");
+  const [submitting, setSubmitting] = useState(false);
 
-  const signIn = () => {
+  const onSignIn = () => {
+    setSubmitting(true);
+
     const md5 = require("md5");
-
-    request({
-      url: "/api/auth/signIn",
-      method: "POST",
-      data: JSON.stringify({
-        email: username.trim(),
-        password: md5(password.trim())
-        // username: "kjkk"
+    setTimeout(() => {
+      request({
+        url: "/api/auth/signIn",
+        method: "POST",
+        data: JSON.stringify({
+          email: username.trim(),
+          password: md5(password.trim())
+        })
       })
-    })
-      .then((val) => {
-        console.log(val);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((val) => {
+          console.log(val);
+          setSubmitting(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setSubmitting(false);
+        });
+    }, 1000 * 0.5);
   };
 
   return (
-    <div className="signin-content flex flex-col justify-center items-center mt-10">
+    <div
+      className={`signin-content mt-10 flex flex-col justify-center items-center z-50${
+        isSignIn ? " active" : ""
+      }`}
+    >
       <section className="signin-container relative mb-5">
         <div className="signin-avatar rounded-full overflow-hidden absolute flex justify-center items-center left-1/2 transform -translate-x-1/2 z-50">
           <Icons name="avatar-05" />
@@ -58,8 +73,10 @@ const SignIn: React.FC<SignInOptions> = ({ onSignUp }) => {
             fill
             round
             color="black"
+            onClick={onSignIn}
           >
-            登&emsp;录
+            {!submitting && btnText}
+            {submitting && <Icons name="spinner" className="animate-spin" />}
           </Button>
         </div>
       </section>
