@@ -1,1 +1,1 @@
-export { default } from "lib/routes/auth/signOut";
+export { default } from "lib/auth/signOut";
