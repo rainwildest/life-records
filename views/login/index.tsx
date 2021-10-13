@@ -37,35 +37,6 @@ const signin: React.FC = () => {
           }}
         />
       </PageContent>
-      {/* <signinScreenTitle>Framework7</signinScreenTitle>
-      <List form>
-        <ListInput
-          label="email"
-          type="text"
-          placeholder="Your email"
-          value={username}
-          onInput={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
-        <ListInput
-          label="Password"
-          type="password"
-          placeholder="Your password"
-          value={password}
-          onInput={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-      </List>
-      <List>
-        <ListButton onClick={signIn}>Sign In</ListButton>
-        <BlockFooter>
-          Some text about signin information.
-          <br />
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </BlockFooter>
-      </List> */}
     </Page>
   );
 };
