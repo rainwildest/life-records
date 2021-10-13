@@ -42,11 +42,8 @@ export const localInitAuthentication = (isSignUp = false): void => {
             return user;
           })
           .catch((err) => {
-            return cb(null, err, {
-              code: 4000,
-              data: null,
-              error: err
-            });
+            const info = { code: 4000, data: null, error: err };
+            return cb(null, err, info);
           });
       }
     )
