@@ -1,12 +1,11 @@
 import type { AppProps /* , AppContext */ } from "next/app";
 import { ApolloProvider } from "@apollo/client";
-import { useApollo } from "../apollo/client";
+import { useApollo } from "apollo/client";
 import Framework7 from "framework7/lite-bundle";
 import Framework7React, { App as FrameworkApp } from "framework7-react";
 import f7params from "lib/configure/f7params";
 import fontSizeBase from "lib/fontSizeBase";
 import React, { useEffect } from "react";
-import Router, { useRouter } from "next/router";
 import Head from "next/head";
 import { getTokenCookie } from "lib/api/auth-cookies";
 import store from "lib/store";
@@ -38,16 +37,6 @@ const MyApp = function ({
       <ApolloProvider client={apolloClient}>
         <FrameworkApp {...f7params} store={store}>
           <Component initialPage {...pageProps} />
-          {/* <View
-            main
-            browserHistory
-            browserHistorySeparator=""
-            browserHistoryInitialMatch={true}
-            browserHistoryStoreHistory={false}
-            url="/"
-          >
-            <Component initialPage {...pageProps} />
-          </View> */}
         </FrameworkApp>
       </ApolloProvider>
     </>
@@ -58,7 +47,7 @@ export default MyApp;
 MyApp.getInitialProps = async ({ ctx }) => {
   if (ctx && ctx.req && ctx.req.headers) {
     return {
-      token: await getTokenCookie(ctx.req)
+      token: (await getTokenCookie(ctx.req)) || null
     };
   }
   return {};
