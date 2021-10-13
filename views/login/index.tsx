@@ -1,11 +1,32 @@
-import React, { useState } from "react";
-import { Page, PageContent, Link, Navbar, NavLeft } from "framework7-react";
+import React, { useState, useEffect } from "react";
+import {
+  Page,
+  PageContent,
+  Link,
+  Navbar,
+  NavLeft,
+  useStore
+} from "framework7-react";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Icons from "components/Icons";
+import store from "lib/store";
 
 const signin: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  // const token = useStore("token");
+  // useEffect(() => {
+  //   console.log("ksjdlkfjklsdjkfjkjl", token);
+  // }, [token]);
+  const onSetStatusFalse = () => {
+    setIsSignUp(false);
+  };
+  const onSetStatusTrue = () => {
+    setIsSignUp(false);
+  };
+  const onSuccess = (token) => {
+    store.dispatch("setToken", { token });
+  };
 
   return (
     <Page noToolbar pageContent={false} className="signin-signup-page">
@@ -25,16 +46,14 @@ const signin: React.FC = () => {
         <SignUp
           btnText="注&emsp;册"
           isSignUp={isSignUp}
-          onSignIn={() => {
-            setIsSignUp(false);
-          }}
+          onSignIn={onSetStatusFalse}
+          onSuccess={onSuccess}
         />
         <SignIn
           btnText="登&emsp;录"
           isSignIn={!isSignUp}
-          onSignUp={() => {
-            setIsSignUp(true);
-          }}
+          onSignUp={onSetStatusTrue}
+          onSuccess={onSuccess}
         />
       </PageContent>
     </Page>

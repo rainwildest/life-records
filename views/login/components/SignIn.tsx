@@ -20,12 +20,14 @@ type SignInOptions = {
   isSignIn?: boolean;
   btnText?: string;
   onSignUp?: () => void;
+  onSuccess?: (value: any) => void;
 };
 
 const SignIn: React.FC<SignInOptions> = ({
   btnText = "",
   isSignIn,
-  onSignUp
+  onSignUp,
+  onSuccess
 }) => {
   const [email, setEmail] = useState("rainwildest@163.com");
   const [password, setPassword] = useState("12345678");
@@ -45,12 +47,13 @@ const SignIn: React.FC<SignInOptions> = ({
         })
       })
         .then((val) => {
-          console.log(val);
+          const { code, data } = val;
           setSubmitting(false);
-          if (val.code !== 2000) return Toast("账号或密码错误");
+          if (code !== 2000) return Toast("账号或密码错误");
+
+          onSuccess && onSuccess(data.token);
         })
         .catch((error) => {
-          console.log(error);
           setSubmitting(false);
           Toast("登录失败");
         });

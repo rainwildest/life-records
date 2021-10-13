@@ -20,8 +20,14 @@ type SignUpOptions = {
   isSignUp?: boolean;
   btnText?: string;
   onSignIn?: () => void;
+  onSuccess?: (value: any) => void;
 };
-const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn }) => {
+const SignUp: React.FC<SignUpOptions> = ({
+  btnText,
+  isSignUp,
+  onSignIn,
+  onSuccess
+}) => {
   const [submitting, setSubmitting] = useState(false);
   const [email, setEmail] = useState("rainwildest@163.com");
   const [password, setPassword] = useState("12345678");
@@ -43,9 +49,11 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn }) => {
       })
         .then((val) => {
           setSubmitting(false);
-          const { code, error } = val;
+          const { code, error, data } = val;
           if (code === 4001) return Toast("该账号已存在");
           if (code !== 2000) return Toast("1001: 注册失败");
+
+          onSuccess && onSuccess(data.token);
         })
         .catch((error) => {
           setSubmitting(false);
