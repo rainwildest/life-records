@@ -10,6 +10,9 @@ const ThirdParty: React.FC = () => {
         <Button
           color="black"
           className="inline-flex p-0 rounded-full w-10 h-10 items-center justify-center"
+          onClick={() => {
+            location.href = "/api/oauth/github";
+          }}
         >
           <Icons name="github" />
         </Button>

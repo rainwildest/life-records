@@ -1,9 +1,13 @@
-const runMiddleware = (req, res, fn): Promise<any> => {
+import { NextApiRequest, NextApiResponse } from "next";
+
+const runMiddleware = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  fn: any
+): Promise<any> => {
   return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) return reject(result);
 
       return resolve(result);
     });

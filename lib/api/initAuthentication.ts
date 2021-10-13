@@ -1,6 +1,10 @@
 import passport from "passport";
 import codeComparison from "./code-comparison";
-import { getUserByEmailQuery, verifyUserQuery } from "db/sql/users";
+import {
+  getUserByEmailQuery,
+  createOauthOrFindUser,
+  verifyUserQuery
+} from "db/sql/users";
 
 /* 获取用户提交的信息（用于账号和密码登录） */
 export const localInitAuthentication = (isSignUp = false): void => {
@@ -43,14 +47,14 @@ export const localInitAuthentication = (isSignUp = false): void => {
           })
           .catch((err) => {
             const info = { code: 4000, data: null, error: err };
-            return cb(null, err, info);
+            return cb(info, null);
           });
       }
     )
   );
 };
 
-export const gitHubInitAuthentication = () => {
+export const gitHubInitAuthentication = (): void => {
   const GitHubStrategy = require("passport-github2").Strategy;
 
   passport.use(
@@ -59,34 +63,31 @@ export const gitHubInitAuthentication = () => {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET
       },
-      function (accessToken, refreshToken, profile, cb) {
-        const { id, displayName, username, photos } = profile;
+      function (accessToken, refreshToken, profile, done) {
+        const { id, username, photos } = profile;
 
         const user = {
           github_provider_id: id,
           username,
           profile_photo: (!!photos && photos[0]?.value) || null
         };
-        console.log(user);
 
-        return { id: "sdfdsf", username: "jsdfkds" };
-
-        // return createOrFindUser(user, 'github_provider_id')
-        //   .then(user => {
-        //     cb(null, user)
-        //     return user
-        //   }).catch(err => {
-        //     return cb(null, err, {
-        //       message: 'Please sign in with other to create a new account.'
-        //     })
-        //   })
+        return createOauthOrFindUser(user, "github_provider_id")
+          .then((user) => {
+            done(null, user);
+            return user;
+          })
+          .catch((err) => {
+            const info = { code: 4000, data: null, error: err };
+            return done(info, null);
+          });
       }
     )
   );
 };
 
 /* 获取用户提交的信息（用于Google登录） */
-export const googleInitAuthentication = () => {
+export const googleInitAuthentication = (): void => {
   const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
   passport.use(
@@ -113,7 +114,7 @@ export const googleInitAuthentication = () => {
           profile_photo: (!!photos && photos[0]?.value) || null
         };
 
-        // return createOrFindUser(user, 'google_provider_id')
+        // return createOauthOrFindUser(user, 'google_provider_id')
         //   .then(user => {
         //     cb(null, user)
         //     return user

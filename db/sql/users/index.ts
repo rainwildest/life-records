@@ -1,7 +1,7 @@
 import Users from "db/entities/user";
 // import { UserSnakeOptions } from "typings/uesr";
 import MikrotOrm, { knex } from "db/mikro-orm";
-import { getDataByIds, getDatabyId } from "../common";
+import { getDataByIds, getDatabyId, create } from "../common";
 
 /**
  * 保存注册用户信息
@@ -14,15 +14,9 @@ export const addUserBySignUp = async (
   args: UserSnakeOptions
 ): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { username, email, password } = args;
-  if (!username || !email || !password) {
-    return null;
-  }
+  if (!username || !email || !password) return null;
 
-  const orm = await knex();
-  return orm("users")
-    .insert({ ...args })
-    .returning("*")
-    .then((rows) => (rows.length ? rows[0] : null));
+  return create("users", args);
 };
 
 /**
@@ -30,15 +24,10 @@ export const addUserBySignUp = async (
  * @memberof UserModel
  * @param {string} userInfo 保存所需的数据
  */
-export const addUserByOauth = async (
+export const createUserByOauth = async (
   userInfo: UserSnakeOptions
 ): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await knex();
-
-  return orm("users")
-    .insert({ ...userInfo })
-    .returning("*")
-    .then((rows) => (rows.length ? rows[0] : null));
+  return create("users", userInfo);
 };
 
 /**
@@ -127,20 +116,16 @@ export const getUserByIndex = async (
  * @param {object} userInfo 保存所需的数据
  * @param {string} providerMethod 第三方 provider id 的字段名
  */
-export const oauthCreateOrFindUser = async (
+export const createOauthOrFindUser = async (
   userInfo: UserSnakeOptions,
   providerMethod: string
 ): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   //查找是否存在改用户
   return getUserByIndex(providerMethod, userInfo[providerMethod])
-    .then((val) => {
+    .then(async (val) => {
       // 如果数据存在 则直接返回
-      if (!!val && !!val.id) {
-        return val;
-      }
-
-      // 不存在当前用户，则去新增
-      return addUserByOauth(userInfo);
+      if (!!val && !!val.id) return val;
+      return createUserByOauth(userInfo);
     })
     .catch(() => {
       return null;

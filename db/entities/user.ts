@@ -30,6 +30,9 @@ export default class Users extends SQLCommonField {
   @Property({ nullable: true })
   email: string;
 
+  @Property({ nullable: true, fieldName: "profile_photo" })
+  profilePhoto: string;
+
   /**
    * @param {string} githubProviderId GitHub oauth
    */
