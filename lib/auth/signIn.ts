@@ -5,7 +5,7 @@ import { localInitAuthentication } from "lib/api/initAuthentication";
 import middleware from "lib/api/middleware";
 import runMiddleware from "lib/api/runMiddleware";
 import { setLoginSession } from "lib/api/auth";
-// import code from 'lib/code-comparison';
+import codeComparison from "lib/api/code-comparison";
 
 initPassport();
 localInitAuthentication();
@@ -13,20 +13,12 @@ localInitAuthentication();
 let token = null;
 const main = (req, res, next) => {
   passport.authenticate("local", async (err, user) => {
-    if (err) {
-      return res.end(
-        JSON.stringify({ code: 4000, data: null, error: err.message })
-      );
-    }
+    if (err) return res.end(JSON.stringify({ ...err }));
 
     /* 如果用户为null 或 没有用户ID 以及创建时间的话则视为没有登录成功 */
-    if ((!!user && !user.id && !user.created_at) || !user) {
+    if ((!!user && !user.id) || !user) {
       return res.end(
-        JSON.stringify({
-          code: 4000,
-          data: null,
-          error: {}
-        })
+        JSON.stringify({ code: 4002, data: null, error: codeComparison[4002] })
       );
     }
 
@@ -39,15 +31,11 @@ const main = (req, res, next) => {
     }
 
     req.logIn(user, (err) => {
-      if (err) return next(err);
+      let info = {};
+      if (err) info = { code: 4000, data: null, error: err };
 
-      return res.end(
-        JSON.stringify({
-          code: 2000,
-          data: { token },
-          error: null
-        })
-      );
+      info = { code: 2000, data: { token }, error: null };
+      return res.end(JSON.stringify(info));
     });
   })(req, res, next);
 };

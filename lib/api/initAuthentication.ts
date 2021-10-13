@@ -15,16 +15,23 @@ export const localInitAuthentication = (isSignUp = false): void => {
         /* 注册时检测该邮箱是否已存在 */
         if (isSignUp) {
           /* 检测用户是否存在 */
-          const user = await getUserByEmailQuery(email);
+          try {
+            const user = await getUserByEmailQuery(email);
 
-          /* 用户存在则报错 */
-          if (user) {
-            return cb(codeComparison["4001"], null);
+            /* 用户存在则报错 */
+            if (user) {
+              const error = codeComparison["4001"];
+              const info = { code: 4001, data: null, error };
+              return cb(info, null);
+            }
+          } catch (err) {
+            return cb({ code: 4000, data: null, error: err }, null);
           }
 
           /* 确认没有该用户 */
           return cb(null, null);
         }
+
         /* 登录检测该邮箱是否存在 */
         return verifyUserQuery({
           email,
@@ -35,7 +42,11 @@ export const localInitAuthentication = (isSignUp = false): void => {
             return user;
           })
           .catch((err) => {
-            return cb(null, err, { message: "请检查该账号是否存在！" });
+            return cb(null, err, {
+              code: 4000,
+              data: null,
+              error: err
+            });
           });
       }
     )

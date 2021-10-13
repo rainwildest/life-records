@@ -13,15 +13,19 @@ localInitAuthentication(true);
 let token = null;
 const main = (req, res, next) => {
   passport.authenticate("local", async (err, user) => {
-    if (err) {
-      return res.end(JSON.stringify({ code: 4001, data: null, error: err }));
-    }
+    if (err) return res.end(JSON.stringify({ ...err }));
 
-    /* 新增用户 */
-    user = await addUserBySignUp(req.body);
+    try {
+      /* 新增用户 */
+      user = await addUserBySignUp(req.body);
 
-    /* 如果用户为null 或 没有用户ID 以及创建时间的话则视为没有登录成功 */
-    if (!!user && !user.id && !user.created_at) {
+      /* 如果用户为null 或 没有用户ID 以及创建时间的话则视为没有登录成功 */
+      if ((!!user && !user.id) || !user) {
+        return res.end(
+          JSON.stringify({ code: 4000, data: null, error: err || null })
+        );
+      }
+    } catch (err) {
       return res.end(
         JSON.stringify({ code: 4000, data: null, error: err || null })
       );
@@ -37,11 +41,11 @@ const main = (req, res, next) => {
 
     /* 登录新添加的用户 */
     req.logIn(user, function (err) {
-      if (err) return next(err);
+      let info = {};
+      if (err) info = { code: 4000, data: null, error: err };
 
-      return res.end(
-        JSON.stringify({ code: 2000, data: { token }, error: null })
-      );
+      info = { code: 2000, data: { token }, error: null };
+      return res.end(JSON.stringify(info));
     });
   })(req, res, next);
 };
