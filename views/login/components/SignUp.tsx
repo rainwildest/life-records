@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { Button, Link } from "framework7-react";
+import { Button, f7 } from "framework7-react";
 import ThirdParty from "./ThirdParty";
 import Field from "./Field";
 import Icons from "components/Icons";
 import request from "lib/api/request";
+
+const Toast = (text = "") => {
+  f7.toast
+    .create({
+      text,
+      position: "center",
+      closeTimeout: 2000
+    })
+    .open();
+};
 
 type SignUpOptions = {
   className?: string;
@@ -32,15 +42,28 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn }) => {
         })
       })
         .then((val) => {
-          console.log(val);
           setSubmitting(false);
+          const { code, error } = val;
+          if (code === 4001) return Toast("该账号已存在");
+          if (code !== 2000) return Toast("1001: 注册失败");
         })
         .catch((error) => {
-          console.log(error);
           setSubmitting(false);
+          Toast("1002: 注册失败");
         });
     }, 1000 * 0.5);
   };
+
+  const onEmailInput = (value: string) => {
+    setEmail(value);
+  };
+  const onPassword = (value: string) => {
+    setPassword(value);
+  };
+  const onUsername = (value: string) => {
+    setUsername(value);
+  };
+
   return (
     <div
       className={`signup-content mt-10 flex flex-col justify-center items-center mt-10 z-50${
@@ -53,9 +76,20 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn }) => {
         </div>
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <Field label="用户名" value={username} clear />
-          <Field label="邮&emsp;箱" value={email} clear />
-          <Field label="密&emsp;码" value={password} type="password" clear />
+          <Field clear value={username} label="用户名" onInput={onUsername} />
+          <Field
+            clear
+            value={email}
+            label="邮&emsp;箱"
+            onInput={onEmailInput}
+          />
+          <Field
+            clear
+            value={password}
+            label="密&emsp;码"
+            onInput={onPassword}
+            type="password"
+          />
         </div>
 
         <div className="outer w-full h-full relative">

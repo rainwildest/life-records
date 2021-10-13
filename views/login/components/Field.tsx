@@ -18,7 +18,8 @@ const Field: React.FC<FieldOptions> = ({
   clear,
   required,
   type = "text",
-  placeholder
+  placeholder,
+  onInput
 }) => {
   const [verify, setVerify] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -39,6 +40,7 @@ const Field: React.FC<FieldOptions> = ({
           placeholder={placeholder}
           onInput={(e) => {
             const value = (e.target as HTMLInputElement).value;
+            onInput && onInput(value);
             setInputVaule(value);
           }}
         />

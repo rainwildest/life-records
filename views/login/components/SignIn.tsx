@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { Button, Link } from "framework7-react";
+import { Button, Link, f7 } from "framework7-react";
 import ThirdParty from "./ThirdParty";
 import Field from "./Field";
 import Icons from "components/Icons";
 import request from "lib/api/request";
+
+const Toast = (text = "") => {
+  f7.toast
+    .create({
+      text,
+      position: "center",
+      closeTimeout: 2000
+    })
+    .open();
+};
 
 type SignInOptions = {
   className?: string;
@@ -11,6 +21,7 @@ type SignInOptions = {
   btnText?: string;
   onSignUp?: () => void;
 };
+
 const SignIn: React.FC<SignInOptions> = ({
   btnText = "",
   isSignIn,
@@ -36,12 +47,21 @@ const SignIn: React.FC<SignInOptions> = ({
         .then((val) => {
           console.log(val);
           setSubmitting(false);
+          if (val.code !== 2000) return Toast("账号或密码错误");
         })
         .catch((error) => {
           console.log(error);
           setSubmitting(false);
+          Toast("登录失败");
         });
     }, 1000 * 0.5);
+  };
+
+  const onEmailInput = (value: string) => {
+    setEmail(value);
+  };
+  const onPassword = (value: string) => {
+    setPassword(value);
   };
 
   return (
@@ -56,8 +76,19 @@ const SignIn: React.FC<SignInOptions> = ({
         </div>
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <Field label="邮&nbsp;箱" value={email} clear />
-          <Field label="密&nbsp;码" type="password" value={password} clear />
+          <Field
+            clear
+            value={email}
+            label="邮&nbsp;箱"
+            onInput={onEmailInput}
+          />
+          <Field
+            clear
+            value={password}
+            label="密&nbsp;码"
+            type="password"
+            onInput={onPassword}
+          />
 
           <div className="text-center mt-6 text-xs">
             <Link className="text-gray-500" href="/tabs/">
