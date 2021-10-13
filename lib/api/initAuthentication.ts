@@ -1,9 +1,9 @@
 import passport from "passport";
 import codeComparison from "./code-comparison";
 import {
-  getUserByEmailQuery,
+  getUserByEmail,
   createOauthOrFindUser,
-  verifyUserQuery
+  verifyUserByEmail
 } from "db/sql/users";
 
 /* 获取用户提交的信息（用于账号和密码登录） */
@@ -20,7 +20,7 @@ export const localInitAuthentication = (isSignUp = false): void => {
         if (isSignUp) {
           /* 检测用户是否存在 */
           try {
-            const user = await getUserByEmailQuery(email);
+            const user = await getUserByEmail(email);
 
             /* 用户存在则报错 */
             if (user) {
@@ -37,7 +37,7 @@ export const localInitAuthentication = (isSignUp = false): void => {
         }
 
         /* 登录检测该邮箱是否存在 */
-        return verifyUserQuery({
+        return verifyUserByEmail({
           email,
           password
         })

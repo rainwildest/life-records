@@ -1,5 +1,4 @@
 import Users from "db/entities/user";
-// import { UserSnakeOptions } from "typings/uesr";
 import MikrotOrm, { knex } from "db/mikro-orm";
 import { getDataByIds, getDatabyId, create } from "../common";
 
@@ -57,12 +56,10 @@ export const getUserByIdQuery = async (
  * @memberof UserModel
  * @param {string} email 邮箱
  */
-export const getUserByEmailQuery = async (
+export const getUserByEmail = async (
   email: string
 ): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  if (!email) {
-    return null;
-  }
+  if (!email) return null;
 
   const orm = await MikrotOrm(Users);
   return orm.where({ email }).execute("get");
@@ -74,13 +71,11 @@ export const getUserByEmailQuery = async (
  * @param {string} email 邮箱
  * @param {string} password 密码（md5）
  */
-export const verifyUserQuery = async (
+export const verifyUserByEmail = async (
   args: UserSnakeOptions
 ): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { email, password } = args;
-  if (!email && !password) {
-    return null;
-  }
+  if (!email && !password) return null;
 
   const orm = await MikrotOrm(Users);
   return orm
