@@ -96,7 +96,7 @@ export const googleInitAuthentication = (): void => {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET
       },
-      function (accessToken, refreshToken, profile, cb) {
+      function (accessToken, refreshToken, profile, done) {
         const { id, emails, displayName, photos, name } = profile;
 
         let username = "";
@@ -114,15 +114,15 @@ export const googleInitAuthentication = (): void => {
           profile_photo: (!!photos && photos[0]?.value) || null
         };
 
-        // return createOauthOrFindUser(user, 'google_provider_id')
-        //   .then(user => {
-        //     cb(null, user)
-        //     return user
-        //   }).catch(err => {
-        //     return cb(null, err, {
-        //       message: 'Please sign in with other to create a new account.'
-        //     })
-        //   })
+        return createOauthOrFindUser(user, "google_provider_id")
+          .then((user) => {
+            done(null, user);
+            return user;
+          })
+          .catch((err) => {
+            const info = { code: 4000, data: null, error: err };
+            return done(info, null);
+          });
       }
     )
   );

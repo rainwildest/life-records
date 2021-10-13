@@ -20,6 +20,9 @@ const ThirdParty: React.FC = () => {
         <Button
           color="black"
           className="inline-flex p-0 rounded-full w-10 h-10 items-center justify-center ml-5"
+          onClick={() => {
+            location.href = "/api/oauth/google";
+          }}
         >
           <Icons name="google" />
         </Button>
