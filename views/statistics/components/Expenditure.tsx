@@ -41,38 +41,36 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
   };
 
   return (
-    <Page>
-      <div className="px-6">
-        <Echarts className="shadow-3 rounded-lg mt-7 p-4" option={option} />
+    <div className="px-6">
+      <Echarts className="shadow-3 rounded-lg mt-7 p-4" option={option} />
 
-        <List
-          simpleList
-          noHairlines
-          className="test-statistics shadow-3 rounded-lg mt-14 mb-0"
-        >
-          <ListItem className="py-7">
-            <span className="text-gray-600 text-sm">全年比例</span>
-            <Toggle
-              className="h-4"
-              checked={toggle}
-              onToggleChange={onToggleChange}
-            />
-          </ListItem>
-        </List>
+      <List
+        simpleList
+        noHairlines
+        className="test-statistics shadow-3 rounded-lg mt-14 mb-0"
+      >
+        <ListItem className="py-7">
+          <span className="text-gray-600 text-sm">全年比例</span>
+          <Toggle
+            className="h-4"
+            checked={toggle}
+            onToggleChange={onToggleChange}
+          />
+        </ListItem>
+      </List>
 
-        <section className="mt-6">
-          {percentageDetails.map((item, index) => (
-            <PercentageItem
-              icon={item.icon}
-              progress={item.value}
-              name={item.name}
-              index={index}
-              key={index}
-            />
-          ))}
-        </section>
-      </div>
-    </Page>
+      <section className="mt-6">
+        {percentageDetails.map((item, index) => (
+          <PercentageItem
+            icon={item.icon}
+            progress={item.value}
+            name={item.name}
+            index={index}
+            key={index}
+          />
+        ))}
+      </section>
+    </div>
   );
 };
 

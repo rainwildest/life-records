@@ -86,11 +86,9 @@ const Generalization: React.FC<GeneralizationOptions> = ({ year }) => {
   };
 
   return (
-    <Page>
-      <div className="px-6">
-        <Echarts className="shadow-3 rounded-lg mt-7 p-4" option={option} />
-      </div>
-    </Page>
+    <div className="px-6">
+      <Echarts className="shadow-3 rounded-lg mt-7 p-4" option={option} />
+    </div>
   );
 };
 
