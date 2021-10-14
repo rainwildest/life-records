@@ -40,9 +40,9 @@ const Index: React.FC = () => {
           </Link>
         </Toolbar>
 
-        <View id="home" tab main tabActive url="/home"></View>
-        <View id="statistics" tab url="/statistics"></View>
-        <View id="mine" tab url="/mine"></View>
+        <View id="home" tab main tabActive url="/home" />
+        <View id="statistics" tab url="/statistics" />
+        <View id="mine" tab url="/mine" />
       </Views>
     </Page>
   );

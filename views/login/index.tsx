@@ -1,31 +1,29 @@
-import React, { useState, useEffect } from "react";
-import {
-  Page,
-  PageContent,
-  Link,
-  Navbar,
-  NavLeft,
-  useStore
-} from "framework7-react";
+import React, { useState } from "react";
+import { Page, PageContent, Link, Navbar, NavLeft } from "framework7-react";
+import { RouterOpotions } from "typings/f7-route";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Icons from "components/Icons";
 import store from "lib/store";
 
-const signin: React.FC = () => {
+const signin: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
   const [isSignUp, setIsSignUp] = useState(false);
-  // const token = useStore("token");
-  // useEffect(() => {
-  //   console.log("ksjdlkfjklsdjkfjkjl", token);
-  // }, [token]);
+
   const onSetStatusFalse = () => {
     setIsSignUp(false);
   };
   const onSetStatusTrue = () => {
-    setIsSignUp(false);
+    setIsSignUp(true);
   };
   const onSuccess = (token) => {
-    store.dispatch("setToken", { token });
+    store.dispatch("setToken", token);
+
+    const { to } = f7route.query;
+    if (!to) return f7router.back();
+
+    f7router.navigate(to, {
+      clearPreviousHistory: true
+    });
   };
 
   return (

@@ -32,7 +32,7 @@ const Statistics: React.FC = () => {
 
   return (
     <Page pageContent={false}>
-      <Navbar>
+      <Navbar noHairline>
         <div
           className="w-full h-full absolute left-0 top-0 flex justify-center items-center font-bold"
           onClick={openPicker}

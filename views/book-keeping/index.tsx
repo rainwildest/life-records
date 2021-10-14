@@ -40,7 +40,7 @@ const Bookkeeping: React.FC = () => {
 
   return (
     <Page noToolbar pageContent={false}>
-      <Navbar backLink>
+      <Navbar noHairline backLink>
         <NavTitle>
           <Segmented strong className="w-36">
             <Button tabLink="#tab-pay" tabLinkActive>

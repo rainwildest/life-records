@@ -11,8 +11,9 @@ import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import { format } from "lib/api/dayjs";
 import CostCard from "components/CostCard";
+import { RouterOpotions } from "typings/f7-route";
 
-const Bill: React.FC = () => {
+const Bill: React.FC<RouterOpotions> = () => {
   const [picker, setPicker] = useState(null);
   const [date, setDate] = useState("");
   const openPicker = () => picker.open();
@@ -33,8 +34,8 @@ const Bill: React.FC = () => {
   const statistics = data?.statisticalDetails || {};
 
   return (
-    <Page noToolbar pageContent={false}>
-      <Navbar backLink>
+    <Page pageContent={false}>
+      <Navbar noHairline backLink>
         <NavTitle>账单</NavTitle>
         <NavRight>
           <Button className="w-20" large small fill onClick={openPicker}>

@@ -1,5 +1,14 @@
 import React, { memo, useState, useCallback, useEffect } from "react";
-import { Page, Link, Navbar, NavRight, Fab, useStore } from "framework7-react";
+import {
+  Page,
+  PageContent,
+  Link,
+  Navbar,
+  NavRight,
+  Fab,
+  useStore,
+  NavLeft
+} from "framework7-react";
 import Icons from "components/Icons";
 import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import CostCard from "components/CostCard";
@@ -15,25 +24,21 @@ const Home: React.FC = () => {
   });
   const statistics = data?.statisticalDetails || {};
 
+  const [logged, setLogged] = useState(!!token);
   /* 强制刷新 */
   const [, updateState] = useState<any>();
   const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
     console.log("home token", token);
+    if (!token) return;
+
+    setLogged(!!token);
   }, [token]);
 
   return (
-    <Page
-      ptr
-      onPtrRefresh={(done) => {
-        setTimeout(() => {
-          refetch();
-          done();
-        }, 2000);
-      }}
-    >
-      <Navbar large transparent>
+    <Page pageContent={false}>
+      <Navbar noHairline large transparent>
         <NavRight>
           <Link href="/bill">
             <Icons name="bill" className="notepad-icon" />
@@ -48,51 +53,54 @@ const Home: React.FC = () => {
           </div>
         </NavRight>
       </Navbar>
-
-      {/* <div>
-          <div className="font-color color-orange">
-            <span className="text-xs font-semibold pr-2">今日支出</span>
-            <span className="text-lg font-bold">￥200</span>
+      <PageContent
+        ptr
+        onPtrRefresh={(done) => {
+          if (!logged) return done();
+          setTimeout(() => {
+            // refetch();
+            done();
+          }, 2000);
+        }}
+      >
+        {!!logged && (
+          <div className="pt-2 px-6 mb-10">
+            <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
+              <span>今日收入：{statistics.income || 0}</span>
+              <span className="pl-4">今日支出：{statistics.pay || 0}</span>
+            </div>
+            {statistics.details?.map((detail, index) => (
+              <CostCard
+                key={detail.id}
+                incomeTitle="今日收入"
+                payTitle="今日支出"
+                useMarginTop14={!index}
+                type={detail.expense.expenseType}
+                typeName={detail.expense.expenseName}
+                time={relative(detail.purchaseTime)}
+                amount={detail.expensePrice}
+                remarks={detail.remarks}
+              />
+            ))}
           </div>
-          <div className="font-color color-gray mt-2">
-            <span className="text-xs font-semibold pr-2">今日收入</span>
-            <span className="text-lg font-bold">￥200</span>
-          </div>
+        )}
 
-          <div className="mt-7">
-            <Button outline round href="/bookkeeping/">
-              记一下
-            </Button>
-          </div>
-        </div> */}
-
-      {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4">
-        <Icons name="cry" className="empty-icon" />
-        <div className="font-color color-gray">
-          今日还没任何记录呦，去<Link href="/bookkeeping/">记一笔</Link>
-        </div>
-      </div> */}
-      <a href="/login">登录</a>
-      <div className="pt-2 px-6 mb-10">
-        <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
-          <span>今日收入：{statistics.income || 0}</span>
-          <span className="pl-4">今日支出：{statistics.pay || 0}</span>
-        </div>
-
-        {statistics.details?.map((detail, index) => (
-          <CostCard
-            key={detail.id}
-            incomeTitle="今日收入"
-            payTitle="今日支出"
-            useMarginTop14={!index}
-            type={detail.expense.expenseType}
-            typeName={detail.expense.expenseName}
-            time={relative(detail.purchaseTime)}
-            amount={detail.expensePrice}
-            remarks={detail.remarks}
+        <div style={{ height: "1000px" }}></div>
+      </PageContent>
+      {!logged && (
+        <section className="w-full absolute top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 flex flex-col justify-center items-center z-50">
+          <img
+            className="w-80 h-80 object-contain"
+            src="/images/menhera-01.webp"
           />
-        ))}
-      </div>
+          <section className="text-sm text-gray-700">
+            还没登录呢，
+            <Link href="/login" className="text-blue-600">
+              去登录吧(づ◡ど)
+            </Link>
+          </section>
+        </section>
+      )}
 
       <Fab
         position="right-bottom"
