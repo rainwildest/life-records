@@ -34,7 +34,7 @@ const Bill: React.FC<RouterOpotions> = () => {
   const statistics = data?.statisticalDetails || {};
 
   return (
-    <Page pageContent={false}>
+    <Page noToolbar pageContent={false}>
       <Navbar noHairline backLink>
         <NavTitle>账单</NavTitle>
         <NavRight>
