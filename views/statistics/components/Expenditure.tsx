@@ -41,7 +41,7 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
   };
 
   return (
-    <div className="px-6">
+    <div className="px-6 mb-10">
       <Echarts className="shadow-3 rounded-lg mt-7 p-4" option={option} />
 
       <List
