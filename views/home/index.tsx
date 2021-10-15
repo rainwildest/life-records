@@ -6,14 +6,14 @@ import {
   Navbar,
   NavRight,
   Fab,
-  useStore,
-  NavLeft
+  useStore
 } from "framework7-react";
-import Icons from "components/Icons";
 import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
-import CostCard from "components/CostCard";
 import { relative } from "lib/api/dayjs";
-import store from "lib/store";
+import Icons from "components/Icons";
+import CostCard from "components/CostCard";
+import NotloggedIn from "components/NotloggedIn";
+import ThemeIcon from "components/ThemeIcon";
 
 const Home: React.FC = () => {
   // const { loading, data } = useSameDayQuery();
@@ -36,6 +36,7 @@ const Home: React.FC = () => {
     setLogged(!!token);
   }, [token]);
 
+  const [isDark, setIsDark] = useState(false);
   return (
     <Page pageContent={false}>
       <Navbar noHairline large transparent>
@@ -44,13 +45,12 @@ const Home: React.FC = () => {
             <Icons name="bill" className="notepad-icon" />
           </Link>
 
-          <div className="grid grid-cols-1 pl-4">
-            <Icons
-              name="moon"
-              className="theme-moon row-span-1-2 col-span-1-2"
-            />
-            {/* <Icons name="sunlight" className="row-span-1-2 col-span-1-2" /> */}
-          </div>
+          <ThemeIcon
+            dark={isDark}
+            onToggle={() => {
+              setIsDark(!isDark);
+            }}
+          />
         </NavRight>
       </Navbar>
       <PageContent
@@ -87,20 +87,7 @@ const Home: React.FC = () => {
 
         <div style={{ height: "1000px" }}></div>
       </PageContent>
-      {!logged && (
-        <section className="w-full absolute top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 flex flex-col justify-center items-center z-50">
-          <img
-            className="w-80 h-80 object-contain"
-            src="/images/menhera-01.webp"
-          />
-          <section className="text-sm text-gray-700">
-            还没登录呢，
-            <Link href="/login" className="text-blue-600">
-              去登录吧(づ◡ど)
-            </Link>
-          </section>
-        </section>
-      )}
+      {!logged && <NotloggedIn />}
 
       <Fab
         position="right-bottom"
