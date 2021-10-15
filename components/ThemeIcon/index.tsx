@@ -31,7 +31,7 @@ const ThemeIcon: React.FC<ThemeIconOptions> = () => {
     const _timer = setTimeout(() => {
       setReomveThemeClass(false);
       setTimer(null);
-    }, 1000 * 1.8);
+    }, 1000 * 2);
 
     setTimeout(() => {
       store.dispatch("setDark", !isDark);
