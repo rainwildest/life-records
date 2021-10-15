@@ -1,10 +1,11 @@
 import React from "react";
 import Icons from "components/Icons";
-import { Page, Toolbar, Views, View, Link } from "framework7-react";
+import { Page, Toolbar, Views, View, Link, useStore } from "framework7-react";
 
 const Index: React.FC = () => {
+  const isDark = useStore("dark");
   return (
-    <Page pageContent={false}>
+    <Page themeDark={isDark} pageContent={false}>
       {/* <Toolbar tabbar labels bottom>
         <Link tabLink href="/" routeTabId="tab-home">
           <Icons name="notepad-02" className="toolbar-icon" />

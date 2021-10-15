@@ -25,22 +25,15 @@ const Home: React.FC = () => {
   /* 强制刷新 */
   // const [, updateState] = useState<any>();
   // const forceUpdate = useCallback(() => updateState({}), []);
-
-  const [isDark, setIsDark] = useState(false);
   return (
-    <Page pageContent={false}>
+    <Page className="transition duration-300 ease-in-out" pageContent={false}>
       <Navbar noHairline large transparent>
         <NavRight>
           <Link href="/bill">
             <Icons name="bill" className="notepad-icon" />
           </Link>
 
-          <ThemeIcon
-            dark={isDark}
-            onToggle={() => {
-              setIsDark(!isDark);
-            }}
-          />
+          <ThemeIcon />
         </NavRight>
       </Navbar>
       <PageContent

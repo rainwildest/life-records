@@ -1,35 +1,46 @@
 import React, { useState, memo } from "react";
+import { useStore } from "framework7-react";
 import Icons from "components/Icons";
+import store from "lib/store";
 
 type ThemeIconOptions = {
   dark?: boolean;
   onToggle?: () => void;
 };
-const ThemeIcon: React.FC<ThemeIconOptions> = ({ dark = false, onToggle }) => {
+const ThemeIcon: React.FC<ThemeIconOptions> = () => {
+  const darkStatus = useStore("dark");
+  const [isDark, setIsDark] = useState(darkStatus);
   const [reomveThemeClass, setReomveThemeClass] = useState(false);
   const [timer, setTimer] = useState(null);
+
+  const themeContainerClass = `${isDark ? "rw-theme-dark " : ""}`;
+  const themeIconClass = "row-span-1-2 col-span-1-2";
+
+  const themeMoonIcon = `${isDark ? "theme-hide " : "theme-active "}`;
+  const themeMoonAnimation = `${reomveThemeClass ? "theme-moon " : ""}`;
+  const themeMoon = `${themeMoonIcon}${themeMoonAnimation}${themeIconClass}`;
+
+  const themeSunlightIcon = `${isDark ? "theme-active " : "theme-hide "}`;
+  const themeSunlightAnimation = `${reomveThemeClass ? "theme-sunlight " : ""}`;
+  const themeSunlight = `${themeSunlightIcon}${themeSunlightAnimation}${themeIconClass}`;
+
   const onThemeChange = () => {
     if (timer) return;
 
-    onToggle && onToggle();
+    setIsDark(!isDark);
     const _timer = setTimeout(() => {
       setReomveThemeClass(false);
       setTimer(null);
     }, 1000 * 1.8);
 
+    setTimeout(() => {
+      store.dispatch("setDark", !isDark);
+    }, 1000 * 1);
+
     setTimer(_timer);
     setReomveThemeClass(true);
   };
-  const themeContainerClass = `${dark ? "rw-theme-dark " : ""}`;
-  const themeIconClass = "row-span-1-2 col-span-1-2";
 
-  const themeMoonIcon = `${dark ? "theme-hide " : "theme-active "}`;
-  const themeMoonAnimation = `${reomveThemeClass ? "theme-moon " : ""}`;
-  const themeMoon = `${themeMoonIcon}${themeMoonAnimation}${themeIconClass}`;
-
-  const themeSunlightIcon = `${dark ? "theme-active " : "theme-hide "}`;
-  const themeSunlightAnimation = `${reomveThemeClass ? "theme-sunlight " : ""}`;
-  const themeSunlight = `${themeSunlightIcon}${themeSunlightAnimation}${themeIconClass}`;
   return (
     <div
       className={`${themeContainerClass}theme-container grid grid-cols-1 pl-4`}
