@@ -18,8 +18,7 @@ Framework7.use(Framework7React);
 const MyApp = function ({
   Component,
   pageProps,
-  token,
-  user
+  token
 }: AppProps & { token: string; user: { [key: string]: any } }): JSX.Element {
   store.dispatch("setToken", token);
   const apolloClient = useApollo(pageProps?.initialApolloState);

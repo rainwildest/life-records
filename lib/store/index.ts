@@ -3,7 +3,8 @@ import { createStore } from "framework7/lite";
 const store = createStore({
   state: {
     token: null,
-    user: null
+    user: null,
+    dark: false
   },
   actions: {
     setUser({ state }, { user }) {
@@ -11,6 +12,9 @@ const store = createStore({
     },
     setToken({ state }, token) {
       state.token = token;
+    },
+    setDark({ state }, dark) {
+      state.dark = dark;
     }
   },
   getters: {
@@ -19,6 +23,9 @@ const store = createStore({
     },
     token({ state }) {
       return state.token;
+    },
+    dark({ state }) {
+      return state.dark;
     }
   }
 });
