@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   // const [, updateState] = useState<any>();
   // const forceUpdate = useCallback(() => updateState({}), []);
   return (
-    <Page className="transition duration-300 ease-in-out" pageContent={false}>
+    <Page pageContent={false}>
       <Navbar noHairline large transparent>
         <NavRight>
           <Link href="/bill">

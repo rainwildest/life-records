@@ -6,6 +6,7 @@ type IconsProps = {
   className?: string;
   style?: { [key: string]: any };
   onClick?: React.MouseEventHandler & React.MouseEventHandler<SVGSVGElement>;
+  [key: string]: any;
 };
 
 const handleClassName = (className: string): string => {

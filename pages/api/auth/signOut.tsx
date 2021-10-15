@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import initPassport from "lib/api/initPassport";
 import middleware from "lib/api/middleware";
 import passport from "passport";
+import { removeTokenCookie } from "lib/api/auth-cookies";
 initPassport();
 
 export default async (
@@ -11,5 +12,6 @@ export default async (
   await middleware(req, res);
 
   (req as passport).logout();
-  return res.end(JSON.stringify({ state: true }));
+  removeTokenCookie(res);
+  return res.end(JSON.stringify({ code: 2000, error: null, data: null }));
 };
