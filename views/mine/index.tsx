@@ -1,37 +1,8 @@
-import React, { memo, useState, useCallback, useEffect } from "react";
-import {
-  Page,
-  PageContent,
-  Link,
-  Navbar,
-  NavRight,
-  Fab,
-  useStore,
-  NavLeft
-} from "framework7-react";
+import React, { memo } from "react";
+import { Page, PageContent, Link, Navbar, NavRight } from "framework7-react";
 import Icons from "components/Icons";
-import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
-import CostCard from "components/CostCard";
-import { relative } from "lib/api/dayjs";
-import store from "lib/store";
 
-const Home: React.FC = () => {
-  // const { loading, data } = useSameDayQuery();
-  const token = useStore("token");
-
-  const { loading, data, refetch } = useDetailsQuery({
-    // fetchPolicy: "no-cache"
-  });
-  const statistics = data?.statisticalDetails || {};
-
-  /* 强制刷新 */
-  const [, updateState] = useState<any>();
-  const forceUpdate = useCallback(() => updateState({}), []);
-
-  useEffect(() => {
-    console.log("home token", token);
-  }, [token]);
-
+const Mine: React.FC = () => {
   return (
     <Page pageContent={false}>
       <Navbar noHairline>
@@ -54,4 +25,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default memo(Home);
+export default memo(Mine);

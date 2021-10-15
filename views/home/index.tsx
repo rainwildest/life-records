@@ -19,22 +19,12 @@ const Home: React.FC = () => {
   // const { loading, data } = useSameDayQuery();
   const token = useStore("token");
 
-  const { loading, data, refetch } = useDetailsQuery({
-    // fetchPolicy: "no-cache"
-  });
+  const { loading, data, refetch } = useDetailsQuery();
   const statistics = data?.statisticalDetails || {};
 
-  const [logged, setLogged] = useState(!!token);
   /* 强制刷新 */
-  const [, updateState] = useState<any>();
-  const forceUpdate = useCallback(() => updateState({}), []);
-
-  useEffect(() => {
-    console.log("home token", token);
-    if (!token) return;
-
-    setLogged(!!token);
-  }, [token]);
+  // const [, updateState] = useState<any>();
+  // const forceUpdate = useCallback(() => updateState({}), []);
 
   const [isDark, setIsDark] = useState(false);
   return (
@@ -56,14 +46,14 @@ const Home: React.FC = () => {
       <PageContent
         ptr
         onPtrRefresh={(done) => {
-          if (!logged) return done();
+          if (!token) return done();
           setTimeout(() => {
             // refetch();
             done();
           }, 2000);
         }}
       >
-        {!!logged && (
+        {!!token && (
           <div className="pt-2 px-6 mb-10">
             <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
               <span>今日收入：{statistics.income || 0}</span>
@@ -87,7 +77,7 @@ const Home: React.FC = () => {
 
         <div style={{ height: "1000px" }}></div>
       </PageContent>
-      {!logged && <NotloggedIn />}
+      {!token && <NotloggedIn />}
 
       <Fab
         position="right-bottom"
