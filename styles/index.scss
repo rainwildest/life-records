@@ -270,9 +270,17 @@ body {
   }
 }
 
-.mine-setting {
+.mine-setting-icon {
   svg {
     height: 28px;
     width: 28px;
+  }
+}
+
+.setting-after-icon {
+  svg {
+    width: 15px;
+    height: 15px;
+    fill: #d1d5db;
   }
 }

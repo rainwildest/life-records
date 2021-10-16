@@ -16,7 +16,6 @@ import NotloggedIn from "components/NotloggedIn";
 import ThemeIcon from "components/ThemeIcon";
 
 const Home: React.FC = () => {
-  // const { loading, data } = useSameDayQuery();
   const token = useStore("token");
 
   const { loading, data, refetch } = useDetailsQuery();

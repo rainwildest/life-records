@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { useState, memo } from "react";
 import {
   Page,
   PageContent,
@@ -7,16 +7,37 @@ import {
   NavRight,
   List,
   ListItem,
-  Icon
+  Icon,
+  useStore
 } from "framework7-react";
 import request from "lib/api/request";
 import store from "lib/store";
 import Icons from "components/Icons";
 
 const Mine: React.FC = () => {
+  const [requesting, setRequesting] = useState(false);
+  const token = useStore("token");
+
+  const onSignOut = () => {
+    setRequesting(true);
+
+    setTimeout(() => {
+      request({
+        url: "/api/auth/signOut",
+        method: "GET"
+      }).then((val) => {
+        const { code, data } = val;
+        if (code === 2000) {
+          store.dispatch("setToken", null);
+          setRequesting(false);
+        }
+      });
+    }, 1000 * 0.5);
+  };
+
   return (
     <Page pageContent={false}>
-      <Navbar noHairline>
+      <Navbar large noHairline>
         <NavRight>
           <Link href="/bill">
             <Icons name="bill" className="notepad-icon" />
@@ -34,35 +55,31 @@ const Mine: React.FC = () => {
       <PageContent>
         <List className="mine-setting" inset>
           <ListItem link="#" title="Ivan Petrov" after="CEO">
-            <Icons slot="media" name="moon" />
+            <Icons slot="media" name="moon" className="mine-setting-icon" />
           </ListItem>
           <ListItem link="#" title="John Doe" after="Cleaner">
-            <Icons slot="media" name="moon" />
+            <Icons slot="media" name="moon" className="mine-setting-icon" />
           </ListItem>
           <ListItem link="#" title="Jenna Smith">
-            <Icons slot="media" name="moon" />
+            <Icons slot="media" name="moon" className="mine-setting-icon" />
           </ListItem>
         </List>
 
-        <List className="mine-setting" inset>
-          <ListItem
-            link="#"
-            title="退出"
-            onClick={() => {
-              console.log("jsdkfjs");
-              request({
-                url: "/api/auth/signOut",
-                method: "GET"
-              }).then((val) => {
-                const { code, data } = val;
-                if (code === 2000) store.dispatch("setToken", null);
-              });
-            }}
-          >
-            <Icons slot="media" name="moon" />
-            <div slot="after">jkj</div>
-          </ListItem>
-        </List>
+        {!!token && (
+          <List inset>
+            <ListItem link="#" title="退出" onClick={onSignOut}>
+              <Icons slot="media" name="moon" className="mine-setting-icon" />
+              {requesting && (
+                <Icons
+                  slot="after"
+                  name="spinner"
+                  className="setting-after-icon animate-spin"
+                />
+              )}
+            </ListItem>
+          </List>
+        )}
+        <div style={{ height: "1000px" }}></div>
       </PageContent>
     </Page>
   );
