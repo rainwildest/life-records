@@ -284,3 +284,22 @@ body {
     fill: #d1d5db;
   }
 }
+
+.mine-nav-color,
+.mine-nav-color .navbar-bg,
+.mine-bg-color {
+  background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
+}
+
+.mine-container {
+  width: calc(100vw - 30px);
+  top: 36%;
+  box-shadow: 5px 5px 10px #b9b9b9;
+}
+
+.mine-avatar {
+  svg {
+    width: 50px;
+    height: 50px;
+  }
+}

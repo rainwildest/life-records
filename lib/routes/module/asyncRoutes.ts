@@ -2,7 +2,7 @@ import React from "react";
 import store from "lib/store";
 
 const options = {
-  transition: "f7-cover"
+  // transition: "f7-cover"
 };
 
 type RedirectOptions = {
