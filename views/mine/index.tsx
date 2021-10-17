@@ -82,12 +82,12 @@ const Mine: React.FC = () => {
           </div>
         </div>
         <List inset>
-          <ListItem link="#" title="绑定账号">
+          <ListItem link="#" title="设置">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
           </ListItem>
         </List>
 
-        {!!token && (
+        {/* {!!token && (
           <List inset>
             <ListItem link="#" title="退出" onClick={onSignOut}>
               <Icons slot="media" name="moon" className="mine-setting-icon" />
@@ -100,10 +100,10 @@ const Mine: React.FC = () => {
               )}
             </ListItem>
           </List>
-        )}
+        )} */}
 
         <List inset>
-          <ListItem link="#" title="关于">
+          <ListItem link="/about" title="关于">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
           </ListItem>
         </List>
