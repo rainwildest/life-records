@@ -32,7 +32,6 @@ const asyncRoutes = [
         login: { query: `to=${to.route.path}` }
       });
     },
-    // asyncComponent: (): React.ReactNode => import("pages/book-keeping"),
     options
   },
   {
@@ -69,6 +68,22 @@ const asyncRoutes = [
     path: "/about",
     name: "about",
     asyncComponent: (): React.ReactNode => import("views/about"),
+    options
+  },
+  {
+    path: "/setting",
+    redirect: function ({ to, resolve }): void {
+      onRedirect(resolve, {
+        redirect: { url: "/route-setting" },
+        login: { query: `to=${to.route.path}` }
+      });
+    },
+    options
+  },
+  {
+    path: "/route-setting",
+    name: "route-setting",
+    asyncComponent: (): React.ReactNode => import("views/setting"),
     options
   }
 ];
