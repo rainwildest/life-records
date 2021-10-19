@@ -26,7 +26,6 @@ const Bookkeeping: React.FC = () => {
   const [createCostDetailMutation] = useCreateCostDetailMutation();
 
   const onSelected = (e: { [key: string]: IDSQLOptions }) => {
-    console.log(e);
     Object.keys(e).forEach((type) => {
       expense.current[type] = e[type].id;
     });

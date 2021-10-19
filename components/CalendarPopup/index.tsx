@@ -63,9 +63,11 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
     `custom-calendar-${parseInt((Math.random() * 100).toString())}`
   );
   const containerEl = useRef<HTMLDivElement>(null);
+  const calendar = useRef(null);
+
   useEffect(() => {
     // Inline with custom toolbar
-    const calendarInline = f7.calendar.create({
+    calendar.current = f7.calendar.create({
       containerEl: containerEl.current,
       value: [typeof value === "string" ? new Date(value) : value || null],
       weekHeader: true,
@@ -99,7 +101,7 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
           `;
       },
       on: {
-        init: function (c) {
+        init(c) {
           const months = [];
           const years = [];
           for (let i = 0; i < 12; ++i) months.push(i);
@@ -129,7 +131,7 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
             );
 
             f7.$(".month-item").click((e) => {
-              calendarInline.setYearMonth(
+              calendar.current.setYearMonth(
                 c.currentYear,
                 f7.$(e.target).data("month"),
                 300
@@ -154,7 +156,7 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
               `
             );
             f7.$(".year-item").click((e) => {
-              calendarInline.setYearMonth(
+              calendar.current.setYearMonth(
                 f7.$(e.target).data("year"),
                 c.currentMonth,
                 300
@@ -163,14 +165,14 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
             });
           });
         },
-        monthYearChangeStart: function (c) {
+        monthYearChangeStart(c) {
           const currentMonth = c.currentMonth + 1;
           f7.$(".custom-month-selector .center").text(
             `${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`
           );
           f7.$(".custom-year-selector .center").text(`${c.currentYear}`);
         },
-        dayClick: function (calendar, dayEl, year, month, day) {
+        dayClick(calendar, dayEl, year, month, day) {
           month = month + 1;
           setDateSelect(
             `${year}-${month < 10 ? `0${month}` : month}-${
@@ -181,11 +183,11 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
       }
     });
 
-    return () => calendarInline.destroy();
+    return () => calendar.current?.destroy();
   }, []);
 
   const _onConfirm = () => {
-    if (onConfirm) onConfirm(dateSelect);
+    onConfirm && onConfirm(dateSelect);
   };
 
   return (
@@ -197,7 +199,10 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
       }}
       opened={popupOpened}
       onPopupClosed={() => {
-        if (value !== dateSelect) setDateSelect(value as string);
+        if (value !== dateSelect) {
+          calendar.current.setValue([value]);
+          setDateSelect(value as string);
+        }
       }}
     >
       <div
@@ -221,7 +226,7 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
             <Button
               className="w-24"
               color="blue"
-              onClick={onCancel ? onCancel : null}
+              onClick={(onCancel && onCancel) || null}
             >
               取&ensp;消
             </Button>
