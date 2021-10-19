@@ -17,15 +17,19 @@ import Income from "./components/Income";
 import Calc from "components/Calc";
 import CalendarPopup from "components/CalendarPopup";
 const Bookkeeping: React.FC = () => {
-  const expenseId = useRef("");
+  const expense = useRef({});
+  const expenseType = useRef("pay");
   const [popupOpened, setPopupOpened] = useState(false);
   const [date, setDate] = useState(format(new Date().toISOString()));
 
   /* 新增消费记录 */
   const [createCostDetailMutation] = useCreateCostDetailMutation();
 
-  const onSelected = (e: IDSQLOptions) => {
-    expenseId.current = e.id;
+  const onSelected = (e: { [key: string]: IDSQLOptions }) => {
+    console.log(e);
+    Object.keys(e).forEach((type) => {
+      expense.current[type] = e[type].id;
+    });
   };
 
   const toastTip = (text = "") => {
@@ -38,15 +42,72 @@ const Bookkeeping: React.FC = () => {
       .open();
   };
 
+  const onCalcConfirm = (value) => {
+    const type = expenseType.current;
+    const expenseId = expense.current[type];
+
+    if (!expenseId) return toastTip("请选择类型");
+
+    const sameDay = format(new Date().toISOString());
+    const purchaseTime =
+      date === sameDay ? new Date().toISOString() : `${date} 00:00:00`;
+
+    createCostDetailMutation({
+      variables: {
+        input: {
+          purchaseTime,
+          expenseId: expenseId,
+          expensePrice: value.amounts,
+          remarks: value.remarks
+        }
+      }
+    })
+      .then(() => {
+        toastTip("添加成功");
+      })
+      .catch(() => {
+        toastTip("添加失败");
+      });
+  };
+
+  const onClickCalendar = () => {
+    setPopupOpened(true);
+  };
+
+  const onCalendarCancel = () => {
+    setPopupOpened(false);
+  };
+
+  const onCalendarConfirm = (date) => {
+    setDate(date);
+    setPopupOpened(false);
+  };
+
+  const onGetAttribute = (e) => {
+    const type = e.target.getAttribute("data-type");
+    expenseType.current = type;
+  };
+
   return (
     <Page noToolbar pageContent={false}>
       <Navbar noHairline backLink>
         <NavTitle>
           <Segmented strong className="w-36">
-            <Button tabLink="#tab-pay" tabLinkActive>
+            <Button
+              tabLink="#tab-pay"
+              tabLinkActive
+              data-type="pay"
+              onClick={onGetAttribute}
+            >
               支出
             </Button>
-            <Button tabLink="#tab-income">收入</Button>
+            <Button
+              tabLink="#tab-income"
+              data-type="income"
+              onClick={onGetAttribute}
+            >
+              收入
+            </Button>
           </Segmented>
         </NavTitle>
       </Navbar>
@@ -63,50 +124,15 @@ const Bookkeeping: React.FC = () => {
           <div className="px-4 pb-2">
             <Calc
               date={date}
-              onClickCalendar={() => {
-                setPopupOpened(true);
-              }}
-              onConfirm={(value) => {
-                if (!expenseId.current) {
-                  toastTip("请选择类型");
-                  return;
-                }
-
-                const sameDay = format(new Date().toISOString());
-                const purchaseTime =
-                  date === sameDay
-                    ? new Date().toISOString()
-                    : `${date} 00:00:00`;
-
-                createCostDetailMutation({
-                  variables: {
-                    input: {
-                      purchaseTime,
-                      expenseId: expenseId.current,
-                      expensePrice: value.amounts,
-                      remarks: value.remarks
-                    }
-                  }
-                })
-                  .then(() => {
-                    toastTip("添加成功");
-                  })
-                  .catch(() => {
-                    toastTip("添加失败");
-                  });
-              }}
+              onClickCalendar={onClickCalendar}
+              onConfirm={onCalcConfirm}
             />
 
             <CalendarPopup
               popupOpened={popupOpened}
               value={date}
-              onCancel={() => {
-                setPopupOpened(false);
-              }}
-              onConfirm={(date) => {
-                setDate(date);
-                setPopupOpened(false);
-              }}
+              onCancel={onCalendarCancel}
+              onConfirm={onCalendarConfirm}
             />
           </div>
         </div>

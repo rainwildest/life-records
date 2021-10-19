@@ -1,19 +1,29 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { Swiper, SwiperSlide } from "framework7-react";
 import Icons from "components/Icons";
 
 type Options = LivingExpensesOptions & DateAndIdSQLFieldOption;
 type ExpensesItemOption = {
+  type?: string;
   data: Array<Options[]>;
-  onSelected?: (val: Options) => void;
+  onSelected?: (val: { [key: string]: Options }) => void;
 };
 
-const ExpensesItem: React.FC<ExpensesItemOption> = ({ data, onSelected }) => {
-  const [active, setActive] = useState(null);
+const ExpensesItem: React.FC<ExpensesItemOption> = ({
+  type,
+  data,
+  onSelected
+}) => {
+  const [active, setActive] = useState("0-0");
 
+  useEffect(() => {
+    const index = active.split("-");
+    const info = data[index[0]][index[1]];
+    onSelected && onSelected({ [type]: info });
+  }, []);
   return (
     <Swiper
-      className="demo-swiper demo-swiper-auto h-full overflow-y-auto"
+      className="expenses-swiper expenses-swiper-auto h-full overflow-y-auto"
       spaceBetween={10}
       slidesPerView={"auto"}
       centeredSlides
@@ -22,16 +32,18 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({ data, onSelected }) => {
         return (
           <SwiperSlide key={index}>
             <div className="grid grid-cols-4 gap-4 items-center py-3">
-              {detail.map((item, index) => (
+              {detail.map((item, subIndex) => (
                 <div
                   key={item.id}
                   className={`${
-                    active === index ? "inset-shadow-3" : "shadow-3"
+                    active === `${index}-${subIndex}`
+                      ? "inset-shadow-3"
+                      : "shadow-3"
                   } py-2 rounded-lg flex flex-col items-center`}
-                  data-index={index}
+                  data-index={`${index}-${subIndex}`}
                   onClick={() => {
-                    setActive(index);
-                    onSelected && onSelected(item);
+                    setActive(`${index}-${subIndex}`);
+                    onSelected && onSelected({ [type]: item });
                   }}
                 >
                   <Icons
