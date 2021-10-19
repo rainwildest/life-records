@@ -22,8 +22,8 @@ const Home: React.FC = () => {
   const statistics = data?.statisticalDetails || {};
 
   /* 强制刷新 */
-  // const [, updateState] = useState<any>();
-  // const forceUpdate = useCallback(() => updateState({}), []);
+  const [, updateState] = useState<any>();
+  const forceUpdate = useCallback(() => updateState({}), []);
   return (
     <Page pageContent={false}>
       <Navbar noHairline large transparent>
@@ -40,9 +40,10 @@ const Home: React.FC = () => {
         onPtrRefresh={(done) => {
           if (!token) return done();
           setTimeout(() => {
-            // refetch();
+            refetch();
+            forceUpdate();
             done();
-          }, 2000);
+          }, 500);
         }}
       >
         {!!token && (
@@ -66,8 +67,6 @@ const Home: React.FC = () => {
             ))}
           </div>
         )}
-
-        <div style={{ height: "1000px" }}></div>
       </PageContent>
       {!token && <NotloggedIn />}
 
