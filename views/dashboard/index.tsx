@@ -4,6 +4,10 @@ import { Page, Toolbar, Views, View, Link, useStore } from "framework7-react";
 
 const Index: React.FC = () => {
   const isDark = useStore("dark");
+  const onVibrate = () => {
+    const hasVibrate = "vibrate" in navigator;
+    hasVibrate && navigator.vibrate(100);
+  };
   return (
     <Page themeDark={isDark} pageContent={false}>
       {/* <Toolbar tabbar labels bottom>
@@ -27,15 +31,15 @@ const Index: React.FC = () => {
       </Tabs> */}
       <Views tabs>
         <Toolbar labels tabbar bottom>
-          <Link tabLink="#home" tabLinkActive>
+          <Link tabLink="#home" tabLinkActive onClick={onVibrate}>
             <Icons name="notepad-02" className="toolbar-icon" />
             <span className="tabbar-label tabbar-custom">账簿</span>
           </Link>
-          <Link tabLink="#statistics">
+          <Link tabLink="#statistics" onClick={onVibrate}>
             <Icons name="statistics" className="toolbar-icon" />
             <span className="tabbar-label tabbar-custom">统计</span>
           </Link>
-          <Link tabLink="#mine">
+          <Link tabLink="#mine" onClick={onVibrate}>
             <Icons name="mine" className="toolbar-mine-icon" />
             <span className="tabbar-label tabbar-custom">我的</span>
           </Link>

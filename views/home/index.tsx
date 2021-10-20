@@ -6,7 +6,8 @@ import {
   Navbar,
   NavRight,
   Fab,
-  useStore
+  useStore,
+  Icon
 } from "framework7-react";
 import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import { relative } from "lib/api/dayjs";

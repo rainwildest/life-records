@@ -3,7 +3,7 @@ import { Page, Block, Navbar, BlockTitle } from "framework7-react";
 const About: React.FC = () => {
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline />
+      <Navbar backLink noHairline title="关于" />
       <BlockTitle className="mt-20">项目声明</BlockTitle>
       <Block strong inset>
         <p>
