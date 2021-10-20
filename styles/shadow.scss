@@ -1,0 +1,25 @@
+:root .theme-dark,
+:root.theme-dark {
+  --shadow-before-color: rgb(26 26 26 / 40%);
+  --shadow-after-color: rgb(102 102 102 / 28%);
+}
+:root {
+  // 阴影配色基于 --f7-page-bg-color #efeff4;
+  --shadow-before-color: #cbcbcf;
+  --shadow-after-color: #ffffff;
+}
+
+.inset-shadow-3 {
+  box-shadow: inset 3px 3px 6px var(--shadow-before-color),
+    inset -3px -3px 6px var(--shadow-after-color);
+}
+
+.shadow-2 {
+  box-shadow: 2px 2px 4px var(--shadow-before-color),
+    -2px -2px 4px var(--shadow-after-color);
+}
+
+.shadow-3 {
+  box-shadow: 3px 3px 6px var(--shadow-before-color),
+    -3px -3px 6px var(--shadow-after-color);
+}

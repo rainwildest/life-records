@@ -1,5 +1,5 @@
 import { userid } from "./common";
-import { currentUser } from "./users";
+import { currentUser, statistics } from "./users";
 import { costDetails, expense } from "./cost-details";
 import { livingExpenses } from "./living-expenses";
 import {
@@ -19,6 +19,9 @@ export const queries = {
 };
 
 export const custom = {
+  User: {
+    statistics
+  },
   CostDetails: {
     user: userid,
     expense

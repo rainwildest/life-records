@@ -4,6 +4,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "./shadow.scss";
 @import "./common.scss";
 @import "./toggle.scss";
 @import "./layout.scss";
@@ -104,37 +105,6 @@ body {
   border-bottom-width: calc(1px);
 }
 
-:root .theme-dark,
-:root.theme-dark {
-  --shadow-before-color: rgb(26 26 26 / 40%);
-  --shadow-after-color: rgb(102 102 102 / 28%);
-
-  --shadow-3: 3px 3px 6px var(--shadow-before-color),
-    -3px -3px 6px var(--shadow-after-color);
-
-  --inset-shadow-3: inset 3px 3px 6px var(--shadow-before-color),
-    inset -3px -3px 6px var(--shadow-after-color);
-}
-:root {
-  // 阴影配色基于 --f7-page-bg-color #efeff4;
-  --shadow-before-color: #cbcbcf;
-  --shadow-after-color: #ffffff;
-
-  --shadow-3: 3px 3px 6px var(--shadow-before-color),
-    -3px -3px 6px var(--shadow-after-color);
-
-  --inset-shadow-3: inset 3px 3px 6px var(--shadow-before-color),
-    inset -3px -3px 6px var(--shadow-after-color);
-}
-
-.inset-shadow-3 {
-  box-shadow: var(--inset-shadow-3);
-}
-
-.shadow-3 {
-  box-shadow: var(--shadow-3);
-}
-
 .expense-icon {
   svg {
     width: 30px;
@@ -143,7 +113,8 @@ body {
 }
 
 .calc-active:active {
-  box-shadow: var(--inset-shadow-3-);
+  box-shadow: inset 3px 3px 6px var(--shadow-before-color),
+    inset -3px -3px 6px var(--shadow-after-color);
 }
 
 .test-statistics {
@@ -288,19 +259,19 @@ body {
 .mine-nav-color,
 .mine-nav-color .navbar-bg,
 .mine-bg-color {
-  background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
+  background: linear-gradient(-45deg, #7f7fd5, #86a8e7, #91eae4);
 }
 
 .mine-container {
   // width: calc(100vw - 30px);
-  top: 36%;
-  box-shadow: 5px 5px 10px #b9b9b9;
+  top: -6%;
+  // box-shadow: 5px 5px 10px #b9b9b9;
 }
 
 .mine-avatar {
   svg {
-    width: 50px;
-    height: 50px;
+    width: 72px;
+    height: 72px;
   }
 }
 

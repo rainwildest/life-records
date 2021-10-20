@@ -15,6 +15,25 @@ type User {
   createdAt: Date
   modifiedAt: Date
   deletedAt: Date
+
+  statistics: UserStatistics
+}
+
+type UserStatisticsPay {
+  days: Int
+  months: Int
+  years: Int
+}
+
+type UserStatisticsIncome {
+  days: Int
+  months: Int
+  years: Int
+}
+
+type UserStatistics {
+  pay: UserStatisticsPay
+  income: UserStatisticsIncome
 }
 
 type Query {

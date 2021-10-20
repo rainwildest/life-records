@@ -6,7 +6,6 @@ export default (
   args: { id: string },
   _context: unknown
 ): Promise<any> => {
-  console.log("jsdlkfjs");
   if (!args.id)
     throw new UserInputError("Consumption type information cannot be empty");
 

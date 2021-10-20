@@ -38,13 +38,19 @@ const getApolloServerHandler = async () => {
       schema,
       async context(_ctx) {
         const user = await getLoginSession(_ctx.req);
-
         return {
           ..._ctx,
           loaders: createLoaders,
           user
         };
       }
+      // tracing: true
+      // playground: {
+      //   settings: {
+      //     "request.credentials": "include"
+      //   }
+      // },
+      // introspection: false
     }).createHandler({
       path: "/api/graphql"
     });

@@ -83,6 +83,7 @@ export const verifyUserByEmail = async (
       email,
       password
     })
+    .andWhere("deleted_at is null")
     .execute("get");
 };
 

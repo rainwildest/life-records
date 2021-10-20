@@ -80,7 +80,7 @@ export const statisticalGeneralization = async (
 };
 
 /**
- * 统计全年或月份的支出情况
+ * 统计全年或月份的支出、收入情况
  */
 export const statisticalExpenditure = async (args: {
   userId: string;
@@ -109,4 +109,33 @@ export const statisticalExpenditure = async (args: {
       `t2.expense_name, t2.expense_icon, to_char(t1.purchase_time, '${format}')`
     )
     .orderBy("purchase_time", "ASC");
+};
+
+/**
+ * 统计全年、当天、当月费用
+ */
+export const statisticalUserConsumption = async (args: {
+  userId: string;
+  type?: "pay" | "income";
+  format?: string;
+}): Promise<any> => {
+  const { userId, type = "pay", format = "yyyy" } = args;
+
+  const orm = await knex();
+  return orm("cost_details AS t1")
+    .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
+    .select(
+      orm.raw(`
+        SUM(CASE WHEN t2.expense_type='${type}' THEN t1.expense_price ELSE 0 END) AS ${type},
+        to_char(purchase_time, '${format}') as purchase_time
+      `)
+    )
+    .whereRaw(
+      `to_char(t1.purchase_time, '${format}') = to_char(now(), '${format}')`
+    )
+    .andWhereRaw(`t1.user_id = ?`, [userId])
+    .andWhereRaw(`t2.expense_type = ?`, [type])
+    .whereNull("t1.deleted_at")
+    .groupByRaw(`to_char(t1.purchase_time, '${format}')`)
+    .then((rows) => (rows.length ? rows[0][type] || 0 : 0));
 };
