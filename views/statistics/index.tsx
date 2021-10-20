@@ -11,7 +11,6 @@ import {
   useStore
 } from "framework7-react";
 import store from "lib/store";
-import CalendarPopup from "components/CalendarPopup";
 import Generalization from "./components/Generalization";
 import Expenditure from "./components/Expenditure";
 import Income from "./components/Income";
@@ -21,7 +20,6 @@ import NotloggedIn from "components/NotloggedIn";
 import { RouterOpotions } from "typings/f7-route";
 const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
   const token = useStore("token");
-  const [popupOpened, setPopupOpened] = useState(false);
   const [date, setDate] = useState("");
   const [picker, setPicker] = useState(null);
 
@@ -37,12 +35,6 @@ const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
     setDate(formatDatePicker((picker?.value as string[]) || []));
     setPicker(picker);
   }, []);
-
-  // useEffect(() => {
-  //   console.log("kjksdf");
-  //   if (!token) return;
-  //   forceUpdate();
-  // }, [token]);
 
   const _picker = () => picker.open();
   const openPicker = token && _picker;
@@ -78,18 +70,6 @@ const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
           {!!token && <Income date={date} />}
         </Tab>
       </Tabs>
-
-      <CalendarPopup
-        value={date}
-        popupOpened={popupOpened}
-        onCancel={() => {
-          setPopupOpened(false);
-        }}
-        onConfirm={(time) => {
-          setDate(time);
-          setPopupOpened(false);
-        }}
-      />
 
       {!token && <NotloggedIn className="h-full" />}
     </Page>
