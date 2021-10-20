@@ -75,7 +75,7 @@ export const statisticalGeneralization = async (
     .whereRaw(`to_char(t1.purchase_time, 'yyyy') = ?`, [year])
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .whereNull("t1.deleted_at")
-    .groupByRaw("to_char(t1.purchase_time, 'yyyy-mm')")
+    .groupByRaw(`to_char(t1.purchase_time, 'yyyy-mm')`)
     .orderBy("purchase_time", "ASC");
 };
 
@@ -98,13 +98,15 @@ export const statisticalExpenditure = async (args: {
         SUM(CASE WHEN t2.expense_type='${type}' THEN t1.expense_price ELSE 0 END) AS ${type}, 
         t2.expense_name,
         t2.expense_icon,
-        to_char(purchase_time, 'yyyy-mm') as purchase_time 
+        to_char(purchase_time, '${format}') as purchase_time 
       `)
     )
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .andWhereRaw(`t2.expense_type = ?`, [type])
     .whereNull("t1.deleted_at")
-    .groupByRaw("t2.expense_name, t2.expense_icon, t1.purchase_time")
+    .groupByRaw(
+      `t2.expense_name, t2.expense_icon, to_char(t1.purchase_time, '${format}')`
+    )
     .orderBy("purchase_time", "ASC");
 };
