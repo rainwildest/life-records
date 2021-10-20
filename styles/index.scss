@@ -68,7 +68,7 @@ body {
   width: math.div(230rem, $font-size-base);
 }
 
-.demo-swiper {
+.expenses-swiper {
   .swiper-slide {
     font-size: 25px;
     font-weight: 300;
@@ -79,7 +79,7 @@ body {
     box-sizing: border-box;
   }
 
-  &.demo-swiper-auto .swiper-slide {
+  &.expenses-swiper-auto .swiper-slide {
     width: 85%;
   }
 }
