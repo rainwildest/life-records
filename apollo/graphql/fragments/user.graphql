@@ -8,7 +8,7 @@ fragment UserOptions on User {
   githubProviderId
   googleProviderId
   phoneNumber
-  password
+  # password
   avatar
   isAdmin
   isVerify
