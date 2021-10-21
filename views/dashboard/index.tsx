@@ -3,13 +3,13 @@ import Icons from "components/Icons";
 import { Page, Toolbar, Views, View, Link, useStore } from "framework7-react";
 
 const Index: React.FC = () => {
-  const isDark = useStore("dark");
+  // const isDark = useStore("dark");
   const onVibrate = () => {
     const hasVibrate = "vibrate" in navigator;
     hasVibrate && navigator.vibrate(100);
   };
   return (
-    <Page themeDark={isDark} pageContent={false}>
+    <Page pageContent={false}>
       {/* <Toolbar tabbar labels bottom>
         <Link tabLink href="/" routeTabId="tab-home">
           <Icons name="notepad-02" className="toolbar-icon" />

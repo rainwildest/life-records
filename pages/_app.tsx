@@ -1,19 +1,15 @@
 import type { AppProps /* , AppContext */ } from "next/app";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "apollo/client";
-import Framework7 from "framework7/lite-bundle";
-import Framework7React, { App as FrameworkApp } from "framework7-react";
-import f7params from "lib/configure/f7params";
 import fontSizeBase from "lib/fontSizeBase";
 import React, { useEffect } from "react";
 import Head from "next/head";
 import { getTokenCookie } from "lib/api/auth-cookies";
 import { getLoginSession } from "lib/api/auth";
 import store from "lib/store";
+import Framework7 from "components/Framework7";
 import "framework7/framework7-bundle.min.css";
 import "styles/index.scss";
-
-Framework7.use(Framework7React);
 
 const MyApp = function ({
   Component,
@@ -36,9 +32,12 @@ const MyApp = function ({
         />
       </Head>
       <ApolloProvider client={apolloClient}>
-        <FrameworkApp {...f7params} store={store}>
+        {/* <FrameworkApp {...f7params} store={store}>
           <Component {...pageProps} />
-        </FrameworkApp>
+        </FrameworkApp> */}
+        <Framework7>
+          <Component {...pageProps} />
+        </Framework7>
       </ApolloProvider>
     </>
   );

@@ -6,8 +6,7 @@ import {
   Navbar,
   NavRight,
   Fab,
-  useStore,
-  Icon
+  useStore
 } from "framework7-react";
 import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import { relative } from "lib/api/dayjs";
@@ -25,6 +24,7 @@ const Home: React.FC = () => {
   /* 强制刷新 */
   const [, updateState] = useState<any>();
   const forceUpdate = useCallback(() => updateState({}), []);
+
   return (
     <Page pageContent={false}>
       <Navbar noHairline large transparent>
