@@ -28,7 +28,7 @@ const MineDetails: React.FC = () => {
         <div className="mine-avatar w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
           <Icons name="moon" />
         </div>
-        <section className={`text-center mt-5${accClassName}`}>
+        <section className={`mt-5 text-center ${accClassName}`}>
           <div className="text-xl font-bold">
             {hasLogged ? user?.username : "xxxxxxxx"}
           </div>
