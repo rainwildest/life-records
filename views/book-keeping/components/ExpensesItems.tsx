@@ -18,10 +18,10 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({
 
   useEffect(() => {
     const index = active.split("-");
-    const k = data[index[0]];
-    const info = (k && k[index[1]]) || {};
+    let info = data[index[0]];
+    info = (info && info[index[1]]) || {};
     onSelected && onSelected({ [type]: info });
-  }, [data]);
+  }, []);
   return (
     <Swiper
       className="expenses-swiper expenses-swiper-auto h-full overflow-y-auto"
