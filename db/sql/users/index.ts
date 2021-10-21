@@ -34,7 +34,7 @@ export const createUserByOauth = async (
  * @memberof UserModel
  * @param {array} ids
  */
-export const getUserByIdsQuery = async (
+export const getUserByIds = async (
   ids = []
 ): Promise<[UserSnakeOptions & DateAndIdSQLFieldSnakeOption]> => {
   return getDataByIds(Users, ids);
@@ -45,7 +45,7 @@ export const getUserByIdsQuery = async (
  * @memberof UserModel
  * @param {string} userId 用户的 id
  */
-export const getUserByIdQuery = async (
+export const getUserById = async (
   userId: string
 ): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return getDatabyId(Users, userId);

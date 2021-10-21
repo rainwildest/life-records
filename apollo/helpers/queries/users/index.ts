@@ -1,3 +1,3 @@
-import currentUser from "./currentUser";
+import user from "./user";
 import statistics from "./statistics";
-export { currentUser, statistics };
+export { user, statistics };

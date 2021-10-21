@@ -1,7 +1,19 @@
 # import UserOptions from '../fragments/user.graphql'
 
-query User {
-  currentUser {
+query user {
+  user {
     ...UserOptions
+    statistics {
+      pay {
+        days
+        months
+        years
+      }
+      income {
+        days
+        months
+        years
+      }
+    }
   }
 }

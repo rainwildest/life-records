@@ -1,5 +1,5 @@
 import { userid } from "./common";
-import { currentUser, statistics } from "./users";
+import { user, statistics } from "./users";
 import { costDetails, expense } from "./cost-details";
 import { livingExpenses } from "./living-expenses";
 import {
@@ -10,7 +10,7 @@ import {
 } from "./statistical";
 
 export const queries = {
-  currentUser,
+  user,
   costDetails,
   livingExpenses,
   statisticalDetails,
