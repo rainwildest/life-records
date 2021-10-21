@@ -17,6 +17,24 @@ import MineDetails from "./components/MineDetails";
 
 const Mine: React.FC = () => {
   const token = useStore("token");
+  const [requesting, setRequesting] = useState(false);
+
+  const onSignOut = () => {
+    setRequesting(true);
+
+    setTimeout(() => {
+      request({
+        url: "/api/auth/signOut",
+        method: "GET"
+      }).then((val) => {
+        const { code, data } = val;
+        if (code === 2000) {
+          store.dispatch("setToken", null);
+          setRequesting(false);
+        }
+      });
+    }, 1000 * 0.5);
+  };
 
   return (
     <Page pageContent={false}>
@@ -26,7 +44,7 @@ const Mine: React.FC = () => {
       <PageContent>
         <MineDetails />
 
-        <div className="p-3 grid gap-3 grid-cols-3 rounded-lg mx-4 shadow-3">
+        <div className="p-3 grid mt-10 gap-3 grid-cols-3 rounded-lg mx-4 shadow-3">
           <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">设置</div>
@@ -61,13 +79,25 @@ const Mine: React.FC = () => {
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">关于</div>
           </Link>
-          <Link
-            href="#"
-            className="block m-0 text-center p-2 rounded-lg shadow-2"
-          >
-            <Icons slot="media" name="moon" className="mine-setting-icon" />
-            <div className="text-xs">退出</div>
-          </Link>
+          {!!token && (
+            <Link
+              href="#"
+              className="block m-0 text-center p-2 rounded-lg shadow-2"
+              onClick={onSignOut}
+            >
+              {!requesting && (
+                <Icons slot="media" name="moon" className="mine-setting-icon" />
+              )}
+              {requesting && (
+                <Icons
+                  slot="after"
+                  name="spinner"
+                  className="setting-after-icon animate-spin"
+                />
+              )}
+              <div className="text-xs">退出</div>
+            </Link>
+          )}
         </div>
         {/* <List inset>
           <ListItem link="/setting" title="设置">
