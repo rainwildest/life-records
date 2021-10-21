@@ -74,15 +74,14 @@ const Mine: React.FC = () => {
         <div className="p-3 grid gap-3 grid-cols-3 rounded-lg mx-4 my-8 shadow-3">
           <Link
             href="/about"
-            className="block m-0 text-center p-2 rounded-lg shadow-2"
+            className="block m-0 text-center p-2 rounded-lg select-none shadow-2"
           >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">关于</div>
           </Link>
           {!!token && (
-            <Link
-              href="#"
-              className="block m-0 text-center p-2 rounded-lg shadow-2"
+            <div
+              className="link block m-0 text-center p-2 rounded-lg select-none shadow-2"
               onClick={onSignOut}
             >
               {!requesting && (
@@ -96,7 +95,7 @@ const Mine: React.FC = () => {
                 />
               )}
               <div className="text-xs">退出</div>
-            </Link>
+            </div>
           )}
         </div>
         {/* <List inset>
