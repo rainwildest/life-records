@@ -1,7 +1,7 @@
 import React, { Fragment, memo } from "react";
 
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
-import { group } from "../tool";
+import { group } from "../tools";
 import ExpensesItems from "./ExpensesItems";
 
 type Options = LivingExpensesOptions & DateAndIdSQLFieldOption;
