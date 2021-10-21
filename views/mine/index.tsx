@@ -26,44 +26,44 @@ const Mine: React.FC = () => {
       <PageContent>
         <MineDetails />
 
-        <div className="p-2 grid gap-3 grid-cols-3 rounded-lg mx-4 shadow-3">
-          <Link className="block m-0 text-center p-1 rounded-lg shadow-2">
+        <div className="p-3 grid gap-3 grid-cols-3 rounded-lg mx-4 shadow-3">
+          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">设置</div>
           </Link>
-          <Link className="block m-0 text-center p-1 rounded-lg shadow-2">
+          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">绑定账号</div>
           </Link>
-          <Link className="block m-0 text-center p-1 rounded-lg shadow-2">
+          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">我的账本</div>
           </Link>
-          <Link className="block m-0 text-center p-1 rounded-lg shadow-2">
+          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">预算</div>
           </Link>
-          <Link className="block m-0 text-center p-1 rounded-lg shadow-2">
+          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">资金计划</div>
           </Link>
-          <Link className="block m-0 text-center p-1 rounded-lg shadow-2">
+          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">分类管理</div>
           </Link>
         </div>
 
-        <div className="p-2 grid gap-3 grid-cols-3 rounded-lg mx-4 my-8 shadow-3">
+        <div className="p-3 grid gap-3 grid-cols-3 rounded-lg mx-4 my-8 shadow-3">
           <Link
             href="/about"
-            className="block m-0 text-center p-1 rounded-lg shadow-2"
+            className="block m-0 text-center p-2 rounded-lg shadow-2"
           >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">关于</div>
           </Link>
           <Link
             href="#"
-            className="block m-0 text-center p-1 rounded-lg shadow-2"
+            className="block m-0 text-center p-2 rounded-lg shadow-2"
           >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">退出</div>

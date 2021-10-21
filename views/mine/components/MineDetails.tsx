@@ -19,7 +19,7 @@ const MineDetails: React.FC = () => {
       <BlockHeader className="mt-7 font-bold">收入统计</BlockHeader>
       <div className="mine-container p-2 mx-3 rounded-lg grid grid-cols-3 gap-2 mt-1 shadow-3">
         <section
-          className="rounded px-1 py-3 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
+          className="rounded px-1 py-4 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
           style={{
             color: "#B91C1C"
           }}
@@ -29,7 +29,7 @@ const MineDetails: React.FC = () => {
         </section>
 
         <section
-          className="rounded px-1 py-3 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
+          className="rounded px-1 py-4 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
           style={{
             color: "#B91C1C"
           }}
@@ -38,7 +38,7 @@ const MineDetails: React.FC = () => {
           <div className="truncate leading-none mt-2">+2000000000</div>
         </section>
         <section
-          className="rounded px-1 py-2 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
+          className="rounded px-1 py-4 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
           style={{
             color: "#B91C1C"
           }}
@@ -51,7 +51,7 @@ const MineDetails: React.FC = () => {
       <BlockHeader className="mt-7 font-bold">支出统计</BlockHeader>
       <div className="mine-container p-2 mx-3 mb-10 rounded-lg grid grid-cols-3 gap-2 mt-1 shadow-3">
         <section
-          className="rounded px-1 py-3 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
+          className="rounded px-1 py-4 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
           style={{
             color: "#10B981"
           }}
@@ -61,7 +61,7 @@ const MineDetails: React.FC = () => {
         </section>
 
         <section
-          className="rounded px-1 py-3 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
+          className="rounded px-1 py-4 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
           style={{
             color: "#10B981"
           }}
@@ -70,7 +70,7 @@ const MineDetails: React.FC = () => {
           <div className="truncate leading-none mt-2">-20</div>
         </section>
         <section
-          className="rounded px-1 py-3 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
+          className="rounded px-1 py-4 block my-0 text-center font-bold text-xs text-white leading-loose shadow-2"
           style={{
             color: "#10B981"
           }}
