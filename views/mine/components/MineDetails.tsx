@@ -18,8 +18,8 @@ const MineDetails: React.FC = () => {
 
   const hasLogged = !loading && token;
   const accSkeleton =
-    !loading || (token && " skeleton-text skeleton-effect-wave");
-  const accOpacity = !token && " opacity-0";
+    token && loading ? " skeleton-text skeleton-effect-wave" : "";
+  const accOpacity = !token ? " opacity-0" : "";
   const accClassName = `${accSkeleton}${accOpacity}`;
 
   return (
@@ -28,11 +28,11 @@ const MineDetails: React.FC = () => {
         <div className="mine-avatar w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
           <Icons name="moon" />
         </div>
-        <section className={`text-center mt-3${accClassName}`}>
+        <section className={`text-center mt-5${accClassName}`}>
           <div className="text-xl font-bold">
             {hasLogged ? user?.username : "xxxxxxxx"}
           </div>
-          <div className="text-sm font-medium">
+          <div className="text-sm mt-1 font-medium">
             {hasLogged ? user?.email : "xxxxxxxxxxxxxxxx"}
           </div>
         </section>

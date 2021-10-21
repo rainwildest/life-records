@@ -1,15 +1,5 @@
 import React, { useState, memo, useEffect } from "react";
-import {
-  Page,
-  PageContent,
-  Link,
-  Navbar,
-  NavRight,
-  List,
-  ListItem,
-  Icon,
-  useStore
-} from "framework7-react";
+import { Page, PageContent, Link, useStore } from "framework7-react";
 import request from "lib/api/request";
 import store from "lib/store";
 import Icons from "components/Icons";
