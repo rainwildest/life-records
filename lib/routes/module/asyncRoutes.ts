@@ -1,91 +1,62 @@
-import React from "react";
-import store from "lib/store";
+import { routesHandle, RoutesHandleOptions } from "../tools";
 
 const options = {
   // transition: "f7-cover"
 };
 
-type RedirectOptions = {
-  redirect?: any;
-  login?: any;
-};
-const onRedirect = (resolve, options: RedirectOptions) => {
-  const {
-    redirect: { url, query: redirectQuery },
-    login: { query: loginQuery }
-  } = options;
-
-  const token = store.getters.token;
-  const route = token.value
-    ? `${url}${redirectQuery ? `?${redirectQuery}` : ""}`
-    : `/login${loginQuery ? `?${loginQuery}` : ""}`;
-  resolve(route);
-};
-
-const asyncRoutes = [
-  /* 记账 */
+const testAsyncRoutes: RoutesHandleOptions[] = [
   {
-    path: "/book-keeping",
-    redirect: function ({ to, resolve }): void {
-      onRedirect(resolve, {
-        redirect: { url: "/route-book-keeping" },
-        login: { query: `to=${to.route.path}` }
-      });
-    },
-    options
+    async: true,
+    url: "login",
+    component: (): React.ReactNode => import("pages/login")
   },
   {
-    path: "/route-book-keeping",
-    name: "route-book-keeping",
-    asyncComponent: (): React.ReactNode => import("pages/book-keeping"),
-    options
-  },
-  /* 账单 */
-  {
-    path: "/bill",
-    name: "bill",
-    redirect: function ({ to, resolve }): void {
-      onRedirect(resolve, {
-        redirect: { url: "/route-bill" },
-        login: { query: `to=${to.route.path}` }
-      });
-    },
-    options
+    async: true,
+    url: "about",
+    component: (): React.ReactNode => import("views/about")
   },
   {
-    path: "/route-bill",
-    name: "route-bill",
-    asyncComponent: (): React.ReactNode => import("views/bill"),
-    options
+    async: true,
+    redirect: true,
+    url: "book-keeping",
+    component: (): React.ReactNode => import("pages/book-keeping")
   },
   {
-    path: "/login",
-    name: "login",
-    asyncComponent: (): React.ReactNode => import("pages/login"),
-    options
+    async: true,
+    redirect: true,
+    url: "bill",
+    component: (): React.ReactNode => import("views/bill")
   },
   {
-    path: "/about",
-    name: "about",
-    asyncComponent: (): React.ReactNode => import("views/about"),
-    options
+    async: true,
+    redirect: true,
+    url: "setting",
+    component: (): React.ReactNode => import("views/setting")
   },
   {
-    path: "/setting",
-    redirect: function ({ to, resolve }): void {
-      onRedirect(resolve, {
-        redirect: { url: "/route-setting" },
-        login: { query: `to=${to.route.path}` }
-      });
-    },
-    options
+    async: true,
+    redirect: true,
+    url: "bind-account",
+    component: (): React.ReactNode => import("views/bind-account")
   },
   {
-    path: "/route-setting",
-    name: "route-setting",
-    asyncComponent: (): React.ReactNode => import("views/setting"),
-    options
+    async: true,
+    redirect: true,
+    url: "account-book",
+    component: (): React.ReactNode => import("views/account-book")
+  },
+  {
+    async: true,
+    redirect: true,
+    url: "budget",
+    component: (): React.ReactNode => import("views/budget")
+  },
+  {
+    async: true,
+    redirect: true,
+    url: "fund-plan",
+    component: (): React.ReactNode => import("views/fund-plan")
   }
 ];
 
-export default asyncRoutes;
+export default routesHandle(testAsyncRoutes, options);
