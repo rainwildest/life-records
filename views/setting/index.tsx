@@ -1,55 +1,27 @@
 import React, { useState, memo } from "react";
-import { Page, Navbar, List, ListItem } from "framework7-react";
+import { Page, Navbar, List, ListItem, Toggle } from "framework7-react";
 import Icons from "components/Icons";
-import request from "lib/api/request";
-import store from "lib/store";
 import { RouterOpotions } from "typings/f7-route";
 
 const Setting: React.FC<RouterOpotions> = ({ f7router }) => {
-  const [requesting, setRequesting] = useState(false);
-
-  const onSignOut = () => {
-    setRequesting(true);
-
-    setTimeout(() => {
-      request({
-        url: "/api/auth/signOut",
-        method: "GET"
-      }).then((val) => {
-        const { code, data } = val;
-        if (code === 2000) {
-          store.dispatch("setToken", null);
-          setRequesting(false);
-
-          f7router.back();
-        }
-      });
-    }, 1000 * 0.5);
-  };
+  const hasVibrate = "vibrate" in navigator;
+  const [toggle, setToggle] = useState(true);
 
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline></Navbar>
+      <Navbar backLink noHairline title="设置" />
       {/* <img src="/images/3.png" alt="" /> */}
-      <List inset>
-        <ListItem link="#" title="绑定账号">
-          <Icons slot="media" name="moon" className="mine-setting-icon" />
+      <List className="text-sm" inset>
+        <ListItem title="关闭震动" disabled={!hasVibrate}>
+          <Icons slot="media" name="vibrate" className="mine-setting-icon" />
+          <Toggle
+            className="h-4"
+            checked={toggle}
+            // onToggleChange={onToggleChange}
+          />
         </ListItem>
-        <ListItem link="#" title="绑定账号">
-          <Icons slot="media" name="moon" className="mine-setting-icon" />
-        </ListItem>
-      </List>
-
-      <List inset>
-        <ListItem link="#" title="退出" onClick={onSignOut}>
-          <Icons slot="media" name="moon" className="mine-setting-icon" />
-          {requesting && (
-            <Icons
-              slot="after"
-              name="spinner"
-              className="setting-after-icon animate-spin"
-            />
-          )}
+        <ListItem link="#" title="暗夜主题" after="关闭">
+          <Icons slot="media" name="dark-theme" className="mine-setting-icon" />
         </ListItem>
       </List>
     </Page>

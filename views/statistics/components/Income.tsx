@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Page, List, ListItem, Toggle } from "framework7-react";
+import { List, ListItem, Toggle } from "framework7-react";
 import { useIncomeQuery } from "apollo/graphql/model/statistics.graphql";
 import Echarts from "components/Echarts";
 import { echartsConfig, onSelectDate } from "../tools";

@@ -35,27 +35,45 @@ const Mine: React.FC = () => {
         <MineDetails />
 
         <div className="p-3 grid mt-10 gap-3 grid-cols-3 rounded-lg mx-4 shadow-3">
-          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
+          <Link
+            href="/setting"
+            className="block m-0 text-center p-2 rounded-lg shadow-2"
+          >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">设置</div>
           </Link>
-          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
+          <Link
+            href="/bind-account"
+            className="block m-0 text-center p-2 rounded-lg shadow-2"
+          >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">绑定账号</div>
           </Link>
-          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
+          <Link
+            href="/account-book"
+            className="block m-0 text-center p-2 rounded-lg shadow-2"
+          >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">我的账本</div>
           </Link>
-          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
+          <Link
+            href="/budget"
+            className="block m-0 text-center p-2 rounded-lg shadow-2"
+          >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
-            <div className="text-xs">预算</div>
+            <div className="text-xs">预算中心</div>
           </Link>
-          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
+          <Link
+            href="/fund-plan"
+            className="block m-0 text-center p-2 rounded-lg shadow-2"
+          >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">资金计划</div>
           </Link>
-          <Link className="block m-0 text-center p-2 rounded-lg shadow-2">
+          <Link
+            href="/classification"
+            className="block m-0 text-center p-2 rounded-lg shadow-2"
+          >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
             <div className="text-xs">分类管理</div>
           </Link>
