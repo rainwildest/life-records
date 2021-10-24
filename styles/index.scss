@@ -282,3 +282,22 @@ body {
     fill: #6b7280;
   }
 }
+
+.calc-delete-icon {
+  svg {
+    width: 20px;
+  }
+}
+
+.test-i::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75px;
+  width: 80px;
+  height: 100%;
+  z-index: 100;
+  border-radius: 100%;
+  background-color: var(--f7-page-bg-color);
+  box-shadow: 4px 0px 5px var(--f7-page-bg-color);
+}

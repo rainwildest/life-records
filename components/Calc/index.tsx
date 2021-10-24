@@ -1,11 +1,23 @@
 import React, { useRef, useState, Fragment } from "react";
 import { f7ready } from "framework7-react";
 import Icons from "../Icons";
+import { thousands } from "lib/api/utils";
+import {
+  lastOperation,
+  correctOperation,
+  operationResolve,
+  getOperation,
+  verifyNumber,
+  operationReplace
+} from "./tools";
 
 type CalcOption = {
   date?: string;
   onClickCalendar?: () => void;
-  onConfirm?: (value: { amounts: number; remarks: string }) => void;
+  onConfirm?: (
+    value: { amounts: number; remarks: string },
+    clear: () => void
+  ) => void;
 };
 const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
   const [remarks, setRemarks] = useState("");
@@ -34,64 +46,6 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
     { name: 0, code: 0 },
     { name: "清空", code: "clear" }
   ];
-
-  /**
-   * 判断运算公式对不对
-   * @param {string} value 检查的值
-   * @returns boolean
-   */
-  const correctOperation = (value: string) => {
-    /* 检验最后是否包含运算符 */
-    if (lastOperation(value)) return false;
-    // const isRational = /(×|＋|－)/.test(value);
-    return /(×|＋|－)/.test(value);
-  };
-
-  /* 获取运算符 */
-  const getOperation = (value: string) => value.match(/(×|＋|－)/g)[0];
-
-  /* 替换字符串最后运算符 */
-  const operationReplace = (value: string, operation: "×" | "＋" | "－" | "") =>
-    value.replace(/(×|＋|－){1}$/, operation);
-
-  /* 检验字符串最后是否包含运算符 */
-  const lastOperation = (value: string) => /(×|＋|－)$/.test(value);
-
-  /* 检验数字是否符合格式 */
-  const verifyNumber = (value: string) =>
-    /^([-]{0,1}((0{0,1}\.{0,1})|([1-9]*\.))[0-9]*)$/.test(value);
-
-  /* 运算结果 */
-  const operationResolve = (value: string): number | null => {
-    const operator = getOperation(value);
-    if (correctOperation(value)) {
-      let calc = 0;
-      if (operator) {
-        const values = value.split(operator);
-        switch (operator) {
-          case "＋":
-            calc = parseFloat(
-              (Number(values[0]) + Number(values[1])).toFixed(10)
-            );
-            break;
-          case "－":
-            calc = parseFloat(
-              (Number(values[0]) - Number(values[1])).toFixed(10)
-            );
-            break;
-          case "×":
-            calc = parseFloat(
-              (Number(values[0]) * Number(values[1])).toFixed(10)
-            );
-        }
-      }
-
-      return calc;
-    } else {
-      console.error("请正确运算");
-      return null;
-    }
-  };
 
   const handleOperator = (display: string, operation: "×" | "＋" | "－") => {
     let formula = "";
@@ -126,7 +80,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
     } else {
       /* 提交结果 */
       const amounts = parseFloat(Number(display).toFixed(10));
-      if (onConfirm) onConfirm({ amounts, remarks });
+      if (onConfirm) onConfirm({ amounts, remarks }, onClear);
     }
   };
 
@@ -192,7 +146,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
   };
 
   const onCalendar = () => {
-    if (onClickCalendar) onClickCalendar();
+    onClickCalendar && onClickCalendar();
   };
 
   const onShowPrompt = () => {
@@ -212,10 +166,20 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
     });
   };
 
+  const onDel = () => {
+    const len = display.length - 1;
+    const str = !len ? "0" : display.substr(0, len);
+    setDisplay(str);
+  };
+
   /* 让滚动一直保持在最右边 */
   const onScrollLeft = (element: HTMLElement) => {
     const scrollWidth = element.scrollWidth;
     element.scrollLeft = scrollWidth;
+  };
+
+  const onClear = () => {
+    setDisplay("0");
   };
 
   return (
@@ -233,10 +197,10 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
         </div>
       </div>
 
-      <div className="shadow-3 rounded-lg mt-2.5 py-6 px-3 h-7 flex justify-between items-center overflow-hidden">
+      <div className="shadow-3 rounded-lg mt-2.5 py-6 pl-3 h-7 flex justify-between items-center overflow-hidden">
         {!!date && (
           <div
-            className="flex-shrink-0 pr-4 flex items-center"
+            className="flex-shrink-0 pr-4 flex items-center link"
             onClick={onCalendar}
           >
             <div className="pr-1 pt-1">
@@ -246,11 +210,20 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
           </div>
         )}
 
-        <div
-          className="overflow-scrolling whitespace-nowrap overflow-x-auto font-bold py-8"
-          ref={displayRef}
-        >
-          {display}
+        <div className="test-i relative pl-1 w-full flex overflow-hidden items-center">
+          <div
+            className="w-full text-right overflow-scrolling whitespace-nowrap overflow-x-auto font-bold py-8"
+            ref={displayRef}
+          >
+            {display}
+            {/* {thousands(parseFloat(Number(display).toFixed(10)))} */}
+          </div>
+
+          <Icons
+            name="delete"
+            className="calc-delete-icon link pl-2 pr-3"
+            onClick={onDel}
+          />
         </div>
       </div>
       <div className="grid grid-cols-4 gap-2.5 pb-2 pt-2.5">

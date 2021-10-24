@@ -16,6 +16,7 @@ import Pay from "./components/Pay";
 import Income from "./components/Income";
 import Calc from "components/Calc";
 import CalendarPopup from "components/CalendarPopup";
+import { clear } from "console";
 const Bookkeeping: React.FC = () => {
   const expense = useRef({});
   const expenseType = useRef("pay");
@@ -41,7 +42,7 @@ const Bookkeeping: React.FC = () => {
       .open();
   };
 
-  const onCalcConfirm = (value) => {
+  const onCalcConfirm = (value, clear) => {
     const type = expenseType.current;
     const expenseId = expense.current[type];
 
@@ -62,6 +63,7 @@ const Bookkeeping: React.FC = () => {
       }
     })
       .then(() => {
+        clear && clear();
         toastTip("添加成功");
       })
       .catch(() => {
