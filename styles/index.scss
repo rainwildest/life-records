@@ -301,3 +301,26 @@ body {
   background-color: var(--f7-page-bg-color);
   box-shadow: 4px 0px 5px var(--f7-page-bg-color);
 }
+
+.ancient-books-container {
+  height: 170px;
+  width: 120px;
+  svg {
+    height: 170px;
+    width: 170px;
+  }
+}
+
+.ancient-book-name {
+  top: 18px;
+  left: 14px;
+  width: 36px;
+  height: 102px;
+}
+
+.account-book-add-icon {
+  svg {
+    width: 26px;
+    height: 26px;
+  }
+}
