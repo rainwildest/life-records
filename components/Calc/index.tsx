@@ -25,7 +25,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
   const [display, setDisplay] = useState("0");
   /* 运算状态 */
   const [operationState, setOperationState] = useState(false);
-  const [nextShowPoint, setNextShowPoint] = useState(false);
+  // const [nextShowPoint, setNextShowPoint] = useState(false);
 
   const displayRef = useRef<HTMLDivElement>();
   const remarksRef = useRef<HTMLDivElement>();
@@ -107,7 +107,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
         case "clear":
           setDisplay("0");
           setOperationState(false);
-          setNextShowPoint(false);
+          // setNextShowPoint(false);
           break;
         case "complete":
           completeResolve();
@@ -142,7 +142,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
 
     setDisplay(info);
     onScrollLeft(displayRef.current);
-    if (nextShowPoint) setNextShowPoint(false);
+    // if (nextShowPoint) setNextShowPoint(false);
   };
 
   const onCalendar = () => {
