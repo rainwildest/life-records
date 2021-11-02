@@ -24,7 +24,7 @@ const MineDetails: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="mine-bg-color flex flex-col items-center p-16 mx-3 rounded-3xl mt-3 shadow-3">
+      <div className="mine-bg-color flex flex-col items-center p-16 mx-3 rounded-3xl mt-5 shadow-3">
         <div className="mine-avatar w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
           <Icons name="moon" />
         </div>
