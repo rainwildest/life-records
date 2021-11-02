@@ -9,7 +9,7 @@ const Budget: React.FC = () => {
 
       <div className="pt-2 px-6 mb-10 mt-10">
         <BlockTitle className="mx-0 mt-0 mb-7 text-gray-700 text-xl">
-          十月<span className="px-1">·</span>月预算
+          十月<span className="px-1">·</span>预算
         </BlockTitle>
         <div className="shadow-3 rounded-lg py-3 px-4 flex justify-between">
           <div className="budget-title flex items-center flex-shrink-0 text-sm">
