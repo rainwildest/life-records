@@ -1,16 +1,15 @@
 import { Migration } from "@mikro-orm/migrations";
 
-export class Migration20211013064429 extends Migration {
+export class Migration20211102144556 extends Migration {
   async up(): Promise<void> {
     this.addSql('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
-
     this.addSql(
       'create table "budgets" ("id" uuid not null default uuid_generate_v4(), "seq_id" serial primary key, "created_at" timestamptz(0) not null default current_timestamp, "modified_at" timestamptz(0) null, "deleted_at" timestamptz(0) null, "user_id" varchar(255) null, "expense_id" varchar(255) not null, "amount" varchar(255) not null);'
     );
     this.addSql("comment on table \"budgets\" is '预算表';");
 
     this.addSql(
-      'create table "cost_details" ("id" uuid not null default uuid_generate_v4(), "seq_id" serial primary key, "created_at" timestamptz(0) not null default current_timestamp, "modified_at" timestamptz(0) null, "deleted_at" timestamptz(0) null, "user_id" varchar(255) null, "expense_id" varchar(255) not null, "expense_price" int4 null default 0, "remarks" text null, "purchase_time" timestamptz(0) not null);'
+      'create table "cost_details" ("id" uuid not null default uuid_generate_v4(), "seq_id" serial primary key, "created_at" timestamptz(0) not null default current_timestamp, "modified_at" timestamptz(0) null, "deleted_at" timestamptz(0) null, "user_id" varchar(255) null, "expense_id" varchar(255) not null, "expense_price" int4 null default 0, "rational" bool not null default true, "remarks" text null, "purchase_time" timestamptz(0) not null);'
     );
     this.addSql("comment on table \"cost_details\" is '生活费用记录表';");
 

@@ -22,6 +22,12 @@ export default class CostDetails extends SQLCommonField {
   expensePrice?: number;
 
   /**
+   *
+   */
+  @Property({ default: true })
+  rational?: boolean;
+
+  /**
    * @param {text} remarks 备注
    */
   @Property({ nullable: true, type: "text" })
