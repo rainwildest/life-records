@@ -1,7 +1,8 @@
 import React from "react";
-import { Page, Navbar, NavRight, Icon } from "framework7-react";
+import { Page, Navbar, NavRight } from "framework7-react";
 import Book from "./components/Book";
 import Icons from "components/Icons";
+
 const AccountBook: React.FC = () => {
   return (
     <Page noToolbar>
