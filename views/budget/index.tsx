@@ -13,7 +13,7 @@ const Budget: React.FC = () => {
         </BlockTitle>
         <div className="shadow-3 rounded-lg py-3 px-4 flex justify-between">
           <div className="budget-title flex items-center flex-shrink-0 text-sm">
-            <Icons name="budget" className="budget-icon pr-2" />
+            <Icons name="budget" className="budget-icon pr-3" />
             <div className="truncate text-gray-700">预算总金额</div>
           </div>
 
@@ -24,7 +24,7 @@ const Budget: React.FC = () => {
 
         <div className="shadow-3 rounded-lg py-3 px-4 mt-10 flex justify-between">
           <div className="budget-title flex items-center flex-shrink-0 text-sm">
-            <Icons name="moon" className="budget-icon pr-2" />
+            <Icons name="moon" className="budget-icon pr-3" />
             <div className="truncate text-gray-700">生活费</div>
           </div>
 

@@ -59,7 +59,7 @@ const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
         </Subnavbar>
       </Navbar>
 
-      <Tabs swipeable>
+      <Tabs>
         <Tab className="page-content" id="generalization" tabActive>
           {!!token && <Generalization year={date.split("-")[0]} />}
         </Tab>

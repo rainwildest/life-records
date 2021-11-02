@@ -335,3 +335,39 @@ body {
 .budget-title {
   max-width: 60%;
 }
+
+.plant-items-container {
+  ul {
+    background: transparent;
+  }
+  ul:before,
+  ul:after {
+    height: 0;
+  }
+  .item-inner:after {
+    height: 0;
+  }
+}
+.plant-item {
+  .item-content {
+    padding-left: 0;
+  }
+  .item-inner {
+    padding: 0;
+  }
+  .item-title {
+    width: 100%;
+  }
+  .swipeout-actions-right {
+    padding-left: 3px;
+    padding-right: 10px;
+  }
+  .swipeout-actions-right > a:after {
+    left: 300%;
+  }
+  .plant-operation {
+    border-radius: 8px;
+    height: 40px;
+    margin: 0 5px;
+  }
+}
