@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   List,
   ListItem,
@@ -13,6 +13,11 @@ const Planned: React.FC = () => {
   const onDeleted = () => {
     f7.dialog.alert("Thanks, item removed!");
   };
+  useEffect(() => {
+    setTimeout(() => {
+      f7.swipeout.delete(".plant-item");
+    }, 3000);
+  }, []);
   return (
     <List className="plant-items-container pt-2 px-6 mb-10 mt-6">
       <ListItem
