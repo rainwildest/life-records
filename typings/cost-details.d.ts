@@ -1,13 +1,13 @@
 declare type CostDetailsOptions = {
   userId?: string;
   expenseId: string;
-  expensePrice: number;
+  amounts: number;
   purchaseTime?: Date;
 };
 
 declare type CostDetailsSnakeOptions = {
   user_id: string;
   expense_id: string;
-  expense_price: number;
+  amounts: number;
   purchase_time?: Date;
 };

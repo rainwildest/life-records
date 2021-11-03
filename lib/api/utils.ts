@@ -130,6 +130,7 @@ export const percentage = (
 };
 
 export const thousands = (value: number | string): string => {
+  if (!value) return "0";
   const res = [];
   const strValue = typeof value === "string" ? value : value.toString();
   const splits = strValue.split(".");
