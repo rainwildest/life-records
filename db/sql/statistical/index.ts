@@ -18,8 +18,8 @@ export const amountStatisticsByDate = async (
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .select(
       orm.raw(`
-        SUM(CASE WHEN t2.expense_type='pay' THEN t1.expense_price ELSE 0 END) AS pay,
-        SUM(CASE WHEN t2.expense_type='income' THEN t1.expense_price ELSE 0 END) AS income
+        SUM(CASE WHEN t2.expense_type='pay' THEN t1.amounts ELSE 0 END) AS pay,
+        SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income
       `)
     )
     .whereRaw(`t1.purchase_time >= '${start}' AND t1.purchase_time < '${end}'`)
@@ -45,8 +45,8 @@ export const amountStatisticsByYearsOrMonth = async (
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .select(
       orm.raw(`
-        SUM(CASE WHEN t2.expense_type='pay' THEN t1.expense_price ELSE 0 END) AS pay,
-        SUM(CASE WHEN t2.expense_type='income' THEN t1.expense_price ELSE 0 END) AS income
+        SUM(CASE WHEN t2.expense_type='pay' THEN t1.amounts ELSE 0 END) AS pay,
+        SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income
       `)
     )
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
@@ -67,8 +67,8 @@ export const statisticalGeneralization = async (
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .select(
       orm.raw(`
-        SUM(CASE WHEN t2.expense_type='pay' THEN t1.expense_price ELSE 0 END) AS pay,
-        SUM(CASE WHEN t2.expense_type='income' THEN t1.expense_price ELSE 0 END) AS income,
+        SUM(CASE WHEN t2.expense_type='pay' THEN t1.amounts ELSE 0 END) AS pay,
+        SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income,
         to_char(t1.purchase_time, 'yyyy-mm') as purchase_time
       `)
     )
@@ -95,7 +95,7 @@ export const statisticalExpenditure = async (args: {
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .select(
       orm.raw(`
-        SUM(CASE WHEN t2.expense_type='${type}' THEN t1.expense_price ELSE 0 END) AS ${type}, 
+        SUM(CASE WHEN t2.expense_type='${type}' THEN t1.amounts ELSE 0 END) AS ${type}, 
         t2.expense_name,
         t2.expense_icon,
         to_char(purchase_time, '${format}') as purchase_time 
@@ -126,7 +126,7 @@ export const statisticalUserConsumption = async (args: {
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .select(
       orm.raw(`
-        SUM(CASE WHEN t2.expense_type='${type}' THEN t1.expense_price ELSE 0 END) AS ${type},
+        SUM(CASE WHEN t2.expense_type='${type}' THEN t1.amounts ELSE 0 END) AS ${type},
         to_char(purchase_time, '${format}') as purchase_time
       `)
     )
