@@ -14,4 +14,10 @@ export default class Config extends SQLCommonField {
    */
   @Property({ default: false, fieldName: "has_budget" })
   hasBudget: boolean;
+
+  /**
+   * @param {boolean} hasVibrate 是否开启震动
+   */
+  @Property({ default: false, fieldName: "has_vibrate" })
+  hasVibrate: boolean;
 }

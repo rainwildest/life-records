@@ -16,22 +16,16 @@ export default class CostDetails extends SQLCommonField {
   expenseId: string;
 
   /**
-   * @param {string} expense_price 金额
+   * @param {number} amounts 金额
    */
-  @Property({ nullable: true, fieldName: "expense_price", default: 0 })
-  expensePrice?: number;
+  @Property({ fieldName: "amounts", default: 0 })
+  amounts: number;
 
   /**
    *
    */
   @Property({ default: true })
   rational?: boolean;
-
-  /**
-   * @param {text} remarks 备注
-   */
-  @Property({ nullable: true, type: "text" })
-  remarks?: string;
 
   /**
    * @param {Date} purchaseTime 购买时间
@@ -41,4 +35,16 @@ export default class CostDetails extends SQLCommonField {
     fieldName: "purchase_time"
   })
   purchaseTime?: Date = new Date();
+
+  /**
+   * @param {string} expense_id 账簿id
+   */
+  @Property({ nullable: true, fieldName: "book_id" })
+  bookId: string;
+
+  /**
+   * @param {text} remarks 备注
+   */
+  @Property({ nullable: true, type: "text" })
+  remarks?: string;
 }

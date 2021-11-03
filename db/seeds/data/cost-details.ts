@@ -18,7 +18,7 @@ export default async (knex: Knex, ctx: CtxOptions): Promise<void> => {
       id: uuid(),
       user_id: user.id,
       expense_id: expenseId[0],
-      expense_price: amounts,
+      amounts,
       purchase_time: new Date()
     });
   }
