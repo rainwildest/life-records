@@ -9,3 +9,15 @@ type FundPlan {
   modifiedAt: Date
   deletedAt: Date
 }
+
+type fieldFundPlanOptions {
+  amounts: Int
+  expenseId: String
+  approximateAt: Date
+}
+
+type Mutation {
+  createFundPlan(input: fieldFundPlanOptions): FundPlan
+  modifyFundPlan(id: String, input: fieldFundPlanOptions): FundPlan
+  removeFundPlan(id: String!): FundPlan
+}

@@ -20,20 +20,20 @@ type Query {
   costDetails(userId: String!): [CostDetails]
 }
 
-input CreateCoseOption {
+input CreateCoseOptions {
   expenseId: String!
   amounts: Int!
   remarks: String
   purchaseTime: Date
 }
 
-input ModifyCostOption {
+input ModifyCostOptions {
   amounts: Int
   remarks: String
 }
 
 type Mutation {
-  createCostDetail(input: CreateCoseOption): CostDetails
-  modifyCostDetail(id: String, input: ModifyCostOption): CostDetails
+  createCostDetail(input: CreateCoseOptions): CostDetails
+  modifyCostDetail(id: String, input: ModifyCostOptions): CostDetails
   removeCostDetail(id: String!): CostDetails
 }

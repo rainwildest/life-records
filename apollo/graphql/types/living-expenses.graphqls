@@ -15,13 +15,13 @@ type LivingExpenses {
   user: User
 }
 
-input CreateLivingExpensesOption {
+input CreateLivingExpensesOptions {
   expenseType: String!
   expenseName: String!
   isAddUserId: Boolean
 }
 
-input ModifyLivingExpensesOption {
+input ModifyLivingExpensesOptions {
   expenseType: String!
   expenseName: String!
 }
@@ -31,10 +31,10 @@ type Query {
 }
 
 type Mutation {
-  createLivingExpenses(input: CreateLivingExpensesOption): LivingExpenses
+  createLivingExpenses(input: CreateLivingExpensesOptions): LivingExpenses
   modifyLivingExpenses(
     id: String
-    input: ModifyLivingExpensesOption
+    input: ModifyLivingExpensesOptions
   ): LivingExpenses
   removeLivingExpenses(id: String!): LivingExpenses
 }
