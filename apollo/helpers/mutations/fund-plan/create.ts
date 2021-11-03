@@ -1,5 +1,5 @@
 import { UserInputError, AuthenticationError } from "apollo-server-micro";
-import { createCostDetail } from "db/sql/cost-details";
+import { createFundPlan } from "db/sql/fund-plan";
 import { tanslateSnake } from "lib/api/utils";
 
 export default (
@@ -22,7 +22,7 @@ export default (
     );
   }
 
-  return createCostDetail(
+  return createFundPlan(
     tanslateSnake({
       ...args.input,
       userId: user.id

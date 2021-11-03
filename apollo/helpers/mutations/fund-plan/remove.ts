@@ -1,5 +1,5 @@
 import { UserInputError } from "apollo-server-micro";
-import { removeCostDetail } from "db/sql/cost-details";
+import { removeFundPlan } from "db/sql/fund-plan";
 
 export default (
   _: unknown,
@@ -9,5 +9,5 @@ export default (
   if (!args.id)
     throw new UserInputError("Consumption record information cannot be empty");
 
-  return removeCostDetail(args.id);
+  return removeFundPlan(args.id);
 };
