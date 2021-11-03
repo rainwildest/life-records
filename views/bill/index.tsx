@@ -12,6 +12,7 @@ import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 import { format } from "lib/api/dayjs";
 import CostCard from "components/CostCard";
 import { RouterOpotions } from "typings/f7-route";
+import { thousands } from "lib/api/utils";
 
 const Bill: React.FC<RouterOpotions> = () => {
   const [picker, setPicker] = useState(null);
@@ -55,8 +56,8 @@ const Bill: React.FC<RouterOpotions> = () => {
       >
         <div className="mb-10 mt-10">
           <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
-            <span>收入：{statistics.income || 0}</span>
-            <span className="pl-4">支出：{statistics.pay || 0}</span>
+            <span>收入：{thousands(statistics.income)}</span>
+            <span className="pl-4">支出：{thousands(statistics.pay)}</span>
           </div>
         </div>
 
@@ -69,7 +70,7 @@ const Bill: React.FC<RouterOpotions> = () => {
             type={detail.expense.expenseType}
             typeName={detail.expense.expenseName}
             time={format(detail.purchaseTime)}
-            amount={detail.expensePrice}
+            amounts={thousands(detail.amounts)}
             remarks={detail.remarks}
           />
         ))}

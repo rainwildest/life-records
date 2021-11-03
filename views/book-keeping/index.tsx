@@ -16,7 +16,7 @@ import Pay from "./components/Pay";
 import Income from "./components/Income";
 import Calc from "components/Calc";
 import CalendarPopup from "components/CalendarPopup";
-import { clear } from "console";
+
 const Bookkeeping: React.FC = () => {
   const expense = useRef({});
   const expenseType = useRef("pay");
@@ -57,7 +57,7 @@ const Bookkeeping: React.FC = () => {
         input: {
           purchaseTime,
           expenseId: expenseId,
-          expensePrice: value.amounts,
+          amounts: value.amounts,
           remarks: value.remarks
         }
       }

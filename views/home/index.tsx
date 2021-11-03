@@ -14,13 +14,13 @@ import Icons from "components/Icons";
 import CostCard from "components/CostCard";
 import NotloggedIn from "components/NotloggedIn";
 import ThemeIcon from "components/ThemeIcon";
+import { thousands } from "lib/api/utils";
 
 const Home: React.FC = () => {
   const token = useStore("token");
 
-  const { loading, data, refetch } = useDetailsQuery();
+  const { data, refetch } = useDetailsQuery();
   const statistics = data?.statisticalDetails || {};
-
   /* 强制刷新 */
   const [, updateState] = useState<any>();
   const forceUpdate = useCallback(() => updateState({}), []);
@@ -50,8 +50,10 @@ const Home: React.FC = () => {
         {!!token && (
           <div className="pt-2 px-6 mb-10">
             <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
-              <span>今日收入：{statistics.income || 0}</span>
-              <span className="pl-4">今日支出：{statistics.pay || 0}</span>
+              <span>今日收入：{thousands(statistics.income)}</span>
+              <span className="pl-4">
+                今日支出：{thousands(statistics.pay)}
+              </span>
             </div>
             {statistics.details?.map((detail, index) => (
               <CostCard
@@ -62,7 +64,7 @@ const Home: React.FC = () => {
                 type={detail.expense.expenseType}
                 typeName={detail.expense.expenseName}
                 time={relative(detail.purchaseTime)}
-                amount={detail.expensePrice}
+                amounts={thousands(detail.amounts)}
                 remarks={detail.remarks}
               />
             ))}
