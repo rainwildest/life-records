@@ -43,14 +43,14 @@ const getApolloServerHandler = async () => {
           loaders: createLoaders,
           user
         };
-      }
-      // tracing: true
+      },
+      // tracing: true,
       // playground: {
       //   settings: {
       //     "request.credentials": "include"
       //   }
       // },
-      // introspection: false
+      introspection: process.env.NODE_ENV === "development"
     }).createHandler({
       path: "/api/graphql"
     });
