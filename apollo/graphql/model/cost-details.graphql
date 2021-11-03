@@ -1,6 +1,6 @@
 # import CostDetailsOptions from '../fragments/cost-details.graphql'
 
-mutation createCostDetail($input: CreateCoseOption) {
+mutation createCostDetail($input: CreateCoseOptions) {
   createCostDetail(input: $input) {
     ...CostDetailsOptions
   }

@@ -10,7 +10,7 @@ type FundPlan {
   deletedAt: Date
 }
 
-type fieldFundPlanOptions {
+input fieldFundPlanOptions {
   amounts: Int
   expenseId: String
   approximateAt: Date
