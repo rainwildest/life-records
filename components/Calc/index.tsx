@@ -215,8 +215,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
             className="w-full text-right overflow-scrolling whitespace-nowrap overflow-x-auto font-bold py-8"
             ref={displayRef}
           >
-            {display}
-            {/* {thousands(parseFloat(Number(display).toFixed(10)))} */}
+            {thousands(display)}
           </div>
 
           <Icons

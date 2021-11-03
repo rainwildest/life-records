@@ -5,8 +5,8 @@ type CostCardOptions = {
   type: string;
   time?: string;
   typeName: string;
-  amount: number;
-  remarks: string;
+  amounts?: number | string;
+  remarks?: string;
   incomeTitle: string;
   payTitle: string;
 };
@@ -16,7 +16,7 @@ const CostCard: React.FC<CostCardOptions> = ({
   type,
   time,
   typeName,
-  amount,
+  amounts,
   remarks,
   incomeTitle,
   payTitle
@@ -32,7 +32,7 @@ const CostCard: React.FC<CostCardOptions> = ({
 
       <div className="flex mt-4 px-4 text-sm">
         <div className="w-1/2">类型：{typeName}</div>
-        <div className="w-1/2">费用：{amount}</div>
+        <div className="w-1/2">费用：{amounts}</div>
       </div>
 
       <div className="mt-4 px-4 pb-4 text-sm flex">
