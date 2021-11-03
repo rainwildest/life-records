@@ -7,7 +7,7 @@ export default (
   args: { input: CostDetailsOptions },
   _context: unknown
 ): Promise<any> => {
-  const { expenseId, expensePrice } = args.input;
+  const { expenseId, amounts } = args.input;
   const { user } = _context as GraphqlContext;
 
   if (!user?.id) {
@@ -16,9 +16,9 @@ export default (
     );
   }
 
-  if (!expenseId || !expensePrice) {
+  if (!expenseId || !amounts) {
     throw new UserInputError(
-      "Consumption type and consumption amount cannot be empty"
+      "Consumption type and consumption amounts cannot be empty"
     );
   }
 

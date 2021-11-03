@@ -3,7 +3,7 @@ type Budget {
   seqId: Int
   userId: String
   expenseId: String
-  amount: Int
+  amounts: Int
   createdAt: Date
   modifiedAt: Date
   deletedAt: Date

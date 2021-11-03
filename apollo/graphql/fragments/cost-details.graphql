@@ -3,7 +3,7 @@ fragment CostDetailsOptions on CostDetails {
   seqId
   userId
   expenseId
-  expensePrice
+  amounts
   remarks
   purchaseTime
   createdAt

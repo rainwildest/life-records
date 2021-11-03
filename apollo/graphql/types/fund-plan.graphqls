@@ -1,3 +1,11 @@
 type FundPlan {
   id: ID!
+  seqId: Int
+  expenseId: String
+  userId: String
+  amounts: Int
+  approximateAt: Date
+  createdAt: Date
+  modifiedAt: Date
+  deletedAt: Date
 }

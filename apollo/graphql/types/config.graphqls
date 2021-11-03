@@ -1,3 +1,10 @@
 type Config {
   id: ID!
+  seqId: Int
+  userId: String
+  hasBudget: Boolean
+  hasVibrate: Boolean
+  createdAt: Date
+  modifiedAt: Date
+  deletedAt: Date
 }

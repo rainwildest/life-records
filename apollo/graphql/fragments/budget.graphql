@@ -3,7 +3,7 @@ fragment BudgetOptions on Budget {
   seqId
   userId
   expenseId
-  amount
+  amounts
   createdAt
   modifiedAt
   deletedAt

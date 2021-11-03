@@ -4,7 +4,7 @@ type CostDetails {
   seqId: Int
   userId: String
   expenseId: String
-  expensePrice: Int
+  amounts: Int
   remarks: String
   purchaseTime: Date
   createdAt: Date
@@ -22,13 +22,13 @@ type Query {
 
 input CreateCoseOption {
   expenseId: String!
-  expensePrice: Int!
+  amounts: Int!
   remarks: String
   purchaseTime: Date
 }
 
 input ModifyCostOption {
-  expensePrice: Int
+  amounts: Int
   remarks: String
 }
 

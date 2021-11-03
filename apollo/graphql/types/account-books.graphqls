@@ -1,3 +1,9 @@
 type AccountBooks {
   id: ID!
+  seqId: Int
+  name: String
+  userId: String
+  createdAt: Date
+  modifiedAt: Date
+  deletedAt: Date
 }
