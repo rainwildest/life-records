@@ -129,16 +129,15 @@ export const percentage = (
   return seats[index] / digits;
 };
 
-export const thousands = (num: number): string => {
-  let splits = [];
+export const thousands = (value: number | string): string => {
   const res = [];
-  splits = num.toString().split(".");
-  splits[0]
-    .split("")
-    .reverse()
-    .map((item, i) => {
-      if (i % 3 === 0 && i !== 0) res.push(",");
-      res.push(item);
-    });
-  return res.reverse().join("") + (splits.length > 1 ? `.${splits[1]}` : "");
+  const strValue = typeof value === "string" ? value : value.toString();
+  const splits = strValue.split(".");
+  const reverse = splits[0].split("").reverse();
+
+  reverse.forEach((item, i) => {
+    if (i % 3 === 0 && i !== 0) res.push(",");
+    res.push(item);
+  });
+  return `${res.reverse().join("")}${splits.length > 1 ? `.${splits[1]}` : ""}`;
 };
