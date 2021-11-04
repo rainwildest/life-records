@@ -11,7 +11,7 @@ type CostDetails {
   modifiedAt: Date
   deletedAt: Date
 
-  # custom date
+  # custom data
   user: User
   expense: LivingExpenses
 }
