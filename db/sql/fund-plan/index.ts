@@ -36,3 +36,18 @@ export const removeFundPlan = async (
 ): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return remove("fund_plan", id);
 };
+
+/**
+ * 计划中
+ */
+export const getPlannedByUserId = async (
+  userId: string
+): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm(FundPlan);
+
+  return orm
+    .where({ user_id: userId })
+    .andWhere({ has_complete: false })
+    .andWhere("deleted_at is null")
+    .execute("all");
+};

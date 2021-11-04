@@ -8,14 +8,15 @@ import {
   statisticalGeneralization,
   statisticalExpenditureOrIncome
 } from "./statistical";
-
+import { fundPlan } from "./fund-plan";
 export const queries = {
   user,
   costDetails,
   livingExpenses,
   statisticalDetails,
   statisticalGeneralization,
-  statisticalExpenditureOrIncome
+  statisticalExpenditureOrIncome,
+  fundPlan
 };
 
 export const custom = {
@@ -28,5 +29,9 @@ export const custom = {
   },
   StatisticalDetails: {
     details: statisticalData
+  },
+  FundPlan: {
+    user: userid,
+    expense
   }
 };

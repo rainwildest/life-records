@@ -8,12 +8,21 @@ type FundPlan {
   createdAt: Date
   modifiedAt: Date
   deletedAt: Date
+  hasComplete: Boolean
+
+  # custom data
+  user: User
+  expense: LivingExpenses
 }
 
 input fieldFundPlanOptions {
   amounts: Int
   expenseId: String
   approximateAt: Date
+}
+
+type Query {
+  fundPlan(date: String): [FundPlan]
 }
 
 type Mutation {

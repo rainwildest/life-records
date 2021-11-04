@@ -9,7 +9,7 @@ export default (
 ): Promise<any> => {
   const { expenseId, amounts } = args.input;
   const { user } = _context as GraphqlContext;
-  console.log(user);
+
   if (!user?.id) {
     throw new AuthenticationError(
       "Authentication token is invalid, please log in"

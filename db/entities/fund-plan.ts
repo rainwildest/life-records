@@ -10,6 +10,12 @@ export default class FundPlan extends SQLCommonField {
   expenseId: string;
 
   /**
+   * @param {string} name 计划名称
+   */
+  @Property({ nullable: true })
+  name: string;
+
+  /**
    * @param {string} userId 用户 ID
    */
   @Property({ nullable: true, fieldName: "user_id" })
@@ -31,4 +37,10 @@ export default class FundPlan extends SQLCommonField {
     onUpdate: () => new Date()
   })
   approximateAt: Date = new Date();
+
+  /**
+   * @param {boolean} hasComplete 是否完成
+   */
+  @Property({ fieldName: "has_complete", default: false })
+  hasComplete?: boolean;
 }
