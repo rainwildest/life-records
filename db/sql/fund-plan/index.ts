@@ -51,3 +51,35 @@ export const getPlannedByUserId = async (
     .andWhere("deleted_at is null")
     .execute("all");
 };
+
+/**
+ * 已完成
+ */
+export const getCompletedByUserId = async (
+  userId: string
+): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm(FundPlan);
+
+  return orm
+    .where({ user_id: userId })
+    .andWhere({ has_complete: true })
+    .andWhere("deleted_at is null")
+    .execute("all");
+};
+
+/**
+ * 已逾期
+ */
+export const getOverdueByUserId = async (
+  userId: string,
+  date: string
+): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm(FundPlan);
+
+  return orm
+    .where({ user_id: userId })
+    .andWhere({ has_complete: false })
+    .andWhere(`to_char(approximate_at, 'yyyy-mm-dd') < ?`, [date])
+    .andWhere("deleted_at is null")
+    .execute("all");
+};
