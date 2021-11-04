@@ -27,7 +27,7 @@ const FundPlan: React.FC = () => {
           <Icons name="add" className="account-book-add-icon link px-2" />
         </NavRight>
 
-        <Subnavbar className="px-5">
+        <Subnavbar className="px-3">
           <Segmented strong>
             <Button tabLink="#planned" tabLinkActive>
               计划中
