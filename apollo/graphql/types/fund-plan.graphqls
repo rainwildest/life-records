@@ -2,13 +2,14 @@ type FundPlan {
   id: ID!
   seqId: Int
   expenseId: String
+  name: String
   userId: String
   amounts: Int
   approximateAt: Date
   createdAt: Date
   modifiedAt: Date
   deletedAt: Date
-  hasComplete: Boolean
+  completeAt: Date
 
   # custom data
   user: User
@@ -17,8 +18,10 @@ type FundPlan {
 
 input fieldFundPlanOptions {
   amounts: Int
+  name: String
   expenseId: String
   approximateAt: Date
+  completeAt: Date
 }
 
 type Query {
