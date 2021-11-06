@@ -31,7 +31,6 @@ export default class FundPlan extends SQLCommonField {
    * @param {string} approximateAt 大概的
    */
   @Property({
-    type: "date",
     nullable: true,
     fieldName: "approximate_at",
     onUpdate: () => new Date()
@@ -39,8 +38,12 @@ export default class FundPlan extends SQLCommonField {
   approximateAt: Date = new Date();
 
   /**
-   * @param {boolean} hasComplete 是否完成
+   * @param {boolean} completeAt 完成时间
    */
-  @Property({ fieldName: "has_complete", default: false })
-  hasComplete?: boolean;
+  @Property({
+    nullable: true,
+    fieldName: "complete_at",
+    onUpdate: () => new Date()
+  })
+  completeAt: Date = new Date();
 }

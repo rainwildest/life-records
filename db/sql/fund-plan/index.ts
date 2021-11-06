@@ -47,8 +47,8 @@ export const getPlannedByUserId = async (
 
   return orm
     .where({ user_id: userId })
-    .andWhere({ has_complete: false })
     .andWhere("deleted_at is null")
+    .andWhere("complete_at is null")
     .execute("all");
 };
 
@@ -56,13 +56,15 @@ export const getPlannedByUserId = async (
  * 已完成
  */
 export const getCompletedByUserId = async (
-  userId: string
+  userId: string,
+  date: string
 ): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm(FundPlan);
 
   return orm
     .where({ user_id: userId })
-    .andWhere({ has_complete: true })
+    .andWhere(`to_char(approximate_at, 'yyyy') = ?`, [date])
+    .andWhere("complete_at is not null")
     .andWhere("deleted_at is null")
     .execute("all");
 };
@@ -78,8 +80,8 @@ export const getOverdueByUserId = async (
 
   return orm
     .where({ user_id: userId })
-    .andWhere({ has_complete: false })
     .andWhere(`to_char(approximate_at, 'yyyy-mm-dd') < ?`, [date])
+    .andWhere("complete_at is null")
     .andWhere("deleted_at is null")
     .execute("all");
 };
