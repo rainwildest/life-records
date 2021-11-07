@@ -9,6 +9,11 @@ import {
   removeLivingExpenses
 } from "./living-expenses";
 import { createFundPlan, modifyFundPlan, removeFundPlan } from "./fund-plan";
+import {
+  createAccountBooks,
+  modifyAccountBooks,
+  removeAccountBooks
+} from "./account-books";
 
 export const mutations = {
   createLivingExpenses,
@@ -19,5 +24,8 @@ export const mutations = {
   removeCostDetail,
   createFundPlan,
   modifyFundPlan,
-  removeFundPlan
+  removeFundPlan,
+  createAccountBooks,
+  modifyAccountBooks,
+  removeAccountBooks
 };

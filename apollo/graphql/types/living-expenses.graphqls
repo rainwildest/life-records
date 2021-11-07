@@ -33,7 +33,7 @@ type Query {
 type Mutation {
   createLivingExpenses(input: CreateLivingExpensesOptions): LivingExpenses
   modifyLivingExpenses(
-    id: String
+    id: String!
     input: ModifyLivingExpensesOptions
   ): LivingExpenses
   removeLivingExpenses(id: String!): LivingExpenses

@@ -7,3 +7,13 @@ type AccountBooks {
   modifiedAt: Date
   deletedAt: Date
 }
+
+input fieldAccountBooks {
+  name: String
+}
+
+type Mutation {
+  createAccountBooks(name: String): AccountBooks
+  modifyAccountBooks(id: String!, name: String): AccountBooks
+  removeAccountBooks(id: String!): AccountBooks
+}

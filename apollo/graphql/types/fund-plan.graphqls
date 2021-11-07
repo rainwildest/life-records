@@ -30,6 +30,6 @@ type Query {
 
 type Mutation {
   createFundPlan(input: fieldFundPlanOptions): FundPlan
-  modifyFundPlan(id: String, input: fieldFundPlanOptions): FundPlan
+  modifyFundPlan(id: String!, input: fieldFundPlanOptions): FundPlan
   removeFundPlan(id: String!): FundPlan
 }
