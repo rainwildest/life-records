@@ -25,7 +25,7 @@ input fieldFundPlanOptions {
 }
 
 type Query {
-  fundPlan(date: String): [FundPlan]
+  fundPlan(type: String, date: String): [FundPlan]
 }
 
 type Mutation {
