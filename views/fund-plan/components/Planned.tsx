@@ -19,7 +19,7 @@ const Planned: React.FC = () => {
   //   }, 3000);
   // }, []);
   return (
-    <List className="plant-items-container pt-2 px-6 mb-10 mt-6">
+    <List className="plant-items-container mb-10 !mt-3 pt-2 px-6">
       <ListItem
         className="plant-item shadow-3 rounded-lg"
         divider={false}

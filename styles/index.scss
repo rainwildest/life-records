@@ -371,3 +371,27 @@ body {
     margin: 0 5px;
   }
 }
+
+.plan-icons {
+  .complete-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .overdue-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.budget-status-icon {
+  svg {
+    width: 70px;
+    height: 70px;
+    fill: #b91c1c;
+  }
+}
+
+.overdue-completion-icon {
+  transform: rotate(6deg) scale(0.8);
+}
