@@ -4,7 +4,7 @@ import { tanslateSnake } from "lib/api/utils";
 
 export default (
   _: unknown,
-  args: { input: CostDetailsOptions },
+  args: { input: any },
   _context: unknown
 ): Promise<any> => {
   const { expenseId, amounts } = args.input;
@@ -12,13 +12,13 @@ export default (
 
   if (!user?.id) {
     throw new AuthenticationError(
-      "Authentication token is invalid, please log in"
+      "Authentication token is invalid, please log in."
     );
   }
 
   if (!expenseId || !amounts) {
     throw new UserInputError(
-      "Consumption type and consumption amounts cannot be empty"
+      "Consumption type and consumption amounts cannot be empty."
     );
   }
 

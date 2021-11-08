@@ -10,7 +10,7 @@ export default async (
   const { user } = context as GraphqlContext;
   if (!user?.id) {
     throw new AuthenticationError(
-      "Authentication token is invalid, please log in"
+      "Authentication token is invalid, please log in."
     );
   }
   const { date = format(new Date().toISOString(), "YYYY"), type } = _args;

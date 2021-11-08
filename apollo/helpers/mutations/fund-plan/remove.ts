@@ -7,7 +7,7 @@ export default (
   _context: unknown
 ): Promise<any> => {
   if (!args.id)
-    throw new UserInputError("Consumption record information cannot be empty");
+    throw new UserInputError("Consumption record information cannot be empty.");
 
   return removeFundPlan(args.id);
 };

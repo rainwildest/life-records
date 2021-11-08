@@ -17,7 +17,7 @@ export const createFundPlan = async (
  * 修改资金计划
  * @param id
  * @param options
- * @returns
+ * @returns Promise
  */
 export const modifyFundPlan = async (
   id: string,

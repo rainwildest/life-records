@@ -7,7 +7,7 @@ export default (
   _context: unknown
 ): Promise<any> => {
   if (!args.id)
-    throw new UserInputError("Consumption type information cannot be empty");
+    throw new UserInputError("Consumption type information cannot be empty.");
 
   return removeLivingExpense(args.id);
 };

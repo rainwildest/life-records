@@ -23,7 +23,7 @@ export default (
   const { type, date } = _args;
   if (!user?.id) {
     throw new AuthenticationError(
-      "Authentication token is invalid, please log in"
+      "Authentication token is invalid, please log in."
     );
   }
 

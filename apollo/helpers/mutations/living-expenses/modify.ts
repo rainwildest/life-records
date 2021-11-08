@@ -12,16 +12,16 @@ export default (
 
   if (!user?.id) {
     throw new AuthenticationError(
-      "Authentication token is invalid, please log in"
+      "Authentication token is invalid, please log in."
     );
   }
 
   if (!args.id) {
-    throw new UserInputError("Consumption type information cannot be empty");
+    throw new UserInputError("Consumption type information cannot be empty.");
   }
 
   if (!expenseType || !expenseType) {
-    throw new UserInputError("Consumption name and type cannot be empty");
+    throw new UserInputError("Consumption name and type cannot be empty.");
   }
 
   let fields: LivingExpensesOptions = { expenseType, expenseName };
