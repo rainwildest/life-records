@@ -1,0 +1,13 @@
+fragment FundPlanOptions on FundPlan {
+  id
+  seqId
+  expenseId
+  name
+  userId
+  amounts
+  approximateAt
+  createdAt
+  modifiedAt
+  deletedAt
+  completeAt
+}

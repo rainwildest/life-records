@@ -1,0 +1,9 @@
+fragment AccountBooksOptions on AccountBooks {
+  id
+  seqId
+  name
+  userId
+  createdAt
+  modifiedAt
+  deletedAt
+}
