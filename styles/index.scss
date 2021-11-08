@@ -395,3 +395,11 @@ body {
 .overdue-completion-icon {
   transform: rotate(6deg) scale(0.8);
 }
+
+.save-icon {
+  svg {
+    fill: white;
+    width: 30px;
+    height: 30px;
+  }
+}

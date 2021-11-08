@@ -1,5 +1,5 @@
 import React from "react";
-import { Page, Navbar, NavRight } from "framework7-react";
+import { Page, Navbar, NavRight, Link } from "framework7-react";
 import Book from "./components/Book";
 import Icons from "components/Icons";
 
@@ -8,7 +8,9 @@ const AccountBook: React.FC = () => {
     <Page noToolbar>
       <Navbar backLink noHairline title="我的账本">
         <NavRight>
-          <Icons name="add" className="account-book-add-icon link px-2" />
+          <Link href="/account-book-create">
+            <Icons name="add" className="account-book-add-icon px-2" />
+          </Link>
         </NavRight>
       </Navbar>
 
