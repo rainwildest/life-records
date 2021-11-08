@@ -1,20 +1,20 @@
 import { UserInputError } from "apollo-server-micro";
-import { modifyFundPlan } from "db/sql/fund-plan";
+import { modifyAccountBooks } from "db/sql/account-books";
 import { tanslateSnake } from "lib/api/utils";
 
 export default (
   _: unknown,
-  args: { id: string; input: CostDetailsOptions },
+  args: { id: string; name: string },
   _context: unknown
 ): Promise<any> => {
   if (!args.id) {
-    throw new UserInputError("Consumption record information cannot be empty");
+    throw new UserInputError("Account book information cannot be blank.");
   }
 
-  return modifyFundPlan(
+  return modifyAccountBooks(
     args.id,
     tanslateSnake({
-      ...args.input,
+      name: args.name,
       modifiedAt: new Date()
     })
   );

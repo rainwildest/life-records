@@ -1,30 +1,27 @@
 import { UserInputError, AuthenticationError } from "apollo-server-micro";
-import { createFundPlan } from "db/sql/fund-plan";
+import { createAccountBooks } from "db/sql/account-books";
 import { tanslateSnake } from "lib/api/utils";
 
 export default (
   _: unknown,
-  args: { input: CostDetailsOptions },
+  args: { name: string },
   _context: unknown
 ): Promise<any> => {
-  const { expenseId, amounts } = args.input;
   const { user } = _context as GraphqlContext;
 
   if (!user?.id) {
     throw new AuthenticationError(
-      "Authentication token is invalid, please log in"
+      "Authentication token is invalid, please log in."
     );
   }
 
-  if (!expenseId || !amounts) {
-    throw new UserInputError(
-      "Consumption type and consumption amounts cannot be empty"
-    );
+  if (!args.name) {
+    throw new UserInputError("Account book name cannot be blank.");
   }
 
-  return createFundPlan(
+  return createAccountBooks(
     tanslateSnake({
-      ...args.input,
+      name: args.name,
       userId: user.id
     })
   );

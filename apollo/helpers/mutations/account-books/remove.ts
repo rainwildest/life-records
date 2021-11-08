@@ -1,5 +1,5 @@
 import { UserInputError } from "apollo-server-micro";
-import { removeFundPlan } from "db/sql/fund-plan";
+import { removeAccountBooks } from "db/sql/account-books";
 
 export default (
   _: unknown,
@@ -7,7 +7,7 @@ export default (
   _context: unknown
 ): Promise<any> => {
   if (!args.id)
-    throw new UserInputError("Consumption record information cannot be empty");
+    throw new UserInputError("Account book information cannot be blank.");
 
-  return removeFundPlan(args.id);
+  return removeAccountBooks(args.id);
 };

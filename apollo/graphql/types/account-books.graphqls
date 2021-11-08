@@ -8,10 +8,6 @@ type AccountBooks {
   deletedAt: Date
 }
 
-input fieldAccountBooks {
-  name: String
-}
-
 type Mutation {
   createAccountBooks(name: String): AccountBooks
   modifyAccountBooks(id: String!, name: String): AccountBooks
