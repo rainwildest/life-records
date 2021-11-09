@@ -4,7 +4,8 @@ import { create, modify, remove } from "../common";
 
 /**
  * 新增用户消费记录
- * @param {Object} options
+ * @method createCostDetail
+ * @param {Object} options 新增记录参数
  * @returns Promise
  */
 export const createCostDetail = async (
@@ -13,6 +14,12 @@ export const createCostDetail = async (
   return create("cost_details", options);
 };
 
+/**
+ * 修改用户消费记录
+ * @method modifyCostDetail
+ * @param {Object} options 修改记录参数
+ * @returns Promise
+ */
 export const modifyCostDetail = async (
   id: string,
   options: CostDetailsSnakeOptions
@@ -20,6 +27,12 @@ export const modifyCostDetail = async (
   return modify("cost_details", id, options);
 };
 
+/**
+ * 删除用户消费记录
+ * @method removeCostDetail
+ * @param id
+ * @returns Promise
+ */
 export const removeCostDetail = async (
   id: string
 ): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
@@ -28,21 +41,20 @@ export const removeCostDetail = async (
 
 /**
  * 获取用户的消费记录
+ * @method getCostDetails
  * @param {string} userId 用户id
  * @returns Promise
  */
 export const getCostDetails = async (
-  userId: string
+  args: any
 ): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm(CostDetails);
-  return orm
-    .where({ user_id: userId })
-    .andWhere("deleted_at is null")
-    .execute("all");
+  return orm.where(args).andWhere("deleted_at is null").execute("all");
 };
 
 /**
- * 获取用户的消费记录
+ * 通过日期获取用户的消费记录
+ * @method getCostDetailsByDate
  * @param {string} userId 用户id
  * @param {string} start 开始日期
  * @param {string} end 结束日期
@@ -64,6 +76,7 @@ export const getCostDetailsByDate = async (
 
 /**
  * 获取年月或全年数据
+ * @method getCostDetailsByYearsOrMonth
  * @param {string} userId 用户id
  * @param {string} date 年份或年月
  * @param {string} format 年份或年月的格式(yyyy || yyyy-mm)
@@ -81,4 +94,8 @@ export const getCostDetailsByYearsOrMonth = async (
     .andWhere("deleted_at is null")
     .orderBy({ ["purchase_time"]: "DESC" })
     .execute("all");
+};
+
+export const getCostDetailsByBookId = () => {
+  return null;
 };

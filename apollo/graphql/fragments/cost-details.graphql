@@ -6,6 +6,7 @@ fragment CostDetailsOptions on CostDetails {
   amounts
   remarks
   purchaseTime
+  bookId
   createdAt
   modifiedAt
   deletedAt

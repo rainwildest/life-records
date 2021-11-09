@@ -1,3 +1,4 @@
 import costDetails from "./data";
+import costDetailsByBookId from "./book-data";
 
-export { costDetails };
+export { costDetails, costDetailsByBookId };
