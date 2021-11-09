@@ -144,7 +144,7 @@ export const thousands = (value: number | string): string => {
   return `${res.reverse().join("")}${splits.length > 1 ? `.${splits[1]}` : ""}`;
 };
 
-export const toastTip = (text = "") => {
+export const toastTip = (text = ""): void => {
   f7.toast
     .create({
       text,
