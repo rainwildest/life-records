@@ -1,10 +1,12 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, memo } from "react";
 import Icons from "components/Icons";
+import { F7Router } from "typings/f7-route";
 
 type BookOptions = {
+  id?: string;
   name?: string;
-};
-const Book: React.FC<BookOptions> = ({ name }) => {
+} & F7Router;
+const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
   const parent = useRef<HTMLDivElement>(null);
   const chil = useRef<HTMLDivElement>(null);
 
@@ -17,8 +19,25 @@ const Book: React.FC<BookOptions> = ({ name }) => {
     }
   }, [name]);
 
+  const onNavigate = () => {
+    if (!id || !f7router) return;
+
+    const url = f7router.generateUrl({
+      name: "account-book-details",
+      params: { id: "id" },
+      query: { id }
+    });
+
+    f7router.navigate(url);
+  };
+
   return (
-    <div className="ancient-books-container overflow-hidden relative opacity-80 justify-self-center">
+    <div
+      className={`ancient-books-container overflow-hidden relative opacity-80 justify-self-center${
+        !id || !f7router ? "" : " link"
+      }`}
+      onClick={onNavigate}
+    >
       <div
         className="ancient-book-name flex justify-center px-4 items-center bg-white absolute text-sm rounded-sm"
         ref={parent}
@@ -35,4 +54,4 @@ const Book: React.FC<BookOptions> = ({ name }) => {
   );
 };
 
-export default Book;
+export default memo(Book);
