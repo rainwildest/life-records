@@ -49,7 +49,7 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
 
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline title="新增账本">
+      <Navbar backLink noHairline title="新增账簿">
         <NavRight>
           <Button className="w-20" large small fill onClick={onSaveBefore}>
             {!saving && <Icons name="save" className="save-icon mr-1" />}

@@ -54,7 +54,7 @@ const Mine: React.FC = () => {
             className="block m-0 text-center p-2 rounded-lg shadow-2"
           >
             <Icons slot="media" name="moon" className="mine-setting-icon" />
-            <div className="text-xs">我的账本</div>
+            <div className="text-xs">我的账簿</div>
           </Link>
           <Link
             href="/budget"

@@ -16,7 +16,7 @@ const AccountBook: React.FC = () => {
   }, []);
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline title="我的账本">
+      <Navbar backLink noHairline title="我的账簿">
         <NavRight>
           <Link href="/account-book-create">
             <Icons name="add" className="account-book-add-icon px-2" />
