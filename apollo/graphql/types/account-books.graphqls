@@ -9,7 +9,7 @@ type AccountBooks {
 }
 
 type Mutation {
-  createAccountBooks(name: String): AccountBooks
-  modifyAccountBooks(id: String!, name: String): AccountBooks
+  createAccountBooks(name: String!): AccountBooks
+  modifyAccountBooks(id: String!, name: String!): AccountBooks
   removeAccountBooks(id: String!): AccountBooks
 }

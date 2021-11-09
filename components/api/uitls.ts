@@ -1,4 +1,4 @@
-export function colorClasses(props) {
+export function colorClasses(props): any {
   const {
     color,
     colorTheme,
@@ -20,7 +20,7 @@ export function colorClasses(props) {
   };
 }
 
-export function classNames(...args) {
+export function classNames(...args): string {
   const classes = [];
   args.forEach((arg) => {
     if (typeof arg === "object" && arg.constructor === Object) {
@@ -44,7 +44,7 @@ export function classNames(...args) {
   return uniqueClasses.join(" ");
 }
 
-export function emit(props, events, ...args) {
+export function emit(props, events, ...args): void {
   if (!events || !events.trim().length || typeof events !== "string") {
     return;
   }

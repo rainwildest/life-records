@@ -172,13 +172,13 @@ body {
   .field-clear-container {
     min-width: 31px;
   }
+}
 
-  .field-clear {
-    svg {
-      width: 15px;
-      height: 15px;
-      fill: #4b5563;
-    }
+.field-clear {
+  svg {
+    width: 15px;
+    height: 15px;
+    fill: #4b5563;
   }
 }
 
@@ -399,7 +399,7 @@ body {
 .save-icon {
   svg {
     fill: white;
-    width: 30px;
-    height: 30px;
+    width: 14px;
+    height: 14px;
   }
 }
