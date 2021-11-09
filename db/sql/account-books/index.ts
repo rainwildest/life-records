@@ -1,9 +1,10 @@
-import FundPlan from "db/entities/fund-plan";
+import AccountBooks from "db/entities/account-books";
 import MikrotOrm, { knex } from "db/mikro-orm";
 import { create, modify, remove } from "../common";
 
 /**
  * 新增我的账簿
+ * @method createAccountBooks
  * @param {Object} options
  * @returns Promise
  */
@@ -15,6 +16,7 @@ export const createAccountBooks = async (
 
 /**
  * 修改我的账簿
+ * @method modifyAccountBooks
  * @param id
  * @param options
  * @returns Promise
@@ -28,6 +30,7 @@ export const modifyAccountBooks = async (
 
 /**
  * 删除我的账簿
+ * @method removeAccountBooks
  * @param id
  * @returns Promise
  */
@@ -35,4 +38,22 @@ export const removeAccountBooks = async (
   id: string
 ): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return remove("account_books", id);
+};
+
+/**
+ * 获取账簿
+ * @method getAccountBooksByUserId
+ * @param {string} userId
+ * @returns Promise
+ */
+export const getAccountBooksByUserId = async (
+  userId: string
+): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm(AccountBooks);
+
+  return orm
+    .where({ user_id: userId })
+    .andWhere("deleted_at is null")
+    .orderBy({ ["created_at"]: "DESC" })
+    .execute("all");
 };

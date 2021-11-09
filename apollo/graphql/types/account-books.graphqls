@@ -6,6 +6,19 @@ type AccountBooks {
   createdAt: Date
   modifiedAt: Date
   deletedAt: Date
+
+  # custom data
+  user: User
+}
+
+# type BooksParam {
+#   code: Int
+#   message: String
+#   data: [AccountBooks]
+# }
+
+type Query {
+  accountBooks: [AccountBooks]
 }
 
 type Mutation {

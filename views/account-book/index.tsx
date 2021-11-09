@@ -3,11 +3,15 @@ import { Page, Navbar, NavRight, Link } from "framework7-react";
 import Book from "./components/Book";
 import Icons from "components/Icons";
 import event from "lib/api/framework-event";
-
+import { useAccountBooksQuery } from "apollo/graphql/model/account-books.graphql";
 const AccountBook: React.FC = () => {
+  const { data, refetch } = useAccountBooksQuery();
+  console.log(data);
+  const books = data?.accountBooks || [];
   useEffect(() => {
     event.on("update-books", () => {
       console.log("jksdfjsdjfk");
+      refetch();
     });
 
     return () => {
@@ -25,9 +29,9 @@ const AccountBook: React.FC = () => {
       </Navbar>
 
       <div className="grid grid-cols-3 mt-5 px-2">
-        <Book name="据了解考虑佳节快乐尽快了解了解" />
-        <Book name="据了" />
-        <Book name="jlkjljkjlkjlkjljljkjljkj" />
+        {books.map((item) => (
+          <Book name={item.name} key={item.id} />
+        ))}
       </div>
     </Page>
   );

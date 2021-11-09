@@ -17,3 +17,9 @@ mutation removeAccountBooks($id: String!) {
     ...AccountBooksOptions
   }
 }
+
+query accountBooks {
+  accountBooks {
+    ...AccountBooksOptions
+  }
+}
