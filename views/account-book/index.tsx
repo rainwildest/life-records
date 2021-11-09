@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Page, Navbar, NavRight, Link } from "framework7-react";
 import Book from "./components/Book";
 import Icons from "components/Icons";
+import event from "lib/api/framework-event";
 
 const AccountBook: React.FC = () => {
+  useEffect(() => {
+    event.on("update-books", () => {
+      console.log("jksdfjsdjfk");
+    });
+
+    return () => {
+      event.off("update-books");
+    };
+  }, []);
   return (
     <Page noToolbar>
       <Navbar backLink noHairline title="我的账本">

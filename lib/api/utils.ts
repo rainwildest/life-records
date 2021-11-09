@@ -1,4 +1,5 @@
 import { snakeCase } from "lodash";
+import { f7 } from "framework7-react";
 
 export const format = (date: Date, fmt = "yyyy-MM-dd"): string => {
   // author: meizz
@@ -141,4 +142,14 @@ export const thousands = (value: number | string): string => {
     res.push(item);
   });
   return `${res.reverse().join("")}${splits.length > 1 ? `.${splits[1]}` : ""}`;
+};
+
+export const toastTip = (text = "") => {
+  f7.toast
+    .create({
+      text,
+      position: "center",
+      closeTimeout: 2000
+    })
+    .open();
 };

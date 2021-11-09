@@ -1,0 +1,19 @@
+# import AccountBooksOptions from '../fragments/account-books.graphql'
+
+mutation createAccountBooks($name: String!) {
+  createAccountBooks(name: $name) {
+    ...AccountBooksOptions
+  }
+}
+
+mutation modifyAccountBooks($id: String!, $name: String!) {
+  modifyAccountBooks(id: $id, name: $name) {
+    ...AccountBooksOptions
+  }
+}
+
+mutation removeAccountBooks($id: String!) {
+  removeAccountBooks(id: $id) {
+    ...AccountBooksOptions
+  }
+}
