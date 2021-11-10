@@ -24,10 +24,9 @@ const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
 
     const url = f7router.generateUrl({
       name: "account-book-details",
-      params: { id: "id" },
-      query: { id }
+      params: { id: "id", name: "name" },
+      query: { id, name }
     });
-
     f7router.navigate(url);
   };
 

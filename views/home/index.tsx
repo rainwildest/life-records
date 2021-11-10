@@ -60,14 +60,12 @@ const Home: React.FC = () => {
             {statistics.details?.map((detail, index) => (
               <CostCard
                 key={detail.id}
-                incomeTitle="今日收入"
-                payTitle="今日支出"
-                useMarginTop14={!index}
                 type={detail.expense.expenseType}
                 typeName={detail.expense.expenseName}
                 time={relative(detail.purchaseTime)}
                 amounts={thousands(detail.amounts)}
                 remarks={detail.remarks}
+                className="mt-8"
               />
             ))}
           </div>

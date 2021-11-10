@@ -1,33 +1,29 @@
 import React from "react";
 import Icons from "components/Icons";
-
+import { mergeClassName } from "lib/api/utils";
 type CostCardOptions = {
-  useMarginTop14: boolean;
   type: string;
   time?: string;
   typeName: string;
   amounts?: number | string;
   remarks?: string;
-  incomeTitle: string;
-  payTitle: string;
+  className?: string;
 };
 
 const CostCard: React.FC<CostCardOptions> = ({
-  useMarginTop14 = false,
   type,
   time,
   typeName,
   amounts,
-  remarks
+  remarks,
+  className = ""
 }) => {
   const color = type === "pay" ? "text-green-500" : "text-red-700";
+  const defaultClassName =
+    "shadow-3 rounded-lg py-3 px-4 relative overflow-hidden w-full flex items-center";
 
   return (
-    <div
-      className={`${
-        useMarginTop14 ? "mt-14 " : "mt-8 "
-      }shadow-3 rounded-lg py-3 px-4 relative overflow-hidden w-full flex items-center`}
-    >
+    <div className={mergeClassName(className, defaultClassName)}>
       <Icons name="moon" className="budget-icon pr-3" />
       <div className="cost-item-container">
         <div className="flex justify-between">
