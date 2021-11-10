@@ -15,17 +15,16 @@ type CostDetails {
   # custom data
   user: User
   expense: LivingExpenses
-  # book: AccountBooks
+  book: AccountBooks
 }
 
-# input CostDetailsOptions {
-#   userId: String
-#   bookId: String
-# }
+input CostDetailsOptions {
+  userId: String
+  bookId: String
+}
 
 type Query {
-  costDetails(userId: String!): [CostDetails]
-  costDetailsByBookId(bookId: String!): [CostDetails]
+  costDetails(input: CostDetailsOptions): [CostDetails]
 }
 
 input CreateCoseOptions {

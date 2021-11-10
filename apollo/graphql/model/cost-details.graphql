@@ -1,7 +1,17 @@
 # import CostDetailsOptions from '../fragments/cost-details.graphql'
+# import LivingExpensesOptions from '../fragments/living-expenses.graphql'
 
 mutation createCostDetail($input: CreateCoseOptions) {
   createCostDetail(input: $input) {
     ...CostDetailsOptions
+  }
+}
+
+query costDetails($input: CostDetailsOptions) {
+  costDetails(input: $input) {
+    ...CostDetailsOptions
+    expense {
+      ...LivingExpensesOptions
+    }
   }
 }

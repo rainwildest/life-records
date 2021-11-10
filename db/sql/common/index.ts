@@ -3,7 +3,7 @@ import { EntityName } from "@mikro-orm/core";
 
 /**
  * 根據提供的參數 id 获取用户数据
- * @memberof Model
+ * @method getDataByIds
  * @param {object} entityName
  * @param {array} ids
  */
@@ -30,7 +30,7 @@ export const getDataByIds = async <T>(
 
 /**
  * 根據提供的參數 id 获取用户数据
- * @memberof Model
+ * @method getDatabyId
  * @param {object} entityName
  * @param {string} userId 用户的 id
  */
@@ -45,6 +45,7 @@ export const getDatabyId = async <T>(
 
 /**
  * 新增信息
+ * @method create
  * @param {Object} options
  * @returns Promise
  */
@@ -59,6 +60,7 @@ export const create = async <T>(tableName: string, options: T): Promise<T> => {
 
 /**
  * 修改记录
+ * @method modify
  * @param id
  * @param options
  * @returns Promise
@@ -79,6 +81,7 @@ export const modify = async <T>(
 
 /**
  * 删除记录
+ * @method remove
  * @param tableName 表名
  * @param id 当前记录id
  * @returns Promise

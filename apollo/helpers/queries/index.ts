@@ -1,6 +1,6 @@
-import { userid, expense } from "./common";
+import { userid, expense, bookid } from "./common";
 import { user, statistics } from "./users";
-import { costDetails, costDetailsByBookId } from "./cost-details";
+import { costDetails } from "./cost-details";
 import { livingExpenses } from "./living-expenses";
 import {
   statisticalDetails,
@@ -19,8 +19,7 @@ export const queries = {
   statisticalGeneralization,
   statisticalExpenditureOrIncome,
   fundPlan,
-  accountBooks,
-  costDetailsByBookId
+  accountBooks
 };
 
 export const custom = {
@@ -29,7 +28,8 @@ export const custom = {
   },
   CostDetails: {
     user: userid,
-    expense
+    expense,
+    book: bookid
   },
   StatisticalDetails: {
     details: statisticalData

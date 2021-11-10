@@ -49,7 +49,11 @@ export const getCostDetails = async (
   args: any
 ): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm(CostDetails);
-  return orm.where(args).andWhere("deleted_at is null").execute("all");
+  return orm
+    .where(args)
+    .andWhere("deleted_at is null")
+    .orderBy({ ["purchase_time"]: "DESC" })
+    .execute("all");
 };
 
 /**
@@ -94,8 +98,4 @@ export const getCostDetailsByYearsOrMonth = async (
     .andWhere("deleted_at is null")
     .orderBy({ ["purchase_time"]: "DESC" })
     .execute("all");
-};
-
-export const getCostDetailsByBookId = () => {
-  return null;
 };

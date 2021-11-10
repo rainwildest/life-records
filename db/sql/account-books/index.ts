@@ -1,6 +1,6 @@
 import AccountBooks from "db/entities/account-books";
 import MikrotOrm, { knex } from "db/mikro-orm";
-import { create, modify, remove } from "../common";
+import { create, modify, remove, getDatabyId } from "../common";
 
 /**
  * 新增我的账簿
@@ -56,4 +56,15 @@ export const getAccountBooksByUserId = async (
     .andWhere("deleted_at is null")
     .orderBy({ ["created_at"]: "DESC" })
     .execute("all");
+};
+
+/**
+ * @method getAccountBooksById
+ * @param {string} id
+ * @returns Promise
+ */
+export const getAccountBooksById = async (
+  id: string
+): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  return getDatabyId(AccountBooks, id);
 };
