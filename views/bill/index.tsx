@@ -14,6 +14,7 @@ import CostCard from "components/CostCard";
 import { RouterOpotions } from "typings/f7-route";
 import { thousands } from "lib/api/utils";
 import Icons from "components/Icons";
+import Amounts from "components/Amounts";
 
 const Bill: React.FC<RouterOpotions> = () => {
   const [picker, setPicker] = useState(null);
@@ -55,19 +56,11 @@ const Bill: React.FC<RouterOpotions> = () => {
         }}
         className="pt-14 px-6"
       >
-        {/* <div className="mb-10 mt-10">
-          <div className="shadow-3 px-4 py-5 rounded-lg text-xs text-gray-700 text-right font-bold">
-            <span>收入：{thousands(statistics.income)}</span>
-            <span className="pl-4">支出：{thousands(statistics.pay)}</span>
-          </div>
-        </div> */}
-        <div className="amounts-icon-1 shadow-3 px-4 py-3 mt-10 rounded-lg text-xs text-gray-700 text-right font-bold flex justify-between items-center">
-          <Icons name="amounts" />
-          <div>
-            <span>收入：{thousands(statistics.income)}</span>
-            <span className="pl-4">支出：{thousands(statistics.pay)}</span>
-          </div>
-        </div>
+        <Amounts
+          className="mt-10"
+          income={thousands(statistics.income)}
+          pay={thousands(statistics.pay)}
+        />
 
         {statistics.details?.map((detail, index) => (
           <CostCard

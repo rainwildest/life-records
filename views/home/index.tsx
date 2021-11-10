@@ -15,6 +15,7 @@ import CostCard from "components/CostCard";
 import NotloggedIn from "components/NotloggedIn";
 import ThemeIcon from "components/ThemeIcon";
 import { thousands } from "lib/api/utils";
+import Amounts from "components/Amounts";
 
 const Home: React.FC = () => {
   const token = useStore("token");
@@ -49,15 +50,13 @@ const Home: React.FC = () => {
       >
         {!!token && (
           <div className="pt-2 px-6 mb-10">
-            <div className="amounts-icon-1 shadow-3 px-4 py-3 rounded-lg text-xs text-gray-700 text-right font-bold flex justify-between items-center">
-              <Icons name="amounts" />
-              <div>
-                <span>今日收入：{thousands(statistics.income)}</span>
-                <span className="pl-4">
-                  今日支出：{thousands(statistics.pay)}
-                </span>
-              </div>
-            </div>
+            <Amounts
+              incomTitle="今日收入"
+              payTitle="今日支出"
+              income={thousands(statistics.income)}
+              pay={thousands(statistics.pay)}
+            />
+
             {statistics.details?.map((detail, index) => (
               <CostCard
                 key={detail.id}
