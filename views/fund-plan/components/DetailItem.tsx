@@ -28,18 +28,19 @@ const DetailItem: React.FC<DetailOptions> = ({
   status
 }) => {
   return (
-    <div slot="title" className="py-3 px-4 flex justify-between relative">
-      <div className="budget-title flex items-center flex-shrink-0 text-sm">
-        <Icons name={icon} className="budget-icon pr-3" />
-        <div>
+    <div className="py-3 px-4 relative overflow-hidden w-full flex items-center">
+      <Icons name={icon} className="budget-icon pr-3" />
+      <div className="cost-item-container">
+        <div className="flex justify-between">
           <div className="text-gray-500 text-xs">{type}</div>
-          <div className="truncate text-gray-600 mt-2">{name}</div>
+          <div className="text-gray-500 text-xs">{date}</div>
         </div>
-      </div>
-
-      <div className="rounded-lg w-auto px-3 box-border text-right overflow-hidden">
-        <div className="text-gray-500 text-xs">{date}</div>
-        <div className="text-gray-600 mt-2 text-sm font-bold">{amounts}</div>
+        <div className="flex justify-between">
+          <div className="text-gray-600 mt-2 text-sm truncate">{name}</div>
+          <div className="mt-2 text-sm font-bold text-gray-600 flex-shrink-0">
+            {amounts}
+          </div>
+        </div>
       </div>
 
       {status && (

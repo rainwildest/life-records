@@ -34,7 +34,7 @@ const Mine: React.FC = () => {
       <PageContent>
         <MineDetails />
 
-        <div className="p-3 grid mt-10 gap-3 grid-cols-3 rounded-lg mx-4 shadow-3">
+        <div className="p-2.5 grid mt-10 gap-3 grid-cols-3 rounded-lg mx-4 shadow-3">
           <Link
             href="/setting"
             className="block m-0 text-center p-2 rounded-lg shadow-2"
@@ -79,7 +79,7 @@ const Mine: React.FC = () => {
           </Link>
         </div>
 
-        <div className="p-3 grid gap-3 grid-cols-3 rounded-lg mx-4 my-8 shadow-3">
+        <div className="p-2.5 grid gap-3 grid-cols-3 rounded-lg mx-4 my-8 shadow-3">
           <Link
             href="/about"
             className="block m-0 text-center p-2 rounded-lg select-none shadow-2"

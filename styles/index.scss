@@ -403,3 +403,14 @@ body {
     height: 14px;
   }
 }
+
+.cost-item-container {
+  width: calc(100% - 42px);
+}
+
+.amounts-icon-1 {
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}

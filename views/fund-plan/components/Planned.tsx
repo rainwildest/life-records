@@ -33,6 +33,7 @@ const Planned: React.FC = () => {
           icon="budget"
           date={relative("2021-12-30")}
           amounts={thousands(10000)}
+          status="complete-02"
         />
         <SwipeoutActions className="flex items-center" right>
           <SwipeoutButton

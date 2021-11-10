@@ -1,4 +1,5 @@
 import React from "react";
+import Icons from "components/Icons";
 
 type CostCardOptions = {
   useMarginTop14: boolean;
@@ -17,27 +18,34 @@ const CostCard: React.FC<CostCardOptions> = ({
   time,
   typeName,
   amounts,
-  remarks,
-  incomeTitle,
-  payTitle
+  remarks
 }) => {
+  const color = type === "pay" ? "text-green-500" : "text-red-700";
+
   return (
-    <div className={`${useMarginTop14 ? "mt-14" : "mt-8"} rounded-lg shadow-3`}>
-      <div className="divide-gray p-4 flex justify-between font-bold items-center">
-        {type === "income" && <div className="text-sm">{incomeTitle}</div>}
-        {type === "pay" && <div className="text-sm">{payTitle}</div>}
-
-        <div className="text-sm">{time}</div>
-      </div>
-
-      <div className="flex mt-4 px-4 text-sm">
-        <div className="w-1/2">类型：{typeName}</div>
-        <div className="w-1/2">费用：{amounts}</div>
-      </div>
-
-      <div className="mt-4 px-4 pb-4 text-sm flex">
-        <div className="flex-shrink-0">备注：</div>
-        <div className="line-clamp-2 break-words">{remarks}</div>
+    <div
+      className={`${
+        useMarginTop14 ? "mt-14 " : "mt-8 "
+      }shadow-3 rounded-lg py-3 px-4 relative overflow-hidden w-full flex items-center`}
+    >
+      <Icons name="moon" className="budget-icon pr-3" />
+      <div className="cost-item-container">
+        <div className="flex justify-between">
+          <div className="text-gray-500 text-xs">{typeName}</div>
+          <div className="text-gray-500 text-xs font-medium">{time}</div>
+        </div>
+        <div className="flex justify-between">
+          <div
+            className={`${
+              remarks ? "text-gray-600" : "text-gray-300"
+            }  mt-2 text-sm truncate`}
+          >
+            {remarks ? remarks : "暂无备注"}
+          </div>
+          <div className={`${color} mt-2 text-sm font-bold  flex-shrink-0`}>
+            {type === "pay" ? "-" : "+"}￥{amounts}
+          </div>
+        </div>
       </div>
     </div>
   );

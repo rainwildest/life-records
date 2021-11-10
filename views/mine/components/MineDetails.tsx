@@ -43,12 +43,12 @@ const MineDetails: React.FC = () => {
           return (
             <Fragment key={item.title}>
               <BlockHeader className="mt-7 font-bold">{item.title}</BlockHeader>
-              <div className="mine-container p-2 mx-3 rounded-lg grid grid-cols-3 gap-2 mt-1 shadow-3">
+              <div className="mine-container p-2.5 mx-3 rounded-lg grid grid-cols-3 gap-2.5 mt-1 shadow-3">
                 {_.keys(contrast).map((key) => {
                   return (
                     <section
                       key={key}
-                      className={`rounded px-1 py-4 block my-0 text-center font-bold text-xs leading-loose shadow-2 ${item.color}`}
+                      className={`rounded-lg px-1 py-4 block my-0 text-center font-bold text-xs leading-loose shadow-2 ${item.color}`}
                     >
                       <div className="leading-none">{item[key].title}</div>
                       <div className="truncate leading-none mt-2">

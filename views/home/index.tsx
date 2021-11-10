@@ -49,11 +49,14 @@ const Home: React.FC = () => {
       >
         {!!token && (
           <div className="pt-2 px-6 mb-10">
-            <div className="shadow-3 p-4 rounded-lg text-xs text-right font-bold">
-              <span>今日收入：{thousands(statistics.income)}</span>
-              <span className="pl-4">
-                今日支出：{thousands(statistics.pay)}
-              </span>
+            <div className="amounts-icon-1 shadow-3 px-4 py-3 rounded-lg text-xs text-gray-700 text-right font-bold flex justify-between items-center">
+              <Icons name="amounts" />
+              <div>
+                <span>今日收入：{thousands(statistics.income)}</span>
+                <span className="pl-4">
+                  今日支出：{thousands(statistics.pay)}
+                </span>
+              </div>
             </div>
             {statistics.details?.map((detail, index) => (
               <CostCard
