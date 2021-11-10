@@ -1,7 +1,7 @@
 import MikrotOrm, { knex } from "db/mikro-orm";
 
 /**
- *
+ * @method amountStatisticsByDate
  * @param {string} userId 用户id
  * @param {string} start 开始日期
  * @param {string} end 结束日期
@@ -30,6 +30,7 @@ export const amountStatisticsByDate = async (
 
 /**
  * 获取年月或全年费用统计
+ * @method amountStatisticsByYearsOrMonth
  * @param {string} userId 用户id
  * @param {string} date 年份或年月
  * @param {string} format 年份或年月的格式(yyyy || yyyy-mm)
@@ -57,6 +58,7 @@ export const amountStatisticsByYearsOrMonth = async (
 
 /**
  * 统计全年月份收入和支出概括
+ * @method statisticalGeneralization
  */
 export const statisticalGeneralization = async (
   userId: string,
@@ -81,6 +83,7 @@ export const statisticalGeneralization = async (
 
 /**
  * 统计全年或月份的支出、收入情况
+ * @method statisticalExpenditure
  */
 export const statisticalExpenditure = async (args: {
   userId: string;
@@ -113,6 +116,7 @@ export const statisticalExpenditure = async (args: {
 
 /**
  * 统计全年、当天、当月费用
+ * @method statisticalUserConsumption
  */
 export const statisticalUserConsumption = async (args: {
   userId: string;
@@ -138,4 +142,28 @@ export const statisticalUserConsumption = async (args: {
     .whereNull("t1.deleted_at")
     .groupByRaw(`to_char(t1.purchase_time, '${format}')`)
     .then((rows) => (rows.length ? rows[0][type] || 0 : 0));
+};
+
+/**
+ * @method statisticalCostByBooks
+ * @param {string} userId 用户ID
+ * @param {string} bookId 账簿ID
+ */
+export const statisticalCostByBooks = async (
+  userId: string,
+  bookId: string
+): Promise<any> => {
+  const orm = await knex();
+
+  return orm("cost_details AS t1")
+    .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
+    .select(
+      orm.raw(`
+        SUM(CASE WHEN t2.expense_type='pay' THEN t1.amounts ELSE 0 END) AS pay,
+        SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income
+    `)
+    )
+    .andWhereRaw(`t1.user_id = ?`, [userId])
+    .andWhereRaw(`t1.book_id = ?`, [bookId])
+    .whereNull("t1.deleted_at");
 };
