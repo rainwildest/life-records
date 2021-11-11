@@ -1,34 +1,35 @@
 import { snakeCase } from "lodash";
 import { f7 } from "framework7-react";
+import { format } from "./dayjs";
 
-export const format = (date: Date, fmt = "yyyy-MM-dd"): string => {
-  // author: meizz
-  const time = new Date(date);
-  const o = {
-    "M+": time.getMonth() + 1, // 月份
-    "d+": time.getDate(), // 日
-    "h+": time.getHours(), // 小时
-    "m+": time.getMinutes(), // 分
-    "s+": time.getSeconds(), // 秒
-    "q+": Math.floor((time.getMonth() + 3) / 3), // 季度
-    S: time.getMilliseconds() // 毫秒
-  };
-  if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(
-      RegExp.$1,
-      (time.getFullYear() + "").substr(4 - RegExp.$1.length)
-    );
-  }
-  for (const k in o) {
-    if (new RegExp("(" + k + ")").test(fmt)) {
-      fmt = fmt.replace(
-        RegExp.$1,
-        RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
-      );
-    }
-  }
-  return fmt;
-};
+// export const format = (date: Date, fmt = "yyyy-MM-dd"): string => {
+//   // author: meizz
+//   const time = new Date(date);
+//   const o = {
+//     "M+": time.getMonth() + 1, // 月份
+//     "d+": time.getDate(), // 日
+//     "h+": time.getHours(), // 小时
+//     "m+": time.getMinutes(), // 分
+//     "s+": time.getSeconds(), // 秒
+//     "q+": Math.floor((time.getMonth() + 3) / 3), // 季度
+//     S: time.getMilliseconds() // 毫秒
+//   };
+//   if (/(y+)/.test(fmt)) {
+//     fmt = fmt.replace(
+//       RegExp.$1,
+//       (time.getFullYear() + "").substr(4 - RegExp.$1.length)
+//     );
+//   }
+//   for (const k in o) {
+//     if (new RegExp("(" + k + ")").test(fmt)) {
+//       fmt = fmt.replace(
+//         RegExp.$1,
+//         RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
+//       );
+//     }
+//   }
+//   return fmt;
+// };
 
 export const tanslateSnake = <T>(feilds: { [P in keyof T]?: any }): any => {
   const value: any = {};
@@ -130,6 +131,12 @@ export const percentage = (
   return seats[index] / digits;
 };
 
+/**
+ * 数值添加逗号
+ * @method thousands
+ * @param {number | string} value 数值
+ * @returns string
+ */
 export const thousands = (value: number | string): string => {
   if (!value) return "0";
   const res = [];
@@ -152,4 +159,18 @@ export const toastTip = (text = ""): void => {
       closeTimeout: 2000
     })
     .open();
+};
+
+/**
+ * 判断是否为当天日期
+ * @method isSameDay
+ * @param {string} date 日期
+ * @returns boolean
+ */
+export const isSameDay = (date?: string): boolean => {
+  const _current = new Date().toISOString();
+  const current = format(_current);
+  const _date = format(date);
+
+  return current === _date;
 };
