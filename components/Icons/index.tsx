@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
-
+import { mergeClassName } from "lib/api/utils";
 type IconsProps = {
   name: string;
   className?: string;
@@ -10,15 +10,8 @@ type IconsProps = {
 };
 
 const handleClassName = (className: string): string => {
-  const classBase = "svg-icon inline-block";
-  const classNameSplit = className.split(" ");
-  const classBaseSplit = classBase.split(" ");
-
-  /* 去重 */
-  const classNameArray = new Set([...classBaseSplit, ...classNameSplit]);
-  return [...classNameArray].filter((name) => !!name).join(" ");
+  return mergeClassName(className, "svg-icon inline-block");
 };
-
 const Icons: React.FC<IconsProps> = ({
   name,
   className = "",
@@ -33,6 +26,10 @@ const Icons: React.FC<IconsProps> = ({
     onClick,
     src: url,
     className: handleClassName(className)
+    // beforeInjection: (svg) => {
+    //   svg.classList.add("svg-class-name");
+    //   svg.setAttribute("style", "width: 200px");
+    // }
   };
 
   return <ReactSVG {...svgParams} />;
