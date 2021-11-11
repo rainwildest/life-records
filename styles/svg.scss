@@ -1,0 +1,197 @@
+.svg-icon {
+  &.notepad-icon svg {
+    margin-top: 0.2rem;
+    height: math.div(35.2rem, $font-size-base);
+    width: math.div(35.2rem, $font-size-base);
+  }
+
+  &.toolbar-icon svg {
+    height: math.div(32rem, $font-size-base);
+    width: math.div(32rem, $font-size-base);
+  }
+
+  &.toolbar-mine-icon svg {
+    height: math.div(28rem, $font-size-base);
+    width: math.div(28rem, $font-size-base);
+  }
+
+  &.toolbar-icon svg,
+  &.toolbar-mine-icon svg {
+    transform: scale(0.8);
+    transition: 0.3s;
+  }
+
+  svg {
+    pointer-events: none;
+    height: math.div(40rem, $font-size-base);
+    width: math.div(40rem, $font-size-base);
+  }
+}
+
+.tab-link-active .svg-icon {
+  &.toolbar-icon svg {
+    transform: scale(1.1);
+  }
+  &.toolbar-mine-icon svg {
+    transform: scale(1);
+  }
+}
+
+.empty-icon svg {
+  height: math.div(230rem, $font-size-base);
+  width: math.div(230rem, $font-size-base);
+}
+
+.calc-calendar {
+  svg {
+    height: 16px;
+    width: 16px;
+  }
+}
+
+.expense-icon {
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.field-clear {
+  svg {
+    width: 15px;
+    height: 15px;
+    fill: #4b5563;
+  }
+}
+
+.third-party {
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.amounts-icon-1 {
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.save-icon {
+  svg {
+    fill: white;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.budget-icon {
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.account-book-add-icon {
+  svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.ancient-books-container {
+  svg {
+    height: 170px;
+    width: 170px;
+  }
+}
+
+.mine-avatar {
+  svg {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+.percentage-icon-right {
+  svg {
+    width: 12px;
+    height: 12px;
+    fill: #6b7280;
+  }
+}
+
+.calc-delete-icon {
+  svg {
+    width: 20px;
+  }
+}
+
+.plan-icons {
+  .complete-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .overdue-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.budget-status-icon {
+  svg {
+    width: 70px;
+    height: 70px;
+    fill: #b91c1c;
+  }
+}
+
+.mine-setting-icon {
+  svg {
+    height: 28px;
+    width: 28px;
+  }
+}
+
+.setting-after-icon {
+  svg {
+    width: 28px;
+    height: 28px;
+    fill: #6b7280;
+  }
+}
+
+.signup-container,
+.signin-container {
+  .signup-btn,
+  .signin-btn {
+    svg {
+      fill: white;
+      height: 25px;
+      width: 25px;
+    }
+  }
+}
+
+.signin-signup-page {
+  .signin-signup-back {
+    svg {
+      width: 30px;
+      height: 30px;
+      fill: #374151;
+    }
+  }
+}
+
+.signup-content,
+.signin-content {
+  .signup-avatar,
+  .signin-avatar {
+    svg {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}

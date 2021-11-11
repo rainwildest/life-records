@@ -9,6 +9,7 @@
 @import "./toggle.scss";
 @import "./layout.scss";
 @import "./theme-icon.scss";
+@import "./svg.scss";
 
 html,
 body {
@@ -17,56 +18,12 @@ body {
   user-select: none;
 }
 
-.svg-icon {
-  &.notepad-icon svg {
-    margin-top: 0.2rem;
-    height: math.div(35.2rem, $font-size-base);
-    width: math.div(35.2rem, $font-size-base);
-  }
-
-  &.toolbar-icon svg {
-    height: math.div(32rem, $font-size-base);
-    width: math.div(32rem, $font-size-base);
-  }
-
-  &.toolbar-mine-icon svg {
-    height: math.div(28rem, $font-size-base);
-    width: math.div(28rem, $font-size-base);
-  }
-
-  &.toolbar-icon svg,
-  &.toolbar-mine-icon svg {
-    transform: scale(0.8);
-    transition: 0.3s;
-  }
-
-  svg {
-    pointer-events: none;
-    height: math.div(40rem, $font-size-base);
-    width: math.div(40rem, $font-size-base);
-  }
-}
-
-.tab-link-active .svg-icon {
-  &.toolbar-icon svg {
-    transform: scale(1.1);
-  }
-  &.toolbar-mine-icon svg {
-    transform: scale(1);
-  }
-}
-
 .font-color {
   color: var(--f7-theme-color);
 }
 
 .tabbar-custom {
   transform: scale(0.8);
-}
-
-.empty-icon svg {
-  height: math.div(230rem, $font-size-base);
-  width: math.div(230rem, $font-size-base);
 }
 
 .expenses-swiper {
@@ -85,13 +42,6 @@ body {
   }
 }
 
-.calc-calendar {
-  svg {
-    height: 1rem;
-    width: 1rem;
-  }
-}
-
 .custom-calendar-fontsize .calendar-day-number {
   font-size: 0.7rem;
 }
@@ -103,13 +53,6 @@ body {
 
 .divide-gray {
   border-bottom-width: calc(1px);
-}
-
-.expense-icon {
-  svg {
-    width: 30px;
-    height: 30px;
-  }
 }
 
 .calc-active:active {
@@ -152,12 +95,6 @@ body {
   .signup-btn,
   .signin-btn {
     bottom: -20px;
-
-    svg {
-      fill: white;
-      height: 25px;
-      width: 25px;
-    }
   }
 
   .input-container {
@@ -171,21 +108,6 @@ body {
 
   .field-clear-container {
     min-width: 31px;
-  }
-}
-
-.field-clear {
-  svg {
-    width: 15px;
-    height: 15px;
-    fill: #4b5563;
-  }
-}
-
-.third-party {
-  svg {
-    width: 32px;
-    height: 32px;
   }
 }
 
@@ -209,14 +131,6 @@ body {
   .is-signup {
     top: 200%;
   }
-
-  .signin-signup-back {
-    svg {
-      width: 30px;
-      height: 30px;
-      fill: #374151;
-    }
-  }
 }
 
 .signup-content,
@@ -233,26 +147,6 @@ body {
     background: #d1d5db;
     width: 75px;
     height: 75px;
-
-    svg {
-      width: 60px;
-      height: 60px;
-    }
-  }
-}
-
-.mine-setting-icon {
-  svg {
-    height: 28px;
-    width: 28px;
-  }
-}
-
-.setting-after-icon {
-  svg {
-    width: 28px;
-    height: 28px;
-    fill: #6b7280;
   }
 }
 
@@ -266,27 +160,6 @@ body {
   // width: calc(100vw - 30px);
   top: -6%;
   // box-shadow: 5px 5px 10px #b9b9b9;
-}
-
-.mine-avatar {
-  svg {
-    width: 72px;
-    height: 72px;
-  }
-}
-
-.percentage-icon-right {
-  svg {
-    width: 12px;
-    height: 12px;
-    fill: #6b7280;
-  }
-}
-
-.calc-delete-icon {
-  svg {
-    width: 20px;
-  }
 }
 
 .test-i::before {
@@ -305,10 +178,6 @@ body {
 .ancient-books-container {
   height: 170px;
   width: 120px;
-  svg {
-    height: 170px;
-    width: 170px;
-  }
 }
 
 .ancient-book-name {
@@ -316,20 +185,6 @@ body {
   left: 14px;
   width: 36px;
   height: 102px;
-}
-
-.account-book-add-icon {
-  svg {
-    width: 26px;
-    height: 26px;
-  }
-}
-
-.budget-icon {
-  svg {
-    width: 30px;
-    height: 30px;
-  }
 }
 
 .budget-title {
@@ -372,45 +227,10 @@ body {
   }
 }
 
-.plan-icons {
-  .complete-icon svg {
-    width: 30px;
-    height: 30px;
-  }
-
-  .overdue-icon svg {
-    width: 28px;
-    height: 28px;
-  }
-}
-
-.budget-status-icon {
-  svg {
-    width: 70px;
-    height: 70px;
-    fill: #b91c1c;
-  }
-}
-
 .overdue-completion-icon {
   transform: rotate(6deg) scale(0.8);
 }
 
-.save-icon {
-  svg {
-    fill: white;
-    width: 14px;
-    height: 14px;
-  }
-}
-
 .cost-item-container {
   width: calc(100% - 42px);
-}
-
-.amounts-icon-1 {
-  svg {
-    width: 30px;
-    height: 30px;
-  }
 }
