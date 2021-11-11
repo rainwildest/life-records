@@ -1,15 +1,17 @@
 import React from "react";
-import { Page, Navbar, NavTitle, NavRight } from "framework7-react";
+import { Page, PageContent, Navbar, NavTitle } from "framework7-react";
 import { RouterOpotions } from "typings/f7-route";
-import { useCostDetailsQuery } from "apollo/graphql/model/cost-details.graphql";
-import { useStatisticalBooksQuery } from "apollo/graphql/model/statistics.graphql";
 import Amounts from "components/Amounts";
 import { thousands, isSameDay } from "lib/api/utils";
 import { format, relative } from "lib/api/dayjs";
 import CostCard from "components/CostCard";
 import Icons from "components/Icons";
+import event from "lib/api/framework-event";
+import { useCostDetailsQuery } from "apollo/graphql/model/cost-details.graphql";
+import { useStatisticalBooksQuery } from "apollo/graphql/model/statistics.graphql";
+import { useRemoveAccountBooksMutation } from "apollo/graphql/model/account-books.graphql";
 
-const Details: React.FC<RouterOpotions> = ({ f7route }) => {
+const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
   const { id, name } = f7route.query;
   const { data } = useCostDetailsQuery({
     variables: { input: { bookId: id } }
@@ -17,20 +19,31 @@ const Details: React.FC<RouterOpotions> = ({ f7route }) => {
   const { data: bookData } = useStatisticalBooksQuery({
     variables: { bookId: id }
   });
+  const [removeAccountBooks] = useRemoveAccountBooksMutation();
   const details = data?.costDetails || [];
   const statistical = bookData?.statisticalBooks;
 
+  const onDelete = () => {
+    removeAccountBooks({
+      variables: { id }
+    })
+      .then(() => {
+        // 提送消息更新内容
+        event.emit("update-books");
+        f7router.back();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
-    <Page noToolbar>
+    <Page noToolbar pageContent={false}>
       <Navbar backLink noHairline>
         <NavTitle className="max-w-48 truncate">{name}</NavTitle>
-        <NavRight>
-          <Icons name="delete-02" />
-          <Icons name="eidt-01" />
-        </NavRight>
       </Navbar>
 
-      <div className="pt-2 px-6 mt-10">
+      <PageContent className="pt-20 px-6 pb-28">
         <Amounts
           pay={thousands(statistical?.pay || 0)}
           income={thousands(statistical?.income || 0)}
@@ -52,7 +65,13 @@ const Details: React.FC<RouterOpotions> = ({ f7route }) => {
             />
           );
         })}
-      </div>
+
+        <div className="test-bg fixed bottom-6 z-10 rounded-full px-6 py-1 shadow-3 left-1/2 transform -translate-x-1/2 flex items-center">
+          <Icons name="delete-02" className="mr-2 link rounded-lg p-2.5" />
+
+          <Icons name="eidt-01" className="link rounded-lg p-2.5" />
+        </div>
+      </PageContent>
     </Page>
   );
 };

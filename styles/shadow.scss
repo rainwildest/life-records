@@ -1,7 +1,9 @@
 :root .theme-dark,
 :root.theme-dark {
-  --shadow-before-color: rgb(26 26 26 / 40%);
-  --shadow-after-color: rgb(102 102 102 / 28%);
+  // --shadow-before-color: rgb(26 26 26 / 40%);
+  // --shadow-after-color: rgb(102 102 102 / 28%);
+  --shadow-before-color: rgb(70, 70, 70, 0.4);
+  --shadow-after-color: rgb(203, 203, 203, 0.28);
 }
 :root {
   // 阴影配色基于 --f7-page-bg-color #efeff4;

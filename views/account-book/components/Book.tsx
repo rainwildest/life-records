@@ -41,7 +41,7 @@ const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
         className="ancient-book-name flex justify-center px-4 items-center bg-white absolute text-sm rounded-sm"
         ref={parent}
       >
-        <div ref={chil} className="break-all font-bold">
+        <div ref={chil} className="break-all font-bold text-gray-900">
           {name}
         </div>
       </div>
