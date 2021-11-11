@@ -7,6 +7,9 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    maxWidth: {
+      48: "192px"
+    },
     extend: {}
   },
   variants: {

@@ -86,21 +86,6 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
           <Book name={name} />
         </div>
       </div>
-
-      {/* <div className="flex justify-center">
-          <Button
-            className="mt-20 w-16 h-16 rounded-full flex justify-center items-center"
-            fill
-          >
-            <Icons name="save" className="save-icon" />
-          </Button>
-        </div> */}
-
-      {/* <div className="grid grid-cols-3 mt-5 px-2">
-        <Book name="据了解考虑佳节快乐尽快了解了解" />
-        <Book name="据了" />
-        <Book name="jlkjljkjlkjlkjljljkjljkj" />
-      </div> */}
     </Page>
   );
 };
