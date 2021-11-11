@@ -219,7 +219,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
           </div>
 
           <Icons
-            name="delete"
+            name="delete-01"
             className="calc-delete-icon link pl-2 pr-3"
             onClick={onDel}
           />
