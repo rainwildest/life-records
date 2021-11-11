@@ -7,7 +7,7 @@ import frameworkEvent from "lib/api/framework-event";
 
 Framework7.use(Framework7React);
 
-const Test: React.FC = ({ children }) => {
+const Framework7App: React.FC = ({ children }) => {
   const [themeDark, setThemeDark] = useState(false);
 
   frameworkEvent.on("theme-dark", (themeDark = false) => {
@@ -21,4 +21,4 @@ const Test: React.FC = ({ children }) => {
   );
 };
 
-export default Test;
+export default Framework7App;

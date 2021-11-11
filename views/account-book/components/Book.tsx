@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, memo } from "react";
+import React, { useRef, useEffect, memo, useState, useCallback } from "react";
 import Icons from "components/Icons";
 import { F7Router } from "typings/f7-route";
 
@@ -9,11 +9,16 @@ type BookOptions = {
 const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
   const parent = useRef<HTMLDivElement>(null);
   const chil = useRef<HTMLDivElement>(null);
-
+  // /* 强制刷新 */
+  // const [, updateState] = useState<any>();
+  // const forceUpdate = useCallback(() => updateState({}), []);
   useEffect(() => {
     if (!parent.current) return;
+
     const i = parent.current;
     const o = chil.current;
+    // console.log(i, o.clientHeight);
+    // console.log(i.offsetHeight, o.offsetHeight);
     if (i.offsetHeight < o.offsetHeight) {
       o.style.transform = `scale(${i.offsetHeight / o.offsetHeight - 0.02})`;
     }

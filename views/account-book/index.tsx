@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { Page, Navbar, NavRight, Link } from "framework7-react";
 import Book from "./components/Book";
 import Icons from "components/Icons";
@@ -12,6 +12,7 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
   const books = data?.accountBooks || [];
   useEffect(() => {
     event.on("update-books", () => {
+      console.log("kjk");
       refetch();
     });
 
@@ -19,13 +20,26 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
       event.off("update-books");
     };
   }, []);
+
+  const onNavigate = () => {
+    const url = f7router.generateUrl({
+      name: "account-book-modify",
+      params: { id: "id", name: "name" },
+      query: { id: "", name: "" }
+    });
+    f7router.navigate(url);
+  };
   return (
     <Page noToolbar>
       <Navbar backLink noHairline title="我的账簿">
         <NavRight>
-          <Link href="/account-book-create">
-            <Icons name="add" className="account-book-add-icon px-2" />
-          </Link>
+          {/* <Link href="/account-book-create"> */}
+          <Icons
+            name="add"
+            className="link account-book-add-icon px-2"
+            onClick={onNavigate}
+          />
+          {/* </Link> */}
         </NavRight>
       </Navbar>
 
@@ -43,4 +57,4 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
   );
 };
 
-export default AccountBook;
+export default memo(AccountBook);
