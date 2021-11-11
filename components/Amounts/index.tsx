@@ -17,7 +17,7 @@ const Amounts: React.FC<AmountsOptions> = ({
   className = ""
 }) => {
   const defaultClassName =
-    "amounts-icon-1 shadow-3 px-4 py-3 rounded-lg text-xs text-gray-700 text-right font-bold flex justify-between items-center";
+    "amounts-icon-1 shadow-3 p-4 rounded-lg text-xs text-gray-700 text-right font-bold flex justify-between items-center";
 
   return (
     <div className={mergeClassName(className, defaultClassName)}>
