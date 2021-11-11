@@ -7,14 +7,13 @@ import {
   NavTitle,
   NavRight
 } from "framework7-react";
-import DatePicker, { formatDatePicker } from "components/DatePicker";
-import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
-import { format } from "lib/api/dayjs";
 import CostCard from "components/CostCard";
+import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { RouterOpotions } from "typings/f7-route";
-import { thousands } from "lib/api/utils";
-import Icons from "components/Icons";
+import { thousands, isSameDay } from "lib/api/utils";
+import { format, relative } from "lib/api/dayjs";
 import Amounts from "components/Amounts";
+import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 
 const Bill: React.FC<RouterOpotions> = () => {
   const [picker, setPicker] = useState(null);
@@ -62,17 +61,22 @@ const Bill: React.FC<RouterOpotions> = () => {
           pay={thousands(statistics.pay)}
         />
 
-        {statistics.details?.map((detail, index) => (
-          <CostCard
-            key={detail.id}
-            type={detail.expense.expenseType}
-            typeName={detail.expense.expenseName}
-            time={format(detail.purchaseTime)}
-            amounts={thousands(detail.amounts)}
-            remarks={detail.remarks}
-            className="mt-8"
-          />
-        ))}
+        {statistics.details?.map((detail) => {
+          const _isSameDay = isSameDay(detail.purchaseTime);
+          const _fun = _isSameDay ? relative : format;
+
+          return (
+            <CostCard
+              key={detail.id}
+              type={detail.expense.expenseType}
+              typeName={detail.expense.expenseName}
+              time={_fun(detail.purchaseTime)}
+              amounts={thousands(detail.amounts)}
+              remarks={detail.remarks}
+              className="mt-8"
+            />
+          );
+        })}
       </PageContent>
     </Page>
   );

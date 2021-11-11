@@ -6,20 +6,22 @@ import {
   statisticalDetails,
   details as statisticalData,
   statisticalGeneralization,
-  statisticalExpenditureOrIncome
+  statisticalExpenditureOrIncome,
+  statisticalBooks
 } from "./statistical";
 import { fundPlan } from "./fund-plan";
 import { accountBooks } from "./account-books";
 
 export const queries = {
   user,
+  fundPlan,
   costDetails,
+  accountBooks,
   livingExpenses,
+  statisticalBooks,
   statisticalDetails,
   statisticalGeneralization,
-  statisticalExpenditureOrIncome,
-  fundPlan,
-  accountBooks
+  statisticalExpenditureOrIncome
 };
 
 export const custom = {

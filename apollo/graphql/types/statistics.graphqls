@@ -18,11 +18,20 @@ type ExpenditureAndIncomeOptions {
   purchaseTime: String
 }
 
+type StatisticalBooksOptions {
+  pay: Int
+  income: Int
+}
+
 type Query {
   statisticalDetails(date: String): StatisticalDetails
   # 概括
   statisticalGeneralization(year: String): [GeneralizationOptions]
   # 支出 或 收入
-  statisticalExpenditureOrIncome(date: String, type: String = "pay"): [ExpenditureAndIncomeOptions]
+  statisticalExpenditureOrIncome(
+    date: String
+    type: String = "pay"
+  ): [ExpenditureAndIncomeOptions]
   # statisticalBudget 预算
+  statisticalBooks(bookId: String): StatisticalBooksOptions
 }

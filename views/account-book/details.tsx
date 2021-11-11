@@ -2,9 +2,9 @@ import React from "react";
 import { Page, Navbar, NavTitle } from "framework7-react";
 import { RouterOpotions } from "typings/f7-route";
 import { useCostDetailsQuery } from "apollo/graphql/model/cost-details.graphql";
-import Icons from "components/Icons";
+import { useStatisticalBooksQuery } from "apollo/graphql/model/statistics.graphql";
 import Amounts from "components/Amounts";
-import { thousands } from "lib/api/utils";
+import { thousands, isSameDay } from "lib/api/utils";
 import { format, relative } from "lib/api/dayjs";
 import CostCard from "components/CostCard";
 
@@ -13,7 +13,11 @@ const Details: React.FC<RouterOpotions> = ({ f7route }) => {
   const { data } = useCostDetailsQuery({
     variables: { input: { bookId: id } }
   });
+  const { data: bookData } = useStatisticalBooksQuery({
+    variables: { bookId: id }
+  });
   const details = data?.costDetails || [];
+  const statistical = bookData?.statisticalBooks;
 
   return (
     <Page noToolbar>
@@ -22,19 +26,27 @@ const Details: React.FC<RouterOpotions> = ({ f7route }) => {
       </Navbar>
 
       <div className="pt-2 px-6 mt-10">
-        <Amounts pay={thousands(0)} income={thousands(0)} />
+        <Amounts
+          pay={thousands(statistical?.pay || 0)}
+          income={thousands(statistical?.income || 0)}
+        />
 
-        {details.map((detail) => (
-          <CostCard
-            className="mt-8"
-            key={detail.id}
-            type={detail.expense.expenseType}
-            typeName={detail.expense.expenseName}
-            time={format(detail.purchaseTime)}
-            amounts={thousands(detail.amounts)}
-            remarks={detail.remarks}
-          />
-        ))}
+        {details.map((detail) => {
+          const _isSameDay = isSameDay(detail.purchaseTime);
+          const _fun = _isSameDay ? relative : format;
+
+          return (
+            <CostCard
+              className="mt-8"
+              key={detail.id}
+              type={detail.expense.expenseType}
+              typeName={detail.expense.expenseName}
+              time={_fun(detail.purchaseTime)}
+              amounts={thousands(detail.amounts)}
+              remarks={detail.remarks}
+            />
+          );
+        })}
       </div>
     </Page>
   );

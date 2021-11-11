@@ -165,5 +165,6 @@ export const statisticalCostByBooks = async (
     )
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .andWhereRaw(`t1.book_id = ?`, [bookId])
-    .whereNull("t1.deleted_at");
+    .whereNull("t1.deleted_at")
+    .then((rows) => (rows.length ? rows[0] : null));
 };

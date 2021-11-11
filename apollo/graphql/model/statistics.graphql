@@ -15,7 +15,6 @@ query details($date: String) {
   }
 }
 
-
 query generalization($year: String) {
   statisticalGeneralization(year: $year) {
     pay
@@ -25,7 +24,7 @@ query generalization($year: String) {
 }
 
 query expenditure($date: String, $type: String = "pay") {
-  statisticalExpenditureOrIncome(date: $date, type:$type) {
+  statisticalExpenditureOrIncome(date: $date, type: $type) {
     pay
     expenseName
     purchaseTime
@@ -33,11 +32,18 @@ query expenditure($date: String, $type: String = "pay") {
   }
 }
 
-query income($date:String, $type: String = "income") {
-  statisticalExpenditureOrIncome(date: $date, type:$type) {
+query income($date: String, $type: String = "income") {
+  statisticalExpenditureOrIncome(date: $date, type: $type) {
     income
     expenseName
     purchaseTime
     expenseIcon
+  }
+}
+
+query statisticalBooks($bookId: String) {
+  statisticalBooks(bookId: $bookId) {
+    pay
+    income
   }
 }
