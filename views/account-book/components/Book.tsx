@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, memo } from "react";
+import React, { memo } from "react";
 import Icons from "components/Icons";
 import { F7Router } from "typings/f7-route";
 

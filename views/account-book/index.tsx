@@ -1,5 +1,5 @@
-import React, { useEffect, memo, useState, useCallback } from "react";
-import { Page, Navbar, NavRight, Link } from "framework7-react";
+import React, { useEffect, memo } from "react";
+import { Page, Navbar, NavRight } from "framework7-react";
 import Book from "./components/Book";
 import Icons from "components/Icons";
 import event from "lib/api/framework-event";
@@ -34,13 +34,11 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
     <Page noToolbar>
       <Navbar backLink noHairline title="我的账簿">
         <NavRight>
-          {/* <Link href="/account-book-create"> */}
           <Icons
             name="add"
             className="link account-book-add-icon px-2"
             onClick={onNavigate}
           />
-          {/* </Link> */}
         </NavRight>
       </Navbar>
 
