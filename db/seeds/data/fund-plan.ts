@@ -25,8 +25,9 @@ export default async (knex: Knex, ctx: CtxOptions): Promise<void> => {
     details.push({
       id: uuid(),
       user_id: user.id,
-      expense_id: expenseId[0],
       amounts,
+      name: "Macbook pro 14",
+      expense_id: expenseId[0],
       approximate_at: new Date(date)
     });
   }
