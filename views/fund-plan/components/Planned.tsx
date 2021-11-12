@@ -19,7 +19,8 @@ const Planned: React.FC = () => {
   const { data } = useFundPlanQuery({
     variables: {
       input: {}
-    }
+    },
+    fetchPolicy: "network-only"
   });
   const [modifyFundPlan] = useModifyFundPlanMutation();
   const [removeFundPlan] = useRemoveFundPlanMutation();
