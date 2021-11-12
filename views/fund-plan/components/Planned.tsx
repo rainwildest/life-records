@@ -35,40 +35,51 @@ const Planned: React.FC = () => {
   //     f7.swipeout.delete(".plant-item");
   //   }, 3000);
   // }, []);
+
   const onComplete = (val, el) => {
-    return () => {
-      console.log(val);
-      modifyFundPlan({
-        variables: {
-          id: val,
-          input: {
-            completeAt: true
-          }
+    modifyFundPlan({
+      variables: {
+        id: val,
+        input: {
+          completeAt: true
         }
+      }
+    })
+      .then((val) => {
+        console.log(val);
+        f7.swipeout.delete(`.${el}`);
       })
-        .then((val) => {
-          console.log(val);
-          f7.swipeout.delete(`.${el}`);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
+      .catch((e) => {
+        console.log(e);
+      });
   };
-  const onDeleted = (val, el) => {
+  const onCompleteBefore = (val, el) => {
     return () => {
-      console.log(val);
-      removeFundPlan({ variables: { id: val } })
-        .then(() => {
-          console.log("sdf");
-          f7.swipeout.delete(`.${el}`);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      f7.dialog.confirm("是否确定完成", "确定提示", function () {
+        onComplete(val, el);
+      });
     };
   };
 
+  const onDeleted = (val, el) => {
+    console.log(val);
+    removeFundPlan({ variables: { id: val } })
+      .then(() => {
+        console.log("sdf");
+        f7.swipeout.delete(`.${el}`);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const onDeletedBefore = (val, el) => {
+    return () => {
+      f7.dialog.confirm("是否确定删除", "删除提示", function () {
+        onDeleted(val, el);
+      });
+    };
+  };
   return (
     <List className="plant-items-container pt-2 px-6 my-0">
       {details.map((detail) => {
@@ -78,7 +89,7 @@ const Planned: React.FC = () => {
 
         return (
           <ListItem
-            className={`plant-item shadow-3 rounded-lg  plant-${detail.seqId}`}
+            className={`plant-item shadow-3 rounded-lg mt-8 plant-${detail.seqId}`}
             divider={false}
             swipeout
             key={detail.id}
@@ -97,14 +108,14 @@ const Planned: React.FC = () => {
               <SwipeoutButton
                 color="green"
                 className="plant-operation link !text-sm !font-bold"
-                onClick={onComplete(detail.id, `plant-${detail.seqId}`)}
+                onClick={onCompleteBefore(detail.id, `plant-${detail.seqId}`)}
               >
                 完 成
               </SwipeoutButton>
               <SwipeoutButton
                 color="red"
                 className="plant-operation link !text-sm !font-bold"
-                onClick={onDeleted(detail.id, `plant-${detail.seqId}`)}
+                onClick={onDeletedBefore(detail.id, `plant-${detail.seqId}`)}
               >
                 删 除
               </SwipeoutButton>

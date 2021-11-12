@@ -37,7 +37,7 @@ const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
         console.log(e);
       });
   };
-  const delConfirm = () => {
+  const onDelConfirm = () => {
     f7.dialog.confirm(`是否确定删除 ${name}`, "删除提示", function () {
       onDelete();
     });
@@ -98,7 +98,7 @@ const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
             <Icons
               name="delete-02"
               className="mr-2 link rounded-lg p-2.5"
-              onClick={delConfirm}
+              onClick={onDelConfirm}
             />
 
             <Icons
