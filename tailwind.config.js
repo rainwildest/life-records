@@ -8,7 +8,8 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     maxWidth: {
-      48: "192px"
+      48: "192px",
+      "1/2": "50%"
     },
     extend: {}
   },

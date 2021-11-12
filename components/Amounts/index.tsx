@@ -22,9 +22,13 @@ const Amounts: React.FC<AmountsOptions> = ({
   return (
     <div className={mergeClassName(className, defaultClassName)}>
       <Icons name="amounts" />
-      <div>
-        <span>{income && `${incomTitle}：${income}`}</span>
-        <span className="pl-4">{pay && `${payTitle}：${pay}`}</span>
+      <div className="amounts-container flex justify-end">
+        <div className="max-w-1/2 truncate">
+          {income && `${incomTitle}：${income}`}
+        </div>
+        <div className="pl-3 max-w-1/2 truncate">
+          {pay && `${payTitle}：${pay}`}
+        </div>
       </div>
     </div>
   );

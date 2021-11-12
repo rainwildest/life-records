@@ -242,3 +242,7 @@ body {
   background-color: var(--f7-page-bg-color);
   box-shadow: 0px 0px 20px 5px var(--f7-page-bg-color);
 }
+
+.amounts-container {
+  width: calc(100% - 40px);
+}
