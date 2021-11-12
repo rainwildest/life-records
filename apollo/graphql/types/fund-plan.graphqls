@@ -21,7 +21,7 @@ input fieldFundPlanOptions {
   name: String
   expenseId: String
   approximateAt: Date
-  completeAt: Date
+  completeAt: Boolean
 }
 
 input FundPlanQueryOptions {

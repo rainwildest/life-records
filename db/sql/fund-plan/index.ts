@@ -49,6 +49,7 @@ export const getPlannedByUserId = async (
     .where({ user_id: userId })
     .andWhere("deleted_at is null")
     .andWhere("complete_at is null")
+    .orderBy({ ["created_at"]: "DESC" })
     .execute("all");
 };
 

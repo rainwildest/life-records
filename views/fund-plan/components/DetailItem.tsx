@@ -27,6 +27,7 @@ const DetailItem: React.FC<DetailOptions> = ({
   amounts,
   status
 }) => {
+  console.log("kk");
   return (
     <div className="py-3 px-4 relative overflow-hidden w-full flex items-center">
       <Icons name={icon} className="budget-icon pr-3" />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import {
   List,
   ListItem,
@@ -9,7 +9,11 @@ import {
 import { relative } from "lib/api/dayjs";
 import { thousands, timeStamp } from "lib/api/utils";
 import DetailItem from "./DetailItem";
-import { useFundPlanQuery } from "apollo/graphql/model/fund-plan.graphql";
+import {
+  useFundPlanQuery,
+  useModifyFundPlanMutation,
+  useRemoveFundPlanMutation
+} from "apollo/graphql/model/fund-plan.graphql";
 
 const Planned: React.FC = () => {
   const { data } = useFundPlanQuery({
@@ -17,33 +21,67 @@ const Planned: React.FC = () => {
       input: {}
     }
   });
+  const [modifyFundPlan] = useModifyFundPlanMutation();
+  const [removeFundPlan] = useRemoveFundPlanMutation();
   console.log(data);
   const details = data?.fundPlan.data || [];
   const serverTime = data?.fundPlan.time;
 
-  details.forEach((item) => {
-    console.log(timeStamp(item.approximateAt), data?.fundPlan.time);
-  });
-
-  const onDeleted = () => {
-    f7.dialog.alert("Thanks, item removed!");
-  };
+  // const onDeleted = () => {
+  //   f7.dialog.alert("Thanks, item removed!");
+  // };
   // useEffect(() => {
   //   setTimeout(() => {
   //     f7.swipeout.delete(".plant-item");
   //   }, 3000);
   // }, []);
+  const onComplete = (val, el) => {
+    return () => {
+      console.log(val);
+      modifyFundPlan({
+        variables: {
+          id: val,
+          input: {
+            completeAt: true
+          }
+        }
+      })
+        .then((val) => {
+          console.log(val);
+          f7.swipeout.delete(`.${el}`);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+  };
+  const onDeleted = (val, el) => {
+    return () => {
+      console.log(val);
+      removeFundPlan({ variables: { id: val } })
+        .then(() => {
+          console.log("sdf");
+          f7.swipeout.delete(`.${el}`);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+  };
+
   return (
     <List className="plant-items-container pt-2 px-6 my-0">
       {details.map((detail) => {
         const { expense } = detail;
         const hasOverdue = timeStamp(detail.approximateAt) < serverTime;
         const status = hasOverdue ? "overdue-02" : "";
+
         return (
           <ListItem
-            className="plant-item shadow-3 rounded-lg mt-8"
+            className={`plant-item shadow-3 rounded-lg  plant-${detail.seqId}`}
             divider={false}
             swipeout
+            key={detail.id}
             // onSwipeoutDeleted={onDeleted}
           >
             <DetailItem
@@ -57,16 +95,16 @@ const Planned: React.FC = () => {
             />
             <SwipeoutActions className="flex items-center" right>
               <SwipeoutButton
-                className="plant-operation link !text-sm !font-bold"
                 color="green"
+                className="plant-operation link !text-sm !font-bold"
+                onClick={onComplete(detail.id, `plant-${detail.seqId}`)}
               >
                 完 成
               </SwipeoutButton>
               <SwipeoutButton
+                color="red"
                 className="plant-operation link !text-sm !font-bold"
-                confirmText="是否确定删除"
-                confirmTitle="提示"
-                delete
+                onClick={onDeleted(detail.id, `plant-${detail.seqId}`)}
               >
                 删 除
               </SwipeoutButton>
@@ -78,4 +116,4 @@ const Planned: React.FC = () => {
   );
 };
 
-export default Planned;
+export default memo(Planned);

@@ -12,3 +12,21 @@ query fundPlan($input: FundPlanQueryOptions) {
     time
   }
 }
+
+mutation createFundPlan($input: fieldFundPlanOptions) {
+  createFundPlan(input: $input) {
+    ...FundPlanOptions
+  }
+}
+
+mutation modifyFundPlan($id: String!, $input: fieldFundPlanOptions) {
+  modifyFundPlan(id: $id, input: $input) {
+    ...FundPlanOptions
+  }
+}
+
+mutation removeFundPlan($id: String!) {
+  removeFundPlan(id: $id) {
+    ...FundPlanOptions
+  }
+}
