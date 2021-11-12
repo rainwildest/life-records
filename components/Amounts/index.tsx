@@ -3,8 +3,8 @@ import Icons from "components/Icons";
 import { mergeClassName } from "lib/api/utils";
 
 type AmountsOptions = {
-  income: string;
-  pay: string;
+  income?: string;
+  pay?: string;
   className?: string;
   incomTitle?: string;
   payTitle?: string;
@@ -23,12 +23,8 @@ const Amounts: React.FC<AmountsOptions> = ({
     <div className={mergeClassName(className, defaultClassName)}>
       <Icons name="amounts" />
       <div>
-        <span>
-          {incomTitle}：{income}
-        </span>
-        <span className="pl-4">
-          {payTitle}：{pay}
-        </span>
+        <span>{income && `${incomTitle}：${income}`}</span>
+        <span className="pl-4">{pay && `${payTitle}：${pay}`}</span>
       </div>
     </div>
   );
