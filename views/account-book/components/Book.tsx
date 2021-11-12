@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, memo, useState, useCallback } from "react";
+import React, { useRef, useEffect, memo } from "react";
 import Icons from "components/Icons";
 import { F7Router } from "typings/f7-route";
 
@@ -7,23 +7,6 @@ type BookOptions = {
   name?: string;
 } & F7Router;
 const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
-  const parent = useRef<HTMLDivElement>(null);
-  const chil = useRef<HTMLDivElement>(null);
-  // /* 强制刷新 */
-  // const [, updateState] = useState<any>();
-  // const forceUpdate = useCallback(() => updateState({}), []);
-  useEffect(() => {
-    if (!parent.current) return;
-
-    const i = parent.current;
-    const o = chil.current;
-    // console.log(i, o.clientHeight);
-    // console.log(i.offsetHeight, o.offsetHeight);
-    if (i.offsetHeight < o.offsetHeight) {
-      o.style.transform = `scale(${i.offsetHeight / o.offsetHeight - 0.02})`;
-    }
-  }, [name]);
-
   const onNavigate = () => {
     if (!id || !f7router) return;
 
@@ -42,11 +25,8 @@ const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
       }`}
       onClick={onNavigate}
     >
-      <div
-        className="ancient-book-name flex justify-center px-4 items-center bg-white absolute text-sm rounded-sm"
-        ref={parent}
-      >
-        <div ref={chil} className="break-all font-bold text-gray-900">
+      <div className="ancient-book-name flex justify-center py-2 items-center bg-white absolute text-sm rounded-sm overflow-hidden">
+        <div className="break-all font-bold text-gray-900 truncate tracking-widest">
           {name}
         </div>
       </div>

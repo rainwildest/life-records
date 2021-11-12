@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from "react";
+import React, { useEffect, memo, useState, useCallback } from "react";
 import { Page, Navbar, NavRight, Link } from "framework7-react";
 import Book from "./components/Book";
 import Icons from "components/Icons";
@@ -10,9 +10,9 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
   const { data, refetch } = useAccountBooksQuery();
 
   const books = data?.accountBooks || [];
+
   useEffect(() => {
     event.on("update-books", () => {
-      console.log("kjk");
       refetch();
     });
 
@@ -29,6 +29,7 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
     });
     f7router.navigate(url);
   };
+
   return (
     <Page noToolbar>
       <Navbar backLink noHairline title="我的账簿">

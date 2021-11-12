@@ -47,7 +47,7 @@ const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
     const url = f7router.generateUrl({
       name: "account-book-modify",
       params: { id: "id", name: "name" },
-      query: { id, name }
+      query: { id, name: bookName }
     });
     f7router.navigate(url);
   };

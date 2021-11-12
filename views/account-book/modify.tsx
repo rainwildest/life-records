@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Page, Navbar, NavRight, Button, useStore, f7 } from "framework7-react";
+import { Page, Navbar, NavRight, Button } from "framework7-react";
 import Book from "./components/Book";
 import Icons from "components/Icons";
 import event from "lib/api/framework-event";
@@ -16,7 +16,6 @@ import { toastTip } from "lib/api/utils";
  */
 const AccountBook: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
   const { id, name } = f7route.query;
-  console.log(f7route.query);
   const [bookName, setBookName] = useState(name);
   const [saving, setSaving] = useState(false);
   const [createAccountBooks] = useCreateAccountBooksMutation();
@@ -64,7 +63,7 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
           <Button className="w-20" large small fill onClick={onSaveBefore}>
             <Icons
               name={!saving ? "save" : "spinner"}
-              className={`save-icon mr-1${!saving ? "" : " animate-spin"}`}
+              className={`mr-1 save-icon${!saving ? "" : " animate-spin"}`}
             />
             保存
           </Button>
