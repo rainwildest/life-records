@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, memo } from "react";
 import Icons from "components/Icons";
 import {
   List,
@@ -38,7 +38,7 @@ const DetailItem: React.FC<DetailOptions> = ({
         <div className="flex justify-between">
           <div className="text-gray-600 mt-2 text-sm truncate">{name}</div>
           <div className="mt-2 text-sm font-bold text-gray-600 flex-shrink-0">
-            {amounts}
+            ￥{amounts}
           </div>
         </div>
       </div>
@@ -53,4 +53,4 @@ const DetailItem: React.FC<DetailOptions> = ({
   );
 };
 
-export default DetailItem;
+export default memo(DetailItem);

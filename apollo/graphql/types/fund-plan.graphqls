@@ -24,8 +24,18 @@ input fieldFundPlanOptions {
   completeAt: Date
 }
 
+input FundPlanQueryOptions {
+  type: String
+  date: String
+}
+
+type FundPlanParam {
+  data: [FundPlan]
+  time: Float
+}
+
 type Query {
-  fundPlan(type: String, date: String): [FundPlan]
+  fundPlan(input: FundPlanQueryOptions): FundPlanParam
 }
 
 type Mutation {

@@ -12,15 +12,17 @@ import {
   useStore
 } from "framework7-react";
 import Icons from "components/Icons";
-import { relative } from "lib/api/dayjs";
-import Completed from "./components/Completed";
+// import { relative } from "lib/api/dayjs";
+// import Completed from "./components/Completed";
 import Planned from "./components/Planned";
-import Overdue from "./components/Overdue";
+// import Overdue from "./components/Overdue";
+import Amounts from "components/Amounts";
+import { thousands } from "lib/api/utils";
 
 const FundPlan: React.FC = () => {
   const token = useStore("token");
 
-  console.log(relative("2021-11-30"), new Date(0).getDate());
+  // console.log(relative("2021-11-30"), new Date(0).getDate());
   return (
     <Page noToolbar pageContent={true}>
       <Navbar backLink noHairline title="资金计划">
@@ -43,9 +45,14 @@ const FundPlan: React.FC = () => {
         计划中
         <div className="plan-icons flex items-center">
           <Icons name="complete-01" className="complete-icon link mr-2" />
-          <Icons name="overdue-01" className="overdue-icon link" />
+          {/* <Icons name="overdue-01" className="overdue-icon link" /> */}
         </div>
       </BlockTitle>
+
+      <div className="px-6 mt-5">
+        <Amounts pay={thousands(1000)} payTitle="预计支出" />
+      </div>
+
       <Planned />
       {/* <Tabs>
         <Tab className="page-content" id="planned" tabActive>

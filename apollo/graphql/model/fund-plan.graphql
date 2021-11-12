@@ -1,0 +1,14 @@
+# import FundPlanOptions from '../fragments/fund-plan.graphql'
+# import LivingExpensesOptions from '../fragments/living-expenses.graphql'
+
+query fundPlan($input: FundPlanQueryOptions) {
+  fundPlan(input: $input) {
+    data {
+      ...FundPlanOptions
+      expense {
+        ...LivingExpensesOptions
+      }
+    }
+    time
+  }
+}

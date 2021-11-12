@@ -4,7 +4,7 @@ import {
   getCompletedByUserId,
   getOverdueByUserId
 } from "db/sql/fund-plan";
-
+import { timeStamp } from "lib/api/utils";
 const getCurrentDate = () => {
   const date = new Date();
   const year = date.getFullYear();
@@ -16,11 +16,11 @@ const getCurrentDate = () => {
 
 export default (
   _parent: unknown,
-  _args: { type: string; date: string },
+  _args: { input: { type: string; date: string } },
   context: unknown
-): Promise<any> => {
+): any => {
   const { user } = context as GraphqlContext;
-  const { type, date } = _args;
+  const { type, date } = _args.input;
   if (!user?.id) {
     throw new AuthenticationError(
       "Authentication token is invalid, please log in."
@@ -41,5 +41,8 @@ export default (
       break;
   }
 
-  return _fun;
+  return {
+    data: _fun,
+    time: timeStamp()
+  };
 };

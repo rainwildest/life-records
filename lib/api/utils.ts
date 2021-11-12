@@ -167,10 +167,20 @@ export const toastTip = (text = ""): void => {
  * @param {string} date 日期
  * @returns boolean
  */
-export const isSameDay = (date?: string): boolean => {
+export const isSameDay = (date: string): boolean => {
   const _current = new Date().toISOString();
   const current = format(_current);
   const _date = format(date);
 
   return current === _date;
+};
+
+export const timeStamp = (date?: string): number => {
+  const time = date ? new Date(date) : new Date();
+
+  time.setHours(0);
+  time.setMinutes(0);
+  time.setSeconds(0);
+  time.setMilliseconds(0);
+  return time.getTime();
 };
