@@ -38,7 +38,7 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({
                   key={item.id}
                   className={`${
                     active === `${index}-${subIndex}`
-                      ? "inset-shadow-3"
+                      ? "shadow-inset-3"
                       : "shadow-3"
                   } py-2 rounded-lg flex flex-col items-center`}
                   data-index={`${index}-${subIndex}`}

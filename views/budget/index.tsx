@@ -28,7 +28,7 @@ const Budget: React.FC = () => {
             <div className="truncate text-gray-700">生活费</div>
           </div>
 
-          <div className="inset-shadow-3 rounded-lg inline-block">
+          <div className="shadow-inset-3 rounded-lg inline-block">
             <input
               className=" w-24 h-10 text-sm box-border px-3 py-2 text-center text-gray-700 bg-transparent"
               placeholder="无预算"

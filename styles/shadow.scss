@@ -1,7 +1,10 @@
+$shadow-integer-2: 2px 2px 4px;
+$shadow-negative-2: -2px -2px 4px;
+$shadow-integer-3: 3px 3px 6px;
+$shadow-negative-3: -3px -3px 6px;
+
 :root .theme-dark,
 :root.theme-dark {
-  // --shadow-before-color: rgb(26 26 26 / 40%);
-  // --shadow-after-color: rgb(102 102 102 / 28%);
   --shadow-before-color: rgb(70, 70, 70, 0.4);
   --shadow-after-color: rgb(203, 203, 203, 0.28);
 }
@@ -11,17 +14,32 @@
   --shadow-after-color: #ffffff;
 }
 
-.inset-shadow-3 {
-  box-shadow: inset 3px 3px 6px var(--shadow-before-color),
-    inset -3px -3px 6px var(--shadow-after-color);
+.shadow-2 {
+  box-shadow: $shadow-integer-2 var(--shadow-before-color),
+    $shadow-negative-2 var(--shadow-after-color);
 }
 
-.shadow-2 {
-  box-shadow: 2px 2px 4px var(--shadow-before-color),
-    -2px -2px 4px var(--shadow-after-color);
+.shadow-inset-2 {
+  box-shadow: inset $shadow-integer-2 var(--shadow-before-color),
+    inset $shadow-negative-2 var(--shadow-after-color);
+}
+
+.shadow-active-2:active {
+  box-shadow: inset $shadow-integer-2 var(--shadow-before-color),
+    inset $shadow-negative-2 var(--shadow-after-color);
 }
 
 .shadow-3 {
-  box-shadow: 3px 3px 6px var(--shadow-before-color),
-    -3px -3px 6px var(--shadow-after-color);
+  box-shadow: $shadow-integer-3 var(--shadow-before-color),
+    $shadow-negative-3 var(--shadow-after-color);
+}
+
+.shadow-inset-3 {
+  box-shadow: inset $shadow-integer-3 var(--shadow-before-color),
+    inset $shadow-negative-3 var(--shadow-after-color);
+}
+
+.shadow-active-3:active {
+  box-shadow: inset $shadow-integer-3 var(--shadow-before-color),
+    inset $shadow-negative-3 var(--shadow-after-color);
 }

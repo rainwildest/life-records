@@ -246,3 +246,9 @@ body {
 .amounts-container {
   width: calc(100% - 40px);
 }
+
+.triangle {
+  border: 5px solid;
+  border-color: #4b5563 transparent; /* transparent 设置边框颜色透明 */
+  border-bottom: none;
+}
