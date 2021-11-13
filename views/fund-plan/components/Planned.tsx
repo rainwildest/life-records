@@ -7,7 +7,7 @@ import {
   f7
 } from "framework7-react";
 import { relative } from "lib/api/dayjs";
-import { thousands, timeStamp } from "lib/api/utils";
+import { thousands, timeStamp, toastTip } from "lib/api/utils";
 import DetailItem from "./DetailItem";
 import {
   useFundPlanQuery,
@@ -24,18 +24,8 @@ const Planned: React.FC = () => {
   });
   const [modifyFundPlan] = useModifyFundPlanMutation();
   const [removeFundPlan] = useRemoveFundPlanMutation();
-  console.log(data);
   const details = data?.fundPlan.data || [];
   const serverTime = data?.fundPlan.time;
-
-  // const onDeleted = () => {
-  //   f7.dialog.alert("Thanks, item removed!");
-  // };
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     f7.swipeout.delete(".plant-item");
-  //   }, 3000);
-  // }, []);
 
   const onComplete = (val, el) => {
     modifyFundPlan({
@@ -46,14 +36,14 @@ const Planned: React.FC = () => {
         }
       }
     })
-      .then((val) => {
-        console.log(val);
+      .then(() => {
         f7.swipeout.delete(`.${el}`);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
+        toastTip("确认失败");
       });
   };
+
   const onCompleteBefore = (val, el) => {
     return () => {
       f7.dialog.confirm("是否确定完成", "确定提示", function () {
@@ -63,14 +53,12 @@ const Planned: React.FC = () => {
   };
 
   const onDeleted = (val, el) => {
-    console.log(val);
     removeFundPlan({ variables: { id: val } })
       .then(() => {
-        console.log("sdf");
         f7.swipeout.delete(`.${el}`);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
+        toastTip("删除失败");
       });
   };
 
@@ -81,6 +69,7 @@ const Planned: React.FC = () => {
       });
     };
   };
+
   return (
     <List className="plant-items-container pt-2 px-6 my-0">
       {details.map((detail) => {
@@ -94,7 +83,6 @@ const Planned: React.FC = () => {
             divider={false}
             swipeout
             key={detail.id}
-            // onSwipeoutDeleted={onDeleted}
           >
             <DetailItem
               slot="title"
