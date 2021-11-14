@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Page,
   PageContent,
@@ -27,6 +27,7 @@ const Completed: React.FC = () => {
     variables: { input: { type: "complete" } }
   });
   const details = data?.fundPlan.data || [];
+
   // useEffect(() => {
 
   // }, []);
@@ -36,29 +37,8 @@ const Completed: React.FC = () => {
   const ColValuesYears = { values: years };
   const currentYear = today.getFullYear();
   for (let i = 0; i < currentYear - 1995 + 5; ++i) years.push(1995 + i);
+  const [date, setDate] = useState([currentYear]);
 
-  const k = f7.picker.create({
-    value: [currentYear],
-    renderToolbar: function () {
-      return `
-      <div class="toolbar">
-        <div class="toolbar-inner">
-            <div class="left">
-              <a href="#" class="link toolbar-randomize-link w-12 text-sm text-center">确 定</a>
-            </div>
-            <div class="right">
-              <a href="#" class="link sheet-close popover-close w-12 text-sm text-center">关 闭</a>
-            </div>
-        </div>
-      </div>`;
-    },
-    cols: [
-      {
-        textAlign: "center",
-        ...ColValuesYears
-      }
-    ]
-  });
   return (
     <Page noToolbar pageContent={false}>
       <Navbar backLink noHairline title="完成的计划"></Navbar>
@@ -73,10 +53,14 @@ const Completed: React.FC = () => {
                   ...ColValuesYears
                 }
               ]}
-              values={[currentYear]}
+              values={date}
+              onComfire={(val) => {
+                console.log(val);
+                setDate(val[0]);
+              }}
             />
 
-            <Select
+            {/* <Select
               className="ml-3"
               cols={[
                 {
@@ -87,7 +71,7 @@ const Completed: React.FC = () => {
               ]}
               values={["2"]}
               format={(values, displayValues, index) => displayValues[index]}
-            />
+            /> */}
             {/* <div
               className="shadow-active-2 text-xs ml-2 inline-flex shadow-2 px-3 py-1 rounded-full items-center"
               onClick={() => {

@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from "react";
-import {
-  Page,
-  PageContent,
-  Navbar,
-  NavRight,
-  List,
-  ListItem,
-  SwipeoutActions,
-  SwipeoutButton,
-  BlockTitle,
-  useStore,
-  f7
-} from "framework7-react";
+import React, { useRef, useEffect, useState } from "react";
+import { f7 } from "framework7-react";
 import { mergeClassName } from "lib/api/utils";
 
 type SelectOptions = {
-  cols: any[];
-  values?: any[];
+  cols: any;
+  values?: any;
   className?: string;
-  format?: (values?: any[], displayValues?: any[], index?: number) => string;
+  format?: (values?: any, displayValues?: any, index?: number) => string;
   onComfire?: (value: any) => void;
 };
 
@@ -26,11 +14,13 @@ const Select: React.FC<SelectOptions> = ({
   values = [],
   cols,
   className = "",
-  format
+  format,
+  onComfire
 }) => {
   const [picker, setPicker] = useState(null);
-  const [vals, setVals] = useState(values);
+  const original = useRef(values);
   const [display, setDisplay] = useState("");
+
   const defaultClassName =
     "shadow-active-2 text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center";
 
@@ -51,18 +41,28 @@ const Select: React.FC<SelectOptions> = ({
 
   const callback = (picker) => {
     return () => {
-      const _display = format
-        ? formatHandle(picker.value, cols)
-        : picker.value.join(" ");
-      console.log(_display);
+      original.current = picker.value;
+      onComfire && onComfire(picker.value);
+
+      picker.close();
     };
   };
 
+  useEffect(() => {
+    if (!picker) return;
+
+    const _values = original.current;
+    const _display = format ? formatHandle(_values, cols) : _values.join(" ");
+
+    picker.setValue(values);
+    setDisplay(_display);
+  }, original.current);
+
   const selectClass = `select-${Math.random().toString(16).substr(8, 6)}`;
-  console.log(selectClass);
+
   useEffect(() => {
     const args = {
-      value: vals,
+      value: values,
       rotateEffect: true,
       renderToolbar: function () {
         return `
@@ -81,22 +81,18 @@ const Select: React.FC<SelectOptions> = ({
       cols,
       on: {
         open: (picker) => {
-          console.log(selectClass);
           f7.$(`.${selectClass}`).on("click", callback(picker));
         },
-        closed: function (picker) {
-          picker.setValue(vals);
+        closed: (picker) => {
+          picker.setValue(original.current);
           f7.$(`.${selectClass}`).off("click", callback);
-        },
-        change: (picker) => {
-          console.log(picker.value);
         }
       }
     };
 
     const _picker = f7.picker.create(args);
-    const values = _picker.getValue() as any[];
-    const _display = format ? formatHandle(values, cols) : values.join(" ");
+    const _values = _picker.getValue() as any;
+    const _display = format ? formatHandle(_values, cols) : values.join(" ");
 
     setDisplay(_display);
     setPicker(_picker);
