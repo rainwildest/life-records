@@ -69,10 +69,10 @@ const Select: React.FC<SelectOptions> = ({
           <div class="toolbar">
             <div class="toolbar-inner">
                 <div class="left ${selectClass}">
-                  <a href="#" class="link toolbar-randomize-link w-12 text-sm text-center">确 定</a>
+                  <a href="#" class="link toolbar-randomize-link w-12 !h-8 bg-gray-200 rounded-lg px-10 text-sm text-center">确 定</a>
                 </div>
                 <div class="right">
-                  <a href="#" class="link sheet-close popover-close w-12 text-sm text-center">关 闭</a>
+                  <a href="#" class="link sheet-close popover-close w-12 !h-8 bg-gray-200 rounded-lg px-10 text-sm text-center">关 闭</a>
                 </div>
             </div>
           </div>

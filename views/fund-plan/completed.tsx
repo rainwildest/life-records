@@ -38,6 +38,7 @@ const Completed: React.FC = () => {
   const currentYear = today.getFullYear();
   for (let i = 0; i < currentYear - 1995 + 5; ++i) years.push(1995 + i);
   const [date, setDate] = useState([currentYear]);
+  const [type, setType] = useState(["2"]);
 
   return (
     <Page noToolbar pageContent={false}>
@@ -56,11 +57,11 @@ const Completed: React.FC = () => {
               values={date}
               onComfire={(val) => {
                 console.log(val);
-                setDate(val[0]);
+                setDate(val);
               }}
             />
 
-            {/* <Select
+            <Select
               className="ml-3"
               cols={[
                 {
@@ -69,23 +70,13 @@ const Completed: React.FC = () => {
                   values: ["1", "2"]
                 }
               ]}
-              values={["2"]}
+              values={type}
               format={(values, displayValues, index) => displayValues[index]}
-            /> */}
-            {/* <div
-              className="shadow-active-2 text-xs ml-2 inline-flex shadow-2 px-3 py-1 rounded-full items-center"
-              onClick={() => {
-                k.open();
+              onComfire={(val) => {
+                console.log(val);
+                setType(val);
               }}
-            >
-              2021
-              <div className="ml-2 w-0 h-0 triangle" />
-            </div> */}
-
-            <div className="shadow-active-2 text-xs ml-3 inline-flex shadow-2 px-3 py-1 rounded-full items-center">
-              全部
-              <div className="ml-2 w-0 h-0 triangle" />
-            </div>
+            />
           </div>
         </BlockTitle>
 
