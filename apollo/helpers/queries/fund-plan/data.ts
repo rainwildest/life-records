@@ -17,7 +17,8 @@ export default (
   context: unknown
 ): any => {
   const { user } = context as GraphqlContext;
-  const { type, date = getCurrentDate("year") } = _args.input;
+  const { type, date = getCurrentDate("year"), expenseId } = _args.input;
+
   if (!user?.id) {
     throw new AuthenticationError(
       "Authentication token is invalid, please log in."
@@ -27,7 +28,7 @@ export default (
   let _fun = null;
   switch (type) {
     case "complete":
-      _fun = getCompleted({ userId: user.id, date });
+      _fun = getCompleted({ userId: user.id, date, expenseId });
       break;
     default:
       _fun = getPlannedByUserId(user.id);

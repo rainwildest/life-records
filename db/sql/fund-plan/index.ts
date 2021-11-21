@@ -54,17 +54,18 @@ export const getPlannedByUserId = async (
 };
 
 type CompletedParam = {
-  userId: string;
   date: string;
+  userId: string;
   expenseId?: string;
 };
+
 /**
- * 已完成
- * @method getCompleted
+ * 已完成（通过日期）
+ * @method getCompletedByDate
  * @param {object} args
  * @returns Promise
  */
-export const getCompleted = async (
+export const getCompletedByDate = async (
   args: CompletedParam
 ): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { userId, date } = args;
@@ -76,6 +77,46 @@ export const getCompleted = async (
     .andWhere("complete_at is not null")
     .andWhere("deleted_at is null")
     .execute("all");
+};
+
+/**
+ * 已完成（通过日期和消费类型 ID）
+ * @method getCompletedByExpenses
+ * @param {object} args
+ * @returns Promise
+ */
+export const getCompletedByExpenses = async (
+  args: CompletedParam
+): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const { userId, expenseId, date } = args;
+  const orm = await knex();
+
+  const condition = [
+    `t1.user_id = '${userId}'`,
+    `to_char(approximate_at, 'yyyy') = '${date}'`
+  ];
+
+  if (expenseId) condition.push(`t2.id = '${expenseId}'`);
+
+  return orm("fund_plan AS t1")
+    .joinRaw("JOIN living_expenses AS t2 ON t1.expense_id=t2.id::text")
+    .select(orm.raw("t1.*"))
+    .whereRaw(condition.join(" AND "))
+    .whereNotNull("t1.complete_at")
+    .whereNull("t1.deleted_at");
+};
+
+/**
+ * 已完成
+ * @method getCompletedByDate
+ * @param {object} args
+ * @returns Promise
+ */
+export const getCompleted = (
+  args: CompletedParam
+): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const _fun = args.expenseId ? getCompletedByExpenses : getCompletedByDate;
+  return _fun(args);
 };
 
 // /**
