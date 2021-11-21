@@ -27,6 +27,7 @@ input fieldFundPlanOptions {
 input FundPlanQueryOptions {
   type: String
   date: String
+  expenseId: String
 }
 
 type FundPlanParam {

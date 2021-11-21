@@ -26,6 +26,7 @@ const Completed: React.FC = () => {
   const { data } = useFundPlanQuery({
     variables: { input: { type: "complete" } }
   });
+  const [removeFundPlan] = useRemoveFundPlanMutation();
   const details = data?.fundPlan.data || [];
 
   // useEffect(() => {
@@ -40,6 +41,23 @@ const Completed: React.FC = () => {
   const [date, setDate] = useState([currentYear]);
   const [type, setType] = useState(["2"]);
 
+  const onDeleted = (val, el) => {
+    removeFundPlan({ variables: { id: val } })
+      .then(() => {
+        f7.swipeout.delete(`.${el}`);
+      })
+      .catch(() => {
+        toastTip("删除失败");
+      });
+  };
+
+  const onDeletedBefore = (val, el) => {
+    return () => {
+      f7.dialog.confirm("是否确定删除", "删除提示", function () {
+        onDeleted(val, el);
+      });
+    };
+  };
   return (
     <Page noToolbar pageContent={false}>
       <Navbar backLink noHairline title="完成的计划"></Navbar>
@@ -111,10 +129,10 @@ const Completed: React.FC = () => {
                   <SwipeoutButton
                     color="red"
                     className="plant-operation link !text-sm !font-bold"
-                    // onClick={onDeletedBefore(
-                    //   detail.id,
-                    //   `plant-${detail.seqId}`
-                    // )}
+                    onClick={onDeletedBefore(
+                      detail.id,
+                      `plant-${detail.seqId}`
+                    )}
                   >
                     删 除
                   </SwipeoutButton>

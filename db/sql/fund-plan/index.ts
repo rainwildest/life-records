@@ -53,13 +53,21 @@ export const getPlannedByUserId = async (
     .execute("all");
 };
 
+type CompletedParam = {
+  userId: string;
+  date: string;
+  expenseId?: string;
+};
 /**
  * 已完成
+ * @method getCompleted
+ * @param {object} args
+ * @returns Promise
  */
-export const getCompletedByUserId = async (
-  userId: string,
-  date: string
+export const getCompleted = async (
+  args: CompletedParam
 ): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const { userId, date } = args;
   const orm = await MikrotOrm(FundPlan);
 
   return orm
@@ -70,19 +78,19 @@ export const getCompletedByUserId = async (
     .execute("all");
 };
 
-/**
- * 已逾期
- */
-export const getOverdueByUserId = async (
-  userId: string,
-  date: string
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm(FundPlan);
+// /**
+//  * 已逾期
+//  */
+// export const getOverdueByUserId = async (
+//   userId: string,
+//   date: string
+// ): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+//   const orm = await MikrotOrm(FundPlan);
 
-  return orm
-    .where({ user_id: userId })
-    .andWhere(`to_char(approximate_at, 'yyyy-mm-dd') < ?`, [date])
-    .andWhere("complete_at is null")
-    .andWhere("deleted_at is null")
-    .execute("all");
-};
+//   return orm
+//     .where({ user_id: userId })
+//     .andWhere(`to_char(approximate_at, 'yyyy-mm-dd') < ?`, [date])
+//     .andWhere("complete_at is null")
+//     .andWhere("deleted_at is null")
+//     .execute("all");
+// };

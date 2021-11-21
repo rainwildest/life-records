@@ -1,5 +1,5 @@
 import { AuthenticationError } from "apollo-server-micro";
-import { getPlannedByUserId, getCompletedByUserId } from "db/sql/fund-plan";
+import { getPlannedByUserId, getCompleted } from "db/sql/fund-plan";
 import { timeStamp } from "lib/api/utils";
 
 const getCurrentDate = (type?: "year" | "date") => {
@@ -13,7 +13,7 @@ const getCurrentDate = (type?: "year" | "date") => {
 
 export default (
   _parent: unknown,
-  _args: { input: { type: string; date: string } },
+  _args: { input: { type: string; date: string; expenseId: string } },
   context: unknown
 ): any => {
   const { user } = context as GraphqlContext;
@@ -27,7 +27,7 @@ export default (
   let _fun = null;
   switch (type) {
     case "complete":
-      _fun = getCompletedByUserId(user.id, date);
+      _fun = getCompleted({ userId: user.id, date });
       break;
     default:
       _fun = getPlannedByUserId(user.id);
