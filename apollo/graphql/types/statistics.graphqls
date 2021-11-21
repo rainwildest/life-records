@@ -4,13 +4,13 @@ type StatisticalDetails {
   details(date: String): [CostDetails]
 }
 
-type GeneralizationOptions {
+type GeneralizationField {
   pay: Int
   income: Int
   purchaseTime: String
 }
 
-type ExpenditureAndIncomeOptions {
+type ExpenditureAndIncomeField {
   pay: Int
   income: Int
   expenseIcon: String
@@ -18,20 +18,25 @@ type ExpenditureAndIncomeOptions {
   purchaseTime: String
 }
 
-type StatisticalBooksOptions {
+type StatisticalBooksField {
   pay: Int
   income: Int
+}
+
+type StatisticalFundPlanField {
+  total: Int
 }
 
 type Query {
   statisticalDetails(date: String): StatisticalDetails
   # 概括
-  statisticalGeneralization(year: String): [GeneralizationOptions]
+  statisticalGeneralization(year: String): [GeneralizationField]
   # 支出 或 收入
   statisticalExpenditureOrIncome(
     date: String
     type: String = "pay"
-  ): [ExpenditureAndIncomeOptions]
+  ): [ExpenditureAndIncomeField]
   # statisticalBudget 预算
-  statisticalBooks(bookId: String): StatisticalBooksOptions
+  statisticalBooks(bookId: String): StatisticalBooksField
+  statisticalFundPlan(input: FundPlanQueryOptions): StatisticalFundPlanField
 }

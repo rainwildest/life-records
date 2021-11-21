@@ -54,7 +54,7 @@ export const getPlannedByUserId = async (
 };
 
 type CompletedParam = {
-  date: string;
+  year: string;
   userId: string;
   expenseId?: string;
 };
@@ -68,12 +68,12 @@ type CompletedParam = {
 export const getCompletedByDate = async (
   args: CompletedParam
 ): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const { userId, date } = args;
+  const { userId, year } = args;
   const orm = await MikrotOrm(FundPlan);
 
   return orm
     .where({ user_id: userId })
-    .andWhere(`to_char(approximate_at, 'yyyy') = ?`, [date])
+    .andWhere(`to_char(approximate_at, 'yyyy') = ?`, [year])
     .andWhere("complete_at is not null")
     .andWhere("deleted_at is null")
     .execute("all");
@@ -88,12 +88,12 @@ export const getCompletedByDate = async (
 export const getCompletedByExpenses = async (
   args: CompletedParam
 ): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const { userId, expenseId, date } = args;
+  const { userId, expenseId, year } = args;
   const orm = await knex();
 
   const condition = [
     `t1.user_id = '${userId}'`,
-    `to_char(approximate_at, 'yyyy') = '${date}'`
+    `to_char(approximate_at, 'yyyy') = '${year}'`
   ];
 
   if (expenseId) condition.push(`t2.id = '${expenseId}'`);

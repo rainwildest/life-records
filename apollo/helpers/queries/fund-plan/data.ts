@@ -13,11 +13,11 @@ const getCurrentDate = (type?: "year" | "date") => {
 
 export default (
   _parent: unknown,
-  _args: { input: { type: string; date: string; expenseId: string } },
+  _args: { input: { type: string; year: string; expenseId: string } },
   context: unknown
 ): any => {
   const { user } = context as GraphqlContext;
-  const { type, date = getCurrentDate("year"), expenseId } = _args.input;
+  const { type, year = getCurrentDate("year"), expenseId } = _args.input;
 
   if (!user?.id) {
     throw new AuthenticationError(
@@ -28,7 +28,7 @@ export default (
   let _fun = null;
   switch (type) {
     case "complete":
-      _fun = getCompleted({ userId: user.id, date, expenseId });
+      _fun = getCompleted({ userId: user.id, year, expenseId });
       break;
     default:
       _fun = getPlannedByUserId(user.id);

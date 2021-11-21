@@ -59,6 +59,9 @@ export const amountStatisticsByYearsOrMonth = async (
 /**
  * 统计全年月份收入和支出概括
  * @method statisticalGeneralization
+ * @param {string} userId 用户 id
+ * @param {string} year 年份（例：2021）
+ * @returns Promise
  */
 export const statisticalGeneralization = async (
   userId: string,
@@ -84,6 +87,11 @@ export const statisticalGeneralization = async (
 /**
  * 统计全年或月份的支出、收入情况
  * @method statisticalExpenditure
+ * @param {string} userId 用户 id
+ * @param {string} date 日期
+ * @param {string} type 统计类型
+ * @param {string} format 日期格式
+ * @returns Promise
  */
 export const statisticalExpenditure = async (args: {
   userId: string;
@@ -117,6 +125,10 @@ export const statisticalExpenditure = async (args: {
 /**
  * 统计全年、当天、当月费用
  * @method statisticalUserConsumption
+ * @param {string} userId 用户 id
+ * @param {string} type 统计类型
+ * @param {string} format 日期格式
+ * @returns Promise
  */
 export const statisticalUserConsumption = async (args: {
   userId: string;
@@ -148,6 +160,7 @@ export const statisticalUserConsumption = async (args: {
  * @method statisticalCostByBooks
  * @param {string} userId 用户ID
  * @param {string} bookId 账簿ID
+ * @returns Promise
  */
 export const statisticalCostByBooks = async (
   userId: string,
@@ -167,4 +180,20 @@ export const statisticalCostByBooks = async (
     .andWhereRaw(`t1.book_id = ?`, [bookId])
     .whereNull("t1.deleted_at")
     .then((rows) => (rows.length ? rows[0] : null));
+};
+
+/**
+ * 统计已完成或计划中的资金计划
+ * @method statisticalFundPlan
+ * @param {string} year 年份（如果不传则统计计划中的内容）
+ * @param {string} expenseId 消费类型 id
+ * @returns Promise
+ */
+export const statisticalFundPlan = async (args: {
+  year?: string;
+  expenseId?: string;
+}): Promise<any> => {
+  const orm = await knex();
+
+  return orm("fund_plan");
 };
