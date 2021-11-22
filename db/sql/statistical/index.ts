@@ -190,10 +190,56 @@ export const statisticalCostByBooks = async (
  * @returns Promise
  */
 export const statisticalFundPlan = async (args: {
+  userId: string;
   year?: string;
   expenseId?: string;
 }): Promise<any> => {
+  const { userId, year } = args;
+  if (!year) return statisticalFundPlanPlanned(userId);
+
+  return statisticalFundPlanCompleted(args);
+};
+
+/**
+ * 统计已完成或计划中的资金计划
+ * @method statisticalFundPlan
+ * @param {string} year 年份（如果不传则统计计划中的内容）
+ * @param {string} expenseId 消费类型 id
+ * @returns Promise
+ */
+export const statisticalFundPlanPlanned = async (
+  userId: string
+): Promise<any> => {
   const orm = await knex();
 
-  return orm("fund_plan");
+  return orm("fund_plan")
+    .select(orm.raw(`SUM(amounts) AS total`))
+    .where({ user_id: userId })
+    .whereNull("deleted_at")
+    .whereNull("complete_at")
+    .then((rows) => (rows.length ? rows[0] : { total: 0 }));
+};
+
+export const statisticalFundPlanCompleted = async (args: {
+  userId: String;
+  year?: string;
+  expenseId?: string;
+}): Promise<any> => {
+  const { userId, year, expenseId } = args;
+  const orm = await knex();
+
+  const condition = [
+    `t1.user_id = '${userId}'`,
+    `to_char(approximate_at, 'yyyy') = '${year}'`
+  ];
+
+  if (expenseId) condition.push(`t2.id = '${expenseId}'`);
+
+  return orm("fund_plan AS t1")
+    .joinRaw("JOIN living_expenses AS t2 ON t1.expense_id=t2.id::text")
+    .select(orm.raw(`SUM(amounts) AS total`))
+    .whereRaw(condition.join(" AND "))
+    .whereNotNull("t1.complete_at")
+    .whereNull("t1.deleted_at")
+    .then((rows) => (rows.length ? rows[0] : { total: 0 }));
 };
