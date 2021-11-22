@@ -1,8 +1,8 @@
 import { AuthenticationError } from "apollo-server-micro";
-import { statisticalGeneralization } from "db/sql/statistical";
+import { statisticalFundPlan } from "db/sql/statistical";
 
 type FundPlanParam = {
-  input: { type: string; date: string };
+  input: { year: string; expenseId: string };
 };
 
 export default async (
@@ -17,6 +17,7 @@ export default async (
       "Authentication token is invalid, please log in."
     );
   }
+
   // "complete"
-  return null;
+  return statisticalFundPlan({ userId: user.id, ..._args.input });
 };

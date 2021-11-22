@@ -7,7 +7,8 @@ import {
   details as statisticalData,
   statisticalGeneralization,
   statisticalExpenditureOrIncome,
-  statisticalBooks
+  statisticalBooks,
+  statisticalFundPlan
 } from "./statistical";
 import { fundPlan } from "./fund-plan";
 import { accountBooks } from "./account-books";
@@ -21,7 +22,8 @@ export const queries = {
   statisticalBooks,
   statisticalDetails,
   statisticalGeneralization,
-  statisticalExpenditureOrIncome
+  statisticalExpenditureOrIncome,
+  statisticalFundPlan
 };
 
 export const custom = {
