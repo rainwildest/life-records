@@ -71,7 +71,9 @@
   }
 }
 
-.amounts-icon-1 {
+.amounts-icon {
+  width: 30px;
+  height: 30px;
   svg {
     width: 30px;
     height: 30px;
@@ -200,5 +202,13 @@
   svg {
     width: 26px;
     height: 26px;
+  }
+}
+
+.empty-image {
+  svg {
+    width: 320px;
+    height: 320px;
+    transform: scale(0.5);
   }
 }
