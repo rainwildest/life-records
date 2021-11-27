@@ -10,7 +10,7 @@ const BindAccount: React.FC = () => {
           <Icons slot="media" name="email" className="mine-setting-icon" />
         </ListItem>
         <ListItem link="#" title="手机号码" after="152****8888">
-          <Icons slot="media" name="iPhone-x" className="mine-setting-icon" />
+          <Icons slot="media" name="iphone-x" className="mine-setting-icon" />
         </ListItem>
         <ListItem link="#" title="Github" after="已绑定">
           <Icons slot="media" name="github" className="mine-setting-icon" />
