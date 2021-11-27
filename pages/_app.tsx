@@ -4,8 +4,7 @@ import { useApollo } from "apollo/client";
 import fontSizeBase from "lib/fontSizeBase";
 import React, { useEffect } from "react";
 import Head from "next/head";
-import { getTokenCookie } from "lib/api/auth-cookies";
-import { getLoginSession } from "lib/api/auth";
+// import { getTokenCookie } from "lib/api/auth-cookies";
 import store from "lib/store";
 import Framework7 from "components/Framework7";
 import "framework7/framework7-bundle.min.css";
@@ -15,8 +14,8 @@ const MyApp = function ({
   Component,
   pageProps,
   token
-}: AppProps & { token: string; user: { [key: string]: any } }): JSX.Element {
-  store.dispatch("setToken", token);
+}: AppProps & { token: string }): JSX.Element {
+  // store.dispatch("setToken", token);
   const apolloClient = useApollo(pageProps?.initialApolloState);
 
   useEffect(() => {
@@ -46,9 +45,11 @@ export default MyApp;
 
 MyApp.getInitialProps = async ({ ctx }) => {
   if (ctx && ctx.req && ctx.req.headers) {
+    const { getTokenCookie } = require("lib/api/auth-cookies");
     return {
-      token: (await getTokenCookie(ctx.req)) || null,
-      user: (await getLoginSession(ctx.req)) || null
+      pageProps: {
+        token: getTokenCookie(ctx.req) || null
+      }
     };
   }
   return {};

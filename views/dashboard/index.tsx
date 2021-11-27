@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Icons from "components/Icons";
 import { Page, Toolbar, Views, View, Link, useStore } from "framework7-react";
+import store from "lib/store";
 
-const Index: React.FC = () => {
+type DashboardOptions = {
+  token: string;
+};
+const Index: React.FC<DashboardOptions> = ({ token }) => {
   // const isDark = useStore("dark");
   const onVibrate = () => {
     const hasVibrate = "vibrate" in navigator;
     hasVibrate && navigator.vibrate(100);
   };
+
+  // useEffect(() => {
+  store.dispatch("setToken", token);
+  // }, []);
   return (
     <Page pageContent={false}>
       {/* <Toolbar tabbar labels bottom>
