@@ -63,7 +63,6 @@ const Completed: React.FC = () => {
   });
 
   useEffect(() => {
-    console.log("ksdf");
     setExpenseIds(["", ...ids]);
     setExpenseDisplay(["全部", ...displays]);
   }, [expenseData]);
@@ -102,7 +101,6 @@ const Completed: React.FC = () => {
               ]}
               values={[year]}
               onComfire={(val) => {
-                console.log(val);
                 setYear(val[0]);
               }}
             />
@@ -119,7 +117,6 @@ const Completed: React.FC = () => {
               values={[type]}
               format={(values, displayValues, index) => displayValues[index]}
               onComfire={(val) => {
-                console.log(val);
                 setType(val[0]);
               }}
             />
