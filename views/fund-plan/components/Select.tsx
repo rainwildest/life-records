@@ -22,7 +22,7 @@ const Select: React.FC<SelectOptions> = ({
   const [display, setDisplay] = useState("");
 
   const defaultClassName =
-    "shadow-active-2 text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center";
+    "shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center";
 
   const formatHandle = (values, cols) => {
     let _cols = [];
@@ -68,11 +68,11 @@ const Select: React.FC<SelectOptions> = ({
         return `
           <div class="toolbar">
             <div class="toolbar-inner">
-                <div class="left ${selectClass}">
-                  <a href="#" class="link toolbar-randomize-link w-12 !h-8 bg-gray-200 rounded-lg px-10 text-sm text-center">确 定</a>
-                </div>
                 <div class="right">
                   <a href="#" class="link sheet-close popover-close w-12 !h-8 bg-gray-200 rounded-lg px-10 text-sm text-center">关 闭</a>
+                </div>
+                <div class="left ${selectClass}">
+                  <a href="#" class="link toolbar-randomize-link w-12 !h-8 bg-gray-200 rounded-lg px-10 text-sm text-center">确 定</a>
                 </div>
             </div>
           </div>
@@ -96,7 +96,7 @@ const Select: React.FC<SelectOptions> = ({
 
     setDisplay(_display);
     setPicker(_picker);
-  }, []);
+  }, [cols]);
 
   return (
     <div

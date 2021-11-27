@@ -22,6 +22,7 @@ import {
   useModifyFundPlanMutation,
   useRemoveFundPlanMutation
 } from "apollo/graphql/model/fund-plan.graphql";
+import { useStatisticalFundPlanQuery } from "apollo/graphql/model/statistics.graphql";
 
 const FundPlan: React.FC = () => {
   const token = useStore("token");
@@ -31,10 +32,18 @@ const FundPlan: React.FC = () => {
     },
     fetchPolicy: "network-only"
   });
+
+  const { data: statisticalData } = useStatisticalFundPlanQuery({
+    variables: {
+      input: {}
+    }
+  });
+
   const [modifyFundPlan] = useModifyFundPlanMutation();
   const [removeFundPlan] = useRemoveFundPlanMutation();
   const details = data?.fundPlan.data || [];
   const serverTime = data?.fundPlan.time;
+  const statistical = statisticalData?.statisticalFundPlan;
 
   const onComplete = (val, el) => {
     modifyFundPlan({
@@ -98,7 +107,7 @@ const FundPlan: React.FC = () => {
       </BlockTitle>
 
       <div className="px-6 mt-5">
-        <Amounts pay={thousands(1000)} payTitle="预计支出" />
+        <Amounts pay={thousands(statistical?.total || 0)} payTitle="预计支出" />
       </div>
 
       <List className="plant-items-container pt-2 px-6 my-0">

@@ -21,25 +21,52 @@ import {
   useFundPlanQuery,
   useRemoveFundPlanMutation
 } from "apollo/graphql/model/fund-plan.graphql";
+import { useStatisticalFundPlanQuery } from "apollo/graphql/model/statistics.graphql";
+import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
 
 const Completed: React.FC = () => {
-  const { data } = useFundPlanQuery({
-    variables: { input: { type: "complete" } }
-  });
-  const [removeFundPlan] = useRemoveFundPlanMutation();
-  const details = data?.fundPlan.data || [];
-
-  // useEffect(() => {
-
-  // }, []);
   const today = new Date();
   /* years */
   const years = [];
+  // const expenseIds = [""];
+  // const expenseDisplay = ["全部"];
   const ColValuesYears = { values: years };
   const currentYear = today.getFullYear();
   for (let i = 0; i < currentYear - 1995 + 5; ++i) years.push(1995 + i);
-  const [date, setDate] = useState([currentYear]);
-  const [type, setType] = useState(["2"]);
+  const [year, setYear] = useState(currentYear);
+  const [type, setType] = useState("");
+  const [expenseIds, setExpenseIds] = useState([""]);
+  const [expenseDisplay, setExpenseDisplay] = useState([""]);
+
+  const { data } = useFundPlanQuery({
+    variables: {
+      input: { type: "complete", year: `${year}`, expenseId: type || null }
+    }
+  });
+  const { data: statisticalData } = useStatisticalFundPlanQuery({
+    variables: {
+      input: { year: `${year}`, expenseId: type || null }
+    }
+  });
+  const { data: expenseData } = useLivingExpensesQuery();
+  const [removeFundPlan] = useRemoveFundPlanMutation();
+
+  const details = data?.fundPlan.data || [];
+  const statistical = statisticalData?.statisticalFundPlan;
+  const expense = expenseData?.livingExpenses || [];
+
+  const ids = [];
+  const displays = [];
+  expense.forEach((item) => {
+    ids.push(item.id);
+    displays.push(item.expenseName);
+  });
+
+  useEffect(() => {
+    console.log("ksdf");
+    setExpenseIds(["", ...ids]);
+    setExpenseDisplay(["全部", ...displays]);
+  }, [expenseData]);
 
   const onDeleted = (val, el) => {
     removeFundPlan({ variables: { id: val } })
@@ -58,6 +85,7 @@ const Completed: React.FC = () => {
       });
     };
   };
+
   return (
     <Page noToolbar pageContent={false}>
       <Navbar backLink noHairline title="完成的计划"></Navbar>
@@ -72,10 +100,10 @@ const Completed: React.FC = () => {
                   ...ColValuesYears
                 }
               ]}
-              values={date}
+              values={[year]}
               onComfire={(val) => {
                 console.log(val);
-                setDate(val);
+                setYear(val[0]);
               }}
             />
 
@@ -84,22 +112,22 @@ const Completed: React.FC = () => {
               cols={[
                 {
                   textAlign: "center",
-                  displayValues: ["全部", "生活"],
-                  values: ["1", "2"]
+                  displayValues: expenseDisplay,
+                  values: expenseIds
                 }
               ]}
-              values={type}
+              values={[type]}
               format={(values, displayValues, index) => displayValues[index]}
               onComfire={(val) => {
                 console.log(val);
-                setType(val);
+                setType(val[0]);
               }}
             />
           </div>
         </BlockTitle>
 
         <div className="px-6 mt-5">
-          <Amounts pay={thousands(1000)} payTitle="支出" />
+          <Amounts pay={thousands(statistical?.total || 0)} payTitle="支出" />
         </div>
 
         <List className="plant-items-container pt-2 px-6 my-0">

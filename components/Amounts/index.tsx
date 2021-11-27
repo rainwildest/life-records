@@ -24,10 +24,10 @@ const Amounts: React.FC<AmountsOptions> = ({
       <Icons name="amounts" className="amounts-icon" />
       <div className="amounts-container flex justify-end">
         <div className="max-w-1/2 truncate">
-          {income && `${incomTitle}：${income}`}
+          {income && `${incomTitle}：￥${income}`}
         </div>
         <div className="pl-3 max-w-1/2 truncate">
-          {pay && `${payTitle}：${pay}`}
+          {pay && `${payTitle}：￥${pay}`}
         </div>
       </div>
     </div>

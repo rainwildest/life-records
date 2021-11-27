@@ -47,3 +47,9 @@ query statisticalBooks($bookId: String) {
     income
   }
 }
+
+query statisticalFundPlan($input: FundPlanQueryOptions) {
+  statisticalFundPlan(input: $input) {
+    total
+  }
+}
