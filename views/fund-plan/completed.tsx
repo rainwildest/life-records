@@ -28,8 +28,6 @@ const Completed: React.FC = () => {
   const today = new Date();
   /* years */
   const years = [];
-  // const expenseIds = [""];
-  // const expenseDisplay = ["全部"];
   const ColValuesYears = { values: years };
   const currentYear = today.getFullYear();
   for (let i = 0; i < currentYear - 1995 + 5; ++i) years.push(1995 + i);
@@ -41,12 +39,14 @@ const Completed: React.FC = () => {
   const { data } = useFundPlanQuery({
     variables: {
       input: { type: "complete", year: `${year}`, expenseId: type || null }
-    }
+    },
+    fetchPolicy: "network-only"
   });
-  const { data: statisticalData } = useStatisticalFundPlanQuery({
+  const { data: statisticalData, refetch } = useStatisticalFundPlanQuery({
     variables: {
       input: { year: `${year}`, expenseId: type || null }
-    }
+    },
+    fetchPolicy: "network-only"
   });
   const { data: expenseData } = useLivingExpensesQuery();
   const [removeFundPlan] = useRemoveFundPlanMutation();
@@ -71,6 +71,7 @@ const Completed: React.FC = () => {
     removeFundPlan({ variables: { id: val } })
       .then(() => {
         f7.swipeout.delete(`.${el}`);
+        refetch();
       })
       .catch(() => {
         toastTip("删除失败");

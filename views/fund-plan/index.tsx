@@ -33,10 +33,11 @@ const FundPlan: React.FC = () => {
     fetchPolicy: "network-only"
   });
 
-  const { data: statisticalData } = useStatisticalFundPlanQuery({
+  const { data: statisticalData, refetch } = useStatisticalFundPlanQuery({
     variables: {
       input: {}
-    }
+    },
+    fetchPolicy: "network-only"
   });
 
   const [modifyFundPlan] = useModifyFundPlanMutation();
@@ -56,6 +57,7 @@ const FundPlan: React.FC = () => {
     })
       .then(() => {
         f7.swipeout.delete(`.${el}`);
+        refetch();
       })
       .catch(() => {
         toastTip("确认失败");
@@ -74,6 +76,7 @@ const FundPlan: React.FC = () => {
     removeFundPlan({ variables: { id: val } })
       .then(() => {
         f7.swipeout.delete(`.${el}`);
+        refetch();
       })
       .catch(() => {
         toastTip("删除失败");
@@ -91,7 +94,7 @@ const FundPlan: React.FC = () => {
   return (
     <Page noToolbar pageContent={true}>
       <Navbar backLink noHairline title="资金计划">
-        <NavRight>
+        <NavRight className="link">
           <Icons name="add" className="account-book-add-icon px-2" />
         </NavRight>
       </Navbar>
