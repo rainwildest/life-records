@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  swcMinify: true,
+  swcMinify: false,
   sassOptions: {
     includePaths: [path.resolve("styles")]
   },

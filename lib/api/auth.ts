@@ -21,13 +21,17 @@ export async function getLoginSession(req: NextApiRequest): Promise<any> {
   const token = getTokenCookie(req);
   if (!token) return;
 
-  const session = await Iron.unseal(token, TOKEN_SECRET, Iron.defaults);
-  const expiresAt = session.createdAt + session.maxAge * 1000;
+  try {
+    const session = await Iron.unseal(token, TOKEN_SECRET, Iron.defaults);
+    const expiresAt = session.createdAt + session.maxAge * 1000;
 
-  // Validate the expiration date of the session
-  if (Date.now() > expiresAt) {
-    throw new Error("Session expired");
+    // Validate the expiration date of the session
+    if (Date.now() > expiresAt) {
+      throw new Error("Session expired");
+    }
+
+    return session;
+  } catch (err) {
+    return {};
   }
-
-  return session;
 }
