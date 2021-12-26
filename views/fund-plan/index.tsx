@@ -23,8 +23,9 @@ import {
   useRemoveFundPlanMutation
 } from "apollo/graphql/model/fund-plan.graphql";
 import { useStatisticalFundPlanQuery } from "apollo/graphql/model/statistics.graphql";
+import { RouterOpotions } from "typings/f7-route";
 
-const FundPlan: React.FC = () => {
+const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
   const token = useStore("token");
   const { data } = useFundPlanQuery({
     variables: {
@@ -91,11 +92,24 @@ const FundPlan: React.FC = () => {
     };
   };
 
+  const onNavigate = () => {
+    const url = f7router.generateUrl({
+      name: "fund-plan-modify",
+      params: { id: "id", name: "name" },
+      query: { id: "", name: "" }
+    });
+    f7router.navigate(url);
+  };
+
   return (
     <Page noToolbar pageContent={true}>
       <Navbar backLink noHairline title="资金计划">
         <NavRight className="link">
-          <Icons name="add" className="account-book-add-icon px-2" />
+          <Icons
+            name="add"
+            className="account-book-add-icon px-2"
+            onClick={onNavigate}
+          />
         </NavRight>
       </Navbar>
 
