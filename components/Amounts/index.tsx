@@ -9,26 +9,15 @@ type AmountsOptions = {
   incomTitle?: string;
   payTitle?: string;
 };
-const Amounts: React.FC<AmountsOptions> = ({
-  income,
-  pay,
-  incomTitle = "收入",
-  payTitle = "支出",
-  className = ""
-}) => {
-  const defaultClassName =
-    "shadow-3 p-4 rounded-lg text-xs text-gray-700 text-right font-bold flex justify-between items-center";
+const Amounts: React.FC<AmountsOptions> = ({ income, pay, incomTitle = "收入", payTitle = "支出", className = "" }) => {
+  const defaultClassName = "shadow-3 p-4 rounded-lg text-xs text-gray-700 text-right font-bold flex justify-between items-center";
 
   return (
     <div className={mergeClassName(className, defaultClassName)}>
       <Icons name="amounts" className="amounts-icon" />
       <div className="amounts-container flex justify-end">
-        <div className="max-w-1/2 truncate">
-          {income && `${incomTitle}：￥${income}`}
-        </div>
-        <div className="pl-3 max-w-1/2 truncate">
-          {pay && `${payTitle}：￥${pay}`}
-        </div>
+        <div className="max-w-1/2 truncate">{income && `${incomTitle}：￥${income}`}</div>
+        <div className="pl-3 max-w-1/2 truncate">{pay && `${payTitle}：￥${pay}`}</div>
       </div>
     </div>
   );

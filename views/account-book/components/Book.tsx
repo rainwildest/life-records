@@ -6,6 +6,7 @@ type BookOptions = {
   id?: string;
   name?: string;
 } & F7Router;
+
 const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
   const onNavigate = () => {
     if (!id || !f7router) return;
@@ -15,25 +16,17 @@ const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
       params: { id: "id", name: "name" },
       query: { id, name }
     });
+
     f7router.navigate(url);
   };
 
   return (
-    <div
-      className={`ancient-books-container overflow-hidden relative opacity-80 justify-self-center${
-        !id || !f7router ? "" : " link"
-      }`}
-      onClick={onNavigate}
-    >
-      <div className="ancient-book-name flex justify-center py-2 items-center bg-white absolute text-sm rounded-sm overflow-hidden">
-        <div className="break-all font-bold text-gray-900 truncate tracking-widest">
-          {name}
-        </div>
+    <div className={`shadow-3  rounded-lg flex py-3 px-2 mt-5 justify-start items-center${!id || !f7router ? "" : " link"}`} onClick={onNavigate}>
+      <Icons name="ancient-books" className="scale-75" />
+      <div className="overflow-hidden">
+        <div className="text-gray-500 text-xs">账簿名称</div>
+        <div className="break-all font-semibold text-gray-900 truncate tracking-widest">{name}</div>
       </div>
-      <Icons
-        name="ancient-books"
-        className="ancient-books-container flex justify-center"
-      />
     </div>
   );
 };

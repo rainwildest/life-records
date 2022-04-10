@@ -34,22 +34,13 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
     <Page noToolbar>
       <Navbar backLink noHairline title="我的账簿">
         <NavRight>
-          <Icons
-            name="add"
-            className="link account-book-add-icon px-2"
-            onClick={onNavigate}
-          />
+          <Icons name="add" className="link account-book-add-icon px-2" onClick={onNavigate} />
         </NavRight>
       </Navbar>
 
-      <div className="grid grid-cols-3 mt-5 px-2">
+      <div className="mt-7 px-4">
         {books.map((item) => (
-          <Book
-            id={item.id}
-            name={item.name}
-            f7router={f7router}
-            key={item.id}
-          />
+          <Book id={item.id} name={item.name} f7router={f7router} key={item.id} />
         ))}
       </div>
     </Page>

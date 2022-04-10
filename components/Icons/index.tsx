@@ -12,12 +12,7 @@ type IconsProps = {
 const handleClassName = (className: string): string => {
   return mergeClassName(className, "svg-icon inline-block");
 };
-const Icons: React.FC<IconsProps> = ({
-  name,
-  className = "",
-  style,
-  onClick
-}) => {
+const Icons: React.FC<IconsProps> = ({ name, className = "", style, onClick }) => {
   const base = "/svg/";
   const url = `${base}${name}.svg`;
 

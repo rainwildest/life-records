@@ -124,7 +124,7 @@
   }
 }
 
-.calc-delete-icon {
+.calc-delete-icon, .book-operation-icon {
   svg {
     width: 20px;
   }
@@ -198,12 +198,12 @@
   }
 }
 
-.test-bg {
-  svg {
-    width: 26px;
-    height: 26px;
-  }
-}
+// .book-del {
+//   svg {
+//     width: 20px;
+//     height: 20px;
+//   }
+// }
 
 .empty-image {
   svg {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Page, PageContent, Navbar, NavTitle, f7 } from "framework7-react";
+import { Page, PageContent, Navbar, NavTitle, NavRight, f7 } from "framework7-react";
 import { RouterOpotions } from "typings/f7-route";
 import Amounts from "components/Amounts";
 import { thousands, isSameDay } from "lib/api/utils";
@@ -68,13 +68,14 @@ const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
     <Page noToolbar pageContent={false}>
       <Navbar backLink noHairline>
         <NavTitle className="max-w-48 truncate">{bookName}</NavTitle>
+        <NavRight>
+          <Icons name="delete-02" className="book-operation-icon link rounded-lg p-2.5" onClick={onDelConfirm} />
+          <Icons name="eidt-01" className="book-operation-icon link rounded-lg p-2.5" onClick={onNavigate} />
+        </NavRight>
       </Navbar>
 
       <PageContent className="pt-20 px-6 pb-28">
-        <Amounts
-          pay={thousands(statistical?.pay || 0)}
-          income={thousands(statistical?.income || 0)}
-        />
+        <Amounts pay={thousands(statistical?.pay || 0)} income={thousands(statistical?.income || 0)} />
 
         {details.map((detail) => {
           const _isSameDay = isSameDay(detail.purchaseTime);
@@ -92,22 +93,6 @@ const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
             />
           );
         })}
-
-        <div className="test-bg rounded-full fixed bottom-4 px-3 py-2 left-1/2 transform -translate-x-1/2 z-10 ">
-          <div className="rounded-full px-6 py-1 shadow-3 flex items-center">
-            <Icons
-              name="delete-02"
-              className="mr-2 link rounded-lg p-2.5"
-              onClick={onDelConfirm}
-            />
-
-            <Icons
-              name="eidt-01"
-              className="link rounded-lg p-2.5"
-              onClick={onNavigate}
-            />
-          </div>
-        </div>
       </PageContent>
     </Page>
   );

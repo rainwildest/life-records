@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { Page, Navbar, NavRight, Button } from "framework7-react";
-import Book from "./components/Book";
 import Icons from "components/Icons";
 import event from "lib/api/framework-event";
-import {
-  useCreateAccountBooksMutation,
-  useModifyAccountBooksMutation
-} from "apollo/graphql/model/account-books.graphql";
+import { useCreateAccountBooksMutation, useModifyAccountBooksMutation } from "apollo/graphql/model/account-books.graphql";
 import { RouterOpotions } from "typings/f7-route";
 import { toastTip } from "lib/api/utils";
 /**
@@ -61,38 +57,18 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
       <Navbar backLink noHairline title={id ? "编辑账簿" : "新增账簿"}>
         <NavRight>
           <Button className="w-20" large small fill onClick={onSaveBefore}>
-            <Icons
-              name={!saving ? "save" : "spinner"}
-              className={`mr-1 save-icon${!saving ? "" : " animate-spin"}`}
-            />
+            <Icons name={!saving ? "save" : "spinner"} className={`mr-1 save-icon${!saving ? "" : " animate-spin"}`} />
             保存
           </Button>
         </NavRight>
       </Navbar>
 
       <div className="px-8 mt-10">
-        <div className="text-gray-700 font-bold text-sm mb-3 pl-2">
-          账簿名称
-        </div>
+        <div className="text-gray-700 font-bold text-sm mb-3 pl-2">账簿名称</div>
         <div className="relative h-14 w-full px-3 shadow-3 rounded-lg text-gray-600 text-xs flex items-center">
-          <input
-            placeholder="请输入账簿名称"
-            className="bg-transparent text-sm w-full"
-            value={bookName}
-            onInput={onInput}
-          />
+          <input placeholder="请输入账簿名称" className="bg-transparent text-sm w-full" value={bookName} onInput={onInput} />
 
-          {bookName && (
-            <Icons
-              name="close"
-              className="field-clear px-2"
-              onClick={onClear}
-            />
-          )}
-        </div>
-
-        <div className="flex justify-center mt-16">
-          <Book name={bookName} />
+          {bookName && <Icons name="close" className="field-clear px-2" onClick={onClear} />}
         </div>
       </div>
     </Page>
