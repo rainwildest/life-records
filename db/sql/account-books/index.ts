@@ -8,9 +8,7 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createAccountBooks = async (
-  options: AccountBooksSnakeOptions
-): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createAccountBooks = async (options: AccountBooksSnakeOptions): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("account_books", { ...options });
 };
 
@@ -21,10 +19,7 @@ export const createAccountBooks = async (
  * @param options
  * @returns Promise
  */
-export const modifyAccountBooks = async (
-  id: string,
-  options: AccountBooksSnakeOptions
-): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const modifyAccountBooks = async (id: string, options: AccountBooksSnakeOptions): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return modify("account_books", id, { ...options });
 };
 
@@ -34,9 +29,7 @@ export const modifyAccountBooks = async (
  * @param id
  * @returns Promise
  */
-export const removeAccountBooks = async (
-  id: string
-): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeAccountBooks = async (id: string): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return remove("account_books", id);
 };
 
@@ -46,12 +39,11 @@ export const removeAccountBooks = async (
  * @param {string} userId
  * @returns Promise
  */
-export const getAccountBooksByUserId = async (
-  userId: string
-): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm(AccountBooks);
+export const getAccountBooksByUserId = async (userId: string): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm();
 
   return orm
+    .createQueryBuilder(AccountBooks)
     .where({ user_id: userId })
     .andWhere("deleted_at is null")
     .orderBy({ ["created_at"]: "DESC" })
@@ -63,8 +55,6 @@ export const getAccountBooksByUserId = async (
  * @param {string} id
  * @returns Promise
  */
-export const getAccountBooksById = async (
-  id: string
-): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getAccountBooksById = async (id: string): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return getDatabyId(AccountBooks, id);
 };

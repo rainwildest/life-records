@@ -7,9 +7,7 @@ import { create, modify, remove } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createFundPlan = async (
-  options: FundPlanSnakeOptions
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createFundPlan = async (options: FundPlanSnakeOptions): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("fund_plan", { ...options });
 };
 
@@ -19,10 +17,7 @@ export const createFundPlan = async (
  * @param options
  * @returns Promise
  */
-export const modifyFundPlan = async (
-  id: string,
-  options: FundPlanSnakeOptions
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const modifyFundPlan = async (id: string, options: FundPlanSnakeOptions): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return modify("fund_plan", id, { ...options });
 };
 
@@ -31,21 +26,18 @@ export const modifyFundPlan = async (
  * @param id
  * @returns Promise
  */
-export const removeFundPlan = async (
-  id: string
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeFundPlan = async (id: string): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return remove("fund_plan", id);
 };
 
 /**
  * 计划中
  */
-export const getPlannedByUserId = async (
-  userId: string
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm(FundPlan);
+export const getPlannedByUserId = async (userId: string): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm();
 
   return orm
+    .createQueryBuilder(FundPlan)
     .where({ user_id: userId })
     .andWhere("deleted_at is null")
     .andWhere("complete_at is null")
@@ -65,13 +57,12 @@ type CompletedParam = {
  * @param {object} args
  * @returns Promise
  */
-export const getCompletedByDate = async (
-  args: CompletedParam
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCompletedByDate = async (args: CompletedParam): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { userId, year } = args;
-  const orm = await MikrotOrm(FundPlan);
+  const orm = await MikrotOrm();
 
   return orm
+    .createQueryBuilder(FundPlan)
     .where({ user_id: userId })
     .andWhere(`to_char(approximate_at, 'yyyy') = ?`, [year])
     .andWhere("complete_at is not null")
@@ -85,16 +76,11 @@ export const getCompletedByDate = async (
  * @param {object} args
  * @returns Promise
  */
-export const getCompletedByExpenses = async (
-  args: CompletedParam
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCompletedByExpenses = async (args: CompletedParam): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { userId, expenseId, year } = args;
   const orm = await knex();
 
-  const condition = [
-    `t1.user_id = '${userId}'`,
-    `to_char(approximate_at, 'yyyy') = '${year}'`
-  ];
+  const condition = [`t1.user_id = '${userId}'`, `to_char(approximate_at, 'yyyy') = '${year}'`];
 
   if (expenseId) condition.push(`t2.id = '${expenseId}'`);
 
@@ -112,9 +98,7 @@ export const getCompletedByExpenses = async (
  * @param {object} args
  * @returns Promise
  */
-export const getCompleted = (
-  args: CompletedParam
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCompleted = (args: CompletedParam): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const _fun = args.expenseId ? getCompletedByExpenses : getCompletedByDate;
   return _fun(args);
 };

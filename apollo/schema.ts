@@ -5,7 +5,6 @@ import { mergeTypeDefs } from "@graphql-tools/merge";
 import graphQLLetConfig from ".graphql-let.yml";
 import resolvers from "./resolvers";
 
-console.log(join(process.cwd(), graphQLLetConfig.schema));
 const loadedFiles = loadFilesSync(join(process.cwd(), graphQLLetConfig.schema));
 const typeDefs = mergeTypeDefs(loadedFiles);
 

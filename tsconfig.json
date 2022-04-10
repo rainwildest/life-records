@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
     "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -19,9 +19,7 @@
     "downlevelIteration": true,
     "incremental": true,
     "paths": {
-      "@graphql-types@": [
-        "node_modules/@types/graphql-let/__generated__/__types__"
-      ]
+      "@graphql-types@": ["node_modules/@types/graphql-let/__generated__/__types__"]
     }
   },
   "include": ["next-env.d.ts", "graphql.d.ts", "**/*.ts", "**/*.tsx"],

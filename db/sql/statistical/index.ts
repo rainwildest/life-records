@@ -7,11 +7,7 @@ import MikrotOrm, { knex } from "db/mikro-orm";
  * @param {string} end 结束日期
  * @returns Promise
  */
-export const amountStatisticsByDate = async (
-  userId: string,
-  start: string,
-  end: string
-): Promise<any> => {
+export const amountStatisticsByDate = async (userId: string, start: string, end: string): Promise<any> => {
   const orm = await knex();
 
   return orm("cost_details AS t1")
@@ -36,11 +32,7 @@ export const amountStatisticsByDate = async (
  * @param {string} format 年份或年月的格式(yyyy || yyyy-mm)
  * @returns Promise
  */
-export const amountStatisticsByYearsOrMonth = async (
-  userId: string,
-  date: string,
-  format: string
-): Promise<any> => {
+export const amountStatisticsByYearsOrMonth = async (userId: string, date: string, format: string): Promise<any> => {
   const orm = await knex();
   return orm("cost_details AS t1")
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
@@ -63,10 +55,7 @@ export const amountStatisticsByYearsOrMonth = async (
  * @param {string} year 年份（例：2021）
  * @returns Promise
  */
-export const statisticalGeneralization = async (
-  userId: string,
-  year: string
-): Promise<any> => {
+export const statisticalGeneralization = async (userId: string, year: string): Promise<any> => {
   const orm = await knex();
   return orm("cost_details AS t1")
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
@@ -93,12 +82,7 @@ export const statisticalGeneralization = async (
  * @param {string} format 日期格式
  * @returns Promise
  */
-export const statisticalExpenditure = async (args: {
-  userId: string;
-  date?: string;
-  type?: "pay" | "income";
-  format?: string;
-}): Promise<any> => {
+export const statisticalExpenditure = async (args: { userId: string; date?: string; type?: "pay" | "income"; format?: string }): Promise<any> => {
   const { userId, date, type = "pay", format = "yyyy" } = args;
 
   const orm = await knex();
@@ -116,9 +100,7 @@ export const statisticalExpenditure = async (args: {
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .andWhereRaw(`t2.expense_type = ?`, [type])
     .whereNull("t1.deleted_at")
-    .groupByRaw(
-      `t2.expense_name, t2.expense_icon, to_char(t1.purchase_time, '${format}')`
-    )
+    .groupByRaw(`t2.expense_name, t2.expense_icon, to_char(t1.purchase_time, '${format}')`)
     .orderBy("purchase_time", "ASC");
 };
 
@@ -130,11 +112,7 @@ export const statisticalExpenditure = async (args: {
  * @param {string} format 日期格式
  * @returns Promise
  */
-export const statisticalUserConsumption = async (args: {
-  userId: string;
-  type?: "pay" | "income";
-  format?: string;
-}): Promise<any> => {
+export const statisticalUserConsumption = async (args: { userId: string; type?: "pay" | "income"; format?: string }): Promise<any> => {
   const { userId, type = "pay", format = "yyyy" } = args;
 
   const orm = await knex();
@@ -146,9 +124,7 @@ export const statisticalUserConsumption = async (args: {
         to_char(purchase_time, '${format}') as purchase_time
       `)
     )
-    .whereRaw(
-      `to_char(t1.purchase_time, '${format}') = to_char(now(), '${format}')`
-    )
+    .whereRaw(`to_char(t1.purchase_time, '${format}') = to_char(now(), '${format}')`)
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .andWhereRaw(`t2.expense_type = ?`, [type])
     .whereNull("t1.deleted_at")
@@ -162,10 +138,7 @@ export const statisticalUserConsumption = async (args: {
  * @param {string} bookId 账簿ID
  * @returns Promise
  */
-export const statisticalCostByBooks = async (
-  userId: string,
-  bookId: string
-): Promise<any> => {
+export const statisticalCostByBooks = async (userId: string, bookId: string): Promise<any> => {
   const orm = await knex();
 
   return orm("cost_details AS t1")
@@ -189,11 +162,7 @@ export const statisticalCostByBooks = async (
  * @param {string} expenseId 消费类型 id
  * @returns Promise
  */
-export const statisticalFundPlan = async (args: {
-  userId: string;
-  year?: string;
-  expenseId?: string;
-}): Promise<any> => {
+export const statisticalFundPlan = async (args: { userId: string; year?: string; expenseId?: string }): Promise<any> => {
   const { userId, year } = args;
   if (!year) return statisticalFundPlanPlanned(userId);
 
@@ -207,9 +176,7 @@ export const statisticalFundPlan = async (args: {
  * @param {string} expenseId 消费类型 id
  * @returns Promise
  */
-export const statisticalFundPlanPlanned = async (
-  userId: string
-): Promise<any> => {
+export const statisticalFundPlanPlanned = async (userId: string): Promise<any> => {
   const orm = await knex();
 
   return orm("fund_plan")
@@ -220,18 +187,11 @@ export const statisticalFundPlanPlanned = async (
     .then((rows) => (rows.length ? rows[0] : { total: 0 }));
 };
 
-export const statisticalFundPlanCompleted = async (args: {
-  userId: String;
-  year?: string;
-  expenseId?: string;
-}): Promise<any> => {
+export const statisticalFundPlanCompleted = async (args: { userId: String; year?: string; expenseId?: string }): Promise<any> => {
   const { userId, year, expenseId } = args;
   const orm = await knex();
 
-  const condition = [
-    `t1.user_id = '${userId}'`,
-    `to_char(approximate_at, 'yyyy') = '${year}'`
-  ];
+  const condition = [`t1.user_id = '${userId}'`, `to_char(approximate_at, 'yyyy') = '${year}'`];
 
   if (expenseId) condition.push(`t2.id = '${expenseId}'`);
 

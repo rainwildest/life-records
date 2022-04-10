@@ -17,10 +17,10 @@ const main = (req, res, next) => {
 
     /* 如果用户为null 或 没有用户ID 以及创建时间的话则视为没有登录成功 */
     if ((!!user && !user.id) || !user) {
-      return res.end(
-        JSON.stringify({ code: 4002, data: null, error: codeComparison[4002] })
-      );
+      return res.end(JSON.stringify({ code: 4002, data: null, error: codeComparison[4002] }));
     }
+
+    console.log("err", err);
 
     try {
       // 设置 session
@@ -31,19 +31,14 @@ const main = (req, res, next) => {
     }
 
     req.logIn(user, (err) => {
-      const info = err
-        ? { code: 4000, data: null, error: err }
-        : { code: 2000, data: { token }, error: null };
+      const info = err ? { code: 4000, data: null, error: err } : { code: 2000, data: { token }, error: null };
 
       return res.end(JSON.stringify(info));
     });
   })(req, res, next);
 };
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   await middleware(req, res);
   await runMiddleware(req, res, main);
 };

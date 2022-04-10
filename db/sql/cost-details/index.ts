@@ -8,9 +8,7 @@ import { create, modify, remove } from "../common";
  * @param {Object} options 新增记录参数
  * @returns Promise
  */
-export const createCostDetail = async (
-  options: CostDetailsSnakeOptions
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createCostDetail = async (options: CostDetailsSnakeOptions): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("cost_details", options);
 };
 
@@ -20,10 +18,7 @@ export const createCostDetail = async (
  * @param {Object} options 修改记录参数
  * @returns Promise
  */
-export const modifyCostDetail = async (
-  id: string,
-  options: CostDetailsSnakeOptions
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const modifyCostDetail = async (id: string, options: CostDetailsSnakeOptions): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return modify("cost_details", id, options);
 };
 
@@ -33,9 +28,7 @@ export const modifyCostDetail = async (
  * @param id
  * @returns Promise
  */
-export const removeCostDetail = async (
-  id: string
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeCostDetail = async (id: string): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return remove("cost_details", id);
 };
 
@@ -45,11 +38,10 @@ export const removeCostDetail = async (
  * @param {string} userId 用户id
  * @returns Promise
  */
-export const getCostDetails = async (
-  args: any
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm(CostDetails);
+export const getCostDetails = async (args: any): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm();
   return orm
+    .createQueryBuilder(CostDetails)
     .where(args)
     .andWhere("deleted_at is null")
     .orderBy({ ["purchase_time"]: "DESC" })
@@ -64,13 +56,10 @@ export const getCostDetails = async (
  * @param {string} end 结束日期
  * @returns Promise
  */
-export const getCostDetailsByDate = async (
-  userId: string,
-  start: string,
-  end: string
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm(CostDetails);
+export const getCostDetailsByDate = async (userId: string, start: string, end: string): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm();
   return orm
+    .createQueryBuilder(CostDetails)
     .where({ user_id: userId })
     .andWhere("purchase_time >= ? and purchase_time < ?", [start, end])
     .andWhere("deleted_at is null")
@@ -91,8 +80,9 @@ export const getCostDetailsByYearsOrMonth = async (
   date: string,
   format = "yyyy"
 ): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm(CostDetails);
+  const orm = await MikrotOrm();
   return orm
+    .createQueryBuilder(CostDetails)
     .where({ user_id: userId })
     .andWhere(`to_char(purchase_time, '${format}') = ?`, [date])
     .andWhere("deleted_at is null")

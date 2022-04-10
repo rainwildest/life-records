@@ -13,8 +13,8 @@ const config: Options = {
   debug: process.env.NODE_ENV === "development",
   migrations: {
     // tableName: 'mikro_orm_migrations', // migrations table name
-    path: `${process.cwd()}/db/migrations`, // path to folder with migration files
-    pattern: /^[\w-]+\d+\.[tj]s$/
+    path: `${process.cwd()}/db/migrations` // path to folder with migration files
+    // pattern: /^[\w-]+\d+\.[tj]s$/
   }
 };
 

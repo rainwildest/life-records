@@ -7,24 +7,16 @@ import { EntityName } from "@mikro-orm/core";
  * @param {object} entityName
  * @param {array} ids
  */
-export const getDataByIds = async <T>(
-  entityName: EntityName<unknown>,
-  ids = []
-): Promise<[T]> => {
-  const orm = await MikrotOrm(entityName);
+export const getDataByIds = async <T>(entityName: EntityName<unknown>, ids = []): Promise<[T]> => {
+  let orm: any = await MikrotOrm();
+  orm = orm.createQueryBuilder(entityName);
 
   if (process.env.SQLType === "sqlite") {
-    return orm
-      .where("id in (?) or seq_id in (?)", [ids, ids])
-      .andWhere("deleted_at is null")
-      .execute("all");
+    return orm.where("id in (?) or seq_id in (?)", [ids, ids]).andWhere("deleted_at is null").execute("all");
   }
 
   if (process.env.SQLType === "pg") {
-    return orm
-      .where("array[seq_id::text, id::text] && array[?]", [ids])
-      .andWhere("deleted_at is null")
-      .execute("all");
+    return orm.where("array[seq_id::text, id::text] && array[?]", [ids]).andWhere("deleted_at is null").execute("all");
   }
 };
 
@@ -34,11 +26,9 @@ export const getDataByIds = async <T>(
  * @param {object} entityName
  * @param {string} userId 用户的 id
  */
-export const getDatabyId = async <T>(
-  entityName: EntityName<unknown>,
-  id: string
-): Promise<T> => {
-  const orm = await MikrotOrm(entityName);
+export const getDatabyId = async <T>(entityName: EntityName<unknown>, id: string): Promise<T> => {
+  let orm: any = await MikrotOrm();
+  orm = orm.createQueryBuilder(entityName);
 
   return orm.where({ id }).andWhere("deleted_at is null").execute("get");
 };
@@ -65,11 +55,7 @@ export const create = async <T>(tableName: string, options: T): Promise<T> => {
  * @param options
  * @returns Promise
  */
-export const modify = async <T>(
-  tableName: string,
-  id: string,
-  options: T
-): Promise<T> => {
+export const modify = async <T>(tableName: string, id: string, options: T): Promise<T> => {
   const orm = await knex();
 
   return orm(tableName)

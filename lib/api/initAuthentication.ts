@@ -1,10 +1,6 @@
 import passport from "passport";
 import codeComparison from "./code-comparison";
-import {
-  getUserByEmail,
-  createOauthOrFindUser,
-  verifyUserByEmail
-} from "db/sql/users";
+import { getUserByEmail, createOauthOrFindUser, verifyUserByEmail } from "db/sql/users";
 
 /* 获取用户提交的信息（用于账号和密码登录） */
 export const localInitAuthentication = (isSignUp = false): void => {
@@ -46,6 +42,7 @@ export const localInitAuthentication = (isSignUp = false): void => {
             return user;
           })
           .catch((err) => {
+            console.log("sdfsdf", err);
             const info = { code: 4000, data: null, error: err };
             return cb(info, null);
           });

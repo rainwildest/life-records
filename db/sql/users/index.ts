@@ -9,9 +9,7 @@ import { getDataByIds, getDatabyId, create } from "../common";
  * @param {string} email 邮箱
  * @param {string} password 密码（md5）
  */
-export const addUserBySignUp = async (
-  args: UserSnakeOptions
-): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const addUserBySignUp = async (args: UserSnakeOptions): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { username, email, password } = args;
   if (!username || !email || !password) return null;
 
@@ -23,9 +21,7 @@ export const addUserBySignUp = async (
  * @memberof UserModel
  * @param {string} userInfo 保存所需的数据
  */
-export const createUserByOauth = async (
-  userInfo: UserSnakeOptions
-): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createUserByOauth = async (userInfo: UserSnakeOptions): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("users", userInfo);
 };
 
@@ -34,9 +30,7 @@ export const createUserByOauth = async (
  * @memberof UserModel
  * @param {array} ids
  */
-export const getUserByIds = async (
-  ids = []
-): Promise<[UserSnakeOptions & DateAndIdSQLFieldSnakeOption]> => {
+export const getUserByIds = async (ids = []): Promise<[UserSnakeOptions & DateAndIdSQLFieldSnakeOption]> => {
   return getDataByIds(Users, ids);
 };
 
@@ -45,9 +39,7 @@ export const getUserByIds = async (
  * @memberof UserModel
  * @param {string} userId 用户的 id
  */
-export const getUserById = async (
-  userId: string
-): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getUserById = async (userId: string): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return getDatabyId(Users, userId);
 };
 
@@ -56,13 +48,11 @@ export const getUserById = async (
  * @memberof UserModel
  * @param {string} email 邮箱
  */
-export const getUserByEmail = async (
-  email: string
-): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getUserByEmail = async (email: string): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   if (!email) return null;
 
-  const orm = await MikrotOrm(Users);
-  return orm.where({ email }).execute("get");
+  const orm = await MikrotOrm();
+  return orm.createQueryBuilder(Users).where({ email }).execute("get");
 };
 
 /**
@@ -71,14 +61,14 @@ export const getUserByEmail = async (
  * @param {string} email 邮箱
  * @param {string} password 密码（md5）
  */
-export const verifyUserByEmail = async (
-  args: UserSnakeOptions
-): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const verifyUserByEmail = async (args: UserSnakeOptions): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { email, password } = args;
   if (!email && !password) return null;
 
-  const orm = await MikrotOrm(Users);
+  const orm = await MikrotOrm();
+
   return orm
+    .createQueryBuilder(Users)
     .where({
       email,
       password
@@ -93,12 +83,10 @@ export const verifyUserByEmail = async (
  * @param {string} indexName 字段名字
  * @param {string} indexValue 字段值
  */
-export const getUserByIndex = async (
-  indexName: string,
-  indexValue: string
-): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm(Users);
+export const getUserByIndex = async (indexName: string, indexValue: string): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm();
   return orm
+    .createQueryBuilder(Users)
     .where({
       [indexName]: indexValue
     })
@@ -112,10 +100,7 @@ export const getUserByIndex = async (
  * @param {object} userInfo 保存所需的数据
  * @param {string} providerMethod 第三方 provider id 的字段名
  */
-export const createOauthOrFindUser = async (
-  userInfo: UserSnakeOptions,
-  providerMethod: string
-): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createOauthOrFindUser = async (userInfo: UserSnakeOptions, providerMethod: string): Promise<UserSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   //查找是否存在改用户
   return getUserByIndex(providerMethod, userInfo[providerMethod])
     .then(async (val) => {

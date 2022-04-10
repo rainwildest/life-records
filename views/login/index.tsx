@@ -28,11 +28,7 @@ const signin: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
 
   return (
     <Page noToolbar pageContent={false} className="signin-signup-page">
-      <div
-        className={`signup-status absolute left-1/2 transform -translate-x-1/2${
-          isSignUp ? " is-signup" : ""
-        }`}
-      />
+      <div className={`signup-status absolute left-1/2 transform -translate-x-1/2${isSignUp ? " is-signup" : ""}`} />
       <Navbar noHairline transparent className="h-14">
         <NavLeft>
           <Link className="px-4" back>
@@ -41,18 +37,8 @@ const signin: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
         </NavLeft>
       </Navbar>
       <PageContent className="grid overflow-x-hidden">
-        <SignUp
-          btnText="注&emsp;册"
-          isSignUp={isSignUp}
-          onSignIn={onSetStatusFalse}
-          onSuccess={onSuccess}
-        />
-        <SignIn
-          btnText="登&emsp;录"
-          isSignIn={!isSignUp}
-          onSignUp={onSetStatusTrue}
-          onSuccess={onSuccess}
-        />
+        <SignUp btnText="注&emsp;册" isSignUp={isSignUp} onSignIn={onSetStatusFalse} onSuccess={onSuccess} />
+        <SignIn btnText="登&emsp;录" isSignIn={!isSignUp} onSignUp={onSetStatusTrue} onSuccess={onSuccess} />
       </PageContent>
     </Page>
   );

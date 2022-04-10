@@ -1,16 +1,13 @@
 import MikrotOrm from "db/config/initialize-database";
-import { EntityManager, QueryBuilder } from "@mikro-orm/postgresql";
-import { EntityName } from "@mikro-orm/core";
+import { EntityManager, AbstractSqlDriver, AbstractSqlConnection } from "@mikro-orm/postgresql";
 
 const _MikrotOrm = MikrotOrm();
 
-export default async (
-  entityName: EntityName<unknown>,
-  alias?: string,
-  type?: "read" | "write"
-): Promise<QueryBuilder> => {
+export default async (): Promise<EntityManager<AbstractSqlDriver<AbstractSqlConnection>>> => {
   const orm = await _MikrotOrm;
-  return (orm.em as EntityManager).createQueryBuilder(entityName, alias, type);
+
+  // @ts-ignore
+  return orm.em as EntityManager;
 };
 
 export const knex = async (type?: "read" | "write"): Promise<any> => {

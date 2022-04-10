@@ -7,9 +7,7 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createLivingExpenses = async (
-  options: LivingExpensesSnakeOptions
-): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createLivingExpenses = async (options: LivingExpensesSnakeOptions): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("living_expenses", { ...options });
 };
 
@@ -26,9 +24,7 @@ export const modifyLivingExpense = async (
   return modify("living_expenses", id, { ...options });
 };
 
-export const removeLivingExpense = async (
-  id: string
-): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeLivingExpense = async (id: string): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return remove("living_expenses", id);
 };
 
@@ -37,9 +33,7 @@ export const removeLivingExpense = async (
  * @param id 餐饮类型id
  * @returns Promise
  */
-export const getLivingExpense = async (
-  id: string
-): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getLivingExpense = async (id: string): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return getDatabyId(LivingExpenses, id);
 };
 
@@ -47,13 +41,11 @@ export const getLivingExpense = async (
  * 获取用户的消费类型
  * @param id 用户id
  */
-export const getUserLivingExpense = async (
-  id: string,
-  type: string
-): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm(LivingExpenses);
+export const getUserLivingExpense = async (id: string, type: string): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm();
 
   return orm
+    .createQueryBuilder(LivingExpenses)
     .where("user_id=? or user_id is null", [id])
     .andWhere({ expense_type: type })
     .andWhere("deleted_at is null")
