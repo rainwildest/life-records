@@ -1,15 +1,11 @@
 import { join } from "path";
-import {
-  makeExecutableSchema
-  // addSchemaLevelResolveFunction
-} from "graphql-tools";
-import resolvers from "./resolvers";
-import graphQLLetConfig from ".graphql-let.yml";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { loadFilesSync } from "@graphql-tools/load-files";
 import { mergeTypeDefs } from "@graphql-tools/merge";
-// import { AuthenticationError } from "apollo-server-micro";
-// import { getLoginSession } from "lib/api/auth";
+import graphQLLetConfig from ".graphql-let.yml";
+import resolvers from "./resolvers";
 
+console.log(join(process.cwd(), graphQLLetConfig.schema));
 const loadedFiles = loadFilesSync(join(process.cwd(), graphQLLetConfig.schema));
 const typeDefs = mergeTypeDefs(loadedFiles);
 

@@ -1,4 +1,4 @@
-import { QueryResolvers, MutationResolvers } from "__generated__/__types__";
+import { QueryResolvers, MutationResolvers } from "@graphql-types@";
 import { queriesHelpers, mutationsHelpers, queriesCustom } from "./helpers";
 import { ResolverContext } from "./client";
 import GraphQLJSON from "graphql-type-json";

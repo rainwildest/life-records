@@ -3,4 +3,10 @@ documents: "apollo/**/*.graphql"
 plugins:
   - typescript-operations
   - typescript-react-apollo
-cacheDir: __generated__
+cacheDir: .cache
+# schema: '**/*.graphqls'
+# documents: '**/*.graphql'
+# plugins:
+#   - typescript-operations
+#   - typescript-react-apollo
+# cacheDir: .cache

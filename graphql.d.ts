@@ -1,5 +1,5 @@
 declare module "*.graphqls" {
-  import { DocumentNode } from "typings/graphql";
+  import { DocumentNode } from "graphql";
   export default typeof DocumentNode;
 }
 
