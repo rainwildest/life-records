@@ -9,14 +9,7 @@ type InputParam = {
   onClick?: (e: any) => void;
   readOnly?: boolean;
 };
-const Input: React.FC<InputParam> = ({
-  type = "text",
-  value = "",
-  placeholder = "",
-  readOnly = false,
-  onChange,
-  onClick
-}) => {
+const Input: React.FC<InputParam> = ({ type = "text", value = "", placeholder = "", readOnly = false, onChange, onClick }) => {
   const onInput = (e) => {
     const _value = (e.target as HTMLInputElement).value;
 
@@ -39,9 +32,7 @@ const Input: React.FC<InputParam> = ({
         readOnly={readOnly}
       />
 
-      {value && (
-        <Icons name="close" className="field-clear px-2" onClick={onClear} />
-      )}
+      {value && <Icons name="close" className="field-clear px-2" onClick={onClear} />}
     </div>
   );
 };

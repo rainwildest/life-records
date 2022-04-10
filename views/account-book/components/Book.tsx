@@ -21,7 +21,10 @@ const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
   };
 
   return (
-    <div className={`shadow-3  rounded-lg flex py-3 px-2 mt-5 justify-start items-center${!id || !f7router ? "" : " link"}`} onClick={onNavigate}>
+    <div
+      className={`shadow-3  rounded-lg flex py-3 px-2 mt-5 justify-start items-center${!id || !f7router ? "" : " link"}`}
+      onClick={onNavigate}
+    >
       <Icons name="ancient-books" className="scale-75" />
       <div className="overflow-hidden">
         <div className="text-gray-500 text-xs">账簿名称</div>

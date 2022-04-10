@@ -17,11 +17,7 @@ import { thousands, timeStamp, toastTip } from "lib/api/utils";
 import Icons from "components/Icons";
 import Amounts from "components/Amounts";
 import DetailItem from "./components/DetailItem";
-import {
-  useFundPlanQuery,
-  useModifyFundPlanMutation,
-  useRemoveFundPlanMutation
-} from "apollo/graphql/model/fund-plan.graphql";
+import { useFundPlanQuery, useModifyFundPlanMutation, useRemoveFundPlanMutation } from "apollo/graphql/model/fund-plan.graphql";
 import { useStatisticalFundPlanQuery } from "apollo/graphql/model/statistics.graphql";
 import { RouterOpotions } from "typings/f7-route";
 
@@ -105,11 +101,7 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
     <Page noToolbar pageContent={true}>
       <Navbar backLink noHairline title="资金计划">
         <NavRight className="link">
-          <Icons
-            name="add"
-            className="account-book-add-icon px-2"
-            onClick={onNavigate}
-          />
+          <Icons name="add" className="account-book-add-icon px-2" onClick={onNavigate} />
         </NavRight>
       </Navbar>
 

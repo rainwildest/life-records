@@ -17,10 +17,7 @@ import { thousands, timeStamp, toastTip } from "lib/api/utils";
 import DetailItem from "./components/DetailItem";
 import Amounts from "components/Amounts";
 import Select from "./components/Select";
-import {
-  useFundPlanQuery,
-  useRemoveFundPlanMutation
-} from "apollo/graphql/model/fund-plan.graphql";
+import { useFundPlanQuery, useRemoveFundPlanMutation } from "apollo/graphql/model/fund-plan.graphql";
 import { useStatisticalFundPlanQuery } from "apollo/graphql/model/statistics.graphql";
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
 
@@ -131,8 +128,7 @@ const Completed: React.FC = () => {
         <List className="plant-items-container pt-2 px-6 my-0">
           {details.map((detail) => {
             const { expense } = detail;
-            const hasOverdue =
-              timeStamp(detail.approximateAt) < timeStamp(detail.completeAt);
+            const hasOverdue = timeStamp(detail.approximateAt) < timeStamp(detail.completeAt);
             const status = hasOverdue ? "complete-03" : "";
 
             return (
@@ -155,10 +151,7 @@ const Completed: React.FC = () => {
                   <SwipeoutButton
                     color="red"
                     className="plant-operation link !text-sm !font-bold"
-                    onClick={onDeletedBefore(
-                      detail.id,
-                      `plant-${detail.seqId}`
-                    )}
+                    onClick={onDeletedBefore(detail.id, `plant-${detail.seqId}`)}
                   >
                     删 除
                   </SwipeoutButton>
