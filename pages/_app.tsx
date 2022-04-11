@@ -10,11 +10,7 @@ import Framework7 from "components/Framework7";
 import "framework7/framework7-bundle.min.css";
 import "styles/index.scss";
 
-const MyApp = function ({
-  Component,
-  pageProps,
-  token
-}: AppProps & { token: string }): JSX.Element {
+const MyApp = function ({ Component, pageProps, token }: AppProps & { token: string }): JSX.Element {
   // store.dispatch("setToken", token);
   const apolloClient = useApollo(pageProps?.initialApolloState);
 
@@ -25,10 +21,7 @@ const MyApp = function ({
   return (
     <>
       <Head>
-        <meta
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"
-          name="viewport"
-        />
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
       </Head>
       <ApolloProvider client={apolloClient}>
         {/* <FrameworkApp {...f7params} store={store}>
