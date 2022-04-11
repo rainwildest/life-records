@@ -13,7 +13,9 @@ const config: Options = {
   debug: process.env.NODE_ENV === "development",
   migrations: {
     // tableName: 'mikro_orm_migrations', // migrations table name
-    path: `${process.cwd()}/db/migrations` // path to folder with migration files
+    glob: "!(*.d).{js,ts}",
+    path: `${process.cwd()}/db/migrations`, // path to folder with migration files
+    emit: "ts"
     // pattern: /^[\w-]+\d+\.[tj]s$/
   }
 };
