@@ -9,58 +9,50 @@ import { useCreateFundPlanMutation, useModifyFundPlanMutation } from "apollo/gra
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
 import DatePicker from "components/DatePicker";
 import { format } from "lib/api/dayjs";
-import { Formik, Form, Field, FormikProps } from "formik";
+import { Formik, Form, FormikProps } from "formik";
+import useTest from "./test";
+import _ from "lodash";
 
 const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
   const { id } = f7route.query;
 
   const formik = useRef<FormikProps<any>>();
   const date = useRef<string>();
+  const expenseId = useRef<string>();
+  const picker = useRef(null);
 
   const token = useStore("token");
-
-  // const [date, setDate] = useState("");
-  const [palnName, setPalnName] = useState("");
+  const { data: detailData } = useTest(id);
 
   const [saving, setSaving] = useState(false);
-  const [picker, setPicker] = useState(null);
+  const [popupOpened, setPopupOpened] = useState(false);
+  const [fields, setFields] = useState({
+    name: "",
+    amounts: "",
+    expenseId: "",
+    approximateAt: ""
+  });
 
   const [createFundPlan] = useCreateFundPlanMutation();
   const [modifyFundPlan] = useModifyFundPlanMutation();
   const { loading, data } = useLivingExpensesQuery();
 
   const payDetails = data?.livingExpenses;
-  console.log(payDetails);
-  const [popupOpened, setPopupOpened] = useState(false);
 
   const onSaveBefore = () => {
-    console.log(formik.current.submitForm());
-    return false;
-    if (!palnName) return toastTip("请填写计划名称");
-
-    setSaving(true);
-    setTimeout(() => {
-      onSave();
-    }, 1000 * 0.2);
+    formik.current.submitForm();
   };
 
-  const onSave = () => {
+  const onSave = (data: any) => {
     const _operation = id ? modifyFundPlan : createFundPlan;
-    const input = {
-      name: palnName,
-      amounts: 0,
-      expenseId: "",
-      approximateAt: date.current
-    };
 
-    const _param: any = id ? { id, input } : { input };
+    const _param: any = id ? { id, input: data } : { input: data };
     const variables = { ..._param };
 
     _operation({ variables })
       .then(() => {
         // 提送消息更新内容
-        // if (!id) event.emit("update-books");
-        // if (id) event.emit("update-name", palnName);
+        event.emit("update-plan");
 
         f7router.back();
       })
@@ -71,32 +63,65 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
 
   useEffect(() => {
     if (!window) return;
-
-    const picker = DatePicker({ hasFullYear: false }, (e) => {
+    console.log(detailData?.fundPlanById);
+    const _picker = DatePicker({ hasFullYear: false }, (e) => {
       const _d = e.split("-").map((item) => parseInt(item));
-      const _date = new Date(_d[0], _d[1], 0);
-      const days = _date.getDate();
+      const dateObj = new Date(_d[0], _d[1], 0);
+      const days = dateObj.getDate();
 
       const $date = new Date(`${e}-${days} 23:59:59`).toISOString();
 
       formik.current.setFieldValue("approximateAt", $date ? format($date, "YYYY-MM") : "");
       date.current = $date;
     });
-    setPicker(picker);
+    console.log(_picker);
+    picker.current = _picker;
   }, []);
 
-  const _picker = () => picker.open();
-  const openPicker = token && _picker;
+  useEffect(() => {
+    const detail = detailData?.fundPlanById;
+
+    if (!detail || !payDetails?.length) return;
+
+    _.keys(fields).forEach((key) => {
+      switch (key) {
+        case "expenseId":
+          {
+            expenseId.current = detail[key];
+            const pay = payDetails.find((item) => item.id === detail[key]);
+            formik.current.setFieldValue(key, pay.expenseName);
+          }
+          break;
+        case "approximateAt":
+          {
+            date.current = detail[key];
+            formik.current.setFieldValue(key, format(detail[key], "YYYY-MM"));
+          }
+          break;
+        default:
+          formik.current.setFieldValue(key, detail[key]);
+          break;
+      }
+    });
+  }, [detailData]);
+
+  const onPickerToggle = () => {
+    // console.log(picker.current.cols[0]);
+    picker.current.open();
+  };
+  const openPicker = token && onPickerToggle;
 
   const onSelectType = (e: any) => {
     const target = e.target as HTMLElement;
     const name = target.getAttribute("data-name");
+
     formik.current.setFieldValue("expenseId", name);
+    expenseId.current = target.getAttribute("data-id");
 
     setPopupOpened(false);
   };
 
-  const onTest = () => setPopupOpened(true);
+  const onPopupToggle = () => setPopupOpened(true);
 
   return (
     <Page noToolbar pageContent={true}>
@@ -109,18 +134,15 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
         </NavRight>
       </Navbar>
 
-      <div className="px-8 mt-10">
+      <div className="px-7 mt-10">
         <Formik
           innerRef={formik}
-          initialValues={{
-            name: "",
-            amounts: "",
-            expenseId: "",
-            approximateAt: ""
-          }}
+          initialValues={fields}
           onSubmit={(values) => {
             // same shape as initial values
-            console.log(values);
+            setSaving(true);
+            const data = { ...values, expenseId: expenseId.current, approximateAt: date.current };
+            onSave(data);
           }}
         >
           {({ errors, touched, values, setFieldValue }) => (
@@ -133,18 +155,8 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
                 name="expenseId"
                 readOnly={true}
                 setFieldValue={setFieldValue}
-                onClick={onTest}
+                onClick={onPopupToggle}
               />
-              {/* <InputField
-                label="大概完成时间"
-                placeholder="请输入大概完成时间"
-                autoComplete="off"
-                value={values.expenseId}
-                name="expenseId"
-                readOnly={true}
-                setFieldValue={setFieldValue}
-                onClick={openPicker}
-              /> */}
 
               <InputField
                 label="计划名称"
@@ -199,6 +211,7 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
                   data-name={item.expenseName}
                   data-id={item.id}
                   onClick={onSelectType}
+                  key={item.id}
                 >
                   <div className="flex justify-center pointer-events-none">
                     <Icons name="moon" className="" />

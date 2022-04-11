@@ -37,6 +37,7 @@ type FundPlanParam {
 
 type Query {
   fundPlan(input: FundPlanQueryOptions): FundPlanParam
+  fundPlanById(id: String): FundPlan
 }
 
 type Mutation {

@@ -54,8 +54,3 @@ export const useApollo = (initialState: unknown): ApolloClient<NormalizedCacheOb
   const store = useMemo(() => initializeApollo(initialState), [initialState]);
   return store;
 };
-
-// export type ResolverContext = {
-//   req?: IncomingMessage;
-//   res?: ServerResponse;
-// };

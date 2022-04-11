@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   Page,
   Navbar,
@@ -20,17 +20,18 @@ import DetailItem from "./components/DetailItem";
 import { useFundPlanQuery, useModifyFundPlanMutation, useRemoveFundPlanMutation } from "apollo/graphql/model/fund-plan.graphql";
 import { useStatisticalFundPlanQuery } from "apollo/graphql/model/statistics.graphql";
 import { RouterOpotions } from "typings/f7-route";
+import event from "lib/api/framework-event";
 
 const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
   const token = useStore("token");
-  const { data } = useFundPlanQuery({
+  const { data, refetch: dataRefetch } = useFundPlanQuery({
     variables: {
       input: {}
     },
     fetchPolicy: "network-only"
   });
 
-  const { data: statisticalData, refetch } = useStatisticalFundPlanQuery({
+  const { data: statisticalData, refetch: statisticalRefetch } = useStatisticalFundPlanQuery({
     variables: {
       input: {}
     },
@@ -54,7 +55,7 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
     })
       .then(() => {
         f7.swipeout.delete(`.${el}`);
-        refetch();
+        statisticalRefetch();
       })
       .catch(() => {
         toastTip("确认失败");
@@ -73,7 +74,7 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
     removeFundPlan({ variables: { id: val } })
       .then(() => {
         f7.swipeout.delete(`.${el}`);
-        refetch();
+        statisticalRefetch();
       })
       .catch(() => {
         toastTip("删除失败");
@@ -88,20 +89,36 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
     };
   };
 
-  const onNavigate = () => {
+  const onNavigate = (id?: string) => {
     const url = f7router.generateUrl({
       name: "fund-plan-modify",
       params: { id: "id", name: "name" },
-      query: { id: "", name: "" }
+      query: { id: id || "", name: "" }
     });
     f7router.navigate(url);
   };
+
+  const onCreatePlan = () => onNavigate();
+  const onJump = (e: Event) => {
+    console.log(e.target);
+  };
+
+  useEffect(() => {
+    event.on("update-plan", () => {
+      dataRefetch();
+      statisticalRefetch();
+    });
+
+    return () => {
+      event.off("update-plan");
+    };
+  }, []);
 
   return (
     <Page noToolbar pageContent={true}>
       <Navbar backLink noHairline title="资金计划">
         <NavRight className="link">
-          <Icons name="add" className="account-book-add-icon px-2" onClick={onNavigate} />
+          <Icons name="add" className="account-book-add-icon px-2" onClick={onCreatePlan} />
         </NavRight>
       </Navbar>
 
@@ -127,10 +144,13 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
 
           return (
             <ListItem
-              className={`plant-item shadow-3 rounded-lg mt-8 plant-${detail.seqId}`}
+              className={`plant-item shadow-3 rounded-lg mt-7 plant-${detail.seqId}`}
               divider={false}
               swipeout
               key={detail.id}
+              onClick={() => {
+                onNavigate(detail.id);
+              }}
             >
               <DetailItem
                 slot="title"

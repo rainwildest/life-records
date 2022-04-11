@@ -23,10 +23,7 @@ import { getLoginSession } from "lib/api/auth";
 
 // export default apolloServer.createHandler({ path: "/api/graphql" });
 
-let apolloServerHandler: (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => Promise<void>;
+let apolloServerHandler: (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 
 const getApolloServerHandler = async () => {
   if (!apolloServerHandler) {
@@ -44,12 +41,12 @@ const getApolloServerHandler = async () => {
           user
         };
       },
-      // tracing: true,
-      // playground: {
-      //   settings: {
-      //     "request.credentials": "include"
-      //   }
-      // },
+      tracing: true,
+      playground: {
+        settings: {
+          "request.credentials": "include"
+        }
+      },
       introspection: process.env.NODE_ENV === "development"
     }).createHandler({
       path: "/api/graphql"
@@ -58,10 +55,7 @@ const getApolloServerHandler = async () => {
   return apolloServerHandler;
 };
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const apolloServerHandler = await getApolloServerHandler();
   return apolloServerHandler(req, res);
 };

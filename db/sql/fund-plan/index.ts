@@ -7,7 +7,9 @@ import { create, modify, remove } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createFundPlan = async (options: FundPlanSnakeOptions): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createFundPlan = async (
+  options: FundPlanSnakeOptions
+): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("fund_plan", { ...options });
 };
 
@@ -17,7 +19,10 @@ export const createFundPlan = async (options: FundPlanSnakeOptions): Promise<Fun
  * @param options
  * @returns Promise
  */
-export const modifyFundPlan = async (id: string, options: FundPlanSnakeOptions): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const modifyFundPlan = async (
+  id: string,
+  options: FundPlanSnakeOptions
+): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return modify("fund_plan", id, { ...options });
 };
 
@@ -76,7 +81,9 @@ export const getCompletedByDate = async (args: CompletedParam): Promise<FundPlan
  * @param {object} args
  * @returns Promise
  */
-export const getCompletedByExpenses = async (args: CompletedParam): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCompletedByExpenses = async (
+  args: CompletedParam
+): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const { userId, expenseId, year } = args;
   const orm = await knex();
 
@@ -101,6 +108,12 @@ export const getCompletedByExpenses = async (args: CompletedParam): Promise<Fund
 export const getCompleted = (args: CompletedParam): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const _fun = args.expenseId ? getCompletedByExpenses : getCompletedByDate;
   return _fun(args);
+};
+
+export const getPlannedDetailById = async (id: string): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const orm = await MikrotOrm();
+
+  return orm.createQueryBuilder(FundPlan).where({ id }).andWhere("deleted_at is null").execute("get");
 };
 
 // /**
