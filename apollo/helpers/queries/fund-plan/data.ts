@@ -11,18 +11,12 @@ const getCurrentDate = (type?: "year" | "date") => {
   return type === "year" ? `${year}` : `${year}-${month + 1}-${days}`;
 };
 
-export default (
-  _parent: unknown,
-  _args: { input: { type: string; year: string; expenseId: string } },
-  context: unknown
-): any => {
+export default (_parent: unknown, _args: { input: { type: string; year: string; expenseId: string } }, context: unknown): any => {
   const { user } = context as GraphqlContext;
   const { type, year = getCurrentDate("year"), expenseId } = _args.input;
 
   if (!user?.id) {
-    throw new AuthenticationError(
-      "Authentication token is invalid, please log in."
-    );
+    throw new AuthenticationError("Authentication token is invalid, please log in.");
   }
 
   let _fun = null;
