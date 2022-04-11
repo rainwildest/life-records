@@ -25,10 +25,10 @@ const Book: React.FC<BookOptions> = ({ name, id, f7router }) => {
       className={`shadow-3  rounded-lg flex py-3 px-2 mt-5 justify-start items-center${!id || !f7router ? "" : " link"}`}
       onClick={onNavigate}
     >
-      <Icons name="ancient-books" className="scale-75" />
+      <Icons name="ancient-books" className="scale-80" />
       <div className="overflow-hidden">
         <div className="text-gray-500 text-xs">账簿名称</div>
-        <div className="break-all font-semibold text-gray-900 truncate tracking-widest">{name}</div>
+        <div className="mt-1 break-all font-semibold text-gray-900 truncate tracking-widest">{name}</div>
       </div>
     </div>
   );
