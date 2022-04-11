@@ -8,7 +8,7 @@ import InputField from "./components/InputField";
 import { useCreateFundPlanMutation, useModifyFundPlanMutation } from "apollo/graphql/model/fund-plan.graphql";
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
 import DatePicker from "components/DatePicker";
-import { format } from "lib/api/dayjs";
+import { format, toISOString } from "lib/api/dayjs";
 import { Formik, Form, FormikProps } from "formik";
 import useTest from "./test";
 import _ from "lodash";
@@ -26,12 +26,13 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
 
   const [saving, setSaving] = useState(false);
   const [popupOpened, setPopupOpened] = useState(false);
-  const [fields, setFields] = useState({
+
+  const fields = {
     name: "",
     amounts: "",
     expenseId: "",
     approximateAt: ""
-  });
+  };
 
   const [createFundPlan] = useCreateFundPlanMutation();
   const [modifyFundPlan] = useModifyFundPlanMutation();
@@ -62,51 +63,46 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
   };
 
   useEffect(() => {
-    if (!window) return;
-    console.log(detailData?.fundPlanById);
-    const _picker = DatePicker({ hasFullYear: false }, (e) => {
+    const detail = detailData?.fundPlanById;
+    if (detail && payDetails?.length) {
+      _.keys(fields).forEach((key) => {
+        switch (key) {
+          case "expenseId":
+            {
+              expenseId.current = detail[key];
+              const pay = payDetails.find((item) => item.id === detail[key]);
+              formik.current.setFieldValue(key, pay.expenseName);
+            }
+            break;
+          case "approximateAt":
+            {
+              date.current = detail[key];
+              formik.current.setFieldValue(key, format(detail[key], "YYYY-MM"));
+            }
+            break;
+          default:
+            formik.current.setFieldValue(key, detail[key]);
+            break;
+        }
+      });
+    }
+
+    const _picker = DatePicker({ hasFullYear: false, value: detail ? format(detail.approximateAt, "YYYY-MM") : "" }, (e) => {
       const _d = e.split("-").map((item) => parseInt(item));
       const dateObj = new Date(_d[0], _d[1], 0);
       const days = dateObj.getDate();
 
-      const $date = new Date(`${e}-${days} 23:59:59`).toISOString();
+      // const $date = new Date(`${e}-${days} 23:59:59`).toString();
+      const $date = `${e}-${days} 23:59:59`;
 
       formik.current.setFieldValue("approximateAt", $date ? format($date, "YYYY-MM") : "");
-      date.current = $date;
+      date.current = toISOString($date);
     });
-    console.log(_picker);
+
     picker.current = _picker;
-  }, []);
-
-  useEffect(() => {
-    const detail = detailData?.fundPlanById;
-
-    if (!detail || !payDetails?.length) return;
-
-    _.keys(fields).forEach((key) => {
-      switch (key) {
-        case "expenseId":
-          {
-            expenseId.current = detail[key];
-            const pay = payDetails.find((item) => item.id === detail[key]);
-            formik.current.setFieldValue(key, pay.expenseName);
-          }
-          break;
-        case "approximateAt":
-          {
-            date.current = detail[key];
-            formik.current.setFieldValue(key, format(detail[key], "YYYY-MM"));
-          }
-          break;
-        default:
-          formik.current.setFieldValue(key, detail[key]);
-          break;
-      }
-    });
-  }, [detailData]);
+  }, [detailData, payDetails]);
 
   const onPickerToggle = () => {
-    // console.log(picker.current.cols[0]);
     picker.current.open();
   };
   const openPicker = token && onPickerToggle;
@@ -137,7 +133,12 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
       <div className="px-7 mt-10">
         <Formik
           innerRef={formik}
-          initialValues={fields}
+          initialValues={{
+            name: "",
+            amounts: "",
+            expenseId: "",
+            approximateAt: ""
+          }}
           onSubmit={(values) => {
             // same shape as initial values
             setSaving(true);
@@ -216,7 +217,7 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
                   <div className="flex justify-center pointer-events-none">
                     <Icons name="moon" className="" />
                   </div>
-                  <div className="text-center mt-1 pointer-events-none">{item.expenseName}</div>
+                  <div className="text-center mt-2 text-sm pointer-events-none">{item.expenseName}</div>
                 </div>
               );
             })}

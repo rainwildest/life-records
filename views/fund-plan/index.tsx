@@ -10,6 +10,7 @@ import {
   BlockTitle,
   useStore,
   f7,
+  f7ready,
   Link
 } from "framework7-react";
 import { relative } from "lib/api/dayjs";

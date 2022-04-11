@@ -88,9 +88,10 @@ type ConfirmFunction = (value: string) => void;
 type DateOptions = {
   isFullYear?: boolean;
   hasFullYear?: boolean;
+  value?: string;
 };
 const date = (args?: DateOptions, confirm?: ConfirmFunction): any => {
-  const { isFullYear = false, hasFullYear = true } = args || {};
+  const { isFullYear = false, hasFullYear = true, value } = args || {};
   let originalFullYear = null;
   let originalYearAndMonths = null;
 
@@ -108,11 +109,14 @@ const date = (args?: DateOptions, confirm?: ConfirmFunction): any => {
     };
   };
 
+  let _split: Array<number | string> = (value || "").split("-");
+  _split = _split.map((item) => parseInt(item as string));
+
   const yearAndMonths = f7?.picker.create({
     toolbar: true,
     rotateEffect: true,
     renderToolbar: renderYearAndMonthsToolbar(hasFullYear),
-    value: [today.getFullYear(), today.getMonth()],
+    value: [_split[0] || today.getFullYear(), (_split[1] as number) - 1 || today.getMonth()],
     cols: [
       // Years
       { ...ColValuesYears },

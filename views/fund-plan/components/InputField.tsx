@@ -36,7 +36,7 @@ const InputField: React.FC<InputFieldProps> = ({
         className={`relative h-14 w-full ${value ? "pl-3" : "px-3"} shadow-3 rounded-lg text-gray-600 text-xs flex items-center`}
       >
         <Field
-          className="bg-transparent text-sm w-full"
+          className="bg-transparent text-sm w-full h-full"
           readOnly={readOnly}
           autoComplete={autoComplete}
           placeholder={placeholder}
@@ -45,7 +45,9 @@ const InputField: React.FC<InputFieldProps> = ({
           onClick={onClick}
         />
         {value && (
-          <Icons name="close" className="field-clear px-2 flex h-full w-11 items-center justify-center" onClick={onClearField} />
+          <div className="h-full px-2 w-11 flex items-center justify-center flex-shrink-0" onClick={onClearField}>
+            <Icons name="close" className="field-clear" />
+          </div>
         )}
       </div>
     </Fragment>
