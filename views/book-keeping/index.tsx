@@ -1,27 +1,22 @@
-import React, { useRef, useState } from "react";
-import {
-  Page,
-  Navbar,
-  NavTitle,
-  Segmented,
-  Button,
-  Tabs,
-  Tab,
-  PageContent,
-  f7
-} from "framework7-react";
-import { format } from "lib/api/dayjs";
+import React, { useRef, useState, useEffect } from "react";
+import { Page, Navbar, NavTitle, NavRight, Segmented, Button, Tabs, Tab, PageContent, f7, Link } from "framework7-react";
+import { format, toISOString } from "lib/api/dayjs";
 import { useCreateCostDetailMutation } from "apollo/graphql/model/cost-details.graphql";
 import Pay from "./components/Pay";
 import Income from "./components/Income";
 import Calc from "components/Calc";
+import Icons from "components/Icons";
 import CalendarPopup from "components/CalendarPopup";
+import event from "lib/api/framework-event";
 
 const Bookkeeping: React.FC = () => {
   const expense = useRef({});
   const expenseType = useRef("pay");
+  const bookId = useRef("");
+
+  const [bookName, setBookName] = useState("");
   const [popupOpened, setPopupOpened] = useState(false);
-  const [date, setDate] = useState(format(new Date().toISOString()));
+  const [date, setDate] = useState(format(new Date()));
 
   /* 新增消费记录 */
   const [createCostDetailMutation] = useCreateCostDetailMutation();
@@ -48,9 +43,8 @@ const Bookkeeping: React.FC = () => {
 
     if (!expenseId) return toastTip("请选择类型");
 
-    const sameDay = format(new Date().toISOString());
-    const purchaseTime =
-      date === sameDay ? new Date().toISOString() : `${date} 00:00:00`;
+    const sameDay = format(toISOString(new Date()));
+    const purchaseTime = date === sameDay ? toISOString(new Date()) : `${date} 00:00:00`;
 
     createCostDetailMutation({
       variables: {
@@ -58,12 +52,18 @@ const Bookkeeping: React.FC = () => {
           purchaseTime,
           expenseId: expenseId,
           amounts: value.amounts,
-          remarks: value.remarks
+          remarks: value.remarks,
+          bookId: bookId.current
         }
       }
     })
       .then(() => {
-        clear && clear();
+        if (clear) {
+          clear();
+
+          setBookName("");
+          bookId.current = "";
+        }
         toastTip("添加成功");
       })
       .catch(() => {
@@ -89,32 +89,35 @@ const Bookkeeping: React.FC = () => {
     expenseType.current = type;
   };
 
+  useEffect(() => {
+    event.on("update-books", (id: string, name: string) => {
+      setBookName(name);
+      bookId.current = id;
+    });
+  }, []);
+
   return (
     <Page noToolbar pageContent={false}>
       <Navbar noHairline backLink>
         <NavTitle>
-          <Segmented strong className="w-36">
-            <Button
-              tabLink="#tab-pay"
-              tabLinkActive
-              data-type="pay"
-              onClick={onGetAttribute}
-            >
+          <Segmented strong className="w-44">
+            <Button tabLink="#tab-pay" tabLinkActive data-type="pay" onClick={onGetAttribute}>
               支出
             </Button>
-            <Button
-              tabLink="#tab-income"
-              data-type="income"
-              onClick={onGetAttribute}
-            >
+            <Button tabLink="#tab-income" data-type="income" onClick={onGetAttribute}>
               收入
             </Button>
           </Segmented>
         </NavTitle>
+        <NavRight className="link">
+          <Link href="/book-select">
+            <Icons name="ancient-books" className="account-book-add-icon px-2" />
+          </Link>
+        </NavRight>
       </Navbar>
       <PageContent className="pb-0">
         <div className="flex flex-col h-full">
-          <Tabs animated className="my-3">
+          <Tabs animated className="mt-3 mb-1">
             <Tab id="tab-pay" className="overflow-auto">
               <Pay onSelected={onSelected} />
             </Tab>
@@ -122,19 +125,11 @@ const Bookkeeping: React.FC = () => {
               <Income onSelected={onSelected} />
             </Tab>
           </Tabs>
-          <div className="px-4 pb-2">
-            <Calc
-              date={date}
-              onClickCalendar={onClickCalendar}
-              onConfirm={onCalcConfirm}
-            />
 
-            <CalendarPopup
-              popupOpened={popupOpened}
-              value={date}
-              onCancel={onCalendarCancel}
-              onConfirm={onCalendarConfirm}
-            />
+          <div className="px-3 pb-2">
+            <Calc date={date} onClickCalendar={onClickCalendar} bookName={bookName} onConfirm={onCalcConfirm} />
+
+            <CalendarPopup popupOpened={popupOpened} value={date} onCancel={onCalendarCancel} onConfirm={onCalendarConfirm} />
           </div>
         </div>
       </PageContent>

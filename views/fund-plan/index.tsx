@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Page,
   Navbar,
@@ -10,7 +10,6 @@ import {
   BlockTitle,
   useStore,
   f7,
-  f7ready,
   Link
 } from "framework7-react";
 import { relative } from "lib/api/dayjs";
@@ -100,9 +99,6 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
   };
 
   const onCreatePlan = () => onNavigate();
-  const onJump = (e: Event) => {
-    console.log(e.target);
-  };
 
   useEffect(() => {
     event.on("update-plan", () => {

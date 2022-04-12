@@ -59,6 +59,8 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
       })
       .catch((e) => {
         console.log(e);
+        toastTip("保存失败");
+        setSaving(false);
       });
   };
 
@@ -92,7 +94,6 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
       const dateObj = new Date(_d[0], _d[1], 0);
       const days = dateObj.getDate();
 
-      // const $date = new Date(`${e}-${days} 23:59:59`).toString();
       const $date = `${e}-${days} 23:59:59`;
 
       formik.current.setFieldValue("approximateAt", $date ? format($date, "YYYY-MM") : "");

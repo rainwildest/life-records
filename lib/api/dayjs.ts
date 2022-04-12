@@ -18,7 +18,7 @@ export const relative = (tiem: string): string => dayjs().to(dayjs(tiem));
  * @param format 格式
  * @returns string
  */
-export const format = (time: string, format = "YYYY-MM-DD"): string => dayjs(time).format(format);
+export const format = (time: string | number | Date | dayjs.Dayjs, format = "YYYY-MM-DD"): string => dayjs(time).format(format);
 
 /**
  * @description 转IOS 8601字符串

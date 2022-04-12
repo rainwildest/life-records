@@ -2,24 +2,15 @@ import React, { useRef, useState, Fragment } from "react";
 import { f7ready } from "framework7-react";
 import Icons from "../Icons";
 import { thousands } from "lib/api/utils";
-import {
-  lastOperation,
-  correctOperation,
-  operationResolve,
-  getOperation,
-  verifyNumber,
-  operationReplace
-} from "./tools";
+import { lastOperation, correctOperation, operationResolve, getOperation, verifyNumber, operationReplace } from "./tools";
 
 type CalcOption = {
   date?: string;
+  bookName?: string;
   onClickCalendar?: () => void;
-  onConfirm?: (
-    value: { amounts: number; remarks: string },
-    clear: () => void
-  ) => void;
+  onConfirm?: (value: { amounts: number; remarks: string }, clear: () => void) => void;
 };
-const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
+const Calc: React.FC<CalcOption> = ({ date, bookName, onClickCalendar, onConfirm }) => {
   const [remarks, setRemarks] = useState("");
   /* 显示的信息 */
   const [display, setDisplay] = useState("0");
@@ -85,13 +76,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
   };
 
   const handleNumber = (code: string | number): void => {
-    const operations = [
-      "multiplication",
-      "addition",
-      "subtraction",
-      "clear",
-      "complete"
-    ];
+    const operations = ["multiplication", "addition", "subtraction", "clear", "complete"];
 
     if (operations.includes(code as string)) {
       switch (code) {
@@ -118,8 +103,7 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
 
     /* 如果初始化是0，则下一次输入才显示 . */
     if (display === "0" && code === "0") return;
-    const info =
-      display === "0" && code !== "." ? `${code}` : `${display}${code}`;
+    const info = display === "0" && code !== "." ? `${code}` : `${display}${code}`;
 
     if (lastOperation(info)) {
       const operator = getOperation(info);
@@ -184,25 +168,34 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
 
   return (
     <Fragment>
-      <div
-        className="shadow-3 rounded-lg py-5 px-3 text-xs h-6 flex justify-between items-center overflow-hidden"
-        onClick={onShowPrompt}
-      >
-        <div className="pr-3 font-bold flex-shrink-0">备注</div>
+      <div className="flex items-center">
         <div
-          className="overflow-scrolling whitespace-nowrap overflow-x-auto py-8"
-          ref={remarksRef}
+          className={`shadow-3 rounded-lg py-6 px-3 text-xs h-7 flex justify-between items-center overflow-hidden ${
+            bookName ? "w-1/2 mr-1.5" : "w-full"
+          }`}
+          onClick={onShowPrompt}
         >
-          {remarks}
+          <div className="pr-3 font-bold flex-shrink-0">备注</div>
+          <div className="overflow-scrolling whitespace-nowrap overflow-x-auto py-8" ref={remarksRef}>
+            {remarks}
+          </div>
         </div>
+
+        {bookName && (
+          <div className="shadow-3 rounded-lg py-6 px-3 h-7 text-xs overflow-hidden flex items-center w-1/2 ml-1.5">
+            <div className="flex items-center flex-shrink-0">
+              <Icons name="ancient-books" className="calc-calendar flex-shrink-0" />
+              <p className="pl-0.5">账簿：</p>
+            </div>
+
+            <div className="text-sm overflow-scrolling whitespace-nowrap overflow-x-auto py-8">{bookName}</div>
+          </div>
+        )}
       </div>
 
       <div className="shadow-3 rounded-lg mt-2.5 py-6 pl-3 h-7 flex justify-between items-center overflow-hidden">
         {!!date && (
-          <div
-            className="flex-shrink-0 pr-4 flex items-center link"
-            onClick={onCalendar}
-          >
+          <div className="flex-shrink-0 pr-4 flex items-center link" onClick={onCalendar}>
             <div className="pr-1 pt-1">
               <Icons name="calendar" className="calc-calendar" />
             </div>
@@ -211,18 +204,11 @@ const Calc: React.FC<CalcOption> = ({ date, onClickCalendar, onConfirm }) => {
         )}
 
         <div className="test-i relative pl-1 w-full flex overflow-hidden items-center">
-          <div
-            className="w-full text-right overflow-scrolling whitespace-nowrap overflow-x-auto font-bold py-8"
-            ref={displayRef}
-          >
+          <div className="w-full text-right overflow-scrolling whitespace-nowrap overflow-x-auto font-bold py-8" ref={displayRef}>
             {thousands(display)}
           </div>
 
-          <Icons
-            name="delete-01"
-            className="calc-delete-icon link pl-2 pr-3"
-            onClick={onDel}
-          />
+          <Icons name="delete-01" className="calc-delete-icon link pl-2 pr-3" onClick={onDel} />
         </div>
       </div>
       <div className="grid grid-cols-4 gap-2.5 pb-2 pt-2.5">

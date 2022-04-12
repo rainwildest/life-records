@@ -32,6 +32,7 @@ input CreateCoseOptions {
   amounts: Int!
   remarks: String
   purchaseTime: Date
+  bookId: String
 }
 
 input ModifyCostOptions {
@@ -44,3 +45,4 @@ type Mutation {
   modifyCostDetail(id: String!, input: ModifyCostOptions): CostDetails
   removeCostDetail(id: String!): CostDetails
 }
+

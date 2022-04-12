@@ -22,28 +22,17 @@ const format = (date: Date, fmt = "yyyy-MM-dd"): string => {
     S: time.getMilliseconds() // 毫秒
   };
   if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(
-      RegExp.$1,
-      (time.getFullYear() + "").substr(4 - RegExp.$1.length)
-    );
+    fmt = fmt.replace(RegExp.$1, (time.getFullYear() + "").substr(4 - RegExp.$1.length));
   }
   for (const k in o) {
     if (new RegExp("(" + k + ")").test(fmt)) {
-      fmt = fmt.replace(
-        RegExp.$1,
-        RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
-      );
+      fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
     }
   }
   return fmt;
 };
 
-const CalendarPopup: React.FC<CalendarPopupOption> = ({
-  value,
-  popupOpened,
-  onCancel,
-  onConfirm
-}) => {
+const CalendarPopup: React.FC<CalendarPopupOption> = ({ value, popupOpened, onCancel, onConfirm }) => {
   let defaultValue = null;
   let formatValue = "";
 
@@ -52,16 +41,11 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
   }
 
   if (defaultValue) {
-    formatValue =
-      typeof defaultValue !== "string"
-        ? format(value as Date)
-        : (value as string) || "";
+    formatValue = typeof defaultValue !== "string" ? format(value as Date) : (value as string) || "";
   }
 
   const [dateSelect, setDateSelect] = useState(formatValue);
-  const [customCalendar] = useState(
-    `custom-calendar-${parseInt((Math.random() * 100).toString())}`
-  );
+  const [customCalendar] = useState(`custom-calendar-${parseInt((Math.random() * 100).toString())}`);
   const containerEl = useRef<HTMLDivElement>(null);
   const calendar = useRef(null);
 
@@ -105,13 +89,10 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
           const months = [];
           const years = [];
           for (let i = 0; i < 12; ++i) months.push(i);
-          for (let i = 0; i < c.currentYear - 1995 + 5; ++i)
-            years.push(1995 + i);
+          for (let i = 0; i < c.currentYear - 1995 + 5; ++i) years.push(1995 + i);
 
           const currentMonth = c.currentMonth + 1;
-          f7.$(".custom-month-selector .center").text(
-            `${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`
-          );
+          f7.$(".custom-month-selector .center").text(`${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`);
           f7.$(".custom-year-selector .center").text(`${c.currentYear}`);
 
           f7.$(".custom-month-selector .center").click(() => {
@@ -131,11 +112,7 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
             );
 
             f7.$(".month-item").click((e) => {
-              calendar.current.setYearMonth(
-                c.currentYear,
-                f7.$(e.target).data("month"),
-                300
-              );
+              calendar.current.setYearMonth(c.currentYear, f7.$(e.target).data("month"), 300);
               f7.$(".calendar-month-picker").remove();
             });
           });
@@ -156,29 +133,19 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
               `
             );
             f7.$(".year-item").click((e) => {
-              calendar.current.setYearMonth(
-                f7.$(e.target).data("year"),
-                c.currentMonth,
-                300
-              );
+              calendar.current.setYearMonth(f7.$(e.target).data("year"), c.currentMonth, 300);
               f7.$(".calendar-year-picker").remove();
             });
           });
         },
         monthYearChangeStart(c) {
           const currentMonth = c.currentMonth + 1;
-          f7.$(".custom-month-selector .center").text(
-            `${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`
-          );
+          f7.$(".custom-month-selector .center").text(`${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`);
           f7.$(".custom-year-selector .center").text(`${c.currentYear}`);
         },
         dayClick(calendar, dayEl, year, month, day) {
           month = month + 1;
-          setDateSelect(
-            `${year}-${month < 10 ? `0${month}` : month}-${
-              day < 10 ? `0${day}` : day
-            }`
-          );
+          setDateSelect(`${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`);
         }
       }
     });
@@ -205,10 +172,7 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
         }
       }}
     >
-      <div
-        className="absolute w-full h-full flex flex-col justify-center items-center"
-        onClick={onCancel ? onCancel : null}
-      />
+      <div className="absolute w-full h-full flex flex-col justify-center items-center" onClick={onCancel ? onCancel : null} />
       <div className="absolute w-full flex flex-col justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div
           className="block-title bg-gray-200 p-3 rounded-xl text-2xl text-gray-800 m-0 mb-3"
@@ -216,18 +180,11 @@ const CalendarPopup: React.FC<CalendarPopupOption> = ({
         >
           {dateSelect || "请选择日期"}
         </div>
-        <div
-          className="block block-strong no-padding overflow-hidden rounded-xl m-0"
-          style={{ width: "95%", maxWidth: "400px" }}
-        >
+        <div className="block block-strong no-padding overflow-hidden rounded-xl m-0" style={{ width: "95%", maxWidth: "400px" }}>
           <div className="mb-2" ref={containerEl}></div>
 
           <div className="flex justify-end p-4">
-            <Button
-              className="w-24"
-              color="blue"
-              onClick={(onCancel && onCancel) || null}
-            >
+            <Button className="w-24" color="blue" onClick={(onCancel && onCancel) || null}>
               取&ensp;消
             </Button>
             <Button className="w-24" color="blue" onClick={_onConfirm}>

@@ -11,9 +11,7 @@ const onRedirect = (resolve, options: RedirectOptions) => {
   } = options;
 
   const token = store.getters.token;
-  const route = token.value
-    ? `${url}${redirectQuery ? `?${redirectQuery}` : ""}`
-    : `/login${loginQuery ? `?${loginQuery}` : ""}`;
+  const route = token.value ? `${url}${redirectQuery ? `?${redirectQuery}` : ""}` : `/login${loginQuery ? `?${loginQuery}` : ""}`;
 
   resolve(route);
 };
@@ -24,9 +22,7 @@ const onRedirect = (resolve, options: RedirectOptions) => {
  * @returns string
  */
 export const jsonToUrlString = <T>(args: T): string => {
-  const param = Object.keys(args || {}).map(
-    (key) => `${key}=${(args as any)[key]}`
-  );
+  const param = Object.keys(args || {}).map((key) => `${key}=${(args as any)[key]}`);
 
   return param.length ? `${param.join("&")}` : "";
 };
@@ -41,10 +37,7 @@ export declare type RoutesHandleOptions = {
   component?: React.ReactNode;
 };
 
-export const routesHandle = (
-  routes: RoutesHandleOptions[],
-  options: { [key: string]: any }
-): any => {
+export const routesHandle = (routes: RoutesHandleOptions[], options: { [key: string]: any }): any => {
   const _routes = [];
 
   routes.forEach((item) => {

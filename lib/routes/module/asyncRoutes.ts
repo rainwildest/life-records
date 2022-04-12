@@ -24,6 +24,12 @@ const testAsyncRoutes: RoutesHandleOptions[] = [
   {
     async: true,
     redirect: true,
+    url: "book-select",
+    component: (): React.ReactNode => import("views/book-keeping/book-select")
+  },
+  {
+    async: true,
+    redirect: true,
     url: "bill",
     component: (): React.ReactNode => import("views/bill")
   },
