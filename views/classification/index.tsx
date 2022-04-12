@@ -1,22 +1,33 @@
 import React from "react";
-import { Page, Navbar } from "framework7-react";
+import { Page, Navbar, NavTitle, Segmented, Button, Tabs, Tab } from "framework7-react";
 import Icons from "components/Icons";
+import Income from "./components/Income";
+import Pay from "./components/Pay";
 
 const Classification: React.FC = () => {
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline title="分类管理"></Navbar>
+      <Navbar noHairline backLink>
+        <NavTitle>
+          <Segmented strong className="w-44">
+            <Button tabLink="#tab-pay" tabLinkActive data-type="pay">
+              支出
+            </Button>
+            <Button tabLink="#tab-income" data-type="income">
+              收入
+            </Button>
+          </Segmented>
+        </NavTitle>
+      </Navbar>
 
-      <div className="pt-2 px-6 mb-10 mt-10">
-        {/* <div className="budget-title shadow-3 link rounded-lg py-3 px-4 flex items-center flex-shrink-0 text-sm">
-          <Icons name="budget" className="budget-icon pr-3" />
-          <div className="truncate text-gray-700">预算总金额</div>
-        </div> */}
-        <div className="shadow-3 rounded-lg py-3 px-4 flex items-center">
-          <Icons name="budget" className="budget-icon pr-3" />
-          <div className="truncate text-gray-700">预算总金额</div>
-        </div>
-      </div>
+      <Tabs animated className="mt-3 mb-1">
+        <Tab id="tab-pay" className="overflow-auto">
+          <Pay />
+        </Tab>
+        <Tab id="tab-income">
+          <Income />
+        </Tab>
+      </Tabs>
     </Page>
   );
 };

@@ -15,17 +15,7 @@ const Income: React.FC<PayOptions> = ({ onSelected }) => {
 
   const incomeDetails = group(data?.livingExpenses || [], 20);
 
-  return (
-    <Fragment>
-      {!loading && (
-        <ExpensesItems
-          data={incomeDetails}
-          type="income"
-          onSelected={onSelected}
-        />
-      )}
-    </Fragment>
-  );
+  return <Fragment>{!loading && <ExpensesItems data={incomeDetails} type="income" onSelected={onSelected} />}</Fragment>;
 };
 
 export default memo(Income);

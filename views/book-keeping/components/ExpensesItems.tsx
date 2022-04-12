@@ -9,11 +9,7 @@ type ExpensesItemOption = {
   onSelected?: (val: { [key: string]: Options }) => void;
 };
 
-const ExpensesItem: React.FC<ExpensesItemOption> = ({
-  type,
-  data,
-  onSelected
-}) => {
+const ExpensesItem: React.FC<ExpensesItemOption> = ({ type, data, onSelected }) => {
   const [active, setActive] = useState("0-0");
 
   useEffect(() => {
@@ -37,9 +33,7 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({
                 <div
                   key={item.id}
                   className={`${
-                    active === `${index}-${subIndex}`
-                      ? "shadow-inset-3"
-                      : "shadow-3"
+                    active === `${index}-${subIndex}` ? "shadow-inset-3" : "shadow-3"
                   } py-2 rounded-lg flex flex-col items-center`}
                   data-index={`${index}-${subIndex}`}
                   onClick={() => {
@@ -47,13 +41,8 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({
                     onSelected && onSelected({ [type]: item });
                   }}
                 >
-                  <Icons
-                    name="calendar"
-                    className="expense-icon pointer-events-none"
-                  />
-                  <p className="text-xs pt-1.5 pointer-events-none">
-                    {item.expenseName}
-                  </p>
+                  <Icons name="calendar" className="expense-icon pointer-events-none" />
+                  <p className="text-xs pt-1.5 pointer-events-none">{item.expenseName}</p>
                 </div>
               ))}
             </div>
