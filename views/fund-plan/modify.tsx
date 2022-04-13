@@ -4,7 +4,7 @@ import Icons from "components/Icons";
 import { toastTip } from "lib/api/utils";
 import { RouterOpotions } from "typings/f7-route";
 import event from "lib/api/framework-event";
-import InputField from "./components/InputField";
+import InputField from "components/InputField";
 import { useCreateFundPlanMutation, useModifyFundPlanMutation } from "apollo/graphql/model/fund-plan.graphql";
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
 import DatePicker from "components/DatePicker";
