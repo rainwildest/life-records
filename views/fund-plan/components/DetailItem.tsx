@@ -12,7 +12,7 @@ type DetailOptions = {
 };
 const DetailItem: React.FC<DetailOptions> = ({ date, type, icon, name, amounts, status }) => (
   <div className="py-3 px-4 relative overflow-hidden w-full flex items-center pointer-events-none">
-    <Icons name={icon} className="budget-icon pr-3" />
+    <Icons name={icon} className="svg-icon-30 pr-3" />
     <div className="cost-item-container">
       <div className="flex justify-between pointer-events-none">
         <div className="text-gray-500 text-xs">{type}</div>
@@ -24,7 +24,7 @@ const DetailItem: React.FC<DetailOptions> = ({ date, type, icon, name, amounts, 
       </div>
     </div>
 
-    {status && <Icons name={status} className="budget-status-icon pr-3 absolute right-0 -top-0.5 opacity-60" />}
+    {status && <Icons name={status} className="budget-status-icon svg-icon-70 pr-3 absolute right-0 -top-0.5 opacity-60" />}
   </div>
 );
 

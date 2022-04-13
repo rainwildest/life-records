@@ -184,7 +184,7 @@ const Calc: React.FC<CalcOption> = ({ date, bookName, onClickCalendar, onConfirm
         {bookName && (
           <div className="shadow-3 rounded-lg py-6 px-3 h-7 text-xs overflow-hidden flex items-center w-1/2 ml-1.5">
             <div className="flex items-center flex-shrink-0">
-              <Icons name="ancient-books" className="calc-calendar flex-shrink-0" />
+              <Icons name="ancient-books" className="svg-icon-16 flex-shrink-0" />
               <p className="pl-0.5">账簿：</p>
             </div>
 
@@ -197,7 +197,7 @@ const Calc: React.FC<CalcOption> = ({ date, bookName, onClickCalendar, onConfirm
         {!!date && (
           <div className="flex-shrink-0 pr-4 flex items-center link" onClick={onCalendar}>
             <div className="pr-1 pt-1">
-              <Icons name="calendar" className="calc-calendar" />
+              <Icons name="calendar" className="svg-icon-16" />
             </div>
             <div className="text-xs">{date}</div>
           </div>
@@ -208,7 +208,7 @@ const Calc: React.FC<CalcOption> = ({ date, bookName, onClickCalendar, onConfirm
             {thousands(display)}
           </div>
 
-          <Icons name="delete-01" className="calc-delete-icon link pl-2 pr-3" onClick={onDel} />
+          <Icons name="delete-01" className="svg-icon-20 link pl-2 pr-3" onClick={onDel} />
         </div>
       </div>
       <div className="grid grid-cols-4 gap-2.5 pb-2 pt-2.5">

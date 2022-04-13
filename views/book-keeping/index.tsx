@@ -111,7 +111,7 @@ const Bookkeeping: React.FC = () => {
         </NavTitle>
         <NavRight className="link">
           <Link href="/book-select">
-            <Icons name="ancient-books" className="account-book-add-icon px-2" />
+            <Icons name="ancient-books" className="svg-icon-26 px-2" />
           </Link>
         </NavRight>
       </Navbar>

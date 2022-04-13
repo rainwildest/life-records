@@ -32,7 +32,7 @@ const signin: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
       <Navbar noHairline transparent className="h-14">
         <NavLeft>
           <Link className="px-4" back>
-            <Icons className="signin-signup-back" name="left-arrow" />
+            <Icons className="signin-signup-back svg-icon-30" name="left-arrow" />
           </Link>
         </NavLeft>
       </Navbar>

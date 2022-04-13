@@ -46,7 +46,7 @@ const InputField: React.FC<InputFieldProps> = ({
         />
         {value && (
           <div className="h-full px-2 w-11 flex items-center justify-center flex-shrink-0" onClick={onClearField}>
-            <Icons name="close" className="field-clear" />
+            <Icons name="close" className="field-clear svg-icon-15" />
           </div>
         )}
       </div>

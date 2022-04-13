@@ -57,7 +57,10 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
       <Navbar backLink noHairline title={id ? "编辑账簿" : "新增账簿"}>
         <NavRight>
           <Button className="w-20" large small fill onClick={onSaveBefore}>
-            <Icons name={!saving ? "save" : "spinner"} className={`mr-1 save-icon${!saving ? "" : " animate-spin"}`} />
+            <Icons
+              name={!saving ? "save" : "spinner"}
+              className={`mr-1 save-icon svg-icon-14 ${!saving ? "" : "animate-spin"}`}
+            />
             保存
           </Button>
         </NavRight>
@@ -68,7 +71,7 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
         <div className="relative h-14 w-full px-3 shadow-3 rounded-lg text-gray-600 text-xs flex items-center">
           <input placeholder="请输入账簿名称" className="bg-transparent text-sm w-full" value={bookName} onInput={onInput} />
 
-          {bookName && <Icons name="close" className="field-clear px-2" onClick={onClear} />}
+          {bookName && <Icons name="close" className="svg-icon-15 field-clear px-2" onClick={onClear} />}
         </div>
       </div>
     </Page>

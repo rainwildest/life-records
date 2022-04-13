@@ -20,7 +20,7 @@ const Classification: React.FC = () => {
         </NavTitle>
       </Navbar>
 
-      <Tabs animated className="mt-3 mb-1">
+      <Tabs animated className="">
         <Tab id="tab-pay" className="overflow-auto">
           <Pay />
         </Tab>

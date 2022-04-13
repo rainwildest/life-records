@@ -13,19 +13,15 @@ const NotloggedIn: React.FC<NotloggedInOptions> = ({ className = "" }) => {
   const [random] = useState(parseInt((Math.random() * 5).toString()));
   const [imageUrl, setImageUrl] = useState("");
 
-  const imageUrls = [1, 2, 3, 4, 5].map(
-    (num) => `/images/menhera-0${num}.webp`
-  );
+  const imageUrls = [1, 2, 3, 4, 5].map((num) => `/images/menhera-0${num}.webp`);
 
   useEffect(() => {
     setImageUrl(imageUrls[random]);
   }, []);
   return (
     <section className={mergeClassName(className, defaultClassName)}>
-      {imageUrl && (
-        <img className="w-80 h-80 object-contain" src={imageUrls[random]} />
-      )}
-      {!imageUrl && <Icons name="image" className="empty-image w-80 h-80" />}
+      {imageUrl && <img className="w-80 h-80 object-contain" src={imageUrls[random]} />}
+      {!imageUrl && <Icons name="image" className="empty-image svg-icon-320 w-80 h-80" />}
 
       <section className="text-sm text-gray-700">
         还没登录呢，

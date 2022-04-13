@@ -115,7 +115,7 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
     <Page noToolbar pageContent={true}>
       <Navbar backLink noHairline title="资金计划">
         <NavRight className="link">
-          <Icons name="add" className="account-book-add-icon px-2" onClick={onCreatePlan} />
+          <Icons name="add" className="svg-icon-26 px-2" onClick={onCreatePlan} />
         </NavRight>
       </Navbar>
 
@@ -123,9 +123,9 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
         计划中
         <div className="plan-icons flex items-center">
           <Link href="/fund-plan-completed">
-            <Icons name="complete-01" className="complete-icon mr-2" />
+            <Icons name="complete-01" className="svg-icon-30 mr-2" />
           </Link>
-          {/* <Icons name="overdue-01" className="overdue-icon link" /> */}
+          {/* <Icons name="overdue-01" className="svg-icon-28 link" /> */}
         </div>
       </BlockTitle>
 

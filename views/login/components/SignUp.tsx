@@ -22,12 +22,7 @@ type SignUpOptions = {
   onSignIn?: () => void;
   onSuccess?: (value: any) => void;
 };
-const SignUp: React.FC<SignUpOptions> = ({
-  btnText,
-  isSignUp,
-  onSignIn,
-  onSuccess
-}) => {
+const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSuccess }) => {
   const [submitting, setSubmitting] = useState(false);
   const [email, setEmail] = useState("rainwildest@163.com");
   const [password, setPassword] = useState("12345678");
@@ -73,31 +68,16 @@ const SignUp: React.FC<SignUpOptions> = ({
   };
 
   return (
-    <div
-      className={`signup-content mt-10 flex flex-col justify-center items-center mt-10 z-50${
-        isSignUp ? " active" : ""
-      }`}
-    >
+    <div className={`signup-content mt-10 flex flex-col justify-center items-center z-50${isSignUp ? " active" : ""}`}>
       <section className="signup-container relative mb-5">
         <div className="signup-avatar rounded-full overflow-hidden absolute flex justify-center items-center left-1/2 transform -translate-x-1/2 z-50">
-          <Icons name="avatar-05" />
+          <Icons name="avatar-05" className="svg-icon-60" />
         </div>
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
           <Field clear value={username} label="用户名" onInput={onUsername} />
-          <Field
-            clear
-            value={email}
-            label="邮&emsp;箱"
-            onInput={onEmailInput}
-          />
-          <Field
-            clear
-            value={password}
-            label="密&emsp;码"
-            onInput={onPassword}
-            type="password"
-          />
+          <Field clear value={email} label="邮&emsp;箱" onInput={onEmailInput} />
+          <Field clear value={password} label="密&emsp;码" onInput={onPassword} type="password" />
         </div>
 
         <div className="outer w-full h-full relative">
@@ -110,17 +90,12 @@ const SignUp: React.FC<SignUpOptions> = ({
             onClick={onSignUp || null}
           >
             {!submitting && btnText}
-            {submitting && <Icons name="spinner" className="animate-spin" />}
+            {submitting && <Icons name="spinner" className="animate-spin svg-icon-25" />}
           </Button>
         </div>
       </section>
 
-      <Button
-        className="signup-btn w-32 mt-6 h-10"
-        round
-        color="black"
-        onClick={onSignIn || null}
-      >
+      <Button className="signup-btn w-32 mt-6 h-10" round color="black" onClick={onSignIn || null}>
         登&ensp;录
       </Button>
 

@@ -41,7 +41,7 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({ type, data, onSelected }) 
                     onSelected && onSelected({ [type]: item });
                   }}
                 >
-                  <Icons name="calendar" className="expense-icon pointer-events-none" />
+                  <Icons name="calendar" className="svg-icon-30 pointer-events-none" />
                   <p className="text-xs pt-1.5 pointer-events-none">{item.expenseName}</p>
                 </div>
               ))}

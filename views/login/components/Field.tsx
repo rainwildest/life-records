@@ -12,15 +12,7 @@ type FieldOptions = {
   onInput?: (value: string) => void;
   onVerify?: (value: boolean) => void;
 };
-const Field: React.FC<FieldOptions> = ({
-  value,
-  label,
-  clear,
-  required,
-  type = "text",
-  placeholder,
-  onInput
-}) => {
+const Field: React.FC<FieldOptions> = ({ value, label, clear, required, type = "text", placeholder, onInput }) => {
   const [verify, setVerify] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [inputValue, setInputVaule] = useState(value || "");
@@ -32,9 +24,7 @@ const Field: React.FC<FieldOptions> = ({
       </div>
       <div className="relative bg-gray-200 text-gray-600 h-10 rounded w-full text-xs flex items-center">
         <input
-          className={`text-right w-full h-full${
-            clear && !!inputValue ? " !pl-3" : " !px-3"
-          }`}
+          className={`text-right w-full h-full${clear && !!inputValue ? " !pl-3" : " !px-3"}`}
           value={inputValue}
           type={type}
           placeholder={placeholder}
@@ -48,7 +38,7 @@ const Field: React.FC<FieldOptions> = ({
         {clear && !!inputValue && (
           <Icons
             name="close"
-            className="field-clear px-2"
+            className="field-clear svg-icon-15 px-2"
             onClick={() => {
               setInputVaule("");
             }}
@@ -56,9 +46,7 @@ const Field: React.FC<FieldOptions> = ({
         )}
 
         {verify && required && (
-          <div className="error-message absolute top-10 left-1 break-all transform scale-90">
-            {errorMessage}
-          </div>
+          <div className="error-message absolute top-10 left-1 break-all transform scale-90">{errorMessage}</div>
         )}
       </div>
     </div>

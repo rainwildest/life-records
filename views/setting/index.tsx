@@ -13,7 +13,7 @@ const Setting: React.FC<RouterOpotions> = ({ f7router }) => {
       {/* <img src="/images/3.png" alt="" /> */}
       <List className="text-sm" inset>
         <ListItem title="关闭震动" disabled={!hasVibrate}>
-          <Icons slot="media" name="vibrate" className="mine-setting-icon" />
+          <Icons slot="media" name="vibrate" className="svg-icon-28" />
           <Toggle
             className="h-4"
             checked={toggle}
@@ -21,7 +21,7 @@ const Setting: React.FC<RouterOpotions> = ({ f7router }) => {
           />
         </ListItem>
         <ListItem link="#" title="暗夜主题" after="关闭">
-          <Icons slot="media" name="dark-theme" className="mine-setting-icon" />
+          <Icons slot="media" name="dark-theme" className="svg-icon-28" />
         </ListItem>
       </List>
     </Page>

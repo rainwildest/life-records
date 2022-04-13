@@ -69,8 +69,8 @@ const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
       <Navbar backLink noHairline>
         <NavTitle className="max-w-48 truncate">{bookName}</NavTitle>
         <NavRight>
-          <Icons name="delete-02" className="book-operation-icon link rounded-lg p-2.5" onClick={onDelConfirm} />
-          <Icons name="eidt-01" className="book-operation-icon link rounded-lg p-2.5" onClick={onNavigate} />
+          <Icons name="delete-02" className="svg-icon-20 link rounded-lg p-2.5" onClick={onDelConfirm} />
+          <Icons name="eidt-01" className="svg-icon-20 link rounded-lg p-2.5" onClick={onNavigate} />
         </NavRight>
       </Navbar>
 

@@ -125,7 +125,10 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
       <Navbar backLink noHairline title={id ? "编辑计划" : "添加计划"}>
         <NavRight>
           <Button className="w-20" large small fill onClick={onSaveBefore}>
-            <Icons name={!saving ? "save" : "spinner"} className={`mr-1 save-icon${!saving ? "" : " animate-spin"}`} />
+            <Icons
+              name={!saving ? "save" : "spinner"}
+              className={`mr-1 save-icon svg-icon-14 ${!saving ? "" : "animate-spin"}`}
+            />
             保存
           </Button>
         </NavRight>

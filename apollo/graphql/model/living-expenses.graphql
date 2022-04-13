@@ -5,3 +5,22 @@ query livingExpenses($type: String) {
     ...LivingExpensesOptions
   }
 }
+
+mutation createLivingExpenses($input: CreateLivingExpensesOptions) {
+  createLivingExpenses(input: $input) {
+    ...LivingExpensesOptions
+  }
+}
+
+mutation modifyLivingExpenses($id: String!, $input: ModifyLivingExpensesOptions) {
+  modifyLivingExpenses(id: $id, input: $input) {
+    ...LivingExpensesOptions
+  }
+}
+
+mutation removeLivingExpenses($id: String!) {
+  removeLivingExpenses(id: $id) {
+    ...LivingExpensesOptions
+  }
+}
+
