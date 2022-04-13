@@ -19,7 +19,7 @@ input CreateLivingExpensesOptions {
   expenseType: String!
   expenseName: String!
   expenseIcon: String
-  isAddUserId: Boolean
+  isAddUserId: Boolean = true
 }
 
 input ModifyLivingExpensesOptions {
@@ -37,4 +37,3 @@ type Mutation {
   modifyLivingExpenses(id: String!, input: ModifyLivingExpensesOptions): LivingExpenses
   removeLivingExpenses(id: String!): LivingExpenses
 }
-

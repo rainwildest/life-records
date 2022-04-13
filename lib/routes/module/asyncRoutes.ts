@@ -92,6 +92,12 @@ const testAsyncRoutes: RoutesHandleOptions[] = [
     redirect: true,
     url: "classification",
     component: (): React.ReactNode => import("views/classification")
+  },
+  {
+    async: true,
+    redirect: true,
+    url: "classification-modify",
+    component: (): React.ReactNode => import("views/classification/modify")
   }
 ];
 

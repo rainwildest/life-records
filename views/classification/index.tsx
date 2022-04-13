@@ -1,10 +1,21 @@
 import React from "react";
+import { RouterOpotions } from "typings/f7-route";
 import { Page, Navbar, NavTitle, Segmented, Button, Tabs, Tab } from "framework7-react";
 import Icons from "components/Icons";
 import Income from "./components/Income";
 import Pay from "./components/Pay";
 
-const Classification: React.FC = () => {
+const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
+  const onNavigate = (type: string) => {
+    const url = f7router.generateUrl({
+      name: "classification-modify",
+      params: { type: "type" },
+      query: { type }
+    });
+
+    f7router.navigate(url);
+  };
+
   return (
     <Page noToolbar>
       <Navbar noHairline backLink>
@@ -22,10 +33,10 @@ const Classification: React.FC = () => {
 
       <Tabs animated className="">
         <Tab id="tab-pay" className="overflow-auto">
-          <Pay />
+          <Pay f7router={f7router} onNavigate={() => onNavigate("pay")} />
         </Tab>
         <Tab id="tab-income">
-          <Income />
+          <Income f7router={f7router} onNavigate={() => onNavigate("income")} />
         </Tab>
       </Tabs>
     </Page>
