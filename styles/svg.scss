@@ -42,125 +42,137 @@
   width: math.div(230rem, $font-size-base);
 }
 
-.calc-calendar {
+.svg-icon-12 {
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.svg-icon-14 {
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.svg-icon-15 {
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.svg-icon-16 {
   svg {
     height: 16px;
     width: 16px;
   }
 }
 
-.expense-icon {
+.svg-icon-20 {
   svg {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
 }
 
-.field-clear {
+.svg-icon-25 {
   svg {
-    width: 15px;
-    height: 15px;
-    fill: #4b5563;
+    width: 25px;
+    height: 25px;
   }
 }
 
-.third-party {
-  svg {
-    width: 32px;
-    height: 32px;
-  }
-}
-
-.amounts-icon {
-  width: 30px;
-  height: 30px;
-  svg {
-    width: 30px;
-    height: 30px;
-  }
-}
-
-.save-icon {
-  svg {
-    fill: white;
-    width: 14px;
-    height: 14px;
-  }
-}
-
-.budget-icon {
-  svg {
-    width: 30px;
-    height: 30px;
-  }
-}
-
-.account-book-add-icon {
+.svg-icon-26 {
   svg {
     width: 26px;
     height: 26px;
   }
 }
 
-.ancient-books-container {
+.svg-icon-28 {
   svg {
-    height: 170px;
-    width: 170px;
+    height: 28px;
+    width: 28px;
   }
 }
 
-.mine-avatar {
+.svg-icon-30 {
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.svg-icon-32 {
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.svg-icon-60 {
+  svg {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.svg-icon-70 {
+  svg {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+.svg-icon-72 {
   svg {
     width: 72px;
     height: 72px;
   }
 }
 
+.svg-icon-170 {
+  svg {
+    height: 170px;
+    width: 170px;
+  }
+}
+
+.svg-icon-320 {
+  svg {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+.field-clear {
+  svg {
+    fill: #4b5563;
+  }
+}
+
 .percentage-icon-right {
   svg {
-    width: 12px;
-    height: 12px;
     fill: #6b7280;
-  }
-}
-
-.calc-delete-icon, .book-operation-icon {
-  svg {
-    width: 20px;
-  }
-}
-
-.plan-icons {
-  .complete-icon svg {
-    width: 30px;
-    height: 30px;
-  }
-
-  .overdue-icon svg {
-    width: 28px;
-    height: 28px;
   }
 }
 
 .budget-status-icon {
   svg {
-    width: 70px;
-    height: 70px;
     fill: #b91c1c;
   }
 }
 
-.mine-setting-icon {
+.save-icon {
   svg {
-    height: 28px;
-    width: 28px;
+    fill: white;
   }
 }
 
 .setting-after-icon {
   svg {
-    width: 28px;
-    height: 28px;
     fill: #6b7280;
   }
 }
@@ -171,8 +183,6 @@
   .signin-btn {
     svg {
       fill: white;
-      height: 25px;
-      width: 25px;
     }
   }
 }
@@ -180,20 +190,7 @@
 .signin-signup-page {
   .signin-signup-back {
     svg {
-      width: 30px;
-      height: 30px;
       fill: #374151;
-    }
-  }
-}
-
-.signup-content,
-.signin-content {
-  .signup-avatar,
-  .signin-avatar {
-    svg {
-      width: 60px;
-      height: 60px;
     }
   }
 }
@@ -207,8 +204,6 @@
 
 .empty-image {
   svg {
-    width: 320px;
-    height: 320px;
     transform: scale(0.5);
   }
 }
