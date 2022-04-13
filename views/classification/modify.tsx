@@ -9,7 +9,7 @@ import Icons from "components/Icons";
 const Modify: React.FC<RouterOpotions> = ({ f7route }) => {
   const { type } = f7route.query;
 
-  const formik = useRef();
+  const formik = useRef<FormikProps<any>>();
 
   const [saving, setSaving] = useState(false);
   console.log(type);
