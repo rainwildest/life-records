@@ -6,13 +6,13 @@ type RedirectOptions = {
 };
 const onRedirect = (resolve, options: RedirectOptions) => {
   const {
-    redirect: { url, query: redirectQuery },
+    redirect: { url },
     login: { query: loginQuery }
   } = options;
 
   const token = store.getters.token;
-  const route = token.value ? `${url}${redirectQuery ? `?${redirectQuery}` : ""}` : `/login${loginQuery ? `?${loginQuery}` : ""}`;
-
+  const route = token.value ? url : `/login${loginQuery ? `?${loginQuery}` : ""}`;
+  console.log(route);
   resolve(route);
 };
 
@@ -59,12 +59,9 @@ export const routesHandle = (routes: RoutesHandleOptions[], options: { [key: str
         path: `/${item.url}`,
         name: name[0],
         redirect: function ({ to, resolve }): void {
-          const isEmpty = !Object.keys(to.query || {}).length;
-
           onRedirect(resolve, {
             redirect: {
-              url: `/route-${item.url}`,
-              query: !isEmpty ? jsonToUrlString(to.query) : null
+              url: `/route-${to.url.substring(1)}`
             },
             login: { query: `to=${to.route.path}` }
           });
