@@ -1,6 +1,6 @@
 import FundPlan from "db/entities/fund-plan";
 import MikrotOrm, { knex } from "db/mikro-orm";
-import { create, modify, remove } from "../common";
+import { create, modify, remove, getDatabyId } from "../common";
 
 /**
  * 新增资金计划
@@ -111,9 +111,7 @@ export const getCompleted = (args: CompletedParam): Promise<FundPlanSnakeOptions
 };
 
 export const getPlannedDetailById = async (id: string): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
-  const orm = await MikrotOrm();
-
-  return orm.createQueryBuilder(FundPlan).where({ id }).andWhere("deleted_at is null").execute("get");
+  return getDatabyId(FundPlan, id);
 };
 
 // /**

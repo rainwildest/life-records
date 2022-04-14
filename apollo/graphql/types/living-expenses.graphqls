@@ -30,6 +30,7 @@ input ModifyLivingExpensesOptions {
 
 type Query {
   livingExpenses(type: String): [LivingExpenses]
+  livingExpensesById(id: String): LivingExpenses
 }
 
 type Mutation {

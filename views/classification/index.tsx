@@ -6,11 +6,13 @@ import Income from "./components/Income";
 import Pay from "./components/Pay";
 
 const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
-  const onNavigate = (type: string) => {
+  const onNavigate = (type: string, event?: any) => {
+    const id = (event.target as HTMLElement).getAttribute("data-id");
+
     const url = f7router.generateUrl({
       name: "classification-modify",
-      params: { type: "type" },
-      query: { type }
+      query: { type, id },
+      params: {}
     });
 
     f7router.navigate(url);
@@ -33,7 +35,7 @@ const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
       <PageContent className="pb-0">
         <Tabs animated className="">
           <Tab id="tab-pay" className="overflow-auto">
-            <Pay f7router={f7router} onNavigate={() => onNavigate("pay")} />
+            <Pay f7router={f7router} onNavigate={(event) => onNavigate("pay", event)} />
           </Tab>
           <Tab id="tab-income">
             <Income f7router={f7router} onNavigate={() => onNavigate("income")} />

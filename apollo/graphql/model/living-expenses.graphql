@@ -6,6 +6,12 @@ query livingExpenses($type: String) {
   }
 }
 
+query livingExpensesById($id: String) {
+  livingExpensesById(id: $id) {
+    ...LivingExpensesOptions
+  }
+}
+
 mutation createLivingExpenses($input: CreateLivingExpensesOptions) {
   createLivingExpenses(input: $input) {
     ...LivingExpensesOptions
@@ -23,4 +29,3 @@ mutation removeLivingExpenses($id: String!) {
     ...LivingExpensesOptions
   }
 }
-

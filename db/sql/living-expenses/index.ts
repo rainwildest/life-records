@@ -7,7 +7,9 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createLivingExpenses = async (options: LivingExpensesSnakeOptions): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createLivingExpenses = async (
+  options: LivingExpensesSnakeOptions
+): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("living_expenses", { ...options });
 };
 
@@ -41,7 +43,10 @@ export const getLivingExpense = async (id: string): Promise<LivingExpensesSnakeO
  * 获取用户的消费类型
  * @param id 用户id
  */
-export const getUserLivingExpense = async (id: string, type: string): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getUserLivingExpense = async (
+  id: string,
+  type: string
+): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm();
 
   return orm

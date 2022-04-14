@@ -1,7 +1,7 @@
 import { userid, expense, bookid } from "./common";
 import { user, statistics } from "./users";
 import { costDetails } from "./cost-details";
-import { livingExpenses } from "./living-expenses";
+import { livingExpenses, livingExpensesById } from "./living-expenses";
 import {
   statisticalDetails,
   details as statisticalData,
@@ -20,6 +20,7 @@ export const queries = {
   fundPlanById,
   accountBooks,
   livingExpenses,
+  livingExpensesById,
   statisticalBooks,
   statisticalDetails,
   statisticalGeneralization,

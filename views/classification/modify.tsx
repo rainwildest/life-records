@@ -1,7 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { RouterOpotions } from "typings/f7-route";
 import { Page, Navbar, NavTitle, Segmented, Button, NavRight } from "framework7-react";
-import { useCreateLivingExpensesMutation, useModifyLivingExpensesMutation } from "apollo/graphql/model/living-expenses.graphql";
+import {
+  useCreateLivingExpensesMutation,
+  useModifyLivingExpensesMutation,
+  useLivingExpensesByIdQuery
+} from "apollo/graphql/model/living-expenses.graphql";
 import { Formik, Form, FormikProps } from "formik";
 import InputField from "components/InputField";
 import Icons from "components/Icons";
@@ -20,7 +24,9 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
 
   const [createLivingExpensesMutation] = useCreateLivingExpensesMutation();
   const [modifyLivingExpensesMutation] = useModifyLivingExpensesMutation();
+  const { data } = useLivingExpensesByIdQuery({ variables: { id } });
 
+  console.log(data);
   const onSaveBefore = () => {
     formik.current.submitForm();
   };
