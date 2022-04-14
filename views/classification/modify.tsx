@@ -14,10 +14,9 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
 
   const [saving, setSaving] = useState(false);
   const payIcons = ["calendar", "书籍", "add", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
-  const incomeIcons = ["calendar", "calendar", "calendar", "calendar", "calendar", "calendar", "calendar", "calendar"];
+  const incomeIcons = ["calendar", "书籍", "add", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
 
   const icons = type === "pay" ? payIcons : incomeIcons;
-  console.log(type);
 
   const [createLivingExpensesMutation] = useCreateLivingExpensesMutation();
   const [modifyLivingExpensesMutation] = useModifyLivingExpensesMutation();
@@ -94,7 +93,7 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
             <div className="px-4 mt-7">
               <div className="text-gray-700 font-bold text-sm">类型图标</div>
               <div className="grid grid-cols-4 gap-5 pt-3">
-                {icons.map((icon) => (
+                {icons.map((icon, index) => (
                   <div
                     className={`${
                       values.expenseIcon === icon ? "shadow-inset-3" : "shadow-3"
@@ -102,6 +101,7 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
                     onClick={() => {
                       setFieldValue("expenseIcon", icon);
                     }}
+                    key={`${icon}-${index}`}
                   >
                     <Icons name={icon} className="svg-icon-28 pointer-events-none" />
                   </div>
