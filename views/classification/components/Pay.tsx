@@ -17,7 +17,7 @@ const Pay: React.FC<RouterOpotions & PayOptons> = ({ f7router, onNavigate }) => 
   }, []);
 
   return (
-    <div className="grid grid-cols-4 gap-4 px-4 py-5">
+    <div className="grid grid-cols-4 gap-4 px-4 py-6">
       {payDetails.map((item) => (
         <div className="shadow-3 rounded-lg text-center py-3" key={item.id}>
           <Icons name="calendar" className="svg-icon-30" />

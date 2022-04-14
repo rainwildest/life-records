@@ -11,13 +11,7 @@ const Pay: React.FC<PayOptions> = ({ onSelected }) => {
   const { loading, data } = useLivingExpensesQuery();
   const payDetails = group(data?.livingExpenses || [], 20);
 
-  return (
-    <Fragment>
-      {!loading && (
-        <ExpensesItems data={payDetails} type="pay" onSelected={onSelected} />
-      )}
-    </Fragment>
-  );
+  return <Fragment>{!loading && <ExpensesItems data={payDetails} type="pay" onSelected={onSelected} />}</Fragment>;
 };
 
 export default memo(Pay);

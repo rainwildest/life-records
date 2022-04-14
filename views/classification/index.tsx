@@ -1,6 +1,6 @@
 import React from "react";
 import { RouterOpotions } from "typings/f7-route";
-import { Page, Navbar, NavTitle, Segmented, Button, Tabs, Tab } from "framework7-react";
+import { Page, PageContent, Navbar, NavTitle, Segmented, Button, Tabs, Tab } from "framework7-react";
 import Icons from "components/Icons";
 import Income from "./components/Income";
 import Pay from "./components/Pay";
@@ -17,7 +17,7 @@ const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
   };
 
   return (
-    <Page noToolbar>
+    <Page noToolbar pageContent={false}>
       <Navbar noHairline backLink>
         <NavTitle>
           <Segmented strong className="w-44">
@@ -30,15 +30,16 @@ const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
           </Segmented>
         </NavTitle>
       </Navbar>
-
-      <Tabs animated className="">
-        <Tab id="tab-pay" className="overflow-auto">
-          <Pay f7router={f7router} onNavigate={() => onNavigate("pay")} />
-        </Tab>
-        <Tab id="tab-income">
-          <Income f7router={f7router} onNavigate={() => onNavigate("income")} />
-        </Tab>
-      </Tabs>
+      <PageContent className="pb-0">
+        <Tabs animated className="">
+          <Tab id="tab-pay" className="overflow-auto">
+            <Pay f7router={f7router} onNavigate={() => onNavigate("pay")} />
+          </Tab>
+          <Tab id="tab-income">
+            <Income f7router={f7router} onNavigate={() => onNavigate("income")} />
+          </Tab>
+        </Tabs>
+      </PageContent>
     </Page>
   );
 };
