@@ -5,13 +5,18 @@ import { useCreateLivingExpensesMutation, useModifyLivingExpensesMutation } from
 import { Formik, Form, FormikProps } from "formik";
 import InputField from "components/InputField";
 import Icons from "components/Icons";
+import event from "lib/api/framework-event";
 
-const Modify: React.FC<RouterOpotions> = ({ f7route }) => {
-  const { type } = f7route.query;
+const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
+  const { type, id } = f7route.query;
 
   const formik = useRef<FormikProps<any>>();
 
   const [saving, setSaving] = useState(false);
+  const payIcons = ["calendar", "书籍", "add", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
+  const incomeIcons = ["calendar", "calendar", "calendar", "calendar", "calendar", "calendar", "calendar", "calendar"];
+
+  const icons = type === "pay" ? payIcons : incomeIcons;
   console.log(type);
 
   const [createLivingExpensesMutation] = useCreateLivingExpensesMutation();
@@ -20,17 +25,22 @@ const Modify: React.FC<RouterOpotions> = ({ f7route }) => {
   const onSaveBefore = () => {
     formik.current.submitForm();
   };
-  // createLivingExpensesMutation({
-  //   variables: {
-  //     input: {
-  //       expenseType: "",
-  //       expenseName: "",
-  //       expenseIcon: ""
-  //     }
-  //   }
-  // }).then((val) => {
-  //   console.log(val);
-  // });
+
+  const onSave = (data) => {
+    const _operation = id ? modifyLivingExpensesMutation : createLivingExpensesMutation;
+    const _param: any = id ? { id, input: data } : { input: data };
+    const variables = { ..._param };
+
+    _operation({ variables })
+      .then((val) => {
+        event.emit(`update-${type}-classification`);
+
+        f7router.back();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <Page noToolbar>
@@ -59,12 +69,18 @@ const Modify: React.FC<RouterOpotions> = ({ f7route }) => {
           // same shape as initial values
           // setSaving(true);
           // const data = { ...values, expenseId: expenseId.current, approximateAt: date.current };
-          // onSave(data);
+          onSave(values);
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
           <Form>
             <div className="px-4 pt-5">
+              <div>
+                <div className="text-gray-700 font-bold text-sm mt-5 mb-3 pl-2">添加类型</div>
+                <div className="relative h-14 w-full px-3 shadow-3 rounded-lg text-gray-600 text-xs flex items-center">
+                  {type === "pay" ? "支付" : "收入"}
+                </div>
+              </div>
               <InputField
                 label="类型名称"
                 placeholder="请输入类型名称"
@@ -77,6 +93,20 @@ const Modify: React.FC<RouterOpotions> = ({ f7route }) => {
 
             <div className="px-4 mt-7">
               <div className="text-gray-700 font-bold text-sm">类型图标</div>
+              <div className="grid grid-cols-4 gap-5 pt-3">
+                {icons.map((icon) => (
+                  <div
+                    className={`${
+                      values.expenseIcon === icon ? "shadow-inset-3" : "shadow-3"
+                    } rounded-lg flex justify-center items-center py-4`}
+                    onClick={() => {
+                      setFieldValue("expenseIcon", icon);
+                    }}
+                  >
+                    <Icons name={icon} className="svg-icon-28 pointer-events-none" />
+                  </div>
+                ))}
+              </div>
             </div>
           </Form>
         )}
