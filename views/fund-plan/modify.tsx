@@ -10,7 +10,7 @@ import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.gra
 import DatePicker from "components/DatePicker";
 import { format, toISOString } from "lib/api/dayjs";
 import { Formik, Form, FormikProps } from "formik";
-import useTest from "./test";
+import usePlanData from "./utils/usePlanData";
 import _ from "lodash";
 
 const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
@@ -22,7 +22,7 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
   const picker = useRef(null);
 
   const token = useStore("token");
-  const { data: detailData } = useTest(id);
+  const { data: detailData } = usePlanData(id);
 
   const [saving, setSaving] = useState(false);
   const [popupOpened, setPopupOpened] = useState(false);

@@ -12,7 +12,6 @@ const Pay: React.FC<RouterOpotions & PayOptons> = ({ f7router, onNavigate }) => 
 
   useEffect(() => {
     event.on("update-pay-classification", () => {
-      console.log("sdfsdfdfs");
       refetch();
     });
   }, []);

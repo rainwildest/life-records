@@ -21,9 +21,14 @@ const Income: React.FC<RouterOpotions & IncomeOptons> = ({ f7router, onNavigate 
   return (
     <div className="grid grid-cols-4 gap-4 px-4 py-5">
       {incomeDetails.map((item) => (
-        <div className="shadow-3 rounded-lg text-center py-3" key={item.id}>
-          <Icons name="calendar" className="svg-icon-30" />
-          <div className="text-xs mt-1">{item.expenseName}</div>
+        <div
+          className={`shadow-3 rounded-lg text-center py-3 ${item.userId ? "shadow-active-3" : ""}`}
+          key={item.id}
+          data-id={item.id}
+          onClick={item.userId && onNavigate}
+        >
+          <Icons name="calendar" className="svg-icon-30 pointer-events-none" />
+          <div className="text-xs mt-1 pointer-events-none">{item.expenseName}</div>
         </div>
       ))}
 

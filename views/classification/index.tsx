@@ -38,7 +38,7 @@ const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
             <Pay f7router={f7router} onNavigate={(event) => onNavigate("pay", event)} />
           </Tab>
           <Tab id="tab-income">
-            <Income f7router={f7router} onNavigate={() => onNavigate("income")} />
+            <Income f7router={f7router} onNavigate={() => onNavigate("income", event)} />
           </Tab>
         </Tabs>
       </PageContent>
