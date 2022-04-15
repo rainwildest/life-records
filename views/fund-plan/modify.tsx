@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo, useRef } from "react";
-import { Page, Navbar, NavRight, useStore, f7, Link, Button, Popup } from "framework7-react";
+import { Page, PageContent, BlockTitle, Block, Navbar, NavRight, useStore, Sheet, Button, Popup } from "framework7-react";
 import Icons from "components/Icons";
 import { toastTip } from "lib/api/utils";
 import { RouterOpotions } from "typings/f7-route";
@@ -120,6 +120,10 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
 
   const onPopupToggle = () => setPopupOpened(true);
 
+  const onCloseSheet = () => {
+    setPopupOpened(false);
+  };
+
   return (
     <Page noToolbar pageContent={true}>
       <Navbar backLink noHairline title={id ? "编辑计划" : "添加计划"}>
@@ -197,37 +201,43 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
         </Formik>
       </div>
 
-      <Popup opened={popupOpened} onPopupClosed={() => setPopupOpened(false)} push>
-        <Page>
-          <Navbar noHairline title="计划类型">
+      <Sheet
+        className="h-2/3 rounded-t-xl overflow-hidden"
+        opened={popupOpened}
+        onSheetClosed={onCloseSheet}
+        swipeToClose
+        backdrop
+      >
+        <Page pageContent={false}>
+          <Navbar className="h-14" noHairline title="计划类型">
             <NavRight>
-              <Button className="w-20" large small fill popupClose>
-                关闭
-              </Button>
-              {/* <Link popupClose>关闭</Link> */}
+              <div className="px-3 flex items-center link" onClick={onCloseSheet}>
+                <i className="f7-icons">multiply_circle</i>
+              </div>
             </NavRight>
           </Navbar>
-
-          <div className="pt-5 grid grid-cols-4 gap-4 px-5 pb-10">
-            {payDetails?.map((item) => {
-              return (
-                <div
-                  className="shadow-3 shadow-active-3 rounded-lg py-2 px-4"
-                  data-name={item.expenseName}
-                  data-id={item.id}
-                  onClick={onSelectType}
-                  key={item.id}
-                >
-                  <div className="flex justify-center pointer-events-none">
-                    <Icons name="moon" className="svg-icon-30" />
+          <PageContent className="pt-16 pb-10">
+            <div className="pt-5 grid grid-cols-4 gap-4 px-5">
+              {payDetails?.map((item) => {
+                return (
+                  <div
+                    className="shadow-3 shadow-active-3 rounded-lg py-2 px-4"
+                    data-name={item.expenseName}
+                    data-id={item.id}
+                    onClick={onSelectType}
+                    key={item.id}
+                  >
+                    <div className="flex justify-center pointer-events-none">
+                      <Icons name="moon" className="svg-icon-30" />
+                    </div>
+                    <div className="text-center mt-2 text-xs pointer-events-none">{item.expenseName}</div>
                   </div>
-                  <div className="text-center mt-2 text-xs pointer-events-none">{item.expenseName}</div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          </PageContent>
         </Page>
-      </Popup>
+      </Sheet>
     </Page>
   );
 };
