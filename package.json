@@ -34,6 +34,7 @@
     "echarts-for-react": "^3.0.1",
     "formik": "^2.2.9",
     "framework7": "6.3.16",
+    "framework7-icons": "^5.0.5",
     "framework7-react": "6.3.16",
     "graphql": "^15.6.0",
     "graphql-date": "^1.0.3",

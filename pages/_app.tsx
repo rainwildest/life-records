@@ -9,6 +9,7 @@ import store from "lib/store";
 import Framework7 from "components/Framework7";
 import "framework7/framework7-bundle.min.css";
 import "styles/index.scss";
+import "framework7-icons";
 
 const MyApp = function ({ Component, pageProps, token }: AppProps & { token: string }): JSX.Element {
   // store.dispatch("setToken", token);
