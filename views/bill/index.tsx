@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Page,
-  PageContent,
-  Button,
-  Navbar,
-  NavTitle,
-  NavRight
-} from "framework7-react";
+import { Page, PageContent, Button, Navbar, NavTitle, NavRight } from "framework7-react";
 import CostCard from "components/CostCard";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { RouterOpotions } from "typings/f7-route";
@@ -34,7 +27,7 @@ const Bill: React.FC<RouterOpotions> = () => {
   }, []);
 
   const statistics = data?.statisticalDetails || {};
-
+  console.log(statistics);
   return (
     <Page noToolbar pageContent={false}>
       <Navbar noHairline backLink>
@@ -55,11 +48,7 @@ const Bill: React.FC<RouterOpotions> = () => {
         }}
         className="pt-14 px-6"
       >
-        <Amounts
-          className="mt-10"
-          income={thousands(statistics.income)}
-          pay={thousands(statistics.pay)}
-        />
+        <Amounts className="mt-10" income={thousands(statistics.income)} pay={thousands(statistics.pay)} />
 
         {statistics.details?.map((detail) => {
           const _isSameDay = isSameDay(detail.purchaseTime);

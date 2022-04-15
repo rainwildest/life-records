@@ -262,3 +262,17 @@ body {
   width: 30px;
   height: 30px;
 }
+
+.lock-icon-tip::after{
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -12px;
+  height: 0;
+  width: 0;
+  transform: rotate(45deg);
+  border-left: none;
+  border-right: 20px solid #03A9F4;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+}
