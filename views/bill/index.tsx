@@ -46,9 +46,9 @@ const Bill: React.FC<RouterOpotions> = () => {
             done();
           }, 2000);
         }}
-        className="pt-14 px-6"
+        className="pt-16 px-6"
       >
-        <Amounts className="mt-10" income={thousands(statistics.income)} pay={thousands(statistics.pay)} />
+        <Amounts className="mt-2" income={thousands(statistics.income)} pay={thousands(statistics.pay)} />
 
         {statistics.details?.map((detail) => {
           const _isSameDay = isSameDay(detail.purchaseTime);

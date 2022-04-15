@@ -42,7 +42,12 @@ const Home: React.FC = () => {
       >
         {!!token && (
           <div className="pt-2 px-6 mb-10">
-            <Amounts incomTitle="今日收入" payTitle="今日支出" income={thousands(statistics.income)} pay={thousands(statistics.pay)} />
+            <Amounts
+              incomTitle="今日收入"
+              payTitle="今日支出"
+              income={thousands(statistics.income)}
+              pay={thousands(statistics.pay)}
+            />
 
             {statistics.details?.map((detail, index) => (
               <CostCard
