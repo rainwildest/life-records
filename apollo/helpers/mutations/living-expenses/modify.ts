@@ -7,13 +7,11 @@ export default (
   args: { id: string; input: LivingExpensesOptions & { isAddUserId: boolean } },
   _context: unknown
 ): Promise<any> => {
-  const { expenseType, expenseName, isAddUserId = false } = args.input;
+  const { expenseType, expenseName, expenseIcon, isAddUserId = false } = args.input;
   const { user } = _context as GraphqlContext;
 
   if (!user?.id) {
-    throw new AuthenticationError(
-      "Authentication token is invalid, please log in."
-    );
+    throw new AuthenticationError("Authentication token is invalid, please log in.");
   }
 
   if (!args.id) {
@@ -24,7 +22,7 @@ export default (
     throw new UserInputError("Consumption name and type cannot be empty.");
   }
 
-  let fields: LivingExpensesOptions = { expenseType, expenseName };
+  let fields: LivingExpensesOptions = { expenseType, expenseName, expenseIcon };
 
   if (isAddUserId) fields = { ...fields, userId: user.id };
   return modifyLivingExpense(args.id, tanslateSnake(fields));

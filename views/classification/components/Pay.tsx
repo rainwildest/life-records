@@ -12,6 +12,7 @@ const Pay: React.FC<RouterOpotions & PayOptons> = ({ f7router, onNavigate }) => 
 
   useEffect(() => {
     event.on("update-pay-classification", () => {
+      console.log("sdfsdfdfs");
       refetch();
     });
   }, []);
@@ -19,7 +20,12 @@ const Pay: React.FC<RouterOpotions & PayOptons> = ({ f7router, onNavigate }) => 
   return (
     <div className="grid grid-cols-4 gap-4 px-4 py-6">
       {payDetails.map((item) => (
-        <div className="shadow-3 rounded-lg text-center py-3" data-id={item.id} key={item.id} onClick={onNavigate}>
+        <div
+          className={`shadow-3 rounded-lg text-center py-3 ${item.userId ? "shadow-active-3" : ""}`}
+          data-id={item.id}
+          key={item.id}
+          onClick={item.userId && onNavigate}
+        >
           <Icons name="calendar" className="svg-icon-30 pointer-events-none" />
           <div className="text-xs mt-1 pointer-events-none">{item.expenseName}</div>
         </div>

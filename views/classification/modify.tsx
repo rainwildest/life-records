@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import { RouterOpotions } from "typings/f7-route";
 import { Page, Navbar, NavTitle, Segmented, Button, NavRight } from "framework7-react";
 import {
@@ -10,23 +10,31 @@ import { Formik, Form, FormikProps } from "formik";
 import InputField from "components/InputField";
 import Icons from "components/Icons";
 import event from "lib/api/framework-event";
+import useExpense from "./utils/useExpense";
+import _ from "lodash";
 
 const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
   const { type, id } = f7route.query;
 
   const formik = useRef<FormikProps<any>>();
-
   const [saving, setSaving] = useState(false);
+
+  const { data } = useExpense(id);
+
+  const [createLivingExpensesMutation] = useCreateLivingExpensesMutation();
+  const [modifyLivingExpensesMutation] = useModifyLivingExpensesMutation();
+
   const payIcons = ["calendar", "书籍", "add", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
   const incomeIcons = ["calendar", "书籍", "add", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
 
   const icons = type === "pay" ? payIcons : incomeIcons;
 
-  const [createLivingExpensesMutation] = useCreateLivingExpensesMutation();
-  const [modifyLivingExpensesMutation] = useModifyLivingExpensesMutation();
-  const { data } = useLivingExpensesByIdQuery({ variables: { id } });
+  const fields = {
+    expenseType: type,
+    expenseName: "",
+    expenseIcon: icons[0]
+  };
 
-  console.log(data);
   const onSaveBefore = () => {
     formik.current.submitForm();
   };
@@ -37,15 +45,35 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
     const variables = { ..._param };
 
     _operation({ variables })
-      .then((val) => {
+      .then(() => {
         event.emit(`update-${type}-classification`);
 
         f7router.back();
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
+        setSaving(false);
       });
   };
+
+  const onSetExpenseIcon = (e: any) => {
+    const icon = (e.target as HTMLElement).getAttribute("data-icon");
+    formik.current.setFieldValue("expenseIcon", icon);
+  };
+
+  const onSubmit = (values: any) => {
+    setSaving(true);
+    onSave(values);
+  };
+
+  useEffect(() => {
+    const detail = data?.livingExpensesById;
+
+    if (detail) {
+      _.keys(fields).forEach((key) => {
+        formik.current.setFieldValue(key, detail[key]);
+      });
+    }
+  }, [data]);
 
   return (
     <Page noToolbar>
@@ -62,21 +90,7 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
         </NavRight>
       </Navbar>
 
-      <Formik
-        innerRef={formik}
-        initialValues={{
-          expenseType: type,
-          expenseName: "",
-          expenseIcon: ""
-        }}
-        onSubmit={(values) => {
-          console.log(values);
-          // same shape as initial values
-          // setSaving(true);
-          // const data = { ...values, expenseId: expenseId.current, approximateAt: date.current };
-          onSave(values);
-        }}
-      >
+      <Formik innerRef={formik} initialValues={fields} onSubmit={onSubmit}>
         {({ errors, touched, values, setFieldValue }) => (
           <Form>
             <div className="px-4 pt-5">
@@ -104,9 +118,8 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
                     className={`${
                       values.expenseIcon === icon ? "shadow-inset-3" : "shadow-3"
                     } rounded-lg flex justify-center items-center py-4`}
-                    onClick={() => {
-                      setFieldValue("expenseIcon", icon);
-                    }}
+                    data-icon={icon}
+                    onClick={onSetExpenseIcon}
                     key={`${icon}-${index}`}
                   >
                     <Icons name={icon} className="svg-icon-28 pointer-events-none" />
@@ -121,4 +134,4 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
   );
 };
 
-export default Modify;
+export default memo(Modify);

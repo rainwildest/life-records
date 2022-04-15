@@ -23,6 +23,7 @@ export const modifyLivingExpense = async (
   id: string,
   options: LivingExpensesSnakeOptions
 ): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  console.log(id, options);
   return modify("living_expenses", id, { ...options });
 };
 

@@ -12,7 +12,7 @@ const onRedirect = (resolve, options: RedirectOptions) => {
 
   const token = store.getters.token;
   const route = token.value ? url : `/login${loginQuery ? `?${loginQuery}` : ""}`;
-  console.log(route);
+
   resolve(route);
 };
 
