@@ -141,7 +141,7 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
 
           return (
             <ListItem
-              className={`plant-item shadow-3 rounded-lg mt-7 plant-${detail.seqId}`}
+              className={`plant-item shadow-3 shadow-active-3 rounded-lg mt-7 plant-${detail.seqId}`}
               divider={false}
               swipeout
               key={detail.id}

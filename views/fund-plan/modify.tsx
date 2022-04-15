@@ -208,20 +208,20 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
             </NavRight>
           </Navbar>
 
-          <div className="mt-7 grid grid-cols-3 gap-4 px-5 pb-10">
+          <div className="pt-5 grid grid-cols-4 gap-4 px-5 pb-10">
             {payDetails?.map((item) => {
               return (
                 <div
-                  className="shadow-3 rounded-lg py-3 px-4 link block my-0"
+                  className="shadow-3 shadow-active-3 rounded-lg py-2 px-4"
                   data-name={item.expenseName}
                   data-id={item.id}
                   onClick={onSelectType}
                   key={item.id}
                 >
                   <div className="flex justify-center pointer-events-none">
-                    <Icons name="moon" className="" />
+                    <Icons name="moon" className="svg-icon-30" />
                   </div>
-                  <div className="text-center mt-2 text-sm pointer-events-none">{item.expenseName}</div>
+                  <div className="text-center mt-2 text-xs pointer-events-none">{item.expenseName}</div>
                 </div>
               );
             })}
