@@ -276,3 +276,7 @@ body {
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
 }
+
+.sheet-picker-date::before{
+  height: 0 !important;
+}
