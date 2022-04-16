@@ -53,7 +53,7 @@ const Home: React.FC = () => {
                 time={relative(detail.purchaseTime)}
                 amounts={thousands(detail.amounts)}
                 remarks={detail.remarks}
-                className="mt-8"
+                className="mt-6"
               />
             ))}
           </div>
