@@ -1,13 +1,9 @@
-import React, { memo, useState, useCallback, useEffect } from "react";
+import React, { memo, useState, useCallback } from "react";
 import { Page, PageContent, Link, Navbar, NavRight, Fab, useStore } from "framework7-react";
 import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
+import { Amounts, Icons, CostCard, NotloggedIn, ThemeIcon } from "components";
 import { relative } from "lib/api/dayjs";
-import Icons from "components/Icons";
-import CostCard from "components/CostCard";
-import NotloggedIn from "components/NotloggedIn";
-import ThemeIcon from "components/ThemeIcon";
 import { thousands } from "lib/api/utils";
-import Amounts from "components/Amounts";
 
 const Home: React.FC = () => {
   const token = useStore("token");

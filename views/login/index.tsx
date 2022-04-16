@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Page, PageContent, Link, Navbar, NavLeft } from "framework7-react";
 import { RouterOpotions } from "typings/f7-route";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
-import Icons from "components/Icons";
+import { SignIn, SignUp } from "./components";
+import { Icons } from "components";
 import store from "lib/store";
 
 const signin: React.FC<RouterOpotions> = ({ f7route, f7router }) => {

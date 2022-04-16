@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, f7 } from "framework7-react";
-import ThirdParty from "./ThirdParty";
-import Field from "./Field";
-import Icons from "components/Icons";
+import ThirdParty from "../ThirdParty";
+import Field from "../Field";
+import { Icons } from "components";
 import request from "lib/api/request";
 
 const Toast = (text = "") => {

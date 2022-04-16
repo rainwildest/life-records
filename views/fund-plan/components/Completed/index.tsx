@@ -1,17 +1,10 @@
 import React from "react";
-import Icons from "components/Icons";
-import {
-  List,
-  ListItem,
-  SwipeoutActions,
-  SwipeoutButton,
-  f7
-} from "framework7-react";
+import { List, ListItem, SwipeoutActions, SwipeoutButton } from "framework7-react";
 import { relative } from "lib/api/dayjs";
 import { thousands } from "lib/api/utils";
-import DetailItem from "./DetailItem";
+import DetailItem from "../DetailItem";
 
-const Overdue: React.FC = () => {
+const Completed: React.FC = () => {
   return (
     <List className="plant-items-container pt-2 px-6 mb-10 mt-6">
       <ListItem
@@ -32,13 +25,12 @@ const Overdue: React.FC = () => {
           <SwipeoutButton
             className="plant-operation link !text-sm !font-bold"
             color="green"
+            confirmText="sfjlksjf"
+            confirmTitle="删除确定"
           >
             完 成
           </SwipeoutButton>
-          <SwipeoutButton
-            className="plant-operation link !text-sm !font-bold"
-            delete
-          >
+          <SwipeoutButton className="plant-operation link !text-sm !font-bold" delete>
             删 除
           </SwipeoutButton>
         </SwipeoutActions>
@@ -47,4 +39,4 @@ const Overdue: React.FC = () => {
   );
 };
 
-export default Overdue;
+export default Completed;

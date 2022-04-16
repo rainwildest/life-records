@@ -1,7 +1,7 @@
 import React, { useEffect, memo } from "react";
 import { Page, Navbar, NavRight } from "framework7-react";
-import Book from "./components/Book";
-import Icons from "components/Icons";
+import { Book } from "./components";
+import { Icons } from "components";
 import event from "lib/api/framework-event";
 import { RouterOpotions } from "typings/f7-route";
 import { useAccountBooksQuery } from "apollo/graphql/model/account-books.graphql";

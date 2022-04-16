@@ -1,9 +1,8 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import { Page, Navbar, List, ListItem, Toggle } from "framework7-react";
-import Icons from "components/Icons";
-import { RouterOpotions } from "typings/f7-route";
+import { Icons } from "components";
 
-const Setting: React.FC<RouterOpotions> = ({ f7router }) => {
+const Setting: React.FC = () => {
   const hasVibrate = "vibrate" in navigator;
   const [toggle, setToggle] = useState(true);
 

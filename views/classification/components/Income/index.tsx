@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, memo } from "react";
+import React, { useEffect, memo } from "react";
 import { RouterOpotions } from "typings/f7-route";
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
 import Icons from "components/Icons";

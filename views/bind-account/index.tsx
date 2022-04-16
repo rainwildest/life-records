@@ -1,6 +1,7 @@
-import React, { useState, memo } from "react";
+import React from "react";
 import { Page, Navbar, List, ListItem } from "framework7-react";
-import Icons from "components/Icons";
+import { Icons } from "components";
+
 const BindAccount: React.FC = () => {
   return (
     <Page noToolbar>

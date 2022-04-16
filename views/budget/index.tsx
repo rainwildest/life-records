@@ -1,6 +1,6 @@
 import React from "react";
 import { Page, Navbar, BlockTitle } from "framework7-react";
-import Icons from "components/Icons";
+import { Icons } from "components";
 
 const Budget: React.FC = () => {
   return (

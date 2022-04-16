@@ -2,11 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { Page, Navbar, NavTitle, NavRight, Segmented, Button, Tabs, Tab, PageContent, f7, Link } from "framework7-react";
 import { format, toISOString } from "lib/api/dayjs";
 import { useCreateCostDetailMutation } from "apollo/graphql/model/cost-details.graphql";
-import Pay from "./components/Pay";
-import Income from "./components/Income";
-import Calc from "components/Calc";
-import Icons from "components/Icons";
-import CalendarPopup from "components/CalendarPopup";
+import { Pay, Income } from "./components";
+import { Calc, Icons, CalendarPopup } from "components";
 import event from "lib/api/framework-event";
 
 const Bookkeeping: React.FC = () => {

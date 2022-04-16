@@ -10,19 +10,12 @@ type SelectOptions = {
   onComfire?: (value: any) => void;
 };
 
-const Select: React.FC<SelectOptions> = ({
-  values = [],
-  cols,
-  className = "",
-  format,
-  onComfire
-}) => {
+const Select: React.FC<SelectOptions> = ({ values = [], cols, className = "", format, onComfire }) => {
   const [picker, setPicker] = useState(null);
   const original = useRef(values);
   const [display, setDisplay] = useState("");
 
-  const defaultClassName =
-    "shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center";
+  const defaultClassName = "shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center";
 
   const formatHandle = (values, cols) => {
     let _cols = [];

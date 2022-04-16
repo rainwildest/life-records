@@ -1,9 +1,9 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo } from "react";
 import { Page, PageContent, Link, useStore } from "framework7-react";
+import { Icons } from "components";
+import { MineDetails } from "./components";
 import request from "lib/api/request";
 import store from "lib/store";
-import Icons from "components/Icons";
-import MineDetails from "./components/MineDetails";
 
 const Mine: React.FC = () => {
   const token = useStore("token");

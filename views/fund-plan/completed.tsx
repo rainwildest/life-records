@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Page,
-  PageContent,
-  Navbar,
-  NavRight,
-  List,
-  ListItem,
-  SwipeoutActions,
-  SwipeoutButton,
-  BlockTitle,
-  useStore,
-  f7
-} from "framework7-react";
+import { Page, PageContent, Navbar, List, ListItem, SwipeoutActions, SwipeoutButton, BlockTitle, f7 } from "framework7-react";
 import { format } from "lib/api/dayjs";
 import { thousands, timeStamp, toastTip } from "lib/api/utils";
-import DetailItem from "./components/DetailItem";
-import Amounts from "components/Amounts";
-import Select from "./components/Select";
+import { DetailItem, Select } from "./components";
+import { Amounts } from "components";
 import { useFundPlanQuery, useRemoveFundPlanMutation } from "apollo/graphql/model/fund-plan.graphql";
 import { useStatisticalFundPlanQuery } from "apollo/graphql/model/statistics.graphql";
 import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";

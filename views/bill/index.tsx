@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Page, PageContent, Button, Navbar, NavTitle, NavRight } from "framework7-react";
-import CostCard from "components/CostCard";
+import { CostCard, Amounts } from "components";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { RouterOpotions } from "typings/f7-route";
 import { thousands, isSameDay } from "lib/api/utils";
 import { format, relative } from "lib/api/dayjs";
-import Amounts from "components/Amounts";
 import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
 
 const Bill: React.FC<RouterOpotions> = () => {

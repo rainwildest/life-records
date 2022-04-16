@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import Icons from "components/Icons";
-import { Page, Toolbar, Views, View, Link, useStore } from "framework7-react";
+import React from "react";
+import { Icons } from "components";
+import { Page, Toolbar, Views, View, Link } from "framework7-react";
 import store from "lib/store";
 
 type DashboardOptions = {

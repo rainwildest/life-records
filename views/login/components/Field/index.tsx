@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import Icons from "components/Icons";
+import { Icons } from "components";
 
 type FieldOptions = {
   value?: any;
@@ -12,6 +12,7 @@ type FieldOptions = {
   onInput?: (value: string) => void;
   onVerify?: (value: boolean) => void;
 };
+
 const Field: React.FC<FieldOptions> = ({ value, label, clear, required, type = "text", placeholder, onInput }) => {
   const [verify, setVerify] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");

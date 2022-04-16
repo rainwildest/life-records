@@ -1,17 +1,10 @@
 import React from "react";
-import Icons from "components/Icons";
-import {
-  List,
-  ListItem,
-  SwipeoutActions,
-  SwipeoutButton,
-  f7
-} from "framework7-react";
+import { List, ListItem, SwipeoutActions, SwipeoutButton } from "framework7-react";
 import { relative } from "lib/api/dayjs";
 import { thousands } from "lib/api/utils";
-import DetailItem from "./DetailItem";
+import DetailItem from "../DetailItem";
 
-const Completed: React.FC = () => {
+const Overdue: React.FC = () => {
   return (
     <List className="plant-items-container pt-2 px-6 mb-10 mt-6">
       <ListItem
@@ -29,18 +22,10 @@ const Completed: React.FC = () => {
           amounts={thousands(10000)}
         />
         <SwipeoutActions className="flex items-center" right>
-          <SwipeoutButton
-            className="plant-operation link !text-sm !font-bold"
-            color="green"
-            confirmText="sfjlksjf"
-            confirmTitle="删除确定"
-          >
+          <SwipeoutButton className="plant-operation link !text-sm !font-bold" color="green">
             完 成
           </SwipeoutButton>
-          <SwipeoutButton
-            className="plant-operation link !text-sm !font-bold"
-            delete
-          >
+          <SwipeoutButton className="plant-operation link !text-sm !font-bold" delete>
             删 除
           </SwipeoutButton>
         </SwipeoutActions>
@@ -49,4 +34,4 @@ const Completed: React.FC = () => {
   );
 };
 
-export default Completed;
+export default Overdue;

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Button } from "framework7-react";
-import Icons from "components/Icons";
+import { Icons } from "components";
 
 const ThirdParty: React.FC = () => {
   return (

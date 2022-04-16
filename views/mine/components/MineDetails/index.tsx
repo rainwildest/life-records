@@ -3,7 +3,7 @@ import { BlockHeader, useStore } from "framework7-react";
 import { useUserQuery } from "apollo/graphql/model/user.graphql";
 import _ from "lodash";
 import Icons from "components/Icons";
-import { statisticsHandle } from "../tools";
+import { statisticsHandle } from "../../utils";
 
 const MineDetails: React.FC = () => {
   const token = useStore("token");

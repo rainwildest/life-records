@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Page, Navbar, NavRight, Button } from "framework7-react";
-import Icons from "components/Icons";
-import event from "lib/api/framework-event";
+import { Icons } from "components";
 import { useCreateAccountBooksMutation, useModifyAccountBooksMutation } from "apollo/graphql/model/account-books.graphql";
 import { RouterOpotions } from "typings/f7-route";
+import event from "lib/api/framework-event";
 import { toastTip } from "lib/api/utils";
+
 /**
  *
  * @param param0

@@ -1,9 +1,6 @@
 import { EChartsOption } from "echarts-for-react";
 
-export const echartsConfig = (
-  data: any[],
-  name = "支出分析"
-): EChartsOption => {
+export const echartsConfig = (data: any[], name = "支出分析"): EChartsOption => {
   return {
     title: {
       // text: 'Referer of a Website',
@@ -28,14 +25,10 @@ export const echartsConfig = (
           posX = 5;
         } else {
           //左边放的下
-          posX =
-            pointX > viewWidth - boxWidth ? pointX - boxWidth + 20 : pointX;
+          posX = pointX > viewWidth - boxWidth ? pointX - boxWidth + 20 : pointX;
         }
 
-        posY =
-          pointY < boxHeight
-            ? 5 /*上边放不开*/
-            : pointY - boxHeight - 10 /*上边放得下*/;
+        posY = pointY < boxHeight ? 5 /*上边放不开*/ : pointY - boxHeight - 10 /*上边放得下*/;
 
         return [posX, posY];
       }

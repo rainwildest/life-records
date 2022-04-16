@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { List, ListItem, Toggle } from "framework7-react";
 import { useExpenditureQuery } from "apollo/graphql/model/statistics.graphql";
 import Echarts from "components/Echarts";
-import { echartsConfig, onSelectDate } from "../../tools";
+import { echartsConfig, onSelectDate } from "../../utils";
 import { percentage } from "lib/api/utils";
 import PercentageItem from "../PercentageItem";
 

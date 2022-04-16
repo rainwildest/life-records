@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, f7 } from "framework7-react";
 import { RouterOpotions } from "typings/f7-route";
-import Amounts from "components/Amounts";
 import { thousands, isSameDay } from "lib/api/utils";
 import { format, relative } from "lib/api/dayjs";
-import CostCard from "components/CostCard";
-import Icons from "components/Icons";
 import event from "lib/api/framework-event";
+import { Amounts, Icons, CostCard } from "components";
 import { useCostDetailsQuery } from "apollo/graphql/model/cost-details.graphql";
 import { useStatisticalBooksQuery } from "apollo/graphql/model/statistics.graphql";
 import { useRemoveAccountBooksMutation } from "apollo/graphql/model/account-books.graphql";

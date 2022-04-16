@@ -1,9 +1,7 @@
 import React from "react";
 import { RouterOpotions } from "typings/f7-route";
 import { Page, PageContent, Navbar, NavTitle, Segmented, Button, Tabs, Tab } from "framework7-react";
-import Icons from "components/Icons";
-import Income from "./components/Income";
-import Pay from "./components/Pay";
+import { Income, Pay } from "./components";
 
 const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
   const onNavigate = (type: string, event?: any) => {

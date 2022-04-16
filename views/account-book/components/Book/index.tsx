@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import Icons from "components/Icons";
+import { Icons } from "components";
 import { F7Router } from "typings/f7-route";
 
 type BookOptions = {

@@ -1,5 +1,6 @@
 import React from "react";
 import { Page, Block, Navbar, BlockTitle } from "framework7-react";
+
 const About: React.FC = () => {
   return (
     <Page noToolbar>
@@ -14,9 +15,7 @@ const About: React.FC = () => {
         </p>
       </Block>
 
-      <BlockTitle className="text-center text-gray-500">
-        版本号 V1.0.0
-      </BlockTitle>
+      <BlockTitle className="text-center text-gray-500">版本号 v1.0.0</BlockTitle>
     </Page>
   );
 };
