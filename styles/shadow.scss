@@ -56,3 +56,10 @@ $shadow-negative-3: -3px -3px 6px;
   box-shadow: inset $shadow-integer-3 var(--shadow-bg-white-before-color),
     inset $shadow-negative-3 var(--shadow-after-color);
 }
+
+.picker-center-highlight {
+  background-color: transparent;
+  
+  box-shadow: $shadow-integer-2 var(--shadow-before-color),
+    $shadow-negative-2 var(--shadow-after-color);
+}
