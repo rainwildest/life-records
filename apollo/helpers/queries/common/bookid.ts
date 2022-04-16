@@ -8,6 +8,7 @@ export default async (_parent: unknown): Promise<any> => {
   const snakeValue = _parent[snakeField];
   const value = snakeValue ? snakeValue : _parent[originField];
 
-  if (!value) null;
+  if (!value) return null;
+
   return getAccountBooksById(value);
 };

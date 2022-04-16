@@ -7,7 +7,7 @@ import { RouterOpotions } from "typings/f7-route";
 import { useAccountBooksQuery } from "apollo/graphql/model/account-books.graphql";
 
 const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
-  const { data, refetch } = useAccountBooksQuery();
+  const { data, refetch } = useAccountBooksQuery({ fetchPolicy: "network-only" });
 
   const books = data?.accountBooks || [];
 

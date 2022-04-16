@@ -12,13 +12,42 @@ type CostCardOptions = {
 
 const CostCard: React.FC<CostCardOptions> = ({ type, time, typeName, amounts, remarks, className = "" }) => {
   const color = type === "pay" ? "text-green-500" : "text-red-700";
-  const defaultClassName = "shadow-3 rounded-lg py-3 px-4 relative overflow-hidden w-full flex items-center";
+  const defaultClassName = "shadow-3 rounded-lg py-3 px-4 relative overflow-hidden w-full";
 
   return (
     <div className={mergeClassName(className, defaultClassName)}>
-      <Icons name="moon" className="svg-icon-30 pr-3" />
-      <div className="cost-item-container">
-        <div className="flex justify-between">
+      <div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Icons name="moon" className="svg-icon-25 pr-1" />
+            <text className="text-sm">{typeName}</text>
+          </div>
+
+          <div>
+            <text className="text-xs text-gray-500">{time}</text>
+          </div>
+        </div>
+
+        <div>
+          <div className="text-center pt-3 text-gray-700 text-xs">{type === "pay" ? "支出费用" : "收入金额"}</div>
+          <div className={`${color} mt-2 text-2xl text-center font-bold flex-shrink-0`}>
+            {type === "pay" ? "-" : "+"}￥{amounts}
+          </div>
+        </div>
+
+        <div className="pt-4">
+          {/* <div className="flex pb-2">
+            <div className="text-sm text-gray-700 font-semibold pr-3 flex-shrink-0">账簿</div>
+            <div className="text-sm text-gray-600">奥特曼</div>
+          </div> */}
+          <div className="flex">
+            <div className="text-sm text-gray-700 font-semibold pr-3 flex-shrink-0">备注</div>
+            <div className={`${remarks ? "text-gray-600" : "text-gray-300"} text-sm break-all`}>
+              {remarks ? remarks : "暂无备注"}
+            </div>
+          </div>
+        </div>
+        {/* <div className="flex justify-between">
           <div className="text-gray-500 text-xs">{typeName}</div>
           <div className="text-gray-500 text-xs font-medium">{time}</div>
         </div>
@@ -29,7 +58,7 @@ const CostCard: React.FC<CostCardOptions> = ({ type, time, typeName, amounts, re
           <div className={`${color} mt-2 text-sm font-bold  flex-shrink-0`}>
             {type === "pay" ? "-" : "+"}￥{amounts}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

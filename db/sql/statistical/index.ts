@@ -82,7 +82,12 @@ export const statisticalGeneralization = async (userId: string, year: string): P
  * @param {string} format 日期格式
  * @returns Promise
  */
-export const statisticalExpenditure = async (args: { userId: string; date?: string; type?: "pay" | "income"; format?: string }): Promise<any> => {
+export const statisticalExpenditure = async (args: {
+  userId: string;
+  date?: string;
+  type?: "pay" | "income";
+  format?: string;
+}): Promise<any> => {
   const { userId, date, type = "pay", format = "yyyy" } = args;
 
   const orm = await knex();
@@ -112,7 +117,11 @@ export const statisticalExpenditure = async (args: { userId: string; date?: stri
  * @param {string} format 日期格式
  * @returns Promise
  */
-export const statisticalUserConsumption = async (args: { userId: string; type?: "pay" | "income"; format?: string }): Promise<any> => {
+export const statisticalUserConsumption = async (args: {
+  userId: string;
+  type?: "pay" | "income";
+  format?: string;
+}): Promise<any> => {
   const { userId, type = "pay", format = "yyyy" } = args;
 
   const orm = await knex();

@@ -8,7 +8,9 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createAccountBooks = async (options: AccountBooksSnakeOptions): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createAccountBooks = async (
+  options: AccountBooksSnakeOptions
+): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return create("account_books", { ...options });
 };
 
@@ -19,7 +21,10 @@ export const createAccountBooks = async (options: AccountBooksSnakeOptions): Pro
  * @param options
  * @returns Promise
  */
-export const modifyAccountBooks = async (id: string, options: AccountBooksSnakeOptions): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const modifyAccountBooks = async (
+  id: string,
+  options: AccountBooksSnakeOptions
+): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   return modify("account_books", id, { ...options });
 };
 
@@ -39,7 +44,9 @@ export const removeAccountBooks = async (id: string): Promise<AccountBooksSnakeO
  * @param {string} userId
  * @returns Promise
  */
-export const getAccountBooksByUserId = async (userId: string): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getAccountBooksByUserId = async (
+  userId: string
+): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
   const orm = await MikrotOrm();
 
   return orm
