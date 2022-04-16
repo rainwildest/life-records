@@ -38,7 +38,7 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
         </NavRight>
       </Navbar>
 
-      <div className="mt-7 px-4">
+      <div className="pt-7 px-4 grid grid-cols-2 gap-3">
         {books.map((item) => (
           <Book id={item.id} name={item.name} f7router={f7router} key={item.id} />
         ))}

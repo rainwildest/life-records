@@ -134,13 +134,13 @@ const SheetModalPicker: React.FC<SheetProps> = ({
     >
       <div className="flex justify-between px-4 pb-3 pt-3 border-b border-solid border-gray-50 dark:border-zinc-700 mb-5">
         <div
-          className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-5 rounded-lg text-blue-400"
+          className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-6 rounded-lg text-blue-500"
           onClick={onConfirmPicker}
         >
           确 认
         </div>
         <div
-          className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-5 rounded-lg text-gray-700 dark:text-white"
+          className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-6 rounded-lg text-gray-700 dark:text-white"
           onClick={onCloseSheet}
         >
           取 消

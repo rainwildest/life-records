@@ -30,11 +30,11 @@ const BookSelect: React.FC<RouterOpotions> = ({ f7router }) => {
         </NavRight>
       </Navbar>
 
-      <div className="px-4 pt-5">
+      <div className="px-4 pt-7 grid grid-cols-2 gap-3">
         {books.map((item) => {
           return (
             <div
-              className="shadow-3  rounded-lg flex py-3 px-2 mt-5 justify-start items-center link"
+              className="shadow-3 rounded-lg flex py-3 px-2 justify-start items-center shadow-active-3"
               data-id={item.id}
               data-name={item.name}
               onClick={onSelect}
@@ -42,8 +42,8 @@ const BookSelect: React.FC<RouterOpotions> = ({ f7router }) => {
             >
               <Icons name="ancient-books" className="scale-80 pointer-events-none" />
               <div className="overflow-hidden pointer-events-none">
-                <div className="text-gray-500 text-xs">账簿名称</div>
-                <div className="mt-1 break-all font-semibold text-gray-900 truncate tracking-widest">{item.name}</div>
+                <div className="text-gray-400 text-xs">账簿名称</div>
+                <div className="mt-1 break-all text-sm font-semibold text-gray-900 truncate tracking-widest">{item.name}</div>
               </div>
             </div>
           );
