@@ -1,27 +1,19 @@
-import React, { useEffect, useState, useCallback, Fragment, memo } from "react";
-import {
-  Page,
-  Navbar,
-  Subnavbar,
-  Segmented,
-  Tabs,
-  Tab,
-  Button,
-  Link,
-  useStore
-} from "framework7-react";
+import React, { useEffect, useState, useRef, useCallback, memo } from "react";
+import { Page, Navbar, Subnavbar, Segmented, Tabs, Tab, Button, Link, useStore } from "framework7-react";
 import store from "lib/store";
 import Generalization from "./components/Generalization";
 import Expenditure from "./components/Expenditure";
 import Income from "./components/Income";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
 import NotloggedIn from "components/NotloggedIn";
-
+import SheetModalPicker from "./SheetModalPicker";
 import { RouterOpotions } from "typings/f7-route";
+
 const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
   const token = useStore("token");
+  const picker = useRef(null);
+  const [sheetOpened, setSheetOpened] = useState(false);
   const [date, setDate] = useState("");
-  const [picker, setPicker] = useState(null);
 
   /* 强制刷新 */
   const [, updateState] = useState<any>();
@@ -29,22 +21,24 @@ const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
 
   useEffect(() => {
     if (!window) return;
-    const picker = DatePicker({ hasFullYear: false }, (e) => {
+    const _picker = DatePicker({ hasFullYear: false }, (e) => {
       setDate(e);
     });
-    setDate(formatDatePicker((picker?.value as string[]) || []));
-    setPicker(picker);
+    setDate(formatDatePicker((_picker?.value as string[]) || []));
+
+    picker.current = _picker;
   }, []);
 
-  const _picker = () => picker.open();
-  const openPicker = token && _picker;
+  const openPicker = token && (() => picker.current.open());
 
   return (
     <Page pageContent={false}>
       <Navbar noHairline>
         <div
-          className="w-full h-full absolute left-0 top-0 flex justify-center items-center font-bold"
-          onClick={openPicker}
+          className=" w-full h-full absolute left-0 top-0 flex justify-center items-center font-bold"
+          onClick={() => {
+            setSheetOpened(true);
+          }}
         >
           {date}
         </div>
@@ -72,6 +66,16 @@ const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
       </Tabs>
 
       {!token && <NotloggedIn className="h-full" />}
+      <SheetModalPicker
+        sheetOpened={sheetOpened}
+        onCloseSheet={() => {
+          setSheetOpened(false);
+        }}
+        onConfirm={(e) => {
+          console.log(e);
+          setDate(e);
+        }}
+      />
     </Page>
   );
 };
