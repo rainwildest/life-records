@@ -2,7 +2,7 @@ import React, { useState, memo } from "react";
 import { useStore } from "framework7-react";
 import Icons from "components/Icons";
 import store from "lib/store";
-import frameworkEvent from "lib/api/framework-event";
+import event from "lib/api/framework-event";
 
 type ThemeIconOptions = {
   dark?: boolean;
@@ -36,7 +36,7 @@ const ThemeIcon: React.FC<ThemeIconOptions> = () => {
 
     setTimeout(() => {
       // store.dispatch("setDark", !isDark);
-      frameworkEvent.emit("theme-dark", !isDark);
+      event.emit("theme-dark", !isDark);
     }, 1000 * 0.5);
 
     setTimer(_timer);
@@ -44,10 +44,7 @@ const ThemeIcon: React.FC<ThemeIconOptions> = () => {
   };
 
   return (
-    <div
-      className={`${themeContainerClass}theme-container grid grid-cols-1 pl-4`}
-      onClick={onThemeChange}
-    >
+    <div className={`${themeContainerClass}theme-container grid grid-cols-1 pl-4`} onClick={onThemeChange}>
       <Icons name="moon" className={`${themeMoon}`} />
       <Icons name="sunlight" className={`${themeSunlight}`} />
     </div>
