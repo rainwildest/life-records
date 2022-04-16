@@ -84,11 +84,17 @@ const SheetModalPicker: React.FC<SheetProps> = ({ sheetOpened = false, onCloseSh
       opened={sheetOpened}
       onSheetClosed={onCloseSheet}
     >
-      <div className="flex justify-between px-4 pb-3 pt-3 border-b border-solid border-gray-50 mb-5">
-        <div className="h-8 flex items-center text-sm px-5 link rounded-lg bg-blue-400 text-white" onClick={onConfirmPicker}>
+      <div className="flex justify-between px-4 pb-3 pt-3 border-b border-solid border-gray-50 dark:border-zinc-700 mb-5">
+        <div
+          className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-5 rounded-lg text-blue-400"
+          onClick={onConfirmPicker}
+        >
           确 认
         </div>
-        <div className="h-8 flex items-center text-sm px-5 link rounded-lg bg-gray-50 text-gray-700" onClick={onCloseSheet}>
+        <div
+          className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-5 rounded-lg text-gray-700 dark:text-white"
+          onClick={onCloseSheet}
+        >
           取 消
         </div>
       </div>
