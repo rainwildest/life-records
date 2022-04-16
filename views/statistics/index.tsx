@@ -1,35 +1,27 @@
-import React, { useEffect, useState, useRef, useCallback, memo } from "react";
-import { Page, Navbar, Subnavbar, Segmented, Tabs, Tab, Button, Link, useStore } from "framework7-react";
-import store from "lib/store";
-import Generalization from "./components/Generalization";
-import Expenditure from "./components/Expenditure";
-import Income from "./components/Income";
-import DatePicker, { formatDatePicker } from "components/DatePicker";
-import NotloggedIn from "components/NotloggedIn";
-import SheetModalPicker from "./SheetModalPicker";
-import { RouterOpotions } from "typings/f7-route";
+import React, { useState, useCallback, memo } from "react";
+import { Page, Navbar, Subnavbar, Segmented, Tabs, Tab, Button, useStore } from "framework7-react";
+// import store from "lib/store";
+import { Income, Generalization, Expenditure } from "./components";
+import { SheetDatePicker, NotloggedIn } from "components";
+import { getCurrentDate } from "lib/api/dayjs";
 
-const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
+const Statistics: React.FC = () => {
   const token = useStore("token");
-  const picker = useRef(null);
   const [sheetOpened, setSheetOpened] = useState(false);
-  const [date, setDate] = useState("");
+
+  const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
 
   /* 强制刷新 */
   const [, updateState] = useState<any>();
   const forceUpdate = useCallback(() => updateState({}), []);
 
-  useEffect(() => {
-    if (!window) return;
-    const _picker = DatePicker({ hasFullYear: false }, (e) => {
-      setDate(e);
-    });
-    setDate(formatDatePicker((_picker?.value as string[]) || []));
+  const onCloseSheet = () => {
+    setSheetOpened(false);
+  };
 
-    picker.current = _picker;
-  }, []);
-
-  const openPicker = token && (() => picker.current.open());
+  const onConfirmPicker = (e: string) => {
+    setDate(e);
+  };
 
   return (
     <Page pageContent={false}>
@@ -66,15 +58,14 @@ const Statistics: React.FC<RouterOpotions> = ({ f7router }) => {
       </Tabs>
 
       {!token && <NotloggedIn className="h-full" />}
-      <SheetModalPicker
+
+      <SheetDatePicker
+        date={date}
+        isCurrnetYear={true}
+        isCurrentMonth={true}
         sheetOpened={sheetOpened}
-        onCloseSheet={() => {
-          setSheetOpened(false);
-        }}
-        onConfirm={(e) => {
-          console.log(e);
-          setDate(e);
-        }}
+        onCloseSheet={onCloseSheet}
+        onConfirm={onConfirmPicker}
       />
     </Page>
   );

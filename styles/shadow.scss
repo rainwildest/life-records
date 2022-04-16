@@ -58,8 +58,8 @@ $shadow-negative-3: -3px -3px 6px;
 }
 
 .picker-center-highlight {
-  background-color: transparent;
-  
-  box-shadow: $shadow-integer-2 var(--shadow-before-color),
-    $shadow-negative-2 var(--shadow-after-color);
+  // background-color: transparent;
+
+  // box-shadow: $shadow-integer-2 var(--shadow-before-color),
+  //   $shadow-negative-2 var(--shadow-after-color);
 }

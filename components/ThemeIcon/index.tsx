@@ -1,7 +1,6 @@
 import React, { useState, memo } from "react";
 import { useStore } from "framework7-react";
 import Icons from "components/Icons";
-import store from "lib/store";
 import event from "lib/api/framework-event";
 
 type ThemeIconOptions = {

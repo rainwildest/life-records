@@ -26,4 +26,12 @@ export const format = (time: string | number | Date | dayjs.Dayjs, format = "YYY
  * @returns string
  */
 export const toISOString = (time: string | number | Date | dayjs.Dayjs): string => dayjs(time).toISOString();
+
+/**
+ * @description 获取当前日期
+ * @param format 输出的格式
+ * @returns string
+ */
+export const getCurrentDate = (format = "YYYY-MM-DD"): string => dayjs().format(format);
+
 export default dayjs;

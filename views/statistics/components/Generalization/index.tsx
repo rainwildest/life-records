@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { Page } from "framework7-react";
 import { useGeneralizationQuery } from "apollo/graphql/model/statistics.graphql";
 import Echarts from "components/Echarts";
 
@@ -39,20 +38,7 @@ const Generalization: React.FC<GeneralizationOptions> = ({ year }) => {
       containLabel: true
     },
     xAxis: {
-      data: [
-        "一月",
-        "二月",
-        "三月",
-        "四月",
-        "五月",
-        "六月",
-        "七月",
-        "八月",
-        "九月",
-        "十月",
-        "十一月",
-        "十二月"
-      ]
+      data: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
     },
     yAxis: {
       type: "value",
