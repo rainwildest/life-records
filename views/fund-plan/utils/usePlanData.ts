@@ -1,4 +1,4 @@
-import { useFundPlanByIdQuery, FundPlanByIdQuery } from "apollo/graphql/model/fund-plan.graphql";
+import { useFundPlanByIdQuery, FundPlanByIdQuery } from "graphql/model/fund-plan.graphql";
 
 const usePlanData = (id: string): { data: FundPlanByIdQuery; refetch: any } => {
   if (!id) return { data: null, refetch: null };

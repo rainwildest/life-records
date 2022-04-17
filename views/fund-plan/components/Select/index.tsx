@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { f7 } from "framework7-react";
-import { mergeClassName } from "lib/api/utils";
+import { mergeClassName } from "lib/apis/utils";
 
 type SelectOptions = {
   cols: any;

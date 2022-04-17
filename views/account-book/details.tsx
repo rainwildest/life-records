@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, f7 } from "framework7-react";
 import { RouterOpotions } from "typings/f7-route";
-import { thousands, isSameDay } from "lib/api/utils";
-import { format, relative } from "lib/api/dayjs";
-import event from "lib/api/framework-event";
+import { thousands, isSameDay } from "lib/apis/utils";
+import { format, relative } from "lib/apis/dayjs";
+import event from "lib/apis/framework-event";
 import { Amounts, Icons, CostCard } from "components";
-import { useCostDetailsQuery } from "apollo/graphql/model/cost-details.graphql";
-import { useStatisticalBooksQuery } from "apollo/graphql/model/statistics.graphql";
-import { useRemoveAccountBooksMutation } from "apollo/graphql/model/account-books.graphql";
+import { useCostDetailsQuery } from "graphql/model/cost-details.graphql";
+import { useStatisticalBooksQuery } from "graphql/model/statistics.graphql";
+import { useRemoveAccountBooksMutation } from "graphql/model/account-books.graphql";
 
 const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
   const { id, name } = f7route.query;

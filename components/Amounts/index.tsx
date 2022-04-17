@@ -1,6 +1,6 @@
 import React from "react";
 import Icons from "components/Icons";
-import { mergeClassName } from "lib/api/utils";
+import { mergeClassName } from "lib/apis/utils";
 
 type AmountsOptions = {
   income?: string;

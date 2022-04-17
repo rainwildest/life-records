@@ -1,8 +1,8 @@
 import React, { useEffect, memo } from "react";
 import { RouterOpotions } from "typings/f7-route";
-import { useLivingExpensesQuery } from "apollo/graphql/model/living-expenses.graphql";
+import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import Icons from "components/Icons";
-import event from "lib/api/framework-event";
+import event from "lib/apis/framework-event";
 
 type PayOptons = { onNavigate?: (event?: any) => void };
 const Pay: React.FC<RouterOpotions & PayOptons> = ({ f7router, onNavigate }) => {

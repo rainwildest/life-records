@@ -1,6 +1,6 @@
 import React, { memo } from "react";
-import { useGeneralizationQuery } from "apollo/graphql/model/statistics.graphql";
-import Echarts from "components/Echarts";
+import { useGeneralizationQuery } from "graphql/model/statistics.graphql";
+import { Echarts } from "components";
 
 type GeneralizationOptions = { year: string };
 const Generalization: React.FC<GeneralizationOptions> = ({ year }) => {

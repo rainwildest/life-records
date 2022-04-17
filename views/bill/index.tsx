@@ -3,9 +3,9 @@ import { Page, PageContent, Button, Navbar, NavTitle, NavRight } from "framework
 import { CostCard, Amounts } from "components";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { RouterOpotions } from "typings/f7-route";
-import { thousands, isSameDay } from "lib/api/utils";
-import { format, relative } from "lib/api/dayjs";
-import { useDetailsQuery } from "apollo/graphql/model/statistics.graphql";
+import { thousands, isSameDay } from "lib/apis/utils";
+import { format, relative } from "lib/apis/dayjs";
+import { useDetailsQuery } from "graphql/model/statistics.graphql";
 
 const Bill: React.FC<RouterOpotions> = () => {
   const [picker, setPicker] = useState(null);
@@ -13,7 +13,7 @@ const Bill: React.FC<RouterOpotions> = () => {
   const openPicker = () => picker.open();
 
   const { loading, data, refetch } = useDetailsQuery({
-    variables: { date }
+    // variables: { date }
   });
 
   useEffect(() => {
@@ -26,6 +26,9 @@ const Bill: React.FC<RouterOpotions> = () => {
   }, []);
 
   const statistics = data?.statisticalDetails || {};
+  const test = () => {
+    // updateQuery();
+  };
   console.log(statistics);
   return (
     <Page noToolbar pageContent={false}>
@@ -41,7 +44,7 @@ const Bill: React.FC<RouterOpotions> = () => {
         ptr
         onPtrRefresh={(done) => {
           setTimeout(() => {
-            refetch({ date });
+            refetch();
             done();
           }, 2000);
         }}

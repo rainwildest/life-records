@@ -1,6 +1,7 @@
 import React from "react";
 import Icons from "components/Icons";
-import { mergeClassName } from "lib/api/utils";
+import { mergeClassName } from "lib/apis/utils";
+
 type CostCardOptions = {
   type: string;
   time?: string;
@@ -20,18 +21,18 @@ const CostCard: React.FC<CostCardOptions> = ({ type, time, typeName, amounts, re
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Icons name="moon" className="svg-icon-25 pr-1" />
-            <text className="text-sm">{typeName}</text>
+            <p className="text-sm">{typeName}</p>
           </div>
 
-          <div>
-            <text className="text-xs text-gray-500">{time}</text>
-          </div>
+          <p className="text-xs text-gray-500">{time}</p>
         </div>
 
         <div>
           <div className="text-center pt-3 text-gray-700 text-xs">{type === "pay" ? "支出费用" : "收入金额"}</div>
           <div className={`${color} mt-2 text-2xl text-center font-bold flex-shrink-0`}>
-            {type === "pay" ? "-" : "+"}￥{amounts}
+            {type === "pay" ? "-" : "+"}
+            <span className="text-lg">￥</span>
+            <span>{amounts}</span>
           </div>
         </div>
 

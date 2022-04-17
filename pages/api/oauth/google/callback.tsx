@@ -1,12 +1,12 @@
 import passport from "passport";
 import { NextApiRequest, NextApiResponse } from "next";
-import initPassport from "lib/api/initPassport";
-import { googleInitAuthentication } from "lib/api/initAuthentication";
-import middleware from "lib/api/middleware";
-import runMiddleware from "lib/api/runMiddleware";
-import trustProxy from "lib/api/trustProxy";
-import comparison from "lib/api/code-comparison";
-import { setLoginSession } from "lib/api/auth";
+import initPassport from "lib/apis/initPassport";
+import { googleInitAuthentication } from "lib/apis/initAuthentication";
+import middleware from "lib/apis/middleware";
+import runMiddleware from "lib/apis/runMiddleware";
+import trustProxy from "lib/apis/trustProxy";
+import comparison from "lib/apis/code-comparison";
+import { setLoginSession } from "lib/apis/auth";
 
 initPassport();
 googleInitAuthentication();
@@ -38,9 +38,7 @@ const main = (req, res, next) => {
       await setLoginSession(res, session);
 
       req.logIn(user, function (err) {
-        const query = err
-          ? `/?to=/login&code=4000&error${err}`
-          : `/?to=null&code=2000&error=null`;
+        const query = err ? `/?to=/login&code=4000&error${err}` : `/?to=null&code=2000&error=null`;
 
         return res.redirect(query);
       });
@@ -48,10 +46,7 @@ const main = (req, res, next) => {
   )(req, res, next);
 };
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   await runMiddleware(req, res, trustProxy);
   await middleware(req, res);
   await runMiddleware(req, res, main);

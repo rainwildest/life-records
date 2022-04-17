@@ -1,7 +1,7 @@
 import React, { useState, memo } from "react";
 import { useStore } from "framework7-react";
 import Icons from "components/Icons";
-import event from "lib/api/framework-event";
+import event from "lib/apis/framework-event";
 
 type ThemeIconOptions = {
   dark?: boolean;

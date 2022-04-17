@@ -3,7 +3,7 @@ import { schema } from "apollo/schema";
 import createLoaders from "apollo/loaders";
 import { snakeCase } from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getLoginSession } from "lib/api/auth";
+import { getLoginSession } from "lib/apis/auth";
 // const apolloServer = new ApolloServer({
 //   fieldResolver: (source, args, contextValue, info) =>
 //     typeof source[snakeCase(info.fieldName)] !== "undefined"

@@ -1,7 +1,7 @@
 import React, { useRef, useState, Fragment } from "react";
 import { f7ready } from "framework7-react";
 import Icons from "../Icons";
-import { thousands } from "lib/api/utils";
+import { thousands } from "lib/apis/utils";
 import { lastOperation, correctOperation, operationResolve, getOperation, verifyNumber, operationReplace } from "./tools";
 
 type CalcOption = {
@@ -163,6 +163,7 @@ const Calc: React.FC<CalcOption> = ({ date, bookName, onClickCalendar, onConfirm
   };
 
   const onClear = () => {
+    setRemarks("");
     setDisplay("0");
   };
 

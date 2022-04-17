@@ -2,8 +2,8 @@ import React from "react";
 import { Page, Navbar, NavRight, Button, Popup } from "framework7-react";
 import { RouterOpotions } from "typings/f7-route";
 import Icons from "components/Icons";
-import event from "lib/api/framework-event";
-import { useAccountBooksQuery } from "apollo/graphql/model/account-books.graphql";
+import event from "lib/apis/framework-event";
+import { useAccountBooksQuery } from "graphql/model/account-books.graphql";
 
 const BookSelect: React.FC<RouterOpotions> = ({ f7router }) => {
   const { data, refetch } = useAccountBooksQuery();

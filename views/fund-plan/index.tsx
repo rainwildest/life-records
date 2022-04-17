@@ -12,15 +12,15 @@ import {
   f7,
   Link
 } from "framework7-react";
-import { relative } from "lib/api/dayjs";
-import { thousands, timeStamp, toastTip } from "lib/api/utils";
+import { relative } from "lib/apis/dayjs";
+import { thousands, timeStamp, toastTip } from "lib/apis/utils";
 import Icons from "components/Icons";
 import Amounts from "components/Amounts";
 import DetailItem from "./components/DetailItem";
-import { useFundPlanQuery, useModifyFundPlanMutation, useRemoveFundPlanMutation } from "apollo/graphql/model/fund-plan.graphql";
-import { useStatisticalFundPlanQuery } from "apollo/graphql/model/statistics.graphql";
+import { useFundPlanQuery, useModifyFundPlanMutation, useRemoveFundPlanMutation } from "graphql/model/fund-plan.graphql";
+import { useStatisticalFundPlanQuery } from "graphql/model/statistics.graphql";
 import { RouterOpotions } from "typings/f7-route";
-import event from "lib/api/framework-event";
+import event from "lib/apis/framework-event";
 
 const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
   const token = useStore("token");

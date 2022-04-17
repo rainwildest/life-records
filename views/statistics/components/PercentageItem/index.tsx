@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Progressbar, Link } from "framework7-react";
-import Icons from "components/Icons";
+import { Icons } from "components";
 
 type PercentageItemOptins = {
   index?: number;

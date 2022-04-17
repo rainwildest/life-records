@@ -3,7 +3,7 @@ import { Button, Link, f7 } from "framework7-react";
 import ThirdParty from "../ThirdParty";
 import Field from "../Field";
 import { Icons } from "components";
-import request from "lib/api/request";
+import request from "lib/apis/request";
 
 const Toast = (text = "") => {
   f7.toast

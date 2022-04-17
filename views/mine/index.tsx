@@ -2,7 +2,7 @@ import React, { useState, memo } from "react";
 import { Page, PageContent, Link, useStore } from "framework7-react";
 import { Icons } from "components";
 import { MineDetails } from "./components";
-import request from "lib/api/request";
+import request from "lib/apis/request";
 import store from "lib/store";
 
 const Mine: React.FC = () => {

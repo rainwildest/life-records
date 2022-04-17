@@ -3,7 +3,7 @@ import Framework7 from "framework7/lite-bundle";
 import Framework7React, { App as FrameworkApp } from "framework7-react";
 import f7params from "lib/configure/f7params";
 import store from "lib/store";
-import event from "lib/api/framework-event";
+import event from "lib/apis/framework-event";
 
 Framework7.use(Framework7React);
 

@@ -1,13 +1,16 @@
 import MikrotOrm, { knex } from "db/mikro-orm";
 
 /**
- * @method amountStatisticsByDate
- * @param {string} userId 用户id
- * @param {string} start 开始日期
- * @param {string} end 结束日期
+ * @description 根据时间段获取费用统计
+ * @param {object} args
+ *  @value string userId 用户id
+ *  @value string type 费用类型
+ *  @value string start 开始日期
+ *  @value string end 结束日期
  * @returns Promise
  */
-export const amountStatisticsByDate = async (userId: string, start: string, end: string): Promise<any> => {
+export const getAmountStatisticsByTimeSlot = async (args: any = {}): Promise<any> => {
+  const { userId, type = "pay", start, end } = args;
   const orm = await knex();
 
   return orm("cost_details AS t1")
@@ -19,21 +22,25 @@ export const amountStatisticsByDate = async (userId: string, start: string, end:
       `)
     )
     .whereRaw(`t1.purchase_time >= '${start}' AND t1.purchase_time < '${end}'`)
-    .whereRaw(`t1.user_id = ?`, [userId])
+    .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
     .whereNull("t1.deleted_at")
     .then((rows) => (rows.length ? rows[0] : null));
 };
 
 /**
- * 获取年月或全年费用统计
- * @method amountStatisticsByYearsOrMonth
- * @param {string} userId 用户id
- * @param {string} date 年份或年月
- * @param {string} format 年份或年月的格式(yyyy || yyyy-mm)
+ * 获取年、月、日费用统计
+ * @param {object} args
+ *  @value string userId 用户id
+ *  @value string type 费用类型
+ *  @value string date 年份或年月
+ *  @value string format 年份或年月的格式(yyyy || yyyy-mm)
  * @returns Promise
  */
-export const amountStatisticsByYearsOrMonth = async (userId: string, date: string, format: string): Promise<any> => {
+export const getAmountStatisticsByDate = async (args: any = {}): Promise<any> => {
+  const { userId, type = "pay", date, format } = args;
+
   const orm = await knex();
+
   return orm("cost_details AS t1")
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .select(
@@ -43,14 +50,13 @@ export const amountStatisticsByYearsOrMonth = async (userId: string, date: strin
       `)
     )
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
-    .andWhereRaw(`t1.user_id = ?`, [userId])
+    .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
     .whereNull("t1.deleted_at")
     .then((rows) => (rows.length ? rows[0] : null));
 };
 
 /**
- * 统计全年月份收入和支出概括
- * @method statisticalGeneralization
+ * @description 统计全年月份收入和支出概括
  * @param {string} userId 用户 id
  * @param {string} year 年份（例：2021）
  * @returns Promise
@@ -74,8 +80,7 @@ export const statisticalGeneralization = async (userId: string, year: string): P
 };
 
 /**
- * 统计全年或月份的支出、收入情况
- * @method statisticalExpenditure
+ * @description 统计全年或月份的支出、收入情况
  * @param {string} userId 用户 id
  * @param {string} date 日期
  * @param {string} type 统计类型
@@ -110,8 +115,7 @@ export const statisticalExpenditure = async (args: {
 };
 
 /**
- * 统计全年、当天、当月费用
- * @method statisticalUserConsumption
+ * @description 统计全年、当天、当月费用
  * @param {string} userId 用户 id
  * @param {string} type 统计类型
  * @param {string} format 日期格式
@@ -211,4 +215,22 @@ export const statisticalFundPlanCompleted = async (args: { userId: String; year?
     .whereNotNull("t1.complete_at")
     .whereNull("t1.deleted_at")
     .then((rows) => (rows.length ? rows[0] : { total: 0 }));
+};
+
+/**
+ * @description 统计消费笔数以及消费详情
+ * @param {object} args
+ */
+export const getStatisticalCostTotal = async (args = {} as any): Promise<any> => {
+  const { userId = "", format = "YYYY-MM-DD", groupFormat = "MM-DD", date = "", type = "pay" } = args;
+  const orm = await knex();
+
+  return orm("cost_details AS t1")
+    .select(orm.raw(`to_char(purchase_time, '${groupFormat}') as purchase_time, COUNT(*) AS total`))
+    .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
+    .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
+    .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
+    .whereNull("t1.deleted_at")
+    .groupByRaw(`to_char(t1.purchase_time, '${groupFormat}')`)
+    .then((rows: any[]) => (rows?.length ? rows[0] : { purchase_time: "", total: 0 }));
 };

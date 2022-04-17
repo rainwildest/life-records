@@ -3,7 +3,7 @@ import { Page, Navbar, Subnavbar, Segmented, Tabs, Tab, Button, useStore } from 
 // import store from "lib/store";
 import { Income, Generalization, Expenditure } from "./components";
 import { SheetDatePicker, NotloggedIn } from "components";
-import { getCurrentDate } from "lib/api/dayjs";
+import { getCurrentDate } from "lib/apis/dayjs";
 
 const Statistics: React.FC = () => {
   const token = useStore("token");

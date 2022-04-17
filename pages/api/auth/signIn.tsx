@@ -1,11 +1,11 @@
 import passport from "passport";
 import { NextApiRequest, NextApiResponse } from "next";
-import initPassport from "lib/api/initPassport";
-import { localInitAuthentication } from "lib/api/initAuthentication";
-import middleware from "lib/api/middleware";
-import runMiddleware from "lib/api/runMiddleware";
-import { setLoginSession } from "lib/api/auth";
-import codeComparison from "lib/api/code-comparison";
+import initPassport from "lib/apis/initPassport";
+import { localInitAuthentication } from "lib/apis/initAuthentication";
+import middleware from "lib/apis/middleware";
+import runMiddleware from "lib/apis/runMiddleware";
+import { setLoginSession } from "lib/apis/auth";
+import codeComparison from "lib/apis/code-comparison";
 
 initPassport();
 localInitAuthentication();
@@ -19,8 +19,6 @@ const main = (req, res, next) => {
     if ((!!user && !user.id) || !user) {
       return res.end(JSON.stringify({ code: 4002, data: null, error: codeComparison[4002] }));
     }
-
-    console.log("err", err);
 
     try {
       // 设置 session

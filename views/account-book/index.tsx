@@ -2,9 +2,9 @@ import React, { useEffect, memo } from "react";
 import { Page, Navbar, NavRight } from "framework7-react";
 import { Book } from "./components";
 import { Icons } from "components";
-import event from "lib/api/framework-event";
+import event from "lib/apis/framework-event";
 import { RouterOpotions } from "typings/f7-route";
-import { useAccountBooksQuery } from "apollo/graphql/model/account-books.graphql";
+import { useAccountBooksQuery } from "graphql/model/account-books.graphql";
 
 const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
   const { data, refetch } = useAccountBooksQuery({ fetchPolicy: "network-only" });

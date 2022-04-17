@@ -4,10 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
-export async function setLoginSession(
-  res: NextApiResponse,
-  session: { [key: string]: any }
-): Promise<string> {
+export async function setLoginSession(res: NextApiResponse, session: { [key: string]: any }): Promise<string> {
   const createdAt = Date.now();
   // Create a session object with a max age that we can validate later
   const obj = { ...session, createdAt, maxAge: MAX_AGE };

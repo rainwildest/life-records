@@ -1,7 +1,7 @@
 import React from "react";
 import { List, ListItem, SwipeoutActions, SwipeoutButton } from "framework7-react";
-import { relative } from "lib/api/dayjs";
-import { thousands } from "lib/api/utils";
+import { relative } from "lib/apis/dayjs";
+import { thousands } from "lib/apis/utils";
 import DetailItem from "../DetailItem";
 
 const Overdue: React.FC = () => {

@@ -1,4 +1,4 @@
-import { thousands } from "lib/api/utils";
+import { thousands } from "lib/apis/utils";
 import _ from "lodash";
 
 export const statisticsHandle = (data, contrast): any => {

@@ -4,7 +4,7 @@ import { useApollo } from "apollo/client";
 import fontSizeBase from "lib/fontSizeBase";
 import React, { useEffect } from "react";
 import Head from "next/head";
-// import { getTokenCookie } from "lib/api/auth-cookies";
+// import { getTokenCookie } from "lib/apis/auth-cookies";
 import store from "lib/store";
 import Framework7 from "components/Framework7";
 import "framework7/framework7-bundle.min.css";
@@ -39,7 +39,7 @@ export default MyApp;
 
 MyApp.getInitialProps = async ({ ctx }) => {
   if (ctx && ctx.req && ctx.req.headers) {
-    const { getTokenCookie } = require("lib/api/auth-cookies");
+    const { getTokenCookie } = require("lib/apis/auth-cookies");
     return {
       pageProps: {
         token: getTokenCookie(ctx.req) || null

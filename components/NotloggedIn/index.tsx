@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "framework7-react";
-import { mergeClassName } from "lib/api/utils";
+import { mergeClassName } from "lib/apis/utils";
 import Icons from "components/Icons";
 
 type NotloggedInOptions = {

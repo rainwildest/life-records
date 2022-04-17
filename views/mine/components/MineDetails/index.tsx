@@ -1,6 +1,6 @@
 import React, { memo, Fragment, useEffect } from "react";
 import { BlockHeader, useStore } from "framework7-react";
-import { useUserQuery } from "apollo/graphql/model/user.graphql";
+import { useUserQuery } from "graphql/model/user.graphql";
 import _ from "lodash";
 import Icons from "components/Icons";
 import { statisticsHandle } from "../../utils";

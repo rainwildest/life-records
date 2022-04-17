@@ -46,10 +46,7 @@ export const tanslateSnake = <T>(feilds: { [P in keyof T]?: any }): any => {
  * @param {string} className
  * @returns string
  */
-export const mergeClassName = (
-  className: string,
-  defaultClassName = ""
-): string => {
+export const mergeClassName = (className: string, defaultClassName = ""): string => {
   const classNameSplit = className.split(" ");
   const defaultClassNameSplit = defaultClassName.split(" ");
 
@@ -65,11 +62,7 @@ export const mergeClassName = (
  * @param {number} index 索引
  * @param {number} precision 保留小数，默认为1
  */
-export const percentage = (
-  values: number[],
-  index: number,
-  precision = 1
-): number => {
+export const percentage = (values: number[], index: number, precision = 1): number => {
   // 判断是否为空
   if (!values[index]) return 0;
 
@@ -183,4 +176,29 @@ export const timeStamp = (date?: string): number => {
   time.setSeconds(0);
   time.setMilliseconds(0);
   return time.getTime();
+};
+
+/**
+ * @description 自动切割填充日期的 format 格式（暂时只支持日期）
+ * @param {string} date
+ * @returns String
+ */
+export const autoFormatDate = (date: string): string => {
+  const $format = [];
+  const values = date.split(" ");
+  const dateSplit = values[0].split("-");
+
+  dateSplit.forEach((item) => {
+    const len = item.length;
+
+    if (len === 4) $format.push("Y".repeat(4));
+
+    if ((len === 1 || len === 2) && !$format.includes("MM")) {
+      $format.push("M".repeat(2));
+    } else if ((len === 1 || len === 2) && !$format.includes("DD")) {
+      $format.push("D".repeat(2));
+    }
+  });
+
+  return $format.join("-");
 };

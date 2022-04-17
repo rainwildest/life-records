@@ -1,11 +1,11 @@
 import passport from "passport";
 import { NextApiRequest, NextApiResponse } from "next";
-import initPassport from "lib/api/initPassport";
-import { gitHubInitAuthentication } from "lib/api/initAuthentication";
-import middleware from "lib/api/middleware";
-import runMiddleware from "lib/api/runMiddleware";
-import { setLoginSession } from "lib/api/auth";
-import comparison from "lib/api/code-comparison";
+import initPassport from "lib/apis/initPassport";
+import { gitHubInitAuthentication } from "lib/apis/initAuthentication";
+import middleware from "lib/apis/middleware";
+import runMiddleware from "lib/apis/runMiddleware";
+import { setLoginSession } from "lib/apis/auth";
+import comparison from "lib/apis/code-comparison";
 
 initPassport();
 gitHubInitAuthentication();
@@ -27,19 +27,14 @@ const main = (req: NextApiRequest, res, next) => {
     await setLoginSession(res, session);
 
     (req as passport).logIn(user, function (err) {
-      const query = err
-        ? `/?to=/login&code=4000&error${err}`
-        : `/?to=null&code=2000&error=null`;
+      const query = err ? `/?to=/login&code=4000&error${err}` : `/?to=null&code=2000&error=null`;
 
       return res.redirect(query);
     });
   })(req, res, next);
 };
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   await middleware(req, res);
   await runMiddleware(req, res, main);
 };

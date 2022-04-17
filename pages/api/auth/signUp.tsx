@@ -1,11 +1,11 @@
 import passport from "passport";
 import { NextApiRequest, NextApiResponse } from "next";
-import initPassport from "lib/api/initPassport";
-import { localInitAuthentication } from "lib/api/initAuthentication";
-import middleware from "lib/api/middleware";
-import runMiddleware from "lib/api/runMiddleware";
+import initPassport from "lib/apis/initPassport";
+import { localInitAuthentication } from "lib/apis/initAuthentication";
+import middleware from "lib/apis/middleware";
+import runMiddleware from "lib/apis/runMiddleware";
 import { addUserBySignUp } from "db/sql/users";
-import { setLoginSession } from "lib/api/auth";
+import { setLoginSession } from "lib/apis/auth";
 
 initPassport();
 localInitAuthentication(true);
@@ -21,14 +21,10 @@ const main = (req, res, next) => {
 
       /* 如果用户为null 或 没有用户ID 以及创建时间的话则视为没有登录成功 */
       if ((!!user && !user.id) || !user) {
-        return res.end(
-          JSON.stringify({ code: 4000, data: null, error: err || null })
-        );
+        return res.end(JSON.stringify({ code: 4000, data: null, error: err || null }));
       }
     } catch (err) {
-      return res.end(
-        JSON.stringify({ code: 4000, data: null, error: err || null })
-      );
+      return res.end(JSON.stringify({ code: 4000, data: null, error: err || null }));
     }
 
     try {
@@ -41,19 +37,14 @@ const main = (req, res, next) => {
 
     /* 登录新添加的用户 */
     req.logIn(user, function (err) {
-      const info = err
-        ? { code: 4000, data: null, error: err }
-        : { code: 2000, data: { token }, error: null };
+      const info = err ? { code: 4000, data: null, error: err } : { code: 2000, data: { token }, error: null };
 
       return res.end(JSON.stringify(info));
     });
   })(req, res, next);
 };
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   await middleware(req, res);
   await runMiddleware(req, res, main);
 };

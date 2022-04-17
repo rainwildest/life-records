@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
-import { mergeClassName } from "lib/api/utils";
+import { mergeClassName } from "lib/apis/utils";
 type IconsProps = {
   name: string;
   className?: string;

@@ -1,9 +1,9 @@
 import passport from "passport";
 import { NextApiRequest, NextApiResponse } from "next";
-import runMiddleware from "lib/api/runMiddleware";
-import initPassport from "lib/api/initPassport";
-import { gitHubInitAuthentication } from "lib/api/initAuthentication";
-import middleware from "lib/api/middleware";
+import runMiddleware from "lib/apis/runMiddleware";
+import initPassport from "lib/apis/initPassport";
+import { gitHubInitAuthentication } from "lib/apis/initAuthentication";
+import middleware from "lib/apis/middleware";
 
 initPassport();
 gitHubInitAuthentication();
@@ -17,10 +17,7 @@ const main = (req, res, next) => {
   })(req, res, next);
 };
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   await middleware(req, res);
   await runMiddleware(req, res, main);
 };

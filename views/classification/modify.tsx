@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect, memo } from "react";
 import { RouterOpotions } from "typings/f7-route";
 import { Page, Navbar, NavTitle, Button, NavRight } from "framework7-react";
-import { useCreateLivingExpensesMutation, useModifyLivingExpensesMutation } from "apollo/graphql/model/living-expenses.graphql";
+import { useCreateLivingExpensesMutation, useModifyLivingExpensesMutation } from "graphql/model/living-expenses.graphql";
 import { Formik, Form, FormikProps } from "formik";
 import { Icons, InputField } from "components";
-import event from "lib/api/framework-event";
+import event from "lib/apis/framework-event";
 import useExpenseData from "./utils/useExpenseData";
 import _ from "lodash";
 

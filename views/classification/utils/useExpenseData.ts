@@ -1,4 +1,4 @@
-import { useLivingExpensesByIdQuery, LivingExpensesByIdQuery } from "apollo/graphql/model/living-expenses.graphql";
+import { useLivingExpensesByIdQuery, LivingExpensesByIdQuery } from "graphql/model/living-expenses.graphql";
 
 const useExpense = (id: string): { data: LivingExpensesByIdQuery; refetch: any } => {
   if (!id) return { data: null, refetch: null };
