@@ -1,17 +1,11 @@
 import { UserInputError, AuthenticationError } from "apollo-server-micro";
 import { modifyFundPlan } from "db/sql/fund-plan";
-import { tanslateSnake } from "lib/api/utils";
+import { tanslateSnake } from "lib/apis/utils";
 
-export default (
-  _: unknown,
-  args: { id: string; input: any },
-  _context: unknown
-): Promise<any> => {
+export default (_: unknown, args: { id: string; input: any }, _context: unknown): Promise<any> => {
   const { user } = _context as GraphqlContext;
   if (!user?.id) {
-    throw new AuthenticationError(
-      "Authentication token is invalid, please log in."
-    );
+    throw new AuthenticationError("Authentication token is invalid, please log in.");
   }
   if (!args.id) {
     throw new UserInputError("Consumption record information cannot be empty.");

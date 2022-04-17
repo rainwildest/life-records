@@ -1,18 +1,12 @@
 import { UserInputError, AuthenticationError } from "apollo-server-micro";
 import { createAccountBooks } from "db/sql/account-books";
-import { tanslateSnake } from "lib/api/utils";
+import { tanslateSnake } from "lib/apis/utils";
 
-export default (
-  _: unknown,
-  args: { name: string },
-  _context: unknown
-): Promise<any> => {
+export default (_: unknown, args: { name: string }, _context: unknown): Promise<any> => {
   const { user } = _context as GraphqlContext;
 
   if (!user?.id) {
-    throw new AuthenticationError(
-      "Authentication token is invalid, please log in."
-    );
+    throw new AuthenticationError("Authentication token is invalid, please log in.");
   }
 
   if (!args.name) {

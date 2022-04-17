@@ -1,5 +1,5 @@
-schema: "apollo/**/*.graphqls"
-documents: "apollo/**/*.graphql"
+schema: "graphql/**/*.graphqls"
+documents: "graphql/**/*.graphql"
 plugins:
   - typescript-operations
   - typescript-react-apollo

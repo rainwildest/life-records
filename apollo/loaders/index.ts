@@ -1,5 +1,5 @@
 import DataLoader from "dataloader";
-import unique from "lib/api/unique";
+import unique from "lib/apis/unique";
 import { getUserByIds } from "db/sql/users";
 
 const createLoaders = {
@@ -7,9 +7,7 @@ const createLoaders = {
     const ids = unique(keys);
     return getUserByIds(ids).then((rows) =>
       keys.map((key) => {
-        return rows.find(
-          (x: any) => x.id === key || x.seq_id.toString() === key
-        );
+        return rows.find((x: any) => x.id === key || x.seq_id.toString() === key);
       })
     );
   })

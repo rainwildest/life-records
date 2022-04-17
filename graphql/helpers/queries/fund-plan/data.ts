@@ -1,6 +1,6 @@
 import { AuthenticationError } from "apollo-server-micro";
 import { getPlannedByUserId, getCompleted } from "db/sql/fund-plan";
-import { timeStamp } from "lib/api/utils";
+import { timeStamp } from "lib/apis/utils";
 
 const getCurrentDate = (type?: "year" | "date") => {
   const date = new Date();

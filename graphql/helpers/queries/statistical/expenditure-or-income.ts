@@ -1,6 +1,6 @@
 import { AuthenticationError } from "apollo-server-micro";
 import { statisticalExpenditure } from "db/sql/statistical";
-import { format } from "lib/api/dayjs";
+import { format } from "lib/apis/dayjs";
 
 export default async (_parent: unknown, _args: { date: string; type: "pay" | "income" }, context: unknown): Promise<any> => {
   const { user } = context as GraphqlContext;

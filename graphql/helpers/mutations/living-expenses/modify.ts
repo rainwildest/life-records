@@ -1,10 +1,10 @@
 import { UserInputError, AuthenticationError } from "apollo-server-micro";
-import { createLivingExpenses } from "db/sql/living-expenses";
-import { tanslateSnake } from "lib/api/utils";
+import { modifyLivingExpense } from "db/sql/living-expenses";
+import { tanslateSnake } from "lib/apis/utils";
 
 export default (
   _: unknown,
-  args: { input: LivingExpensesOptions & { isAddUserId: boolean } },
+  args: { id: string; input: LivingExpensesOptions & { isAddUserId: boolean } },
   _context: unknown
 ): Promise<any> => {
   const { expenseType, expenseName, expenseIcon, isAddUserId = false } = args.input;
@@ -14,6 +14,10 @@ export default (
     throw new AuthenticationError("Authentication token is invalid, please log in.");
   }
 
+  if (!args.id) {
+    throw new UserInputError("Consumption type information cannot be empty.");
+  }
+
   if (!expenseType || !expenseType) {
     throw new UserInputError("Consumption name and type cannot be empty.");
   }
@@ -21,5 +25,5 @@ export default (
   let fields: LivingExpensesOptions = { expenseType, expenseName, expenseIcon };
 
   if (isAddUserId) fields = { ...fields, userId: user.id };
-  return createLivingExpenses(tanslateSnake(fields));
+  return modifyLivingExpense(args.id, tanslateSnake(fields));
 };

@@ -1,11 +1,11 @@
 # import CostDetailsOptions from '../fragments/cost-details.graphql';
 # import AccountBooksOptions from '../fragments/account-books.graphql';
 
-query details($date: String) {
-  statisticalDetails(date: $date) {
+query details($input: StatisticalDetailsOptions) {
+  statisticalDetails(input: $input) {
     pay
     income
-    details(date: $date) {
+    details(input: $input) {
       ...CostDetailsOptions
       expense {
         id
