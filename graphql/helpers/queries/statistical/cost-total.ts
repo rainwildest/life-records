@@ -1,8 +1,9 @@
 import { AuthenticationError } from "apollo-server-micro";
-import { getStatisticalCostTotal } from "db/sql/statistical";
-import { DetailsQueryVariables } from "../../../graphql/model/statistics.graphql";
+import { getStatisticalCostTotalByDate } from "db/sql/statistical";
+import { GetCostTotalDetailsQueryVariables } from "graphql/model/statistics.graphql";
+import { autoFormatDate } from "lib/apis/utils";
 
-export default (_parent: unknown, args: DetailsQueryVariables, context: unknown): Promise<any> => {
+export default (_parent: unknown, args: GetCostTotalDetailsQueryVariables, context: unknown): Promise<any> => {
   const { user } = context as GraphqlContext;
 
   if (!user?.id) {
@@ -10,22 +11,22 @@ export default (_parent: unknown, args: DetailsQueryVariables, context: unknown)
   }
 
   const params = args.input;
+  const date: string = params?.date || "";
 
-  /* 按日期搜索 */
-  const date = params?.date || "";
+  let format = "";
+  if (date.length && !params.format) format = autoFormatDate(date);
 
   const $args = {
-    userId: "",
-    format: date.length > 4 ? "YYYY-MM" : "YYYY",
-    groupFormat: "MM-DD",
-    date: "",
-    type: "pay"
+    userId: user.id,
+    date,
+    format,
+    type: params?.type || "pay",
+    groupFormat: params?.groupFormat || "MM-DD"
   };
-  if (date.length) {
-    // return getStatisticalCostTotal(user.id, params.type, date, date.length > 4 ? "yyyy-mm" : "yyyy");
-    return null;
-  }
 
+  if (date.length) return getStatisticalCostTotalByDate($args);
+
+  return null;
   /* 获取当日数据 */
   const start = new Date();
   start.setHours(0);

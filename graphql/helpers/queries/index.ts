@@ -3,12 +3,13 @@ import { user, statistics } from "./users";
 import { costDetails } from "./cost-details";
 import { livingExpenses, livingExpensesById } from "./living-expenses";
 import {
-  statisticalDetails,
-  details as statisticalData,
-  statisticalGeneralization,
-  statisticalExpenditureOrIncome,
   statisticalBooks,
-  statisticalFundPlan
+  statisticalFundPlan,
+  statisticalCostTotal,
+  statisticalCostDetails,
+  statisticalGeneralization,
+  details as statisticalData,
+  statisticalExpenditureOrIncome
 } from "./statistical";
 import { fundPlan, fundPlanById } from "./fund-plan";
 import { accountBooks } from "./account-books";
@@ -22,7 +23,7 @@ export const queries = {
   livingExpenses,
   livingExpensesById,
   statisticalBooks,
-  statisticalDetails,
+  statisticalCostDetails,
   statisticalGeneralization,
   statisticalExpenditureOrIncome,
   statisticalFundPlan
@@ -38,7 +39,8 @@ export const custom = {
     book: bookid
   },
   StatisticalDetails: {
-    details: statisticalData
+    details: statisticalData,
+    total: statisticalCostTotal
   },
   FundPlan: {
     user: userid,

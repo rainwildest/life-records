@@ -1,6 +1,6 @@
 import React, { memo, useState, useCallback } from "react";
 import { Page, PageContent, Link, Navbar, NavRight, Fab, useStore } from "framework7-react";
-import { useDetailsQuery } from "graphql/model/statistics.graphql";
+import { useGetCostTotalDetailsQuery } from "graphql/model/statistics.graphql";
 import { Amounts, Icons, CostCard, NotloggedIn, ThemeIcon, Echarts } from "components";
 import { relative, getCurrentDate } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
@@ -10,8 +10,16 @@ const Home: React.FC = () => {
 
   const [costType, setCostType] = useState<string>("pay");
 
-  const { data, refetch } = useDetailsQuery({ variables: { date: getCurrentDate("YYYY-MM"), type: costType } });
-  const statistics = data?.statisticalDetails || {};
+  const { data, refetch } = useGetCostTotalDetailsQuery({
+    variables: {
+      input: {
+        date: getCurrentDate("YYYY-MM"),
+        type: costType,
+        groupFormat: "MM"
+      }
+    }
+  });
+  const statistics = data?.statisticalCostDetails || {};
 
   /* 强制刷新 */
   const [, updateState] = useState<any>();
@@ -88,15 +96,18 @@ const Home: React.FC = () => {
             </div>
 
             <div className="shadow-3 rounded-lg py-3 mt-10">
-              <div className="flex justify-between px-5">
+              <div className="flex justify-between px-5 h-7">
                 <div>
-                  <span className="font-medium">{costType === "pay" ? "我的支出" : "我的收入"}</span>
-                  <span className="text-xs text-gray-500 pl-1">共计 222 笔</span>
+                  <div className="inline-block font-medium text-base">{costType === "pay" ? "我的支出" : "我的收入"}</div>
+                  <span className="text-xs text-gray-500 pl-1">共计 {statistics?.total || 0} 笔</span>
                 </div>
 
                 <div>
                   <span className="text-xs font-medium">￥</span>
-                  <span className="text-xl font-medium">3333</span>
+                  <span className="text-xl font-medium">
+                    {costType === "pay" && thousands(statistics.pay || 0)}
+                    {costType === "income" && thousands(statistics.income || 0)}
+                  </span>
                 </div>
               </div>
 
@@ -129,7 +140,7 @@ const Home: React.FC = () => {
               />
             </div>
 
-            {statistics.details?.map((detail, index) => (
+            {/* {statistics.?.map((detail, index) => (
               <CostCard
                 key={detail.id}
                 type={detail.expense.expenseType}
@@ -139,7 +150,7 @@ const Home: React.FC = () => {
                 remarks={detail.remarks}
                 className="mt-6"
               />
-            ))}
+            ))} */}
           </div>
         )}
       </PageContent>

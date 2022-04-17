@@ -1,10 +1,16 @@
 # import CostDetailsOptions from '../fragments/cost-details.graphql';
 # import AccountBooksOptions from '../fragments/account-books.graphql';
 
-query details($input: StatisticalDetailsOptions) {
-  statisticalDetails(input: $input) {
+query getCostTotalDetails($input: StatisticalDetailsOptions) {
+  statisticalCostDetails(input: $input) {
     pay
     income
+    total(input: $input)
+  }
+}
+
+query getCostDataDetails($input: StatisticalDetailsOptions) {
+  statisticalCostDetails(input: $input) {
     details(input: $input) {
       ...CostDetailsOptions
       expense {

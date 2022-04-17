@@ -1,8 +1,10 @@
 import { AuthenticationError } from "apollo-server-micro";
-import { getCostDetailsByDate, getCostDetailsByYearsOrMonth } from "db/sql/cost-details";
-import { DetailsQueryVariables } from "../../../graphql/model/statistics.graphql";
+import { getCostDetailsByTimeSlot, getCostDetailsByDate } from "db/sql/cost-details";
+import { GetCostTotalDetailsQueryVariables } from "graphql/model/statistics.graphql";
+import { autoFormatDate } from "lib/apis/utils";
+import { getSameDayTimeSlot } from "./utils";
 
-export default (_parent: unknown, args: DetailsQueryVariables, context: unknown): Promise<any> => {
+export default (_parent: unknown, args: GetCostTotalDetailsQueryVariables, context: unknown): Promise<any> => {
   const { user } = context as GraphqlContext;
 
   if (!user?.id) {
@@ -10,23 +12,19 @@ export default (_parent: unknown, args: DetailsQueryVariables, context: unknown)
   }
 
   const params = args.input;
+  const date: string = params?.date || "";
 
+  let format = "";
+  if (date.length && !params.format) format = autoFormatDate(date);
   /* 按日期搜索 */
-  const date = params?.date || "";
-  if (date.length) {
-    return getCostDetailsByYearsOrMonth(user.id, params.type, date, date.length > 4 ? "yyyy-mm" : "yyyy");
-  }
+
+  let $args: any = { userId: user?.id, type: params.type, date, format };
+
+  if (date.length) return getCostDetailsByDate($args);
 
   /* 获取当日数据 */
-  const start = new Date();
-  start.setHours(0);
-  start.setMinutes(0);
-  start.setSeconds(0);
+  const { start, end } = getSameDayTimeSlot();
 
-  const end = new Date();
-  end.setHours(23);
-  end.setMinutes(59);
-  end.setSeconds(59);
-
-  return getCostDetailsByDate(user.id, params.type, start.toISOString(), end.toISOString());
+  $args = { userId: user?.id, type: params.type, start, end };
+  return getCostDetailsByTimeSlot($args);
 };

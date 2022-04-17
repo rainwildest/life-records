@@ -2,7 +2,7 @@ import { snakeCase } from "lodash";
 import { f7 } from "framework7-react";
 import { format } from "./dayjs";
 
-// export const format = (date: Date, fmt = "yyyy-MM-dd"): string => {
+// export const format = (date: Date, fmt = "YYYY-MM-dd"): string => {
 //   // author: meizz
 //   const time = new Date(date);
 //   const o = {

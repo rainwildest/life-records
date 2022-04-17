@@ -33,7 +33,7 @@ export const getAmountStatisticsByTimeSlot = async (args: any = {}): Promise<any
  *  @value string userId 用户id
  *  @value string type 费用类型
  *  @value string date 年份或年月
- *  @value string format 年份或年月的格式(yyyy || yyyy-mm)
+ *  @value string format 年份或年月的格式(YYYY || YYYY-MM)
  * @returns Promise
  */
 export const getAmountStatisticsByDate = async (args: any = {}): Promise<any> => {
@@ -69,13 +69,13 @@ export const statisticalGeneralization = async (userId: string, year: string): P
       orm.raw(`
         SUM(CASE WHEN t2.expense_type='pay' THEN t1.amounts ELSE 0 END) AS pay,
         SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income,
-        to_char(t1.purchase_time, 'yyyy-mm') as purchase_time
+        to_char(t1.purchase_time, 'YYYY-MM') as purchase_time
       `)
     )
-    .whereRaw(`to_char(t1.purchase_time, 'yyyy') = ?`, [year])
+    .whereRaw(`to_char(t1.purchase_time, 'YYYY') = ?`, [year])
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .whereNull("t1.deleted_at")
-    .groupByRaw(`to_char(t1.purchase_time, 'yyyy-mm')`)
+    .groupByRaw(`to_char(t1.purchase_time, 'YYYY-MM')`)
     .orderBy("purchase_time", "ASC");
 };
 
@@ -93,7 +93,7 @@ export const statisticalExpenditure = async (args: {
   type?: "pay" | "income";
   format?: string;
 }): Promise<any> => {
-  const { userId, date, type = "pay", format = "yyyy" } = args;
+  const { userId, date, type = "pay", format = "YYYY" } = args;
 
   const orm = await knex();
   return orm("cost_details AS t1")
@@ -126,7 +126,7 @@ export const statisticalUserConsumption = async (args: {
   type?: "pay" | "income";
   format?: string;
 }): Promise<any> => {
-  const { userId, type = "pay", format = "yyyy" } = args;
+  const { userId, type = "pay", format = "YYYY" } = args;
 
   const orm = await knex();
   return orm("cost_details AS t1")
@@ -204,7 +204,7 @@ export const statisticalFundPlanCompleted = async (args: { userId: String; year?
   const { userId, year, expenseId } = args;
   const orm = await knex();
 
-  const condition = [`t1.user_id = '${userId}'`, `to_char(approximate_at, 'yyyy') = '${year}'`];
+  const condition = [`t1.user_id = '${userId}'`, `to_char(approximate_at, 'YYYY') = '${year}'`];
 
   if (expenseId) condition.push(`t2.id = '${expenseId}'`);
 
@@ -221,7 +221,7 @@ export const statisticalFundPlanCompleted = async (args: { userId: String; year?
  * @description 统计消费笔数以及消费详情
  * @param {object} args
  */
-export const getStatisticalCostTotal = async (args = {} as any): Promise<any> => {
+export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any> => {
   const { userId = "", format = "YYYY-MM-DD", groupFormat = "MM-DD", date = "", type = "pay" } = args;
   const orm = await knex();
 
@@ -232,5 +232,5 @@ export const getStatisticalCostTotal = async (args = {} as any): Promise<any> =>
     .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
     .whereNull("t1.deleted_at")
     .groupByRaw(`to_char(t1.purchase_time, '${groupFormat}')`)
-    .then((rows: any[]) => (rows?.length ? rows[0] : { purchase_time: "", total: 0 }));
+    .then((rows: any[]) => (rows?.length ? rows[0].total || 0 : 0));
 };

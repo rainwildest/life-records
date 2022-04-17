@@ -1,15 +1,17 @@
-import statisticalDetails from "./data";
 import details from "./details";
+import statisticalCostTotal from "./cost-total";
+import statisticalCostDetails from "./data";
+import statisticalFundPlan from "./fund-plan";
+import statisticalBooks from "./statistical-books";
 import statisticalGeneralization from "./generalization";
 import statisticalExpenditureOrIncome from "./expenditure-or-income";
-import statisticalBooks from "./statistical-books";
-import statisticalFundPlan from "./fund-plan";
 
 export {
-  statisticalDetails,
   details,
-  statisticalGeneralization,
-  statisticalExpenditureOrIncome,
   statisticalBooks,
-  statisticalFundPlan
+  statisticalFundPlan,
+  statisticalCostTotal,
+  statisticalCostDetails,
+  statisticalGeneralization,
+  statisticalExpenditureOrIncome
 };

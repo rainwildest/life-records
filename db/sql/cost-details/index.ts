@@ -54,23 +54,24 @@ export const getCostDetails = async (args: any): Promise<CostDetailsSnakeOptions
 };
 
 /**
- * 通过日期获取用户的消费记录
- * @method getCostDetailsByDate
- * @param {string} userId 用户id
- * @param {string} type 费用类型
- * @param {string} start 开始日期
- * @param {string} end 结束日期
+ * 通过时间段获取用户的消费记录
+ * @method getCostDetailsByTimeSlot
+ * @param {object} args
+ *  @value string userId 用户id
+ *  @value string type 费用类型
+ *  @value string start 开始日期
+ *  @value string end 结束日期
  * @returns Promise
  */
-export const getCostDetailsByDate = async (
-  userId: string,
-  type: string,
-  start: string,
-  end: string
+export const getCostDetailsByTimeSlot = async (
+  args: any = {}
 ): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const { userId, type = "pay", start, end } = args;
+
   const orm = await knex();
 
   return orm("cost_details AS t1")
+    .select(["t1.*"])
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .whereRaw("t1.purchase_time >= ? and t1.purchase_time < ?", [start, end])
     .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
@@ -80,23 +81,21 @@ export const getCostDetailsByDate = async (
 };
 
 /**
- * 获取年月或全年数据
- * @method getCostDetailsByYearsOrMonth
- * @param {string} userId 用户id
- * @param {string} type 费用类型
- * @param {string} date 年份或年月
- * @param {string} format 年份或年月的格式(yyyy || yyyy-mm)
+ * 获取年、月、日数据
+ * @method getCostDetailsByDate
+ * @param {object} args
+ *  @value string userId 用户id
+ *  @value string type 费用类型
+ *  @value string date 年份或年月
+ *  @value string format 年份/年月/年月日的格式(YYYY || YYYY-MM || YYYY-MM-DD)
  * @returns Promise
  */
-export const getCostDetailsByYearsOrMonth = async (
-  userId: string,
-  type: string,
-  date: string,
-  format = "yyyy"
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCostDetailsByDate = async (args: any = {}): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const { userId, type = "pay", date, format } = args;
   const orm = await knex();
 
   return orm("cost_details AS t1")
+    .select(["t1.*"])
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
     .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])

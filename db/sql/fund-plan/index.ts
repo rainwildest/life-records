@@ -69,7 +69,7 @@ export const getCompletedByDate = async (args: CompletedParam): Promise<FundPlan
   return orm
     .createQueryBuilder(FundPlan)
     .where({ user_id: userId })
-    .andWhere(`to_char(approximate_at, 'yyyy') = ?`, [year])
+    .andWhere(`to_char(approximate_at, 'YYYY') = ?`, [year])
     .andWhere("complete_at is not null")
     .andWhere("deleted_at is null")
     .execute("all");
@@ -87,7 +87,7 @@ export const getCompletedByExpenses = async (
   const { userId, expenseId, year } = args;
   const orm = await knex();
 
-  const condition = [`t1.user_id = '${userId}'`, `to_char(approximate_at, 'yyyy') = '${year}'`];
+  const condition = [`t1.user_id = '${userId}'`, `to_char(approximate_at, 'YYYY') = '${year}'`];
 
   if (expenseId) condition.push(`t2.id = '${expenseId}'`);
 
@@ -125,7 +125,7 @@ export const getPlannedDetailById = async (id: string): Promise<FundPlanSnakeOpt
 
 //   return orm
 //     .where({ user_id: userId })
-//     .andWhere(`to_char(approximate_at, 'yyyy-mm-dd') < ?`, [date])
+//     .andWhere(`to_char(approximate_at, 'YYYY-MM-DD') < ?`, [date])
 //     .andWhere("complete_at is null")
 //     .andWhere("deleted_at is null")
 //     .execute("all");

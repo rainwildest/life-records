@@ -11,8 +11,8 @@ export default async (_parent: unknown, _args: { date: string; type: "pay" | "in
 
   return statisticalExpenditure({
     userId: user.id,
-    date: date,
-    format: date.length > 4 ? "yyyy-mm" : "yyyy",
-    type
+    type,
+    date,
+    format: date.length > 4 ? "YYYY-MM" : "YYYY"
   });
 };

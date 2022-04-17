@@ -5,6 +5,11 @@ type StatisticalDetails {
   details(input: StatisticalDetailsOptions): [CostDetails]
 }
 
+type TotalField {
+  total: Int
+  purchaseTime: String
+}
+
 type GeneralizationField {
   pay: Int
   income: Int
@@ -36,7 +41,7 @@ input StatisticalDetailsOptions {
 }
 
 type Query {
-  statisticalDetails(input: StatisticalDetailsOptions): StatisticalDetails
+  statisticalCostDetails(input: StatisticalDetailsOptions): StatisticalDetails
   # 概括
   statisticalGeneralization(year: String): [GeneralizationField]
   # 支出 或 收入
