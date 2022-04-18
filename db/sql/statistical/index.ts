@@ -81,10 +81,11 @@ export const statisticalGeneralization = async (userId: string, year: string): P
 
 /**
  * @description 统计全年或月份的支出、收入情况
- * @param {string} userId 用户 id
- * @param {string} date 日期
- * @param {string} type 统计类型
- * @param {string} format 日期格式
+ * @param {object} args
+ *  @value string userId 用户 id
+ *  @value string date 日期
+ *  @value string type 统计类型
+ *  @value string format 日期格式
  * @returns Promise
  */
 export const statisticalExpenditure = async (args: {

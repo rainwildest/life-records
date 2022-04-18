@@ -36,7 +36,7 @@ const Pay: React.FC<RouterOpotions & PayOptons> = ({ f7router, onNavigate }) => 
         </div>
       ))}
       <div className="shadow-3 shadow-active-3 rounded-lg text-center py-4 flex items-center justify-center" onClick={onNavigate}>
-        <Icons name="add" className="svg-icon-33" />
+        <Icons name="add-01" className="svg-icon-33" />
       </div>
     </div>
   );

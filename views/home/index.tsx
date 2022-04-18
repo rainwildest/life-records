@@ -4,7 +4,7 @@ import { useGetCostTotalDetailsQuery } from "graphql/model/statistics.graphql";
 import { Amounts, Icons, CostCard, NotloggedIn, ThemeIcon } from "components";
 import { relative, getCurrentDate, getDaysInMonth } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
-import { PaymentAnalysis } from "./components";
+import { Income, Expenditure, PaymentAnalysis } from "./components";
 
 type AmountType = { pay: string; income: string };
 const Home: React.FC = () => {
@@ -88,7 +88,7 @@ const Home: React.FC = () => {
         }}
       >
         {!!token && (
-          <div className="px-6">
+          <div className="px-6 pb-8">
             {/* <Amounts
               incomTitle="今日收入"
               payTitle="今日支出"
@@ -139,6 +139,9 @@ const Home: React.FC = () => {
               <PaymentAnalysis days={days} type={costType} />
             </div>
 
+            {costType === "pay" && <Expenditure />}
+            {costType === "income" && <Income />}
+
             {/* {statistics.?.map((detail, index) => (
               <CostCard
                 key={detail.id}
@@ -155,9 +158,9 @@ const Home: React.FC = () => {
       </PageContent>
       {!token && <NotloggedIn />}
 
-      <Fab position="right-bottom" slot="fixed" text="" color="white" href="/book-keeping">
+      {/* <Fab position="right-bottom" slot="fixed" text="" color="white" href="/book-keeping">
         <Icons name="notepad-01" className="row-span-1-2 col-span-1-2" />
-      </Fab>
+      </Fab> */}
     </Page>
   );
 };

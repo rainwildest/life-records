@@ -115,7 +115,7 @@ const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
     <Page noToolbar pageContent={true}>
       <Navbar backLink noHairline title="资金计划">
         <NavRight className="link">
-          <Icons name="add" className="svg-icon-26 px-2" onClick={onCreatePlan} />
+          <Icons name="add-01" className="svg-icon-26 px-2" onClick={onCreatePlan} />
         </NavRight>
       </Navbar>
 

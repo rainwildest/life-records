@@ -1,3 +1,5 @@
 import PaymentAnalysis from "./PaymentAnalysis";
+import Expenditure from "./Expenditure";
+import Income from "./Income";
 
-export { PaymentAnalysis };
+export { Expenditure, Income, PaymentAnalysis };
