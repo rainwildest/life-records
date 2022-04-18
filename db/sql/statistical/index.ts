@@ -226,11 +226,21 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
   const orm = await knex();
 
   return orm("cost_details AS t1")
-    .select(orm.raw(`to_char(purchase_time, '${groupFormat}') as purchase_time, COUNT(*) AS total`))
+    .select(
+      orm.raw(
+        `to_char(purchase_time, '${groupFormat}') as purchase_time, 
+        COUNT(*) AS total, 
+        SUM(CASE WHEN t2.expense_type='${type}' THEN t1.amounts ELSE 0 END) AS amounts`
+      )
+    )
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
     .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
     .whereNull("t1.deleted_at")
     .groupByRaw(`to_char(t1.purchase_time, '${groupFormat}')`)
-    .then((rows: any[]) => (rows?.length ? rows[0].total || 0 : 0));
+    .then((rows: any[]) => {
+      if (rows?.length) return groupFormat.length > 2 ? rows : rows[0].total || 0;
+
+      return null;
+    });
 };

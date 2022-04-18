@@ -34,4 +34,14 @@ export const toISOString = (time: string | number | Date | dayjs.Dayjs): string 
  */
 export const getCurrentDate = (format = "YYYY-MM-DD"): string => dayjs().format(format);
 
+/**
+ * @description 获取当月天数
+ * @param {string | number | Date | dayjs.Dayjs} date
+ * @returns
+ */
+export const getDaysInMonth = (date?: string | number | Date | dayjs.Dayjs): number => {
+  const $time = date ? date : getCurrentDate();
+
+  return dayjs($time).daysInMonth();
+};
 export default dayjs;

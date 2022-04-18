@@ -2,11 +2,13 @@ type StatisticalDetails {
   pay: Int
   income: Int
   total(input: StatisticalDetailsOptions): Int
+  totalDetails(input: StatisticalDetailsOptions): [TotalField]
   details(input: StatisticalDetailsOptions): [CostDetails]
 }
 
 type TotalField {
   total: Int
+  amounts: Int
   purchaseTime: String
 }
 

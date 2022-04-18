@@ -40,7 +40,8 @@ export const custom = {
   },
   StatisticalDetails: {
     details: statisticalData,
-    total: statisticalCostTotal
+    total: statisticalCostTotal,
+    totalDetails: statisticalCostTotal
   },
   FundPlan: {
     user: userid,
