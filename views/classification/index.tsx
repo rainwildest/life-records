@@ -1,7 +1,7 @@
 import React from "react";
 import { RouterOpotions } from "typings/f7-route";
 import { Page, PageContent, Navbar, NavTitle, Segmented, Button, Tabs, Tab } from "framework7-react";
-import { Income, Pay } from "./components";
+import { Income, Expenditure } from "./components";
 
 const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
   const onNavigate = (type: string, event?: any) => {
@@ -33,7 +33,7 @@ const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
       <PageContent className="pb-0">
         <Tabs animated className="">
           <Tab id="tab-pay" className="overflow-auto">
-            <Pay f7router={f7router} onNavigate={(event) => onNavigate("pay", event)} />
+            <Expenditure f7router={f7router} onNavigate={(event) => onNavigate("pay", event)} />
           </Tab>
           <Tab id="tab-income">
             <Income f7router={f7router} onNavigate={() => onNavigate("income", event)} />

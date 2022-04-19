@@ -5,6 +5,9 @@ module.exports = {
     extend: {
       maxHeight: {
         50.5: "12.625rem" /*202px*/
+      },
+      minHeight: {
+        50.5: "12.625rem" /*202px*/
       }
     }
   },

@@ -34,7 +34,7 @@ const Expenditure: React.FC = () => {
     <div className="shadow-3 rounded-lg mt-8 pt-3 pb-4">
       <div className="font-medium text-base mb-3 px-4">支付分类</div>
 
-      <div className={`px-2 overflow-hidden ${!showAll ? "max-h-50.5" : "h-auto"}`}>
+      <div className={`px-2 overflow-hidden min-h-50.5 ${!showAll ? "max-h-50.5" : "h-auto"}`}>
         {!percentageDetails.length && <ClassificationEmpty text="暂无支出分类" />}
 
         {percentageDetails.map((item) => {

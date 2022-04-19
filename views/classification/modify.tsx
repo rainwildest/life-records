@@ -19,8 +19,8 @@ const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
   const [createLivingExpensesMutation] = useCreateLivingExpensesMutation();
   const [modifyLivingExpensesMutation] = useModifyLivingExpensesMutation();
 
-  const payIcons = ["calendar", "书籍", "add", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
-  const incomeIcons = ["calendar", "书籍", "add", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
+  const payIcons = ["calendar", "书籍", "add-01", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
+  const incomeIcons = ["calendar", "书籍", "add-01", "amounts", "avatar-01", "avatar-02", "avatar-03", "avatar-04"];
 
   const icons = type === "pay" ? payIcons : incomeIcons;
 

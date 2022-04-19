@@ -1,4 +1,4 @@
 import Income from "./Income";
-import Pay from "./Pay";
+import Expenditure from "./Expenditure";
 
-export { Income, Pay };
+export { Income, Expenditure };

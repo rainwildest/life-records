@@ -31,7 +31,10 @@ const Pay: React.FC<RouterOpotions & PayOptons> = ({ f7router, onNavigate }) => 
             </div>
           )}
 
-          <Icons name="calendar" className="svg-icon-30 pointer-events-none" />
+          <Icons
+            name={item.expenseIcon || "default-01"}
+            className={`svg-icon-30 pointer-events-none ${!item.expenseIcon ? "default-icon-color" : ""}`}
+          />
           <div className="text-xs mt-1 pointer-events-none">{item.expenseName}</div>
         </div>
       ))}

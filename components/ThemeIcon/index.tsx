@@ -43,7 +43,10 @@ const ThemeIcon: React.FC<ThemeIconOptions> = () => {
   };
 
   return (
-    <div className={`${themeContainerClass}theme-container grid grid-cols-1 pl-4`} onClick={onThemeChange}>
+    <div
+      className={`${themeContainerClass} shadow-2 shadow-active-2 rounded-md p-1 mr-2 svg-icon-36 theme-container grid grid-cols-1`}
+      onClick={onThemeChange}
+    >
       <Icons name="moon" className={`${themeMoon}`} />
       <Icons name="sunlight" className={`${themeSunlight}`} />
     </div>

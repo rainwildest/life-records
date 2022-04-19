@@ -41,8 +41,11 @@ const ExpensesItem: React.FC<ExpensesItemOption> = ({ type, data, onSelected }) 
                     onSelected && onSelected({ [type]: item });
                   }}
                 >
-                  <Icons name="calendar" className="svg-icon-30 pointer-events-none" />
-                  <p className="text-xs pt-1.5 pointer-events-none">{item.expenseName}</p>
+                  <Icons
+                    name={item.expenseIcon || "default-01"}
+                    className={`svg-icon-30 pointer-events-none ${!item.expenseIcon ? "default-icon-color" : ""}`}
+                  />
+                  <p className="text-xs font-medium text-gray-800 pt-1.5 pointer-events-none">{item.expenseName}</p>
                 </div>
               ))}
             </div>

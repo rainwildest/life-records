@@ -66,16 +66,27 @@ const Home: React.FC = () => {
 
   return (
     <Page pageContent={false}>
-      <Navbar noHairline large transparent>
+      <Navbar className="h-16" noHairline large transparent>
         <NavRight>
-          <Link href="/bill">
-            <Icons name="bill" className="notepad-icon" />
+          {/* 记账 */}
+          <Link href="/book-keeping" className="no-active-state">
+            <div className="flex justify-center items-center">
+              <Icons name="notepad-01" className="shadow-2 shadow-active-2 rounded-md p-1 mr-3 svg-icon-36" />
+            </div>
+          </Link>
+
+          {/* 账单 */}
+          <Link href="/bill" className="no-active-state !mx-0">
+            <div className="flex justify-center items-center">
+              <Icons name="bill" className="shadow-2 shadow-active-2 rounded-md p-1 mr-3 svg-icon-36" />
+            </div>
           </Link>
 
           <ThemeIcon />
         </NavRight>
       </Navbar>
       <PageContent
+        className="pt-32"
         ptr
         onPtrRefresh={(done) => {
           if (!token) return done();
@@ -87,7 +98,7 @@ const Home: React.FC = () => {
         }}
       >
         {!!token && (
-          <div className="px-6 pb-8">
+          <div className="px-6 pb-12">
             {/* <Amounts
               incomTitle="今日收入"
               payTitle="今日支出"

@@ -4,43 +4,43 @@ import { CostCard, Amounts } from "components";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { RouterOpotions } from "typings/f7-route";
 import { thousands, isSameDay } from "lib/apis/utils";
-import { format, relative } from "lib/apis/dayjs";
-import { useDetailsQuery } from "graphql/model/statistics.graphql";
+import { format, relative, getCurrentDate } from "lib/apis/dayjs";
+// import { useDetailsQuery } from "graphql/model/statistics.graphql";
 
 const Bill: React.FC<RouterOpotions> = () => {
-  const [picker, setPicker] = useState(null);
-  const [date, setDate] = useState("");
-  const openPicker = () => picker.open();
+  // const [picker, setPicker] = useState(null);
+  const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
+  // const openPicker = () => picker.open();
 
-  const { loading, data, refetch } = useDetailsQuery({
-    // variables: { date }
-  });
+  // const { loading, data, refetch } = useDetailsQuery({
+  //   // variables: { date }
+  // });
 
-  useEffect(() => {
-    if (!window) return;
-    const picker = DatePicker({}, (e) => {
-      setDate(e);
-    });
-    setDate(formatDatePicker(picker?.value as string[]));
-    setPicker(picker);
-  }, []);
+  // useEffect(() => {
+  //   if (!window) return;
+  //   const picker = DatePicker({}, (e) => {
+  //     setDate(e);
+  //   });
+  //   setDate(formatDatePicker(picker?.value as string[]));
+  //   setPicker(picker);
+  // }, []);
 
-  const statistics = data?.statisticalDetails || {};
-  const test = () => {
-    // updateQuery();
-  };
-  console.log(statistics);
+  // const statistics = data?.statisticalDetails || {};
+  // const test = () => {
+  //   // updateQuery();
+  // };
+  // console.log(statistics);
   return (
     <Page noToolbar pageContent={false}>
-      <Navbar noHairline backLink>
+      <Navbar className="h-12" noHairline backLink>
         <NavTitle>账单</NavTitle>
         <NavRight>
-          <Button className="w-20" large small fill onClick={openPicker}>
+          <Button className="w-20" large small fill>
             {date}
           </Button>
         </NavRight>
       </Navbar>
-      <PageContent
+      {/* <PageContent
         ptr
         onPtrRefresh={(done) => {
           setTimeout(() => {
@@ -68,7 +68,7 @@ const Bill: React.FC<RouterOpotions> = () => {
             />
           );
         })}
-      </PageContent>
+      </PageContent> */}
     </Page>
   );
 };
