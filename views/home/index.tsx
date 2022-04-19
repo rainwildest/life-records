@@ -64,8 +64,6 @@ const Home: React.FC = () => {
     "12": "十二月"
   };
 
-  console.log(getCurrentDate("MM"));
-
   return (
     <Page pageContent={false}>
       <Navbar noHairline large transparent>
