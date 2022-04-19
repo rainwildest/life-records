@@ -26,7 +26,8 @@ const Home: React.FC = () => {
         ...fields,
         groupFormat: "MM-DD"
       }
-    }
+    },
+    fetchPolicy: "network-only"
   });
 
   const statistics = data?.statisticalCostDetails || {};
