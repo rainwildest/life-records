@@ -1,10 +1,13 @@
-import React, { memo } from "react";
+import React, { useState, Fragment, memo } from "react";
 import { useExpenditureQuery } from "graphql/model/statistics.graphql";
 import { getCurrentDate } from "lib/apis/dayjs";
 import { percentage } from "lib/apis/utils";
 import ClassificationDetails from "../ClassificationDetails";
+import ClassificationEmpty from "../ClassificationEmpty";
 
 const Expenditure: React.FC = () => {
+  const [showAll, setShowAll] = useState(false);
+
   const { data } = useExpenditureQuery({
     variables: { date: getCurrentDate("YYYY-MM") }
   });
@@ -23,11 +26,17 @@ const Expenditure: React.FC = () => {
     };
   });
 
+  const onShowAll = () => {
+    setShowAll(!showAll);
+  };
+
   return (
     <div className="shadow-3 rounded-lg mt-8 pt-3 pb-4">
       <div className="font-medium text-base mb-3 px-4">支付分类</div>
 
-      <div className="px-2 overflow-hidden max-h-50.5">
+      <div className={`px-2 overflow-hidden ${!showAll ? "max-h-50.5" : "h-auto"}`}>
+        {!percentageDetails.length && <ClassificationEmpty text="暂无支出分类" />}
+
         {percentageDetails.map((item) => {
           return (
             <ClassificationDetails
@@ -40,7 +49,13 @@ const Expenditure: React.FC = () => {
           );
         })}
       </div>
-      <div className="text-center text-sm text-gray-700 py-2 rounded-lg mx-4 mt-3 shadow-2 shadow-active-2">展开全部</div>
+      {percentageDetails.length > 3 && (
+        <div className="text-center text-sm text-gray-700 py-2 rounded-lg mx-4 mt-3 shadow-2 shadow-active-2" onClick={onShowAll}>
+          <span>{!showAll ? "展开全部" : "收取全部"}</span>
+          {!showAll && <i className="f7-icons !text-sm pl-1">chevron_down</i>}
+          {showAll && <i className="f7-icons !text-sm pl-1">chevron_up</i>}
+        </div>
+      )}
     </div>
   );
 };
