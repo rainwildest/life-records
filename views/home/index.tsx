@@ -122,7 +122,7 @@ const Home: React.FC = () => {
               <div className="flex justify-between px-5 h-7">
                 <div>
                   <div className="inline-block font-medium text-base">{costType === "pay" ? "我的支出" : "我的收入"}</div>
-                  <span className="text-xs text-gray-500 pl-1">共计 {statistics?.total || 0} 笔</span>
+                  <span className="text-xs text-gray-500 pl-1">共计 {thousands(statistics?.total) || 0} 笔</span>
                 </div>
 
                 <div>

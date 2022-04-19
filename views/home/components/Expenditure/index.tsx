@@ -1,7 +1,7 @@
 import React, { useState, Fragment, memo } from "react";
 import { useExpenditureQuery } from "graphql/model/statistics.graphql";
 import { getCurrentDate } from "lib/apis/dayjs";
-import { percentage } from "lib/apis/utils";
+import { percentage, thousands } from "lib/apis/utils";
 import ClassificationDetails from "../ClassificationDetails";
 import ClassificationEmpty from "../ClassificationEmpty";
 
@@ -42,7 +42,7 @@ const Expenditure: React.FC = () => {
             <ClassificationDetails
               name={item.name}
               icon={item.icon}
-              amount={item.amount}
+              amount={thousands(item.amount)}
               progress={item.progress}
               key={item.name}
             />

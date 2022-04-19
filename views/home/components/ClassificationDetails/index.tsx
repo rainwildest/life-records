@@ -6,7 +6,7 @@ type ClassificationDetailsProps = {
   name?: string;
   icon?: string;
   progress?: number;
-  amount?: number;
+  amount?: number | string;
 };
 
 const ClassificationDetails: React.FC<ClassificationDetailsProps> = ({ name, icon, amount, progress }) => {
