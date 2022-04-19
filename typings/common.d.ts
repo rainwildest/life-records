@@ -21,10 +21,11 @@ declare type IDSQLSnakeOptions = {
 };
 
 declare type DateAndIdSQLFieldOption = DateSQLOptions & IDSQLOptions;
-declare type DateAndIdSQLFieldSnakeOption = DateSQLSnakeOptions &
-  IDSQLSnakeOptions;
+declare type DateAndIdSQLFieldSnakeOption = DateSQLSnakeOptions & IDSQLSnakeOptions;
 
 declare type GraphqlContext = {
   user?: UserSnakeOptions & DateAndIdSQLFieldSnakeOption;
   loaders?: { user?: any };
 };
+
+declare type AmountType = { pay: string; income: string };

@@ -11,6 +11,7 @@ import InputField from "./InputField";
 import Layout from "./Layout";
 import NotloggedIn from "./NotloggedIn";
 import SheetDatePicker from "./SheetDatePicker";
+import SheetModalPicker from "./SheetModalPicker";
 import ThemeIcon from "./ThemeIcon";
 
 export {
@@ -27,5 +28,6 @@ export {
   Layout,
   NotloggedIn,
   SheetDatePicker,
-  ThemeIcon
+  ThemeIcon,
+  SheetModalPicker
 };

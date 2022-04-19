@@ -6,7 +6,6 @@ import { relative, getCurrentDate, getDaysInMonth } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
 import { Income, Expenditure, PaymentAnalysis } from "./components";
 
-type AmountType = { pay: string; income: string };
 const Home: React.FC = () => {
   const token = useStore("token");
 

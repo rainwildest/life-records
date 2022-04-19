@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Page, PageContent, Button, Navbar, NavTitle, NavRight, BlockTitle } from "framework7-react";
-import { CostCard, Amounts } from "components";
+import { CostCard, Amounts, SheetModalPicker, SheetDatePicker } from "components";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { RouterOpotions } from "typings/f7-route";
 import { thousands, isSameDay } from "lib/apis/utils";
 import { format, relative, getCurrentDate } from "lib/apis/dayjs";
+import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 // import { useDetailsQuery } from "graphql/model/statistics.graphql";
 
 const Bill: React.FC<RouterOpotions> = () => {
   // const [picker, setPicker] = useState(null);
   const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
+  const [costType, setCostType] = useState<keyof AmountType>("pay");
+
+  // const [expenseDisplay, setExpenseDisplay] = useState([""]);
+  const [typeName, setTypeName] = useState("全部");
+  // const [expenseIds, setExpenseIds] = useState([""]);
+  const expenseId = useRef("");
+
+  const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
+  const [sheetDateOpened, setSheetDateOpened] = useState(false);
   // const openPicker = () => picker.open();
 
   // const { loading, data, refetch } = useDetailsQuery({
@@ -30,31 +40,115 @@ const Bill: React.FC<RouterOpotions> = () => {
   //   // updateQuery();
   // };
   // console.log(statistics);
+  const { data: expenseData } = useLivingExpensesQuery({
+    variables: { type: costType },
+    fetchPolicy: "network-only"
+  });
+  const expense = expenseData?.livingExpenses || [];
+
+  const expenseIds = [""];
+  const expenseDisplays = ["全部"];
+  expense.forEach((item) => {
+    expenseIds.push(item.id);
+    expenseDisplays.push(item.expenseName);
+  });
+
+  const onSetCostType = (e: any) => {
+    const target = e.target as HTMLDivElement;
+    const type = target.getAttribute("data-type");
+
+    setCostType(type as keyof AmountType);
+  };
+
+  const onTypeConfirm = (values, indexs) => {
+    const name = expenseDisplays[indexs[0]];
+    expenseId.current = values[0];
+    setTypeName(name);
+  };
+
+  const onToggleTypeSheet = () => {
+    setSheetTypeOpened(!sheetTypeOpened);
+  };
+  const onOpenedDateSheet = () => {
+    setSheetDateOpened(true);
+  };
+
+  const onDateSheetClosed = () => {
+    console.log("sdfsd");
+    setSheetDateOpened(false);
+  };
+
+  const onConfirmDateSheet = (e: string) => {
+    setDate(e);
+  };
   return (
     <Page noToolbar pageContent={false}>
       <Navbar className="h-12" noHairline backLink>
         <NavTitle>账单</NavTitle>
-        {/* <NavRight>
-          <Button className="w-20" large small fill>
+        <NavRight>
+          {/* <Button className="w-20" large small fill>
             {date}
-          </Button>
-        </NavRight> */}
+          </Button> */}
+          <div
+            className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1.5 rounded-md items-center"
+            onClick={onOpenedDateSheet}
+          >
+            <span>{date}</span>
+            <div className="ml-2 w-0 h-0 triangle" />
+          </div>
+        </NavRight>
       </Navbar>
       <PageContent>
-        <BlockTitle className="px-6 mx-0 mt-10 mb-0 flex justify-between items-center text-gray-700 text-xl overflow-visible">
-          账单列表
+        <BlockTitle className="px-6 mx-0 mt-10 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
+          {/*  */}
+          {/* <span>账单列表</span> */}
           <div className="flex items-center">
-            <div className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center mr-3">
-              <span>{date}</span>
-              <div className="ml-2 w-0 h-0 triangle" />
+            <div
+              data-type="pay"
+              className={`${costType === "pay" ? "shadow-inset-2" : "shadow-3"} rounded-md px-4 py-1 text-xs`}
+              onClick={onSetCostType}
+            >
+              支付
+            </div>
+            <div
+              data-type="income"
+              className={`${costType === "income" ? "shadow-inset-2" : "shadow-3"} rounded-md px-4 py-1 text-xs mx-4`}
+              onClick={onSetCostType}
+            >
+              收入
             </div>
 
-            <div className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center">
-              <span>全部</span>
+            <div
+              onClick={onToggleTypeSheet}
+              className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center"
+            >
+              <span>{typeName}</span>
               <div className="ml-2 w-0 h-0 triangle" />
             </div>
           </div>
         </BlockTitle>
+
+        <SheetModalPicker
+          sheetOpened={sheetTypeOpened}
+          cols={[
+            {
+              textAlign: "center",
+              displayValues: expenseDisplays,
+              values: expenseIds
+            }
+          ]}
+          onConfirm={onTypeConfirm}
+          onSheetClosed={onToggleTypeSheet}
+        />
+
+        <SheetDatePicker
+          date={date}
+          isCurrnetYear={true}
+          isCurrentMonth={true}
+          sheetOpened={sheetDateOpened}
+          onSheetClosed={onDateSheetClosed}
+          onConfirm={onConfirmDateSheet}
+        />
       </PageContent>
       {/* <PageContent
         ptr

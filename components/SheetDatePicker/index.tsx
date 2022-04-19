@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef, memo } from "react";
 import { f7, Sheet } from "framework7-react";
 
 /**
@@ -6,7 +6,7 @@ import { f7, Sheet } from "framework7-react";
  * @param {boolean} isCurrnetYear 只到当前年
  * @param {boolean} isCurrentMonth 只到当前月
  * @param {boolean} sheetOpened 打开或关闭日期选择器
- * @param {Function} onCloseSheet 关闭回调
+ * @param {Function} onSheetClosed 关闭回调
  * @param {Function} onConfirm 确认回到
  */
 type SheetProps = {
@@ -14,7 +14,7 @@ type SheetProps = {
   isCurrnetYear?: boolean;
   isCurrentMonth?: boolean;
   sheetOpened?: boolean;
-  onCloseSheet?: () => void;
+  onSheetClosed?: () => void;
   onConfirm?: (value: string) => void;
 };
 
@@ -75,18 +75,24 @@ const SheetModalPicker: React.FC<SheetProps> = ({
   isCurrnetYear = false,
   isCurrentMonth = false,
   sheetOpened = false,
-  onCloseSheet,
+  onSheetClosed,
   onConfirm
 }) => {
   const picker = useRef(null);
+  const yearMonth = useRef(null);
+  const fullYear = useRef(null);
   const $date = useRef<string | null>(date || "");
+  const hasConfirm = useRef(false);
+  const insideClosed = useRef(false);
+  const [dateType, setDateType] = useState("year-month");
 
   const onConfirmPicker = () => {
     const value = formatDate(picker.current.value);
     $date.current = value;
+    hasConfirm.current = true;
 
     !!onConfirm && onConfirm(value);
-    !!onCloseSheet && onCloseSheet();
+    !!onSheetClosed && onSheetClosed();
   };
 
   useEffect(() => {
@@ -104,7 +110,7 @@ const SheetModalPicker: React.FC<SheetProps> = ({
     }
 
     picker.current = f7.picker.create({
-      containerEl: picker.current,
+      containerEl: yearMonth.current,
       toolbar: false,
       rotateEffect: true,
       value: [year, month],
@@ -120,36 +126,77 @@ const SheetModalPicker: React.FC<SheetProps> = ({
       ]
     });
 
-    return () => {
-      !!onCloseSheet && onCloseSheet();
-    };
+    // return () => {};
   }, [sheetOpened]);
+
+  const onInsideSheetClosed = () => {
+    console.log("dfff", !!onSheetClosed && !hasConfirm.current);
+    !!onSheetClosed && !hasConfirm.current && onSheetClosed();
+
+    insideClosed.current = true;
+    hasConfirm.current = false;
+  };
+
+  const onTypeSwitch = () => {
+    console.log("dfsdjkfl", dateType);
+    setDateType(dateType === "year-month" ? "full-year" : "year-month");
+    // picker.current.cols = [{ ...getYearsColumn(isCurrnetYear) }];
+  };
+
+  useEffect(() => {
+    if (!window && dateType === "full-month") return;
+    console.log("sdfsdfsdfsdfsdfsdfsdfs");
+    const today = new Date();
+    let year = today.getFullYear();
+
+    if ($date.current) {
+      const split = $date.current.split("-");
+
+      year = parseInt(split[0]);
+    }
+
+    picker.current = f7.picker.create({
+      containerEl: fullYear.current,
+      toolbar: false,
+      rotateEffect: true,
+      value: [year],
+      cols: [
+        // Years
+        { ...getYearsColumn(isCurrnetYear) }
+      ]
+    });
+  }, [dateType]);
 
   return (
     <Sheet
       backdrop
-      className="sheet-picker-date h-auto pb-5 rounded-t-xl overflow-hidden"
+      className="sheet-picker-date h-auto pb-5 rounded-t-xl"
       opened={sheetOpened}
-      onSheetClosed={onCloseSheet}
+      onSheetClosed={onInsideSheetClosed}
     >
-      <div className="flex justify-between px-4 pb-3 pt-3 border-b border-solid border-gray-50 dark:border-zinc-700 mb-5">
-        <div
-          className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-6 rounded-lg text-blue-500"
-          onClick={onConfirmPicker}
-        >
+      <div className="flex justify-between px-4 pb-5 pt-3">
+        <div className="shadow-active-2 h-8 flex items-center text-sm px-6 rounded-lg text-blue-500" onClick={onConfirmPicker}>
           确 认
         </div>
+        <div className="shadow-2 shadow-active-2 text-sm rounded-md flex items-center justify-center px-6" onClick={onTypeSwitch}>
+          全年
+        </div>
         <div
-          className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-6 rounded-lg text-gray-700 dark:text-white"
-          onClick={onCloseSheet}
+          className="shadow-active-2 h-8 flex items-center text-sm px-6 rounded-lg text-gray-700 dark:text-white"
+          onClick={onSheetClosed}
         >
           取 消
         </div>
       </div>
 
-      {sheetOpened && <div ref={picker} />}
+      <div className={`${dateType === "year-month" ? "h-52" : ""}`}>
+        {sheetOpened && dateType === "year-month" && <div className="h-full" ref={yearMonth} />}
+      </div>
+      <div className={`${dateType === "full-year" ? "h-52" : ""}`}>
+        {sheetOpened && dateType === "full-year" && <div className="h-full" ref={fullYear} />}
+      </div>
     </Sheet>
   );
 };
 
-export default SheetModalPicker;
+export default memo(SheetModalPicker);

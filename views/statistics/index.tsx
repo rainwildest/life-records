@@ -15,7 +15,7 @@ const Statistics: React.FC = () => {
   const [, updateState] = useState<any>();
   const forceUpdate = useCallback(() => updateState({}), []);
 
-  const onCloseSheet = () => {
+  const onSheetClosed = () => {
     setSheetOpened(false);
   };
 
@@ -64,7 +64,7 @@ const Statistics: React.FC = () => {
         isCurrnetYear={true}
         isCurrentMonth={true}
         sheetOpened={sheetOpened}
-        onCloseSheet={onCloseSheet}
+        onSheetClosed={onSheetClosed}
         onConfirm={onConfirmPicker}
       />
     </Page>
