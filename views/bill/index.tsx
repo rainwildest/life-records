@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Page, PageContent, Button, Navbar, NavTitle, NavRight } from "framework7-react";
+import { Page, PageContent, Button, Navbar, NavTitle, NavRight, BlockTitle } from "framework7-react";
 import { CostCard, Amounts } from "components";
 import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { RouterOpotions } from "typings/f7-route";
@@ -34,12 +34,28 @@ const Bill: React.FC<RouterOpotions> = () => {
     <Page noToolbar pageContent={false}>
       <Navbar className="h-12" noHairline backLink>
         <NavTitle>账单</NavTitle>
-        <NavRight>
+        {/* <NavRight>
           <Button className="w-20" large small fill>
             {date}
           </Button>
-        </NavRight>
+        </NavRight> */}
       </Navbar>
+      <PageContent>
+        <BlockTitle className="px-6 mx-0 mt-10 mb-0 flex justify-between items-center text-gray-700 text-xl overflow-visible">
+          账单列表
+          <div className="flex items-center">
+            <div className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center mr-3">
+              <span>{date}</span>
+              <div className="ml-2 w-0 h-0 triangle" />
+            </div>
+
+            <div className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center">
+              <span>全部</span>
+              <div className="ml-2 w-0 h-0 triangle" />
+            </div>
+          </div>
+        </BlockTitle>
+      </PageContent>
       {/* <PageContent
         ptr
         onPtrRefresh={(done) => {
