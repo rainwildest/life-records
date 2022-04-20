@@ -16,7 +16,6 @@ const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheet
   const insideClosed = useRef(false);
 
   const onConfirmPicker = () => {
-    // const value = formatDate(picker.current.value);
     $value.current = picker.current.value;
     hasConfirm.current = true;
 
@@ -44,6 +43,12 @@ const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheet
     onSheetClosed && onSheetClosed();
   };
 
+  const onExistenceValues = () => {
+    $value.current?.forEach((element, index) => {
+      console.log(cols);
+    });
+  };
+
   useEffect(() => {
     if (!window || !sheetOpened) return;
 
@@ -55,6 +60,13 @@ const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheet
       cols
     });
   }, [sheetOpened]);
+
+  useEffect(() => {
+    if (!$value.current) return;
+
+    const value = $value.current;
+    console.log("sdfsdf", cols, value);
+  }, [cols]);
 
   return (
     <Sheet

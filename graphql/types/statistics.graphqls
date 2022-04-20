@@ -39,6 +39,7 @@ input StatisticalDetailsOptions {
   date: String
   type: String
   format: String
+  expenseId: String
   groupFormat: String
 }
 

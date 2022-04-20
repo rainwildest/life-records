@@ -1,45 +1,27 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Page, PageContent, Button, Navbar, NavTitle, NavRight, BlockTitle } from "framework7-react";
 import { CostCard, Amounts, SheetModalPicker, SheetDatePicker } from "components";
-import DatePicker, { formatDatePicker } from "components/DatePicker";
 import { RouterOpotions } from "typings/f7-route";
 import { thousands, isSameDay } from "lib/apis/utils";
 import { format, relative, getCurrentDate } from "lib/apis/dayjs";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
-// import { useDetailsQuery } from "graphql/model/statistics.graphql";
+import { useGetCostDataDetailsQuery } from "graphql/model/statistics.graphql";
 
 const Bill: React.FC<RouterOpotions> = () => {
-  // const [picker, setPicker] = useState(null);
   const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
   const [costType, setCostType] = useState<keyof AmountType>("pay");
 
-  // const [expenseDisplay, setExpenseDisplay] = useState([""]);
   const [typeName, setTypeName] = useState("全部");
-  // const [expenseIds, setExpenseIds] = useState([""]);
   const expenseId = useRef("");
 
   const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
-  // const openPicker = () => picker.open();
 
-  // const { loading, data, refetch } = useDetailsQuery({
-  //   // variables: { date }
-  // });
+  const { loading, data, refetch } = useGetCostDataDetailsQuery({
+    variables: { input: { date, type: costType, expenseId: expenseId.current } }
+  });
+  console.log(data);
 
-  // useEffect(() => {
-  //   if (!window) return;
-  //   const picker = DatePicker({}, (e) => {
-  //     setDate(e);
-  //   });
-  //   setDate(formatDatePicker(picker?.value as string[]));
-  //   setPicker(picker);
-  // }, []);
-
-  // const statistics = data?.statisticalDetails || {};
-  // const test = () => {
-  //   // updateQuery();
-  // };
-  // console.log(statistics);
   const { data: expenseData } = useLivingExpensesQuery({
     variables: { type: costType },
     fetchPolicy: "network-only"
@@ -48,6 +30,7 @@ const Bill: React.FC<RouterOpotions> = () => {
 
   const expenseIds = [""];
   const expenseDisplays = ["全部"];
+
   expense.forEach((item) => {
     expenseIds.push(item.id);
     expenseDisplays.push(item.expenseName);
@@ -56,6 +39,11 @@ const Bill: React.FC<RouterOpotions> = () => {
   const onSetCostType = (e: any) => {
     const target = e.target as HTMLDivElement;
     const type = target.getAttribute("data-type");
+
+    if (costType !== type) {
+      expenseId.current = "";
+      setTypeName("全部");
+    }
 
     setCostType(type as keyof AmountType);
   };
@@ -69,29 +57,23 @@ const Bill: React.FC<RouterOpotions> = () => {
   const onToggleTypeSheet = () => {
     setSheetTypeOpened(!sheetTypeOpened);
   };
-  const onOpenedDateSheet = () => {
-    setSheetDateOpened(true);
-  };
 
-  const onDateSheetClosed = () => {
-    console.log("sdfsd");
-    setSheetDateOpened(false);
+  const onToggledDateSheet = () => {
+    setSheetDateOpened(!sheetDateOpened);
   };
 
   const onConfirmDateSheet = (e: string) => {
     setDate(e);
   };
+
   return (
     <Page noToolbar pageContent={false}>
       <Navbar className="h-12" noHairline backLink>
         <NavTitle>账单</NavTitle>
         <NavRight>
-          {/* <Button className="w-20" large small fill>
-            {date}
-          </Button> */}
           <div
             className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1.5 rounded-md items-center"
-            onClick={onOpenedDateSheet}
+            onClick={onToggledDateSheet}
           >
             <span>{date}</span>
             <div className="ml-2 w-0 h-0 triangle" />
@@ -99,9 +81,7 @@ const Bill: React.FC<RouterOpotions> = () => {
         </NavRight>
       </Navbar>
       <PageContent>
-        <BlockTitle className="px-6 mx-0 mt-10 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
-          {/*  */}
-          {/* <span>账单列表</span> */}
+        <section className="px-6 mx-0 mt-10 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
           <div className="flex items-center">
             <div
               data-type="pay"
@@ -126,7 +106,7 @@ const Bill: React.FC<RouterOpotions> = () => {
               <div className="ml-2 w-0 h-0 triangle" />
             </div>
           </div>
-        </BlockTitle>
+        </section>
 
         <SheetModalPicker
           sheetOpened={sheetTypeOpened}
@@ -146,7 +126,7 @@ const Bill: React.FC<RouterOpotions> = () => {
           isCurrnetYear={true}
           isCurrentMonth={true}
           sheetOpened={sheetDateOpened}
-          onSheetClosed={onDateSheetClosed}
+          onSheetClosed={onToggledDateSheet}
           onConfirm={onConfirmDateSheet}
         />
       </PageContent>

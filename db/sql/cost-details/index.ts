@@ -103,3 +103,31 @@ export const getCostDetailsByDate = async (args: any = {}): Promise<CostDetailsS
     .orderBy("t1.purchase_time", "DESC")
     .then((rows: any[]) => (rows.length ? rows : null));
 };
+
+/**
+ * 获取年、月、日数据
+ * @method getCostDetailsByDate
+ * @param {object} args
+ *  @value string userId 用户id
+ *  @value string type 费用类型
+ *  @value string date 年份或年月
+ *  @value string expenseId 消费类型 id
+ *  @value string format 年份/年月/年月日的格式(YYYY || YYYY-MM || YYYY-MM-DD)
+ * @returns Promise
+ */
+export const getCostDetailsByDateAndExpenseId = async (
+  args: any = {}
+): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  const { userId, type = "pay", date, format, expenseId } = args;
+  const orm = await knex();
+
+  return orm("cost_details AS t1")
+    .select(["t1.*"])
+    .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
+    .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
+    .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
+    .andWhere({ "t2.id": expenseId })
+    .whereNull("t1.deleted_at")
+    .orderBy("t1.purchase_time", "DESC")
+    .then((rows: any[]) => (rows.length ? rows : null));
+};
