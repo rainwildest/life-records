@@ -44,13 +44,21 @@ const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheet
   };
 
   const onExistenceValues = () => {
+    const $values = [];
+
     $value.current?.forEach((element, index) => {
-      console.log(cols);
+      const col = cols[index].values;
+      const val = col.find((item) => item === $value.current[index]);
+
+      $values.push(val ? val : col[index]);
     });
+
+    $value.current = !$values.length ? null : $values;
   };
 
   useEffect(() => {
     if (!window || !sheetOpened) return;
+    onExistenceValues();
 
     picker.current = f7.picker.create({
       containerEl: picker.current,
@@ -60,13 +68,6 @@ const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheet
       cols
     });
   }, [sheetOpened]);
-
-  useEffect(() => {
-    if (!$value.current) return;
-
-    const value = $value.current;
-    console.log("sdfsdf", cols, value);
-  }, [cols]);
 
   return (
     <Sheet
