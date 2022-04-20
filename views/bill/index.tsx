@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, memo } from "react";
 import { Page, PageContent, Button, Navbar, NavTitle, NavRight, BlockTitle } from "framework7-react";
 import { CostCard, Amounts, SheetModalPicker, SheetDatePicker } from "components";
 import { RouterOpotions } from "typings/f7-route";
@@ -8,11 +8,12 @@ import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { useGetCostDataDetailsQuery } from "graphql/model/statistics.graphql";
 
 const Bill: React.FC<RouterOpotions> = () => {
+  const expenseId = useRef("");
+
   const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
   const [costType, setCostType] = useState<keyof AmountType>("pay");
 
   const [typeName, setTypeName] = useState("全部");
-  const expenseId = useRef("");
 
   const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
@@ -20,18 +21,18 @@ const Bill: React.FC<RouterOpotions> = () => {
   const { loading, data, refetch } = useGetCostDataDetailsQuery({
     variables: { input: { date, type: costType, expenseId: expenseId.current } }
   });
-  console.log(data);
-
+  const costDetails = data?.statisticalCostDetails;
+  console.log(costDetails);
   const { data: expenseData } = useLivingExpensesQuery({
     variables: { type: costType },
     fetchPolicy: "network-only"
   });
-  const expense = expenseData?.livingExpenses || [];
+  const expense = expenseData?.livingExpenses;
 
   const expenseIds = [""];
   const expenseDisplays = ["全部"];
 
-  expense.forEach((item) => {
+  expense?.forEach((item) => {
     expenseIds.push(item.id);
     expenseDisplays.push(item.expenseName);
   });
@@ -81,7 +82,7 @@ const Bill: React.FC<RouterOpotions> = () => {
         </NavRight>
       </Navbar>
       <PageContent>
-        <section className="px-6 mx-0 mt-10 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
+        <section className="px-6 mx-0 pt-7 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
           <div className="flex items-center">
             <div
               data-type="pay"
@@ -108,6 +109,25 @@ const Bill: React.FC<RouterOpotions> = () => {
           </div>
         </section>
 
+        <section className="px-5">
+          {costDetails?.details?.map((detail) => {
+            const _isSameDay = isSameDay(detail.purchaseTime);
+            const _fun = _isSameDay ? relative : format;
+
+            return (
+              <CostCard
+                key={detail.id}
+                type={detail.expense.expenseType}
+                typeName={detail.expense.expenseName}
+                time={_fun(detail.purchaseTime)}
+                amounts={thousands(detail.amounts)}
+                remarks={detail.remarks}
+                className="mt-8"
+              />
+            );
+          })}
+        </section>
+
         <SheetModalPicker
           sheetOpened={sheetTypeOpened}
           cols={[
@@ -123,6 +143,7 @@ const Bill: React.FC<RouterOpotions> = () => {
 
         <SheetDatePicker
           date={date}
+          hasFullYears={true}
           isCurrnetYear={true}
           isCurrentMonth={true}
           sheetOpened={sheetDateOpened}
@@ -163,4 +184,4 @@ const Bill: React.FC<RouterOpotions> = () => {
   );
 };
 
-export default Bill;
+export default memo(Bill);

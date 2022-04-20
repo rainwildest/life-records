@@ -14,7 +14,6 @@ export default (_parent: unknown, args: GetCostTotalDetailsQueryVariables, conte
   const params = args.input;
   const date: string = params?.date || "";
 
-  console.log(args);
   let format = "";
   if (date.length && !params.format) format = autoFormatDate(date);
   /* 按日期搜索 */

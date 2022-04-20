@@ -11,9 +11,10 @@ import { f7, Sheet } from "framework7-react";
  */
 type SheetProps = {
   date?: string;
+  sheetOpened?: boolean;
+  hasFullYears?: boolean;
   isCurrnetYear?: boolean;
   isCurrentMonth?: boolean;
-  sheetOpened?: boolean;
   onSheetClosed?: () => void;
   onConfirm?: (value: string) => void;
 };
@@ -72,6 +73,7 @@ const getMonthsColumn = (isCurrnet = false) => {
 
 const SheetModalPicker: React.FC<SheetProps> = ({
   date,
+  hasFullYears = false,
   isCurrnetYear = false,
   isCurrentMonth = false,
   sheetOpened = false,
@@ -190,10 +192,17 @@ const SheetModalPicker: React.FC<SheetProps> = ({
         <div className="shadow-active-2 h-8 flex items-center text-sm px-6 rounded-lg text-blue-500" onClick={onConfirmPicker}>
           确 认
         </div>
-        <div className="shadow-2 shadow-active-2 text-sm rounded-md flex items-center justify-center px-6" onClick={onTypeSwitch}>
-          {dateType === "year-month" && "全年"}
-          {dateType === "full-year" && "年月"}
-        </div>
+
+        {hasFullYears && (
+          <div
+            className="shadow-2 shadow-active-2 text-sm rounded-md flex items-center justify-center px-6"
+            onClick={onTypeSwitch}
+          >
+            {dateType === "year-month" && "全年"}
+            {dateType === "full-year" && "年月"}
+          </div>
+        )}
+
         <div
           className="shadow-active-2 h-8 flex items-center text-sm px-6 rounded-lg text-gray-700 dark:text-white"
           onClick={onCancelClosed}
