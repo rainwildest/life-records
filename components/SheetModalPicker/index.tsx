@@ -12,17 +12,36 @@ type SheetModalPickerProps = {
 const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheetOpened, onConfirm, onSheetClosed }) => {
   const picker = useRef(null);
   const $value = useRef(null);
+  const hasConfirm = useRef(false);
+  const insideClosed = useRef(false);
 
   const onConfirmPicker = () => {
     // const value = formatDate(picker.current.value);
     $value.current = picker.current.value;
-    console.log();
+    hasConfirm.current = true;
+
     const indexs = [];
     picker.current.cols.forEach((item) => {
       indexs.push(item.activeIndex);
     });
+
     !!onConfirm && onConfirm(picker.current.value, indexs);
     !!onSheetClosed && onSheetClosed();
+  };
+
+  const onInsideSheetClosed = () => {
+    const hasClose = !!onSheetClosed && !hasConfirm.current && !insideClosed.current;
+
+    hasClose && onSheetClosed();
+
+    insideClosed.current = false;
+    hasConfirm.current = false;
+  };
+
+  const onCancelClosed = () => {
+    insideClosed.current = true;
+
+    onSheetClosed && onSheetClosed();
   };
 
   useEffect(() => {
@@ -35,10 +54,6 @@ const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheet
       value: $value.current || values,
       cols
     });
-
-    // return () => {
-    //   !!onSheetClosed && onSheetClosed();
-    // };
   }, [sheetOpened]);
 
   return (
@@ -46,7 +61,7 @@ const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheet
       backdrop
       className="sheet-picker-date h-auto pb-5 rounded-t-xl overflow-hidden"
       opened={sheetOpened}
-      onSheetClosed={onSheetClosed}
+      onSheetClosed={onInsideSheetClosed}
     >
       <div className="flex justify-between px-4 pb-3 pt-3 mb-5">
         <div
@@ -57,7 +72,7 @@ const SheetModalPicker: React.FC<SheetModalPickerProps> = ({ cols, values, sheet
         </div>
         <div
           className="shadow-bg-white-3 shadow-bg-white-active-3 h-8 flex items-center text-sm px-6 rounded-lg text-gray-700 dark:text-white"
-          onClick={onSheetClosed}
+          onClick={onCancelClosed}
         >
           取 消
         </div>

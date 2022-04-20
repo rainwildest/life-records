@@ -95,9 +95,26 @@ const SheetModalPicker: React.FC<SheetProps> = ({
     !!onSheetClosed && onSheetClosed();
   };
 
-  useEffect(() => {
-    if (!window || !sheetOpened) return;
+  const onInsideSheetClosed = () => {
+    const hasClose = !!onSheetClosed && !hasConfirm.current && !insideClosed.current;
 
+    hasClose && onSheetClosed();
+
+    insideClosed.current = false;
+    hasConfirm.current = false;
+  };
+
+  const onCancelClosed = () => {
+    insideClosed.current = true;
+
+    onSheetClosed && onSheetClosed();
+  };
+
+  const onTypeSwitch = () => {
+    setDateType(dateType === "year-month" ? "full-year" : "year-month");
+  };
+
+  const onDefaultValue = () => {
     const today = new Date();
     let year = today.getFullYear();
     let month = today.getMonth();
@@ -106,8 +123,14 @@ const SheetModalPicker: React.FC<SheetProps> = ({
       const split = $date.current.split("-");
 
       year = parseInt(split[0]);
-      month = parseInt(split[1]) - 1;
+      month = split[1] ? parseInt(split[1]) - 1 : month;
     }
+
+    return { year, month };
+  };
+
+  const onCreateYearMonth = () => {
+    const { year, month } = onDefaultValue();
 
     picker.current = f7.picker.create({
       containerEl: yearMonth.current,
@@ -125,35 +148,10 @@ const SheetModalPicker: React.FC<SheetProps> = ({
         { ...getMonthsColumn(isCurrentMonth) }
       ]
     });
-
-    // return () => {};
-  }, [sheetOpened]);
-
-  const onInsideSheetClosed = () => {
-    console.log("dfff", !!onSheetClosed && !hasConfirm.current);
-    !!onSheetClosed && !hasConfirm.current && onSheetClosed();
-
-    insideClosed.current = true;
-    hasConfirm.current = false;
   };
 
-  const onTypeSwitch = () => {
-    console.log("dfsdjkfl", dateType);
-    setDateType(dateType === "year-month" ? "full-year" : "year-month");
-    // picker.current.cols = [{ ...getYearsColumn(isCurrnetYear) }];
-  };
-
-  useEffect(() => {
-    if (!window && dateType === "full-month") return;
-    console.log("sdfsdfsdfsdfsdfsdfsdfs");
-    const today = new Date();
-    let year = today.getFullYear();
-
-    if ($date.current) {
-      const split = $date.current.split("-");
-
-      year = parseInt(split[0]);
-    }
+  const onCreateFullYear = () => {
+    const { year } = onDefaultValue();
 
     picker.current = f7.picker.create({
       containerEl: fullYear.current,
@@ -165,6 +163,20 @@ const SheetModalPicker: React.FC<SheetProps> = ({
         { ...getYearsColumn(isCurrnetYear) }
       ]
     });
+  };
+
+  useEffect(() => {
+    if (!window || !sheetOpened) return;
+
+    if (dateType === "full-year") onCreateFullYear();
+    if (dateType === "year-month") onCreateYearMonth();
+  }, [sheetOpened]);
+
+  useEffect(() => {
+    if (!sheetOpened) return;
+
+    if (dateType === "full-year") onCreateFullYear();
+    if (dateType === "year-month") onCreateYearMonth();
   }, [dateType]);
 
   return (
@@ -179,11 +191,12 @@ const SheetModalPicker: React.FC<SheetProps> = ({
           确 认
         </div>
         <div className="shadow-2 shadow-active-2 text-sm rounded-md flex items-center justify-center px-6" onClick={onTypeSwitch}>
-          全年
+          {dateType === "year-month" && "全年"}
+          {dateType === "full-year" && "年月"}
         </div>
         <div
           className="shadow-active-2 h-8 flex items-center text-sm px-6 rounded-lg text-gray-700 dark:text-white"
-          onClick={onSheetClosed}
+          onClick={onCancelClosed}
         >
           取 消
         </div>
