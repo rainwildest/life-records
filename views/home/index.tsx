@@ -64,6 +64,16 @@ const Home: React.FC = () => {
     "12": "十二月"
   };
 
+  const onRefresh = (done: () => void) => {
+    if (!token) return done();
+
+    setTimeout(() => {
+      Promise.all([refetch(), forceUpdate()]).then(() => {
+        done();
+      });
+    }, 500);
+  };
+
   return (
     <Page pageContent={false}>
       <Navbar className="h-16" noHairline large transparent>
@@ -85,18 +95,7 @@ const Home: React.FC = () => {
           <ThemeIcon />
         </NavRight>
       </Navbar>
-      <PageContent
-        className="pt-32"
-        ptr
-        onPtrRefresh={(done) => {
-          if (!token) return done();
-          setTimeout(() => {
-            refetch();
-            forceUpdate();
-            done();
-          }, 500);
-        }}
-      >
+      <PageContent className="pt-32" ptr onPtrRefresh={onRefresh}>
         {!!token && (
           <div className="px-6 pb-12">
             <div className="flex justify-between items-center">
