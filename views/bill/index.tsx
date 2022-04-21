@@ -1,13 +1,16 @@
 import React, { useState, useRef, memo } from "react";
-import { Page, PageContent, Navbar, NavTitle, NavRight, BlockTitle } from "framework7-react";
-import { Icons, CostCard, Amounts, SheetModalPicker, SheetDatePicker } from "components";
+import { Page, PageContent, Navbar, NavTitle, NavRight, useStore } from "framework7-react";
+import { Icons, CostCard, SheetModalPicker, SheetDatePicker } from "components";
 import { RouterOpotions } from "typings/f7-route";
 import { thousands } from "lib/apis/utils";
 import { getCurrentDate, getCalendar } from "lib/apis/dayjs";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { useGetCostDataDetailsQuery, useGetCostTotalQuery } from "graphql/model/statistics.graphql";
+import { AmountTotal } from "./components";
 
 const Bill: React.FC<RouterOpotions> = () => {
+  const token = useStore("token");
+
   const expenseId = useRef("");
 
   const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
@@ -25,11 +28,10 @@ const Bill: React.FC<RouterOpotions> = () => {
   const costDetails = data?.statisticalCostDetails;
 
   const { data: totalData, refetch: totalRefetch } = useGetCostTotalQuery({
-    variables: { input: { date, type: costType, expenseId: expenseId.current } },
+    variables: { input: { date, type: costType, expenseId: expenseId.current, groupFormat: date.length === 4 ? "YYYY" : "MM" } },
     fetchPolicy: "network-only"
   });
-
-  console.log(totalData);
+  const statistics = totalData?.statisticalCostDetails;
 
   const { data: expenseData, refetch: expenseReftch } = useLivingExpensesQuery({
     variables: { type: costType },
@@ -76,6 +78,8 @@ const Bill: React.FC<RouterOpotions> = () => {
   };
 
   const onRefresh = (done: () => void) => {
+    if (!token) return done();
+
     setTimeout(() => {
       Promise.all([refetch(), totalRefetch(), expenseReftch()]).finally(() => {
         done();
@@ -125,11 +129,11 @@ const Bill: React.FC<RouterOpotions> = () => {
           </div>
         </section>
 
-        <section className="px-5 shadow-3 rounded-lg py-3 relative overflow-hidden w-full">
-          <div>
-            <Icons name="amounts" className="amounts-icon svg-icon-30" />
-          </div>
-        </section>
+        <AmountTotal
+          type={costType}
+          total={thousands(statistics?.total || 0)}
+          amount={thousands((costType === "pay" ? statistics?.pay : statistics?.income) || 0)}
+        />
 
         <section className="px-5">
           {costDetails?.details?.map((detail) => {

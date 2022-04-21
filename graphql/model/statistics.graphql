@@ -5,6 +5,7 @@ query getCostTotal($input: StatisticalDetailsOptions) {
   statisticalCostDetails(input: $input) {
     pay
     income
+    total(input: $input)
   }
 }
 

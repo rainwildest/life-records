@@ -68,7 +68,7 @@ const Home: React.FC = () => {
     if (!token) return done();
 
     setTimeout(() => {
-      Promise.all([refetch(), forceUpdate()]).then(() => {
+      Promise.all([refetch(), forceUpdate()]).finally(() => {
         done();
       });
     }, 500);

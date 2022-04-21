@@ -44,7 +44,7 @@ const Index: React.FC<DashboardOptions> = ({ token }) => {
             <span className="tabbar-label tabbar-custom">账簿</span>
           </Link>
           <Link tabLink="#statistics" onClick={onVibrate}>
-            <Icons name="statistics" className="toolbar-icon" />
+            <Icons name="statistics-01" className="toolbar-icon" />
             <span className="tabbar-label tabbar-custom">统计</span>
           </Link>
           <Link tabLink="#mine" onClick={onVibrate}>

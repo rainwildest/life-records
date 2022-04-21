@@ -240,7 +240,8 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
     .whereNull("t1.deleted_at")
     .groupByRaw(`to_char(t1.purchase_time, '${groupFormat}')`)
     .then((rows: any[]) => {
-      if (rows?.length) return groupFormat.length > 2 ? rows : rows[0].total || 0;
+      const useArray = (groupFormat as string).includes("-");
+      if (rows?.length) return useArray ? rows : rows[0].total || 0;
 
       return null;
     });
