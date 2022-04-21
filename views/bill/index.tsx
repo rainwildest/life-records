@@ -1,11 +1,11 @@
 import React, { useState, useRef, memo } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, BlockTitle } from "framework7-react";
-import { CostCard, Amounts, SheetModalPicker, SheetDatePicker } from "components";
+import { Icons, CostCard, Amounts, SheetModalPicker, SheetDatePicker } from "components";
 import { RouterOpotions } from "typings/f7-route";
 import { thousands } from "lib/apis/utils";
 import { getCurrentDate, getCalendar } from "lib/apis/dayjs";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
-import { useGetCostDataDetailsQuery } from "graphql/model/statistics.graphql";
+import { useGetCostDataDetailsQuery, useGetCostTotalQuery } from "graphql/model/statistics.graphql";
 
 const Bill: React.FC<RouterOpotions> = () => {
   const expenseId = useRef("");
@@ -23,6 +23,13 @@ const Bill: React.FC<RouterOpotions> = () => {
     fetchPolicy: "network-only"
   });
   const costDetails = data?.statisticalCostDetails;
+
+  const { data: totalData, refetch: totalRefetch } = useGetCostTotalQuery({
+    variables: { input: { date, type: costType, expenseId: expenseId.current } },
+    fetchPolicy: "network-only"
+  });
+
+  console.log(totalData);
 
   const { data: expenseData, refetch: expenseReftch } = useLivingExpensesQuery({
     variables: { type: costType },
@@ -68,6 +75,14 @@ const Bill: React.FC<RouterOpotions> = () => {
     setDate(e);
   };
 
+  const onRefresh = (done: () => void) => {
+    setTimeout(() => {
+      Promise.all([refetch(), totalRefetch(), expenseReftch()]).finally(() => {
+        done();
+      });
+    }, 2000);
+  };
+
   return (
     <Page noToolbar pageContent={false}>
       <Navbar className="h-12" noHairline backLink>
@@ -82,18 +97,7 @@ const Bill: React.FC<RouterOpotions> = () => {
           </div>
         </NavRight>
       </Navbar>
-      <PageContent
-        ptr
-        className="pt-16"
-        onPtrRefresh={(done) => {
-          setTimeout(() => {
-            refetch();
-            expenseReftch();
-
-            done();
-          }, 2000);
-        }}
-      >
+      <PageContent ptr className="pt-16" onPtrRefresh={onRefresh}>
         <section className="px-6 mx-0 pt-5 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
           <div className="flex items-center">
             <div
@@ -118,6 +122,12 @@ const Bill: React.FC<RouterOpotions> = () => {
               <span>{typeName}</span>
               <div className="ml-2 w-0 h-0 triangle" />
             </div>
+          </div>
+        </section>
+
+        <section className="px-5 shadow-3 rounded-lg py-3 relative overflow-hidden w-full">
+          <div>
+            <Icons name="amounts" className="amounts-icon svg-icon-30" />
           </div>
         </section>
 

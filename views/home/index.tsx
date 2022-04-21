@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback } from "react";
+import React, { memo, useState, useCallback, useEffect } from "react";
 import { Page, PageContent, Link, Navbar, NavRight, useStore } from "framework7-react";
 import { useGetCostTotalDetailsQuery } from "graphql/model/statistics.graphql";
 import { Amounts, Icons, NotloggedIn, ThemeIcon } from "components";
