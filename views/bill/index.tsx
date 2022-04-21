@@ -1,9 +1,9 @@
 import React, { useState, useRef, memo } from "react";
-import { Page, PageContent, Button, Navbar, NavTitle, NavRight, BlockTitle } from "framework7-react";
+import { Page, PageContent, Navbar, NavTitle, NavRight, BlockTitle } from "framework7-react";
 import { CostCard, Amounts, SheetModalPicker, SheetDatePicker } from "components";
 import { RouterOpotions } from "typings/f7-route";
-import { thousands, isSameDay } from "lib/apis/utils";
-import { format, relative, getCurrentDate } from "lib/apis/dayjs";
+import { thousands } from "lib/apis/utils";
+import { getCurrentDate, getCalendar } from "lib/apis/dayjs";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { useGetCostDataDetailsQuery } from "graphql/model/statistics.graphql";
 
@@ -19,11 +19,12 @@ const Bill: React.FC<RouterOpotions> = () => {
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
   const { loading, data, refetch } = useGetCostDataDetailsQuery({
-    variables: { input: { date, type: costType, expenseId: expenseId.current } }
+    variables: { input: { date, type: costType, expenseId: expenseId.current } },
+    fetchPolicy: "network-only"
   });
   const costDetails = data?.statisticalCostDetails;
-  console.log(costDetails);
-  const { data: expenseData } = useLivingExpensesQuery({
+
+  const { data: expenseData, refetch: expenseReftch } = useLivingExpensesQuery({
     variables: { type: costType },
     fetchPolicy: "network-only"
   });
@@ -81,8 +82,19 @@ const Bill: React.FC<RouterOpotions> = () => {
           </div>
         </NavRight>
       </Navbar>
-      <PageContent>
-        <section className="px-6 mx-0 pt-7 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
+      <PageContent
+        ptr
+        className="pt-16"
+        onPtrRefresh={(done) => {
+          setTimeout(() => {
+            refetch();
+            expenseReftch();
+
+            done();
+          }, 2000);
+        }}
+      >
+        <section className="px-6 mx-0 pt-5 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
           <div className="flex items-center">
             <div
               data-type="pay"
@@ -111,18 +123,19 @@ const Bill: React.FC<RouterOpotions> = () => {
 
         <section className="px-5">
           {costDetails?.details?.map((detail) => {
-            const _isSameDay = isSameDay(detail.purchaseTime);
-            const _fun = _isSameDay ? relative : format;
+            const expense = detail.expense;
 
             return (
               <CostCard
+                icon={expense.expenseIcon}
                 key={detail.id}
-                type={detail.expense.expenseType}
-                typeName={detail.expense.expenseName}
-                time={_fun(detail.purchaseTime)}
+                book={detail.book?.name}
+                type={expense.expenseType}
+                typeName={expense.expenseName}
+                time={getCalendar(detail.purchaseTime)}
                 amounts={thousands(detail.amounts)}
                 remarks={detail.remarks}
-                className="mt-8"
+                className="mt-6"
               />
             );
           })}

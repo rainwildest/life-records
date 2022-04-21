@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, f7 } from "framework7-react";
 import { RouterOpotions } from "typings/f7-route";
-import { thousands, isSameDay } from "lib/apis/utils";
-import { format, relative } from "lib/apis/dayjs";
+import { thousands } from "lib/apis/utils";
+import { getCalendar } from "lib/apis/dayjs";
 import event from "lib/apis/framework-event";
 import { Amounts, Icons, CostCard } from "components";
 import { useCostDetailsQuery } from "graphql/model/cost-details.graphql";
@@ -76,16 +76,13 @@ const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
         <Amounts pay={thousands(statistical?.pay || 0)} income={thousands(statistical?.income || 0)} />
 
         {details.map((detail) => {
-          const _isSameDay = isSameDay(detail.purchaseTime);
-          const _fun = _isSameDay ? relative : format;
-
           return (
             <CostCard
               className="mt-8"
               key={detail.id}
               type={detail.expense.expenseType}
               typeName={detail.expense.expenseName}
-              time={_fun(detail.purchaseTime)}
+              time={getCalendar(detail.purchaseTime)}
               amounts={thousands(detail.amounts)}
               remarks={detail.remarks}
             />

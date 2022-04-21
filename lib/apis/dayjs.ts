@@ -1,9 +1,11 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import calendar from "dayjs/plugin/calendar";
 import "dayjs/locale/zh-cn";
 
 dayjs.locale("zh-cn");
 dayjs.extend(relativeTime);
+dayjs.extend(calendar);
 
 /**
  * 相对时间
@@ -44,4 +46,16 @@ export const getDaysInMonth = (date?: string | number | Date | dayjs.Dayjs): num
 
   return dayjs($time).daysInMonth();
 };
+
+export const getCalendar = (time: string | null = null): string => {
+  return dayjs().calendar(time, {
+    sameDay: dayjs(time).to(dayjs()), // The same day ( Today at 2:30 AM )
+    nextDay: `昨天 ${format(time, "HH:mm")}`, // The next day ( Tomorrow at 2:30 AM )
+    nextWeek: `${format(time, "YYYY-MM-DD HH:mm")}`, // The next week ( Sunday at 2:30 AM )
+    lastDay: `明天 ${format(time, "HH:mm")}`, // The day before ( Yesterday at 2:30 AM )
+    lastWeek: `${format(time, "YYYY-MM-DD HH:mm")}`, // Last week ( Last Monday at 2:30 AM )
+    sameElse: `${format(time, "YYYY-MM-DD HH:mm")}` // Everything else ( 7/10/2011 )
+  });
+};
+
 export default dayjs;

@@ -1,12 +1,13 @@
 import React, { memo, useState, useCallback } from "react";
-import { Page, PageContent, Link, Navbar, NavRight, Fab, useStore } from "framework7-react";
+import { Page, PageContent, Link, Navbar, NavRight, useStore } from "framework7-react";
 import { useGetCostTotalDetailsQuery } from "graphql/model/statistics.graphql";
-import { Amounts, Icons, CostCard, NotloggedIn, ThemeIcon } from "components";
-import { relative, getCurrentDate, getDaysInMonth } from "lib/apis/dayjs";
+import { Amounts, Icons, NotloggedIn, ThemeIcon } from "components";
+import { getCurrentDate, getDaysInMonth, getCalendar } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
 import { Income, Expenditure, PaymentAnalysis } from "./components";
 
 const Home: React.FC = () => {
+  console.log(getCalendar("2022-04-20 13:28:01"));
   const token = useStore("token");
 
   const [costType, setCostType] = useState<keyof AmountType>("pay");
@@ -98,13 +99,6 @@ const Home: React.FC = () => {
       >
         {!!token && (
           <div className="px-6 pb-12">
-            {/* <Amounts
-              incomTitle="今日收入"
-              payTitle="今日支出"
-              income={thousands(statistics.income)}
-              pay={thousands(statistics.pay)}
-            /> */}
-
             <div className="flex justify-between items-center">
               <div>
                 <span className="font-semibold text-2xl pr-0.5">{contrast[getCurrentDate("MM")]}</span>
@@ -150,26 +144,10 @@ const Home: React.FC = () => {
 
             {costType === "pay" && <Expenditure />}
             {costType === "income" && <Income />}
-
-            {/* {statistics.?.map((detail, index) => (
-              <CostCard
-                key={detail.id}
-                type={detail.expense.expenseType}
-                typeName={detail.expense.expenseName}
-                time={relative(detail.purchaseTime)}
-                amounts={thousands(detail.amounts)}
-                remarks={detail.remarks}
-                className="mt-6"
-              />
-            ))} */}
           </div>
         )}
       </PageContent>
       {!token && <NotloggedIn />}
-
-      {/* <Fab position="right-bottom" slot="fixed" text="" color="white" href="/book-keeping">
-        <Icons name="notepad-01" className="row-span-1-2 col-span-1-2" />
-      </Fab> */}
     </Page>
   );
 };

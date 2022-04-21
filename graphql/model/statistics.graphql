@@ -22,6 +22,7 @@ query getCostDataDetails($input: StatisticalDetailsOptions) {
         id
         expenseName
         expenseType
+        expenseIcon
       }
       book {
         ...AccountBooksOptions
