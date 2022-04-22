@@ -122,6 +122,12 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
     setPopupOpened(false);
   };
 
+  const onSubmit = (values: any) => {
+    setSaving(true);
+    const data = { ...values, expenseId: expenseId.current, approximateAt: date.current };
+    onSave(data);
+  };
+
   return (
     <Page noToolbar pageContent={true}>
       <Navbar className="h-12" backLink noHairline title={id ? "编辑计划" : "添加计划"}>
@@ -145,12 +151,7 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
             expenseId: "",
             approximateAt: ""
           }}
-          onSubmit={(values) => {
-            // same shape as initial values
-            setSaving(true);
-            const data = { ...values, expenseId: expenseId.current, approximateAt: date.current };
-            onSave(data);
-          }}
+          onSubmit={onSubmit}
         >
           {({ errors, touched, values, setFieldValue }) => (
             <Form>
