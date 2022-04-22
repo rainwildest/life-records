@@ -10,7 +10,7 @@ import MikrotOrm, { knex } from "db/mikro-orm";
  * @returns Promise
  */
 export const getAmountStatisticsByTimeSlot = async (args: any = {}): Promise<any> => {
-  const { userId, type = "pay", start, end } = args;
+  const { userId, type = "pay", start, end, expenseId } = args;
   const orm = await knex();
 
   return orm("cost_details AS t1")
@@ -21,6 +21,9 @@ export const getAmountStatisticsByTimeSlot = async (args: any = {}): Promise<any
         SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income
       `)
     )
+    .andWhere((builder) => {
+      expenseId && builder.andWhere({ "t2.id": expenseId });
+    })
     .whereRaw(`t1.purchase_time >= '${start}' AND t1.purchase_time < '${end}'`)
     .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
     .whereNull("t1.deleted_at")
@@ -37,7 +40,7 @@ export const getAmountStatisticsByTimeSlot = async (args: any = {}): Promise<any
  * @returns Promise
  */
 export const getAmountStatisticsByDate = async (args: any = {}): Promise<any> => {
-  const { userId, type = "pay", date, format } = args;
+  const { userId, type = "pay", date, format, expenseId } = args;
 
   const orm = await knex();
 
@@ -49,6 +52,9 @@ export const getAmountStatisticsByDate = async (args: any = {}): Promise<any> =>
         SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income
       `)
     )
+    .andWhere((builder) => {
+      expenseId && builder.andWhere({ "t2.id": expenseId });
+    })
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
     .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
     .whereNull("t1.deleted_at")
@@ -223,7 +229,7 @@ export const statisticalFundPlanCompleted = async (args: { userId: String; year?
  * @param {object} args
  */
 export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any> => {
-  const { userId = "", format = "YYYY-MM-DD", groupFormat = "MM-DD", date = "", type = "pay" } = args;
+  const { userId = "", format = "YYYY-MM-DD", groupFormat = "MM-DD", date = "", type = "pay", expenseId } = args;
   const orm = await knex();
 
   return orm("cost_details AS t1")
@@ -237,10 +243,14 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
     .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
+    .andWhere((builder) => {
+      expenseId && builder.andWhere({ "t2.id": expenseId });
+    })
     .whereNull("t1.deleted_at")
     .groupByRaw(`to_char(t1.purchase_time, '${groupFormat}')`)
     .then((rows: any[]) => {
       const useArray = (groupFormat as string).includes("-");
+
       if (rows?.length) return useArray ? rows : rows[0].total || 0;
 
       return null;

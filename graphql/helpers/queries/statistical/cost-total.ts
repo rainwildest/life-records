@@ -21,7 +21,8 @@ export default (_parent: unknown, args: GetCostTotalDetailsQueryVariables, conte
     date,
     format,
     type: params?.type || "pay",
-    groupFormat: params?.groupFormat || "MM-DD"
+    groupFormat: params?.groupFormat || "MM-DD",
+    expenseId: params.expenseId
   };
 
   if (date.length) return getStatisticalCostTotalByDate($args);
