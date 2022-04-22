@@ -1,5 +1,6 @@
 import PaymentAnalysis from "./PaymentAnalysis";
-import Expenditure from "./Expenditure";
-import Income from "./Income";
+import ClassificationEmpty from "./ClassificationEmpty";
+import ClassificationDetails from "./ClassificationDetails";
+import ClassificationContainer from "./ClassificationContainer";
 
-export { Expenditure, Income, PaymentAnalysis };
+export { PaymentAnalysis, ClassificationEmpty, ClassificationDetails, ClassificationContainer };

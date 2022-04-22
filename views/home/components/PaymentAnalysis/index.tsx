@@ -95,7 +95,7 @@ const PaymentAnalysis: React.FC<PaymentAnalysisProps> = ({ days, type = "pay" })
             itemStyle: {
               color: "#2a5caa"
             },
-            smooth: true,
+            smooth: false,
             showSymbol: false
           }
         ]

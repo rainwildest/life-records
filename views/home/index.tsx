@@ -1,22 +1,29 @@
 import React, { memo, useState, useCallback, useEffect } from "react";
 import { Page, PageContent, Link, Navbar, NavRight, useStore } from "framework7-react";
-import { useGetCostTotalDetailsQuery } from "graphql/model/statistics.graphql";
+import { useGetCostTotalDetailsQuery, useGetClassifiedStatisticsQuery } from "graphql/model/statistics.graphql";
 import { Amounts, Icons, NotloggedIn, ThemeIcon } from "components";
-import { getCurrentDate, getDaysInMonth, getCalendar } from "lib/apis/dayjs";
+import { getCurrentDate, getDaysInMonth } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
-import { Income, Expenditure, PaymentAnalysis } from "./components";
+import { PaymentAnalysis } from "./components";
+import { ClassificationContainer } from "./components";
 
 const Home: React.FC = () => {
-  console.log(getCalendar("2022-04-20 13:28:01"));
   const token = useStore("token");
 
+  const [showAll, setShowAll] = useState(false);
   const [costType, setCostType] = useState<keyof AmountType>("pay");
+
+  const { data: classifiedData, refetch: classifiedRefetch } = useGetClassifiedStatisticsQuery({
+    variables: { date: getCurrentDate("YYYY-MM"), type: token && costType },
+    fetchPolicy: "network-only"
+  });
 
   const fields = {
     date: getCurrentDate("YYYY-MM"),
-    type: costType
+    type: token && costType
   };
-  const { data, refetch } = useGetCostTotalDetailsQuery({
+
+  const { data: totalData, refetch: totalRefetch } = useGetCostTotalDetailsQuery({
     variables: {
       input: {
         ...fields,
@@ -29,8 +36,7 @@ const Home: React.FC = () => {
     },
     fetchPolicy: "network-only"
   });
-
-  const statistics = data?.statisticalCostDetails || {};
+  const statistics = totalData?.statisticalCostDetails || {};
 
   const days = new Array(getDaysInMonth()).fill(0);
   statistics?.totalDetails?.map((item) => {
@@ -40,8 +46,9 @@ const Home: React.FC = () => {
   });
 
   /* 强制刷新 */
-  const [, updateState] = useState<any>();
-  const forceUpdate = useCallback(() => updateState({}), []);
+  // const [, updateState] = useState<any>();
+  // const forceUpdate = useCallback(() => updateState({}), []);
+
   const onSetCostType = (e: any) => {
     const target = e.target as HTMLDivElement;
     const type = target.getAttribute("data-type");
@@ -64,11 +71,15 @@ const Home: React.FC = () => {
     "12": "十二月"
   };
 
+  const onShowAll = () => {
+    setShowAll(!showAll);
+  };
+
   const onRefresh = (done: () => void) => {
     if (!token) return done();
 
     setTimeout(() => {
-      Promise.all([refetch(), forceUpdate()]).finally(() => {
+      Promise.all([totalRefetch(), classifiedRefetch()]).finally(() => {
         done();
       });
     }, 500);
@@ -137,12 +148,10 @@ const Home: React.FC = () => {
                 </div>
               </div>
 
-              {/* <div className="text-gray-500 text-sm px-5 mt-6">支出对比（元）</div> */}
               <PaymentAnalysis days={days} type={costType} />
             </div>
 
-            {costType === "pay" && <Expenditure />}
-            {costType === "income" && <Income />}
+            <ClassificationContainer details={classifiedData} type={costType} showAll={showAll} onShowAll={onShowAll} />
           </div>
         )}
       </PageContent>

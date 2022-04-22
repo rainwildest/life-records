@@ -39,6 +39,16 @@ query getCostDataDetails($input: StatisticalDetailsOptions) {
   }
 }
 
+query getClassifiedStatistics($date: String, $type: String = "pay") {
+  statisticalExpenditureOrIncome(date: $date, type: $type) {
+    pay
+    income
+    expenseName
+    expenseIcon
+    purchaseTime
+  }
+}
+
 query generalization($year: String) {
   statisticalGeneralization(year: $year) {
     pay

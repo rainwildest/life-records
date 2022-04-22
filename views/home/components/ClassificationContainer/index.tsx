@@ -1,38 +1,38 @@
-import React, { useState, Fragment, memo } from "react";
-import { useExpenditureQuery } from "graphql/model/statistics.graphql";
-import { getCurrentDate } from "lib/apis/dayjs";
-import { percentage, thousands } from "lib/apis/utils";
-import ClassificationDetails from "../ClassificationDetails";
+import React from "react";
 import ClassificationEmpty from "../ClassificationEmpty";
+import ClassificationDetails from "../ClassificationDetails";
+import { GetClassifiedStatisticsQuery } from "graphql/model/statistics.graphql";
+import { thousands, percentage } from "lib/apis/utils";
 
-const Expenditure: React.FC = () => {
-  const [showAll, setShowAll] = useState(false);
-
-  const { data } = useExpenditureQuery({
-    variables: { date: getCurrentDate("YYYY-MM") }
-  });
-
-  const details = data?.statisticalExpenditureOrIncome || [];
+type ClassificationContainer = {
+  type?: string;
+  showAll?: boolean;
+  details?: GetClassifiedStatisticsQuery;
+  onShowAll?: () => void;
+};
+const ClassificationContainer: React.FC<ClassificationContainer> = ({ type, showAll, details, onShowAll }) => {
   const original = [];
+  const data = details?.statisticalExpenditureOrIncome || [];
 
-  details.forEach((detail) => original.push(detail.pay));
+  data.forEach((detail) => original.push(type === "pay" ? detail.pay : detail.income));
 
-  const percentageDetails = details.map((detail, index) => {
+  const percentageDetails = data.map((detail, index) => {
+    const amount = type === "pay" ? detail.pay : detail.income;
+
     return {
-      amount: detail.pay,
+      amount,
       name: detail.expenseName,
       icon: detail.expenseIcon,
       progress: percentage(original, index)
     };
   });
 
-  const onShowAll = () => {
-    setShowAll(!showAll);
-  };
-
   return (
     <div className="shadow-3 rounded-lg mt-8 pt-3 pb-4">
-      <div className="font-medium text-base mb-3 px-4">支付分类</div>
+      <div className="font-medium text-base mb-3 px-4">
+        {type === "pay" && "支付分类"}
+        {type === "income" && "收入分类"}
+      </div>
 
       <div className={`px-2 overflow-hidden min-h-50.5 ${!showAll ? "max-h-50.5" : "h-auto"}`}>
         {!percentageDetails.length && <ClassificationEmpty text="暂无支出分类" />}
@@ -60,4 +60,4 @@ const Expenditure: React.FC = () => {
   );
 };
 
-export default memo(Expenditure);
+export default ClassificationContainer;
