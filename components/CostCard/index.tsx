@@ -3,6 +3,7 @@ import Icons from "components/Icons";
 import { mergeClassName } from "lib/apis/utils";
 
 type CostCardOptions = {
+  useBook?: boolean;
   icon?: string;
   type: string;
   time?: string;
@@ -13,7 +14,17 @@ type CostCardOptions = {
   className?: string;
 };
 
-const CostCard: React.FC<CostCardOptions> = ({ icon, type, time, book, typeName, amounts, remarks, className = "" }) => {
+const CostCard: React.FC<CostCardOptions> = ({
+  icon,
+  type,
+  time,
+  book,
+  typeName,
+  amounts,
+  remarks,
+  className = "",
+  useBook = false
+}) => {
   const color = type === "pay" ? "text-green-500" : "text-red-700";
   const defaultClassName = "shadow-3 rounded-lg py-3 px-4 relative overflow-hidden w-full";
 
@@ -29,8 +40,8 @@ const CostCard: React.FC<CostCardOptions> = ({ icon, type, time, book, typeName,
           <p className="text-xs text-gray-500">{time}</p>
         </div>
 
-        <div>
-          <div className="text-center pt-3 text-gray-700 text-xs">{type === "pay" ? "支出费用" : "收入金额"}</div>
+        <div className={`${!useBook ? "pt-2.5" : ""}`}>
+          {useBook && <div className="text-center pt-3 text-gray-700 text-xs">{type === "pay" ? "支出费用" : "收入金额"}</div>}
           <div className={`${color} mt-1 text-2xl text-center font-bold flex-shrink-0`}>
             {type === "pay" ? "-" : "+"}
             <span className="text-lg">￥</span>
