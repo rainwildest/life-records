@@ -1,5 +1,5 @@
 import React, { useState, useCallback, memo } from "react";
-import { Page, Navbar, Subnavbar, Segmented, Tabs, Tab, Button, useStore } from "framework7-react";
+import { Page, PageContent, Navbar, Subnavbar, Segmented, Tabs, Tab, Button, useStore } from "framework7-react";
 // import store from "lib/store";
 import { Income, Generalization, Expenditure } from "./components";
 import { SheetDatePicker, NotloggedIn } from "components";
@@ -46,11 +46,15 @@ const Statistics: React.FC = () => {
       </Navbar>
 
       <Tabs>
-        <Tab id="generalization" tabActive>
+        <Tab id="generalization" className="h-full" tabActive>
           {!!token && <Generalization year={date.split("-")[0]} />}
         </Tab>
-        <Tab id="expenditure">{!!token && <Expenditure date={date} />}</Tab>
-        <Tab id="income">{!!token && <Income date={date} />}</Tab>
+        <Tab id="expenditure" className="h-full">
+          {!!token && <Expenditure date={date} />}
+        </Tab>
+        <Tab id="income" className="h-full">
+          {!!token && <Income date={date} />}
+        </Tab>
       </Tabs>
 
       {!token && <NotloggedIn className="h-full" />}
