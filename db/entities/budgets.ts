@@ -24,6 +24,6 @@ export default class Budgets extends SQLCommonField {
   /**
    * @param {string} monthly 按月
    */
-  @Property({ nullable: null, fieldName: "by_month" })
-  byMonth: boolean;
+  // @Property({ nullable: null, fieldName: "by_month" })
+  // byMonth: boolean;
 }
