@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Page, PageContent, Navbar, Subnavbar, Segmented, Tabs, Tab, Button, useStore } from "framework7-react";
+import { PageContent } from "framework7-react";
 import { useGeneralizationQuery } from "graphql/model/statistics.graphql";
 import { Echarts } from "components";
 

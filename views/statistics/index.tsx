@@ -25,7 +25,7 @@ const Statistics: React.FC = () => {
 
   return (
     <Page pageContent={false}>
-      <Navbar noHairline>
+      <Navbar className="h-12" noHairline>
         <div
           className=" w-full h-full absolute left-0 top-0 flex justify-center items-center font-bold"
           onClick={() => {

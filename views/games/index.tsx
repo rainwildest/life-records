@@ -7,7 +7,7 @@ const Games: React.FC = () => {
   console.log({ bol: { k: "k" } });
   return (
     <Page noToolbar>
-      <Navbar backLink></Navbar>
+      <Navbar className="h-12" backLink></Navbar>
       <div>games</div>
     </Page>
   );

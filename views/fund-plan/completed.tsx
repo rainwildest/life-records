@@ -72,7 +72,7 @@ const Completed: React.FC = () => {
 
   return (
     <Page noToolbar pageContent={false}>
-      <Navbar backLink noHairline title="完成的计划"></Navbar>
+      <Navbar className="h-12" backLink noHairline title="完成的计划"></Navbar>
       <PageContent>
         <BlockTitle className="px-6 mx-0 mt-10 mb-0 flex justify-between items-center text-gray-700 text-xl overflow-visible">
           已完成

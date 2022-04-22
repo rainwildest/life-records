@@ -124,7 +124,7 @@ const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
 
   return (
     <Page noToolbar pageContent={true}>
-      <Navbar backLink noHairline title={id ? "编辑计划" : "添加计划"}>
+      <Navbar className="h-12" backLink noHairline title={id ? "编辑计划" : "添加计划"}>
         <NavRight>
           <Button className="w-20" large small fill onClick={onSaveBefore}>
             <Icons

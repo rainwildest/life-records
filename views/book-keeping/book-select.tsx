@@ -21,7 +21,7 @@ const BookSelect: React.FC<RouterOpotions> = ({ f7router }) => {
   };
   return (
     <Page noToolbar pageContent={true}>
-      <Navbar backLink noHairline title="选择账簿">
+      <Navbar className="h-12" backLink noHairline title="选择账簿">
         <NavRight>
           <Button className="w-20" large small fill data-id="" data-name="" onClick={onSelect}>
             {/* <Icons name={!saving ? "save" : "spinner"} className={`mr-1 save-icon${!saving ? "" : " animate-spin"}`} /> */}

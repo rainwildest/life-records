@@ -5,7 +5,7 @@ import { Icons } from "components";
 const BindAccount: React.FC = () => {
   return (
     <Page noToolbar>
-      <Navbar noHairline title="绑定账号" backLink />
+      <Navbar className="h-12" noHairline title="绑定账号" backLink />
       <List className="text-sm" inset>
         <ListItem link="#" title="邮箱" after="rainwildest@163.com">
           <Icons slot="media" name="email" className="svg-icon-28" />

@@ -64,7 +64,7 @@ const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
 
   return (
     <Page noToolbar pageContent={false}>
-      <Navbar backLink noHairline>
+      <Navbar className="h-12" backLink noHairline>
         <NavTitle className="max-w-48 truncate">{bookName}</NavTitle>
         <NavRight>
           <Icons name="delete-02" className="svg-icon-20 link rounded-lg p-2.5" onClick={onDelConfirm} />

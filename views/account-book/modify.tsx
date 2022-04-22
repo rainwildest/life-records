@@ -55,7 +55,7 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
 
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline title={id ? "编辑账簿" : "新增账簿"}>
+      <Navbar className="h-12" backLink noHairline title={id ? "编辑账簿" : "新增账簿"}>
         <NavRight>
           <Button className="w-20" large small fill onClick={onSaveBefore}>
             <Icons

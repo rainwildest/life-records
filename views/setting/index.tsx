@@ -8,7 +8,7 @@ const Setting: React.FC = () => {
 
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline title="设置" />
+      <Navbar className="h-12" backLink noHairline title="设置" />
       {/* <img src="/images/3.png" alt="" /> */}
       <List className="text-sm" inset>
         <ListItem title="关闭震动" disabled={!hasVibrate}>

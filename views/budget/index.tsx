@@ -1,11 +1,17 @@
 import React from "react";
-import { Page, Navbar, BlockTitle } from "framework7-react";
+import { Page, Navbar, NavRight, Link, BlockTitle } from "framework7-react";
 import { Icons } from "components";
 
 const Budget: React.FC = () => {
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline title="预算中心"></Navbar>
+      <Navbar className="h-12" backLink noHairline title="预算中心">
+        <NavRight>
+          <Link href="/budget-modify" className="">
+            <Icons name="add-01" className="link svg-icon-26 px-2" />
+          </Link>
+        </NavRight>
+      </Navbar>
 
       <div className="pt-2 px-6 mb-10 mt-10">
         <BlockTitle className="mx-0 mt-0 mb-7 text-gray-700 text-xl">

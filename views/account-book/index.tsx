@@ -32,7 +32,7 @@ const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
 
   return (
     <Page noToolbar>
-      <Navbar backLink noHairline title="我的账簿">
+      <Navbar className="h-12" backLink noHairline title="我的账簿">
         <NavRight>
           <Icons name="add-01" className="link svg-icon-26 px-2" onClick={onNavigate} />
         </NavRight>

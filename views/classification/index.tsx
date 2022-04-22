@@ -18,7 +18,7 @@ const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
 
   return (
     <Page noToolbar pageContent={false}>
-      <Navbar noHairline backLink>
+      <Navbar className="h-12" noHairline backLink>
         <NavTitle>
           <Segmented strong className="w-44">
             <Button tabLink="#tab-pay" tabLinkActive data-type="pay">
