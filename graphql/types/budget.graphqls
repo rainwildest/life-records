@@ -8,3 +8,14 @@ type Budget {
   modifiedAt: Date
   deletedAt: Date
 }
+
+input ModifyBudgetOptions {
+  expenseId: String
+  amounts: Int
+}
+
+type Mutation {
+  createBudget(input: ModifyBudgetOptions): Budget
+  modifyBudget(id: String!, input: ModifyBudgetOptions): Budget
+  removeBudget(id: String!): Budget
+}

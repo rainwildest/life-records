@@ -3,12 +3,15 @@ import { Page, PageContent, Navbar, NavRight, Button } from "framework7-react";
 import { Formik, Form, FormikProps } from "formik";
 import { Icons, InputField } from "components";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
+import { useCreateBudgetMutation } from "graphql/model/budget.graphql";
 
 const Modify: React.FC = () => {
   const formik = useRef<FormikProps<any>>();
   const [saving, setSaving] = useState(false);
 
   const { loading, data } = useLivingExpensesQuery();
+
+  const [createBudgetMutation] = useCreateBudgetMutation();
 
   const payDetails = data?.livingExpenses;
 

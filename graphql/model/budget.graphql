@@ -1,0 +1,19 @@
+# import BudgetOptions from '../fragments/budget.graphql'
+
+mutation createBudget($input: ModifyBudgetOptions) {
+  createBudget(input: $input) {
+    ...BudgetOptions
+  }
+}
+
+mutation modifyBudget($id: String!, $input: ModifyBudgetOptions) {
+  modifyBudget(id: $id, input: $input) {
+    ...BudgetOptions
+  }
+}
+
+mutation removeBudget($id: String!) {
+  removeBudget(id: $id) {
+    ...BudgetOptions
+  }
+}
