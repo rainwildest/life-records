@@ -178,35 +178,6 @@ const Bill: React.FC<RouterOpotions> = () => {
           onConfirm={onConfirmDateSheet}
         />
       </PageContent>
-      {/* <PageContent
-        ptr
-        onPtrRefresh={(done) => {
-          setTimeout(() => {
-            refetch();
-            done();
-          }, 2000);
-        }}
-        className="pt-16 px-6"
-      >
-        <Amounts className="mt-2" income={thousands(statistics.income)} pay={thousands(statistics.pay)} />
-
-        {statistics.details?.map((detail) => {
-          const _isSameDay = isSameDay(detail.purchaseTime);
-          const _fun = _isSameDay ? relative : format;
-
-          return (
-            <CostCard
-              key={detail.id}
-              type={detail.expense.expenseType}
-              typeName={detail.expense.expenseName}
-              time={_fun(detail.purchaseTime)}
-              amounts={thousands(detail.amounts)}
-              remarks={detail.remarks}
-              className="mt-8"
-            />
-          );
-        })}
-      </PageContent> */}
     </Page>
   );
 };
