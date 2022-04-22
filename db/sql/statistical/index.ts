@@ -21,7 +21,7 @@ export const getAmountStatisticsByTimeSlot = async (args: any = {}): Promise<any
         SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income
       `)
     )
-    .andWhere((builder) => {
+    .andWhere((builder: any) => {
       expenseId && builder.andWhere({ "t2.id": expenseId });
     })
     .whereRaw(`t1.purchase_time >= '${start}' AND t1.purchase_time < '${end}'`)
@@ -52,7 +52,7 @@ export const getAmountStatisticsByDate = async (args: any = {}): Promise<any> =>
         SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income
       `)
     )
-    .andWhere((builder) => {
+    .andWhere((builder: any) => {
       expenseId && builder.andWhere({ "t2.id": expenseId });
     })
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
@@ -243,7 +243,7 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
     .andWhereRaw(`t1.user_id = ? AND t2.expense_type = ?`, [userId, type])
-    .andWhere((builder) => {
+    .andWhere((builder: any) => {
       expenseId && builder.andWhere({ "t2.id": expenseId });
     })
     .whereNull("t1.deleted_at")
