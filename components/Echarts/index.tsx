@@ -13,7 +13,7 @@ const Echarts: React.FC<EchartsOptions> = ({
   option,
   renderer = "svg",
   className,
-  style = { width: "calc(100vw - 3rem)", height: "17rem" }
+  style = { width: "calc(100vw - 2rem)", height: "17rem" }
 }) => {
   return <ReactEcharts className={mergeClassName(className)} opts={{ renderer, width: "auto" }} style={style} option={option} />;
 };

@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { Page, PageContent, Navbar, Subnavbar, Segmented, Tabs, Tab, Button, useStore } from "framework7-react";
 import { useGeneralizationQuery } from "graphql/model/statistics.graphql";
 import { Echarts } from "components";
 
@@ -72,9 +73,11 @@ const Generalization: React.FC<GeneralizationOptions> = ({ year }) => {
   };
 
   return (
-    <div className="px-6 mb-10">
-      <Echarts className="shadow-3 rounded-lg mt-7 p-4" option={option} />
-    </div>
+    <PageContent>
+      <div className="px-4 mb-10 w-full">
+        <Echarts className="shadow-3 rounded-lg mt-7 p-4 w-full" option={option} />
+      </div>
+    </PageContent>
   );
 };
 

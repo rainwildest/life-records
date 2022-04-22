@@ -46,15 +46,11 @@ const Statistics: React.FC = () => {
       </Navbar>
 
       <Tabs>
-        <Tab className="page-content" id="generalization" tabActive>
+        <Tab id="generalization" tabActive>
           {!!token && <Generalization year={date.split("-")[0]} />}
         </Tab>
-        <Tab className="page-content" id="expenditure">
-          {!!token && <Expenditure date={date} />}
-        </Tab>
-        <Tab className="page-content" id="income">
-          {!!token && <Income date={date} />}
-        </Tab>
+        <Tab id="expenditure">{!!token && <Expenditure date={date} />}</Tab>
+        <Tab id="income">{!!token && <Income date={date} />}</Tab>
       </Tabs>
 
       {!token && <NotloggedIn className="h-full" />}
