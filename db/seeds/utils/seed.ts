@@ -4,6 +4,7 @@ export declare type SeedCtxOptions = {
   livingExpenses: string;
   accountBooks: string;
   fundPlan: string;
+  budgets: string;
 };
 
 export declare type CtxOptions = {

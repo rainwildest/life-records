@@ -5,6 +5,7 @@ import addLivingExpenses from "./data/living-expenses";
 import addCostDetails from "./data/cost-details";
 import fundPlan from "./data/fund-plan";
 import accountBooks from "./data/account-books";
+import budgets from "./data/budgets";
 import { CtxOptions } from "./utils/seed";
 
 const ctx: CtxOptions = {};
@@ -25,4 +26,7 @@ export async function seed(knex: Knex): Promise<void> {
 
   await accountBooks(knex, ctx);
   console.log(`add account-books count:${ctx.accountBooks.docs?.length}`);
+
+  await budgets(knex, ctx);
+  console.log(`add budgets count:${ctx.budgets.docs?.length}`);
 }
