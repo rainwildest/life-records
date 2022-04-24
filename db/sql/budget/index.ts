@@ -7,7 +7,7 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createBudget = async (options: BudgetOptions): Promise<BudgetOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createBudget = async (options: BudgetProps): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
   return create("budgets", { ...options });
 };
 
@@ -17,7 +17,7 @@ export const createBudget = async (options: BudgetOptions): Promise<BudgetOption
  * @param options
  * @returns Promise
  */
-export const modifyBudget = async (id: string, options: BudgetOptions): Promise<BudgetOptions & DateAndIdSQLFieldSnakeOption> => {
+export const modifyBudget = async (id: string, options: BudgetProps): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
   return modify("budgets", id, { ...options });
 };
 
@@ -26,6 +26,21 @@ export const modifyBudget = async (id: string, options: BudgetOptions): Promise<
  * @param id
  * @returns Promise
  */
-export const removeBudget = async (id: string): Promise<BudgetOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeBudget = async (id: string): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
   return remove("budgets", id);
+};
+
+/**
+ *@description 获取某年某月的预算记录
+ */
+export const getBudgetsData = async (args: any = {}): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
+  const { userId, date } = args;
+  const orm = await MikrotOrm();
+
+  return orm
+    .createQueryBuilder(Budgets)
+    .where({ user_id: userId })
+    .andWhere(`to_char(created_at, 'YYYY-MM') = ?`, [date])
+    .andWhere("deleted_at is null")
+    .execute("all");
 };

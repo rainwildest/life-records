@@ -1,9 +1,9 @@
-declare type BudgetSnakeOptions = {
+declare type BudgetSnakeProps = {
   expenseId: String;
   amounts: Int;
 };
 
-declare type BudgetOptions = {
+declare type BudgetProps = {
   expense_id: String;
   amounts: Int;
 };

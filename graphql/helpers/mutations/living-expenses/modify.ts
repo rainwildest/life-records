@@ -4,7 +4,7 @@ import { tanslateSnake } from "lib/apis/utils";
 
 export default (
   _: unknown,
-  args: { id: string; input: LivingExpensesOptions & { isAddUserId: boolean } },
+  args: { id: string; input: LivingExpensesProps & { isAddUserId: boolean } },
   _context: unknown
 ): Promise<any> => {
   const { expenseType, expenseName, expenseIcon, isAddUserId = false } = args.input;
@@ -22,7 +22,7 @@ export default (
     throw new UserInputError("Consumption name and type cannot be empty.");
   }
 
-  let fields: LivingExpensesOptions = { expenseType, expenseName, expenseIcon };
+  let fields: LivingExpensesProps = { expenseType, expenseName, expenseIcon };
 
   if (isAddUserId) fields = { ...fields, userId: user.id };
   return modifyLivingExpense(args.id, tanslateSnake(fields));

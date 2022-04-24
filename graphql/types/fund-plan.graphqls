@@ -16,7 +16,7 @@ type FundPlan {
   expense: LivingExpenses
 }
 
-input fieldFundPlanOptions {
+input FieldFundPlanProps {
   amounts: Int
   name: String
   expenseId: String
@@ -24,7 +24,7 @@ input fieldFundPlanOptions {
   completeAt: Boolean
 }
 
-input FundPlanQueryOptions {
+input FundPlanQueryProps {
   type: String
   year: String
   expenseId: String
@@ -36,12 +36,12 @@ type FundPlanParam {
 }
 
 type Query {
-  fundPlan(input: FundPlanQueryOptions): FundPlanParam
+  fundPlan(input: FundPlanQueryProps): FundPlanParam
   fundPlanById(id: String): FundPlan
 }
 
 type Mutation {
-  createFundPlan(input: fieldFundPlanOptions): FundPlan
-  modifyFundPlan(id: String!, input: fieldFundPlanOptions): FundPlan
+  createFundPlan(input: FieldFundPlanProps): FundPlan
+  modifyFundPlan(id: String!, input: FieldFundPlanProps): FundPlan
   removeFundPlan(id: String!): FundPlan
 }

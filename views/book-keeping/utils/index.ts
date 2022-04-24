@@ -1,4 +1,4 @@
-type Options = LivingExpensesOptions & IDSQLOptions;
+type Options = LivingExpensesProps & IDProps;
 
 export const group = (value: any[], group = 5): Array<Options[]> => {
   const items: Array<Options[]> = [];

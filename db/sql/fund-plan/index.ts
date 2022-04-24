@@ -7,9 +7,7 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createFundPlan = async (
-  options: FundPlanSnakeOptions
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const createFundPlan = async (options: FundPlanSnakeProps): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
   return create("fund_plan", { ...options });
 };
 
@@ -21,8 +19,8 @@ export const createFundPlan = async (
  */
 export const modifyFundPlan = async (
   id: string,
-  options: FundPlanSnakeOptions
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  options: FundPlanSnakeProps
+): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
   return modify("fund_plan", id, { ...options });
 };
 
@@ -31,14 +29,14 @@ export const modifyFundPlan = async (
  * @param id
  * @returns Promise
  */
-export const removeFundPlan = async (id: string): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeFundPlan = async (id: string): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
   return remove("fund_plan", id);
 };
 
 /**
  * 计划中
  */
-export const getPlannedByUserId = async (userId: string): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getPlannedByUserId = async (userId: string): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
   const orm = await MikrotOrm();
 
   return orm
@@ -62,7 +60,7 @@ type CompletedParam = {
  * @param {object} args
  * @returns Promise
  */
-export const getCompletedByDate = async (args: CompletedParam): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCompletedByDate = async (args: CompletedParam): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
   const { userId, year } = args;
   const orm = await MikrotOrm();
 
@@ -81,9 +79,7 @@ export const getCompletedByDate = async (args: CompletedParam): Promise<FundPlan
  * @param {object} args
  * @returns Promise
  */
-export const getCompletedByExpenses = async (
-  args: CompletedParam
-): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCompletedByExpenses = async (args: CompletedParam): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
   const { userId, expenseId, year } = args;
   const orm = await knex();
 
@@ -105,12 +101,12 @@ export const getCompletedByExpenses = async (
  * @param {object} args
  * @returns Promise
  */
-export const getCompleted = (args: CompletedParam): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCompleted = (args: CompletedParam): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
   const _fun = args.expenseId ? getCompletedByExpenses : getCompletedByDate;
   return _fun(args);
 };
 
-export const getPlannedDetailById = async (id: string): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getPlannedDetailById = async (id: string): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
   return getDatabyId(FundPlan, id);
 };
 
@@ -120,7 +116,7 @@ export const getPlannedDetailById = async (id: string): Promise<FundPlanSnakeOpt
 // export const getOverdueByUserId = async (
 //   userId: string,
 //   date: string
-// ): Promise<FundPlanSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+// ): Promise<FundPlanSnakeProps & DateAndIDFieldSnakeProps> => {
 //   const orm = await MikrotOrm(FundPlan);
 
 //   return orm

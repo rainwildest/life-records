@@ -1,9 +1,9 @@
 type StatisticalDetails {
   pay: Int
   income: Int
-  total(input: StatisticalDetailsOptions): Int
-  totalDetails(input: StatisticalDetailsOptions): [TotalField]
-  details(input: StatisticalDetailsOptions): [CostDetails]
+  total(input: StatisticalDetailsProps): Int
+  totalDetails(input: StatisticalDetailsProps): [TotalField]
+  details(input: StatisticalDetailsProps): [CostDetails]
 }
 
 type TotalField {
@@ -35,7 +35,7 @@ type StatisticalFundPlanField {
   total: Int
 }
 
-input StatisticalDetailsOptions {
+input StatisticalDetailsProps {
   date: String
   type: String
   format: String
@@ -44,12 +44,12 @@ input StatisticalDetailsOptions {
 }
 
 type Query {
-  statisticalCostDetails(input: StatisticalDetailsOptions): StatisticalDetails
+  statisticalCostDetails(input: StatisticalDetailsProps): StatisticalDetails
   # 概括
   statisticalGeneralization(year: String): [GeneralizationField]
   # 支出 或 收入
   statisticalExpenditureOrIncome(date: String, type: String = "pay"): [ExpenditureAndIncomeField]
   # statisticalBudget 预算
   statisticalBooks(bookId: String): StatisticalBooksField
-  statisticalFundPlan(input: FundPlanQueryOptions): StatisticalFundPlanField
+  statisticalFundPlan(input: FundPlanQueryProps): StatisticalFundPlanField
 }

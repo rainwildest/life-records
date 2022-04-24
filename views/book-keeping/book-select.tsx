@@ -1,11 +1,11 @@
 import React from "react";
 import { Page, Navbar, NavRight, Button, Popup } from "framework7-react";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import Icons from "components/Icons";
 import event from "lib/apis/framework-event";
 import { useAccountBooksQuery } from "graphql/model/account-books.graphql";
 
-const BookSelect: React.FC<RouterOpotions> = ({ f7router }) => {
+const BookSelect: React.FC<RouterProps> = ({ f7router }) => {
   const { data, refetch } = useAccountBooksQuery();
 
   const books = data?.accountBooks || [];

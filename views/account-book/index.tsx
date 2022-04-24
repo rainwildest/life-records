@@ -3,10 +3,10 @@ import { Page, Navbar, NavRight } from "framework7-react";
 import { Book } from "./components";
 import { Icons } from "components";
 import event from "lib/apis/framework-event";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import { useAccountBooksQuery } from "graphql/model/account-books.graphql";
 
-const AccountBook: React.FC<RouterOpotions> = ({ f7router }) => {
+const AccountBook: React.FC<RouterProps> = ({ f7router }) => {
   const { data, refetch } = useAccountBooksQuery({ fetchPolicy: "network-only" });
 
   const books = data?.accountBooks || [];

@@ -19,10 +19,10 @@ import Amounts from "components/Amounts";
 import DetailItem from "./components/DetailItem";
 import { useFundPlanQuery, useModifyFundPlanMutation, useRemoveFundPlanMutation } from "graphql/model/fund-plan.graphql";
 import { useStatisticalFundPlanQuery } from "graphql/model/statistics.graphql";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import event from "lib/apis/framework-event";
 
-const FundPlan: React.FC<RouterOpotions> = ({ f7router }) => {
+const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
   const token = useStore("token");
   const { data, refetch: dataRefetch } = useFundPlanQuery({
     variables: {

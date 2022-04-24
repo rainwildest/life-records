@@ -12,7 +12,7 @@ query livingExpensesById($id: String) {
   }
 }
 
-mutation createLivingExpenses($input: CreateLivingExpensesOptions) {
+mutation createLivingExpenses($input: CreateLivingExpensesProps) {
   createLivingExpenses(input: $input) {
     ...LivingExpensesOptions
   }

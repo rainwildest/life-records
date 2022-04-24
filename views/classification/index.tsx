@@ -1,9 +1,9 @@
 import React from "react";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import { Page, PageContent, Navbar, NavTitle, Segmented, Button, Tabs, Tab } from "framework7-react";
 import { Income, Expenditure } from "./components";
 
-const Classification: React.FC<RouterOpotions> = ({ f7router }) => {
+const Classification: React.FC<RouterProps> = ({ f7router }) => {
   const onNavigate = (type: string, event?: any) => {
     const id = (event.target as HTMLElement).getAttribute("data-id");
 

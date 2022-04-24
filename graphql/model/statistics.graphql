@@ -1,7 +1,7 @@
 # import CostDetailsOptions from '../fragments/cost-details.graphql';
 # import AccountBooksOptions from '../fragments/account-books.graphql';
 
-query getCostTotal($input: StatisticalDetailsOptions) {
+query getCostTotal($input: StatisticalDetailsProps) {
   statisticalCostDetails(input: $input) {
     pay
     income
@@ -9,7 +9,7 @@ query getCostTotal($input: StatisticalDetailsOptions) {
   }
 }
 
-query getCostTotalDetails($input: StatisticalDetailsOptions, $details: StatisticalDetailsOptions) {
+query getCostTotalDetails($input: StatisticalDetailsProps, $details: StatisticalDetailsProps) {
   statisticalCostDetails(input: $input) {
     pay
     income
@@ -22,7 +22,7 @@ query getCostTotalDetails($input: StatisticalDetailsOptions, $details: Statistic
   }
 }
 
-query getCostDataDetails($input: StatisticalDetailsOptions) {
+query getCostDataDetails($input: StatisticalDetailsProps) {
   statisticalCostDetails(input: $input) {
     details(input: $input) {
       ...CostDetailsOptions
@@ -82,7 +82,7 @@ query statisticalBooks($bookId: String) {
   }
 }
 
-query statisticalFundPlan($input: FundPlanQueryOptions) {
+query statisticalFundPlan($input: FundPlanQueryProps) {
   statisticalFundPlan(input: $input) {
     total
   }

@@ -1,6 +1,6 @@
 import { Router } from "framework7/modules/router/router";
 
-export declare type RouterOpotions = F7Router & F7Route;
+export declare type RouterProps = F7Router & F7Route;
 
 export declare type F7Router = {
   f7router?: Router.Router;

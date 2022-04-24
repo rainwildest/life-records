@@ -1,4 +1,4 @@
-declare type FundPlanOptions = {
+declare type FundPlanProps = {
   expenseId: string;
   userId: string;
   name: string;
@@ -7,7 +7,7 @@ declare type FundPlanOptions = {
   completeAt: Date;
 };
 
-declare type FundPlanSnakeOptions = {
+declare type FundPlanSnakeProps = {
   expense_id: string;
   user_id: string;
   name: string;

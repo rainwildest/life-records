@@ -7,15 +7,26 @@ type Budget {
   createdAt: Date
   modifiedAt: Date
   deletedAt: Date
+
+  # custom data
+  expense: LivingExpenses
 }
 
-input ModifyBudgetOptions {
+input ModifyBudgetProps {
   expenseId: String
   amounts: Int
 }
 
+input BudgetProps {
+  date: String
+}
+
+type Query {
+  budgets(input: BudgetProps): [Budget]
+}
+
 type Mutation {
-  createBudget(input: ModifyBudgetOptions): Budget
-  modifyBudget(id: String!, input: ModifyBudgetOptions): Budget
+  createBudget(input: ModifyBudgetProps): Budget
+  modifyBudget(id: String!, input: ModifyBudgetProps): Budget
   removeBudget(id: String!): Budget
 }

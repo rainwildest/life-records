@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, memo } from "react";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import { Page, Navbar, NavTitle, Button, NavRight } from "framework7-react";
 import { useCreateLivingExpensesMutation, useModifyLivingExpensesMutation } from "graphql/model/living-expenses.graphql";
 import { Formik, Form, FormikProps } from "formik";
@@ -8,7 +8,7 @@ import event from "lib/apis/framework-event";
 import useExpenseData from "./utils/useExpenseData";
 import _ from "lodash";
 
-const Modify: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
+const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const { type, id } = f7route.query;
 
   const formik = useRef<FormikProps<any>>();

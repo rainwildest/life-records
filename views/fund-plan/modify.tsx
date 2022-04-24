@@ -5,13 +5,13 @@ import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { toastTip } from "lib/apis/utils";
 import { format, toISOString } from "lib/apis/dayjs";
 import event from "lib/apis/framework-event";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import { Icons, InputField, DatePicker } from "components";
 import { Formik, Form, FormikProps } from "formik";
 import usePlanData from "./utils/usePlanData";
 import _ from "lodash";
 
-const Modify: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
+const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
   const { id } = f7route.query;
 
   const formik = useRef<FormikProps<any>>();

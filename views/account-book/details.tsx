@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, f7 } from "framework7-react";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import { thousands } from "lib/apis/utils";
 import { getCalendar } from "lib/apis/dayjs";
 import event from "lib/apis/framework-event";
@@ -9,7 +9,7 @@ import { useCostDetailsQuery } from "graphql/model/cost-details.graphql";
 import { useStatisticalBooksQuery } from "graphql/model/statistics.graphql";
 import { useRemoveAccountBooksMutation } from "graphql/model/account-books.graphql";
 
-const Details: React.FC<RouterOpotions> = ({ f7route, f7router }) => {
+const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const { id, name } = f7route.query;
   const { data } = useCostDetailsQuery({
     variables: { input: { bookId: id } }

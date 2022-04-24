@@ -18,16 +18,16 @@ type CostDetails {
   book: AccountBooks
 }
 
-input CostDetailsOptions {
+input CostDetailsProps {
   userId: String
   bookId: String
 }
 
 type Query {
-  costDetails(input: CostDetailsOptions): [CostDetails]
+  costDetails(input: CostDetailsProps): [CostDetails]
 }
 
-input CreateCoseOptions {
+input CreateCostProps {
   expenseId: String!
   amounts: Int!
   remarks: String
@@ -35,14 +35,13 @@ input CreateCoseOptions {
   bookId: String
 }
 
-input ModifyCostOptions {
+input ModifyCostProps {
   amounts: Int
   remarks: String
 }
 
 type Mutation {
-  createCostDetail(input: CreateCoseOptions): CostDetails
-  modifyCostDetail(id: String!, input: ModifyCostOptions): CostDetails
+  createCostDetail(input: CreateCostProps): CostDetails
+  modifyCostDetail(id: String!, input: ModifyCostProps): CostDetails
   removeCostDetail(id: String!): CostDetails
 }
-

@@ -9,8 +9,8 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @returns Promise
  */
 export const createAccountBooks = async (
-  options: AccountBooksSnakeOptions
-): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  options: AccountBooksSnakeProps
+): Promise<AccountBooksSnakeProps & DateAndIDFieldSnakeProps> => {
   return create("account_books", { ...options });
 };
 
@@ -23,8 +23,8 @@ export const createAccountBooks = async (
  */
 export const modifyAccountBooks = async (
   id: string,
-  options: AccountBooksSnakeOptions
-): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  options: AccountBooksSnakeProps
+): Promise<AccountBooksSnakeProps & DateAndIDFieldSnakeProps> => {
   return modify("account_books", id, { ...options });
 };
 
@@ -34,7 +34,7 @@ export const modifyAccountBooks = async (
  * @param id
  * @returns Promise
  */
-export const removeAccountBooks = async (id: string): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeAccountBooks = async (id: string): Promise<AccountBooksSnakeProps & DateAndIDFieldSnakeProps> => {
   return remove("account_books", id);
 };
 
@@ -44,9 +44,7 @@ export const removeAccountBooks = async (id: string): Promise<AccountBooksSnakeO
  * @param {string} userId
  * @returns Promise
  */
-export const getAccountBooksByUserId = async (
-  userId: string
-): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getAccountBooksByUserId = async (userId: string): Promise<AccountBooksSnakeProps & DateAndIDFieldSnakeProps> => {
   const orm = await MikrotOrm();
 
   return orm
@@ -62,6 +60,6 @@ export const getAccountBooksByUserId = async (
  * @param {string} id
  * @returns Promise
  */
-export const getAccountBooksById = async (id: string): Promise<AccountBooksSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getAccountBooksById = async (id: string): Promise<AccountBooksSnakeProps & DateAndIDFieldSnakeProps> => {
   return getDatabyId(AccountBooks, id);
 };

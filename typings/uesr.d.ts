@@ -1,4 +1,4 @@
-declare type UserOptions = {
+declare type UserProps = {
   username?: string;
   birthday?: string;
   gender?: string;
@@ -12,7 +12,7 @@ declare type UserOptions = {
   isVerify?: boolean;
 };
 
-declare type UserSnakeOptions = {
+declare type UserSnakeProps = {
   username?: string;
   birthday?: string;
   gender?: string;

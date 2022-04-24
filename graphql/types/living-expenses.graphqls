@@ -15,7 +15,7 @@ type LivingExpenses {
   user: User
 }
 
-input CreateLivingExpensesOptions {
+input CreateLivingExpensesProps {
   expenseType: String!
   expenseName: String!
   expenseIcon: String
@@ -34,7 +34,7 @@ type Query {
 }
 
 type Mutation {
-  createLivingExpenses(input: CreateLivingExpensesOptions): LivingExpenses
+  createLivingExpenses(input: CreateLivingExpensesProps): LivingExpenses
   modifyLivingExpenses(id: String!, input: ModifyLivingExpensesOptions): LivingExpenses
   removeLivingExpenses(id: String!): LivingExpenses
 }

@@ -2,7 +2,7 @@ import { UserInputError, AuthenticationError } from "apollo-server-micro";
 import { createBudget } from "db/sql/budget";
 import { tanslateSnake } from "lib/apis/utils";
 
-export default (_: unknown, args: { input: CostDetailsOptions }, context: unknown): Promise<any> => {
+export default (_: unknown, args: { input: CostDetailsProps }, context: unknown): Promise<any> => {
   const { expenseId, amounts } = args.input;
   const { user } = context as GraphqlContext;
 

@@ -1,9 +1,9 @@
-declare type AccountBooksOptions = {
+declare type AccountBooksProps = {
   userId?: string;
   name?: string;
 };
 
-declare type AccountBooksSnakeOptions = {
+declare type AccountBooksSnakeProps = {
   user_id?: string;
   name?: string;
 };

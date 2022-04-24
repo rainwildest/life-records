@@ -1,14 +1,14 @@
 import React, { useState, useRef, memo } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, useStore } from "framework7-react";
 import { Icons, CostCard, SheetModalPicker, SheetDatePicker } from "components";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import { thousands } from "lib/apis/utils";
 import { getCurrentDate, getCalendar } from "lib/apis/dayjs";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { useGetCostDataDetailsQuery, useGetCostTotalQuery } from "graphql/model/statistics.graphql";
 import { AmountTotal } from "./components";
 
-const Bill: React.FC<RouterOpotions> = () => {
+const Bill: React.FC<RouterProps> = () => {
   const token = useStore("token");
 
   const expenseId = useRef("");

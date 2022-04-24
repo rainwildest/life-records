@@ -8,8 +8,8 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @returns Promise
  */
 export const createLivingExpenses = async (
-  options: LivingExpensesSnakeOptions
-): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  options: LivingExpensesSnakeProps
+): Promise<LivingExpensesSnakeProps & DateAndIDFieldSnakeProps> => {
   return create("living_expenses", { ...options });
 };
 
@@ -21,13 +21,13 @@ export const createLivingExpenses = async (
  */
 export const modifyLivingExpense = async (
   id: string,
-  options: LivingExpensesSnakeOptions
-): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  options: LivingExpensesSnakeProps
+): Promise<LivingExpensesSnakeProps & DateAndIDFieldSnakeProps> => {
   console.log(id, options);
   return modify("living_expenses", id, { ...options });
 };
 
-export const removeLivingExpense = async (id: string): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeLivingExpense = async (id: string): Promise<LivingExpensesSnakeProps & DateAndIDFieldSnakeProps> => {
   return remove("living_expenses", id);
 };
 
@@ -36,7 +36,7 @@ export const removeLivingExpense = async (id: string): Promise<LivingExpensesSna
  * @param id 餐饮类型id
  * @returns Promise
  */
-export const getLivingExpense = async (id: string): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getLivingExpense = async (id: string): Promise<LivingExpensesSnakeProps & DateAndIDFieldSnakeProps> => {
   return getDatabyId(LivingExpenses, id);
 };
 
@@ -47,7 +47,7 @@ export const getLivingExpense = async (id: string): Promise<LivingExpensesSnakeO
 export const getUserLivingExpense = async (
   id: string,
   type: string
-): Promise<LivingExpensesSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+): Promise<LivingExpensesSnakeProps & DateAndIDFieldSnakeProps> => {
   const orm = await MikrotOrm();
 
   return orm

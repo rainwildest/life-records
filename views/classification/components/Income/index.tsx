@@ -1,11 +1,11 @@
 import React, { useEffect, memo } from "react";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import Icons from "components/Icons";
 import event from "lib/apis/framework-event";
 
 type IncomeOptons = { onNavigate?: () => void };
-const Income: React.FC<RouterOpotions & IncomeOptons> = ({ f7router, onNavigate }) => {
+const Income: React.FC<RouterProps & IncomeOptons> = ({ f7router, onNavigate }) => {
   const { loading, data, refetch } = useLivingExpensesQuery({
     variables: { type: "income" }
   });

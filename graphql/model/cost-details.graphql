@@ -1,13 +1,13 @@
 # import CostDetailsOptions from '../fragments/cost-details.graphql'
 # import LivingExpensesOptions from '../fragments/living-expenses.graphql'
 
-mutation createCostDetail($input: CreateCoseOptions) {
+mutation createCostDetail($input: CreateCostProps) {
   createCostDetail(input: $input) {
     ...CostDetailsOptions
   }
 }
 
-query costDetails($input: CostDetailsOptions) {
+query costDetails($input: CostDetailsProps) {
   costDetails(input: $input) {
     ...CostDetailsOptions
     expense {

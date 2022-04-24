@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Page, Navbar, NavRight, Button } from "framework7-react";
 import { Icons } from "components";
 import { useCreateAccountBooksMutation, useModifyAccountBooksMutation } from "graphql/model/account-books.graphql";
-import { RouterOpotions } from "typings/f7-route";
+import { RouterProps } from "typings/f7-route";
 import event from "lib/apis/framework-event";
 import { toastTip } from "lib/apis/utils";
 
@@ -11,7 +11,7 @@ import { toastTip } from "lib/apis/utils";
  * @param param0
  * @returns
  */
-const AccountBook: React.FC<RouterOpotions> = ({ f7router, f7route }) => {
+const AccountBook: React.FC<RouterProps> = ({ f7router, f7route }) => {
   const { id, name } = f7route.query;
   const [bookName, setBookName] = useState(name);
   const [saving, setSaving] = useState(false);

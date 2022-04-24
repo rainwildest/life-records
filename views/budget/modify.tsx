@@ -3,15 +3,24 @@ import { Page, PageContent, Navbar, NavRight, Button } from "framework7-react";
 import { Formik, Form, FormikProps } from "formik";
 import { Icons, InputField } from "components";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
-import { useCreateBudgetMutation } from "graphql/model/budget.graphql";
+import { useCreateBudgetMutation, useModifyBudgetMutation } from "graphql/model/budget.graphql";
+import { RouterProps } from "typings/f7-route";
+import event from "lib/apis/framework-event";
 
-const Modify: React.FC = () => {
+const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
+  const { id } = f7route.query;
   const formik = useRef<FormikProps<any>>();
   const [saving, setSaving] = useState(false);
+
+  const fields = {
+    amounts: "",
+    expenseId: ""
+  };
 
   const { loading, data } = useLivingExpensesQuery();
 
   const [createBudgetMutation] = useCreateBudgetMutation();
+  const [mdifyBudgetMutation] = useModifyBudgetMutation();
 
   const payDetails = data?.livingExpenses;
 
@@ -24,6 +33,27 @@ const Modify: React.FC = () => {
     const name = target.getAttribute("data-id");
 
     formik.current.setFieldValue("expenseId", name);
+  };
+
+  const onSubmit = (values: any) => {
+    setSaving(true);
+    onSave(values);
+  };
+
+  const onSave = (data) => {
+    const operation = id ? mdifyBudgetMutation : createBudgetMutation;
+    const _param: any = id ? { id, input: data } : { input: data };
+    const variables = { ..._param };
+
+    operation({ variables })
+      .then(() => {
+        event.emit(`update-budget`);
+
+        f7router.back();
+      })
+      .catch(() => {
+        setSaving(false);
+      });
   };
 
   return (
@@ -41,21 +71,7 @@ const Modify: React.FC = () => {
       </Navbar>
       <PageContent>
         <div className="px-7 pt-4">
-          <Formik
-            innerRef={formik}
-            initialValues={{
-              name: "",
-              amounts: "",
-              expenseId: "",
-              approximateAt: ""
-            }}
-            onSubmit={(values) => {
-              // // same shape as initial values
-              // setSaving(true);
-              // const data = { ...values, expenseId: expenseId.current, approximateAt: date.current };
-              // onSave(data);
-            }}
-          >
+          <Formik innerRef={formik} initialValues={fields} onSubmit={onSubmit}>
             {({ errors, touched, values, setFieldValue }) => (
               <Form>
                 <InputField

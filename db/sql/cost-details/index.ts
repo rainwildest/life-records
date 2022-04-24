@@ -9,8 +9,8 @@ import { create, modify, remove } from "../common";
  * @returns Promise
  */
 export const createCostDetail = async (
-  options: CostDetailsSnakeOptions
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  options: CostDetailsSnakeProps
+): Promise<CostDetailsSnakeProps & DateAndIDFieldSnakeProps> => {
   return create("cost_details", options);
 };
 
@@ -22,8 +22,8 @@ export const createCostDetail = async (
  */
 export const modifyCostDetail = async (
   id: string,
-  options: CostDetailsSnakeOptions
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+  options: CostDetailsSnakeProps
+): Promise<CostDetailsSnakeProps & DateAndIDFieldSnakeProps> => {
   return modify("cost_details", id, options);
 };
 
@@ -33,7 +33,7 @@ export const modifyCostDetail = async (
  * @param id
  * @returns Promise
  */
-export const removeCostDetail = async (id: string): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const removeCostDetail = async (id: string): Promise<CostDetailsSnakeProps & DateAndIDFieldSnakeProps> => {
   return remove("cost_details", id);
 };
 
@@ -43,7 +43,7 @@ export const removeCostDetail = async (id: string): Promise<CostDetailsSnakeOpti
  * @param {string} userId 用户id
  * @returns Promise
  */
-export const getCostDetails = async (args: any): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCostDetails = async (args: any): Promise<CostDetailsSnakeProps & DateAndIDFieldSnakeProps> => {
   const orm = await MikrotOrm();
   return orm
     .createQueryBuilder(CostDetails)
@@ -63,9 +63,7 @@ export const getCostDetails = async (args: any): Promise<CostDetailsSnakeOptions
  *  @value string end 结束日期
  * @returns Promise
  */
-export const getCostDetailsByTimeSlot = async (
-  args: any = {}
-): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCostDetailsByTimeSlot = async (args: any = {}): Promise<CostDetailsSnakeProps & DateAndIDFieldSnakeProps> => {
   const { userId, type = "pay", start, end } = args;
 
   const orm = await knex();
@@ -90,7 +88,7 @@ export const getCostDetailsByTimeSlot = async (
  *  @value string format 年份/年月/年月日的格式(YYYY || YYYY-MM || YYYY-MM-DD)
  * @returns Promise
  */
-export const getCostDetailsByDate = async (args: any = {}): Promise<CostDetailsSnakeOptions & DateAndIdSQLFieldSnakeOption> => {
+export const getCostDetailsByDate = async (args: any = {}): Promise<CostDetailsSnakeProps & DateAndIDFieldSnakeProps> => {
   const { userId, type = "pay", date, format, expenseId } = args;
   const orm = await knex();
 

@@ -1,30 +1,30 @@
-declare type DateSQLOptions = {
+declare type DateProps = {
   createdAt?: Date;
   modifiedAt?: Date;
   deletedAt?: Date;
 };
 
-declare type DateSQLSnakeOptions = {
+declare type DateSnakeProps = {
   created_at?: Date;
   modified_at?: Date;
   deleted_at?: Date;
 };
 
-declare type IDSQLOptions = {
+declare type IDProps = {
   id?: string;
   seqId?: number;
 };
 
-declare type IDSQLSnakeOptions = {
+declare type IDSnakeProps = {
   id?: string;
   seq_id?: number;
 };
 
-declare type DateAndIdSQLFieldOption = DateSQLOptions & IDSQLOptions;
-declare type DateAndIdSQLFieldSnakeOption = DateSQLSnakeOptions & IDSQLSnakeOptions;
+declare type DateAndIDFieldProps = DateProps & IDProps;
+declare type DateAndIDFieldSnakeProps = DateSnakeProps & IDSnakeProps;
 
 declare type GraphqlContext = {
-  user?: UserSnakeOptions & DateAndIdSQLFieldSnakeOption;
+  user?: UserSnakeProps & DateAndIDFieldSnakeProps;
   loaders?: { user?: any };
 };
 

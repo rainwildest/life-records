@@ -13,9 +13,11 @@ import {
 } from "./statistical";
 import { fundPlan, fundPlanById } from "./fund-plan";
 import { accountBooks } from "./account-books";
+import { budgets } from "./budgets";
 
 export const queries = {
   user,
+  budgets,
   fundPlan,
   costDetails,
   fundPlanById,
@@ -32,6 +34,9 @@ export const queries = {
 export const custom = {
   User: {
     statistics
+  },
+  Budget: {
+    expense
   },
   CostDetails: {
     user: userid,

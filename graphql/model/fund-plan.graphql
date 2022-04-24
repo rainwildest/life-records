@@ -1,7 +1,7 @@
 # import FundPlanOptions from '../fragments/fund-plan.graphql'
 # import LivingExpensesOptions from '../fragments/living-expenses.graphql'
 
-query fundPlan($input: FundPlanQueryOptions) {
+query fundPlan($input: FundPlanQueryProps) {
   fundPlan(input: $input) {
     data {
       ...FundPlanOptions
@@ -19,13 +19,13 @@ query fundPlanById($id: String) {
   }
 }
 
-mutation createFundPlan($input: fieldFundPlanOptions) {
+mutation createFundPlan($input: FieldFundPlanProps) {
   createFundPlan(input: $input) {
     ...FundPlanOptions
   }
 }
 
-mutation modifyFundPlan($id: String!, $input: fieldFundPlanOptions) {
+mutation modifyFundPlan($id: String!, $input: FieldFundPlanProps) {
   modifyFundPlan(id: $id, input: $input) {
     ...FundPlanOptions
   }
