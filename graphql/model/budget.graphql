@@ -1,4 +1,5 @@
 # import BudgetOptions from '../fragments/budget.graphql'
+# import LivingExpensesOptions from '../fragments/living-expenses.graphql'
 
 mutation createBudget($input: ModifyBudgetProps) {
   createBudget(input: $input) {
@@ -21,5 +22,9 @@ mutation removeBudget($id: String!) {
 query getBudgets($input: BudgetProps) {
   budgets(input: $input) {
     ...BudgetOptions
+
+    expense {
+      ...LivingExpensesOptions
+    }
   }
 }
