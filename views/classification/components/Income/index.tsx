@@ -33,10 +33,7 @@ const Income: React.FC<RouterProps & IncomeOptons> = ({ f7router, onNavigate }) 
             </div>
           )}
 
-          <Icons
-            name={item.expenseIcon || "default-01"}
-            className={`svg-icon-30 pointer-events-none ${!item.expenseIcon ? "default-icon-color" : ""}`}
-          />
+          <Icons name={item.expenseIcon} className="svg-icon-30 pointer-events-none" />
           <div className="text-xs mt-1 pointer-events-none">{item.expenseName}</div>
         </div>
       ))}

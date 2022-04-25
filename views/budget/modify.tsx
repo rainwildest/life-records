@@ -96,10 +96,7 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
                         key={item.id}
                       >
                         <div className="flex justify-center pointer-events-none">
-                          <Icons
-                            name={item.expenseIcon || "default-01"}
-                            className={`svg-icon-30 ${!item.expenseIcon ? "default-icon-color" : ""}`}
-                          />
+                          <Icons name={item.expenseIcon} className="svg-icon-30" />
                         </div>
                         <div className="text-center mt-2 text-xs pointer-events-none">{item.expenseName}</div>
                       </div>

@@ -33,7 +33,7 @@ const CostCard: React.FC<CostCardOptions> = ({
       <div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Icons name={icon || "default-01"} className={`svg-icon-25 pr-1 ${!icon ? "default-icon-color" : ""}`} />
+            <Icons name={icon} className="svg-icon-25 pr-1" />
             <p className="text-sm">{typeName}</p>
           </div>
 

@@ -13,10 +13,7 @@ type PercentageItemOptins = {
 const PercentageItem: React.FC<PercentageItemOptins> = ({ index = 0, progress = 0, amount, name, icon }) => {
   return (
     <Link className={`shadow-active-3 flex w-full items-center rounded-lg p-2 mt-1 no-active-state`}>
-      <Icons
-        className={`shadow-3 px-2 py-2 rounded-lg flex-shrink-0 svg-icon-30 ${!icon ? "default-icon-color" : ""}`}
-        name={icon || "default-01"}
-      />
+      <Icons name={icon} className="shadow-3 px-2 py-2 rounded-lg flex-shrink-0 svg-icon-30" />
       <div className="w-full pl-3">
         <div className="flex text-xs justify-between px-1 mb-1">
           <div className="text-gray-600 font-semibold text-xs">

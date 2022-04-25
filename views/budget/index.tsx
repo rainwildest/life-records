@@ -77,7 +77,7 @@ const Budget: React.FC = () => {
             return (
               <div className="shadow-3 rounded-lg py-3 px-4 mt-7 flex justify-between" key={item.id}>
                 <div className="budget-title flex items-center flex-shrink-0 text-sm">
-                  <Icons name={expense.expenseIcon} className={`svg-icon-30 pr-2`} />
+                  <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2" />
                   <div className="truncate text-gray-700">{expense.expenseName}</div>
                 </div>
 
