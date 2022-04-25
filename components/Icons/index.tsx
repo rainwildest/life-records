@@ -14,13 +14,13 @@ const handleClassName = (className: string): string => {
 };
 const Icons: React.FC<IconsProps> = ({ name, className = "", style, onClick }) => {
   const base = "/svg/";
-  const url = `${base}${name}.svg`;
+  const url = `${base}${name || "default-01"}.svg`;
 
   const svgParams = {
     style,
     onClick,
     src: url,
-    className: handleClassName(className)
+    className: handleClassName(`${className} ${!name ? "default-icon-color" : ""}`)
     // beforeInjection: (svg) => {
     //   svg.classList.add("svg-class-name");
     //   svg.setAttribute("style", "width: 200px");

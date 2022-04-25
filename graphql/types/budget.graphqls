@@ -10,7 +10,12 @@ type Budget {
 
   # custom data
   expense: LivingExpenses
-  total(input: BudgetProps): Int
+}
+
+type BudgetsData {
+  data: [Budget]
+  total: Int
+  hadEdit: Boolean
 }
 
 input ModifyBudgetProps {
@@ -20,10 +25,11 @@ input ModifyBudgetProps {
 
 input BudgetProps {
   date: String
+  format: String
 }
 
 type Query {
-  budgets(input: BudgetProps): [Budget]
+  budgets(input: BudgetProps): BudgetsData
 }
 
 type Mutation {

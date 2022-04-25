@@ -251,7 +251,7 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
     .then((rows: any[]) => {
       const useArray = (groupFormat as string).includes("-");
 
-      if (rows?.length) return useArray ? rows : rows[0].total || 0;
+      if (rows?.length) return useArray ? rows : rows[0]?.total || 0;
 
       return null;
     });

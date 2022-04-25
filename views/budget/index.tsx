@@ -11,8 +11,8 @@ const Budget: React.FC = () => {
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
   const { data: budgetsData, refetch: budgetRefetch } = useGetBudgetsQuery({ variables: { input: { date } } });
-  const budgets = budgetsData?.budgets || [];
-  console.log(budgets);
+  const budgets = budgetsData?.budgets;
+
   const onToggledDateSheet = () => {
     setSheetDateOpened(!sheetDateOpened);
   };
@@ -43,9 +43,6 @@ const Budget: React.FC = () => {
 
       <PageContent ptr className="pt-20">
         <div className="pt-2 px-6">
-          {/* <BlockTitle className="mx-0 mt-0 mb-7 text-gray-700 text-xl">
-          十月<span className="px-1">·</span>预算
-        </BlockTitle> */}
           <div className="flex justify-end mb-6">
             <div
               className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1.5 rounded-full items-center"
@@ -56,16 +53,6 @@ const Budget: React.FC = () => {
             </div>
           </div>
 
-          {/* <div className="shadow-3 rounded-lg py-3 px-4 flex justify-between">
-            <div className="budget-title flex items-center flex-shrink-0 text-sm">
-              <Icons name="budget" className="svg-icon-30 pr-3" />
-              <div className="truncate text-gray-700">预算总金额</div>
-            </div>
-
-            <div className="shadow-3 rounded-lg w-24 h-10 flex items-center justify-center px-3 py-2 box-border text-sm overflow-hidden">
-              <div className="text-gray-700">100</div>
-            </div>
-          </div> */}
           <section className="">
             <div className="shadow-3 py-3 px-4 rounded-lg ">
               <div className="relative overflow-hidden flex items-center flex-shrink-0">
@@ -78,28 +65,25 @@ const Budget: React.FC = () => {
               <div className="text-center">
                 <div className="text-gray-800 font-bold truncate mt-4 mb-2">
                   <span className="text-sm">￥</span>
-                  <span className="text-2xl">{thousands(10000)}</span>
+                  <span className="text-2xl">{thousands(budgets?.total || 0)}</span>
                 </div>
               </div>
             </div>
           </section>
 
-          {budgets.map((item) => {
+          {budgets?.data?.map((item) => {
             const expense = item.expense;
 
             return (
               <div className="shadow-3 rounded-lg py-3 px-4 mt-7 flex justify-between" key={item.id}>
                 <div className="budget-title flex items-center flex-shrink-0 text-sm">
-                  <Icons
-                    name={expense.expenseIcon || "default-01"}
-                    className={`svg-icon-30 pr-2 ${!expense.expenseIcon ? "default-icon-color" : ""}`}
-                  />
+                  <Icons name={expense.expenseIcon} className={`svg-icon-30 pr-2`} />
                   <div className="truncate text-gray-700">{expense.expenseName}</div>
                 </div>
 
-                <div className="shadow-3 rounded-lg flex items-baseline justify-end w-28 font-semibold px-3 py-2 truncate">
+                <div className="shadow-3 rounded-lg flex items-baseline justify-end min-w-20 max-w-36 font-semibold px-3 py-2">
                   <span className="text-xs">￥</span>
-                  <span className="text-lg">{thousands(item.amounts)}</span>
+                  <span className="text-lg truncate">{thousands(item.amounts || 0)}</span>
                 </div>
               </div>
             );

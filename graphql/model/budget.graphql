@@ -21,10 +21,15 @@ mutation removeBudget($id: String!) {
 
 query getBudgets($input: BudgetProps) {
   budgets(input: $input) {
-    ...BudgetOptions
+    data {
+      ...BudgetOptions
 
-    expense {
-      ...LivingExpensesOptions
+      expense {
+        ...LivingExpensesOptions
+      }
     }
+
+    total
+    hadEdit
   }
 }

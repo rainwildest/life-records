@@ -10,6 +10,11 @@ module.exports = {
         50.5: "12.625rem" /*202px*/
       },
       minWidth: {
+        20: "5rem" /* 80px */,
+        28: "7rem" /* 112px */,
+        36: "9rem" /*144px*/
+      },
+      maxWidth: {
         28: "7rem" /* 112px */,
         36: "9rem" /*144px*/
       }

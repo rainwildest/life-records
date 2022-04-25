@@ -47,6 +47,7 @@ export const getBudgetsData = async (args: any = {}): Promise<BudgetProps & Date
 
 export const getBudgetsTotal = async (args: any = {}): Promise<any> => {
   const orm = await knex();
+  const { userId, format = "YYYY-MM", date } = args;
 
   return orm("budgets AS t1 ")
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
@@ -54,5 +55,16 @@ export const getBudgetsTotal = async (args: any = {}): Promise<any> => {
       orm.raw(`
           SUM(CASE WHEN t2.expense_type='pay' THEN t1.amounts ELSE 0 END) AS amounts
       `)
-    );
+    )
+    .where({ "t1.user_id": userId })
+    .whereRaw(`to_char(t1.created_at, '${format}') = ?`, [date])
+    .whereNull("t1.deleted_at")
+    .then((rows: any[]) => {
+      const useArray = (format as string).includes("-");
+
+      return rows?.length ? rows[0]?.amounts || 0 : 0;
+      // if (rows?.length) return useArray ? rows : rows[0].amounts || 0;
+
+      // return null;
+    });
 };
