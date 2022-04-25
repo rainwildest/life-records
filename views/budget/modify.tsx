@@ -47,7 +47,7 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
 
     operation({ variables })
       .then(() => {
-        event.emit(`update-budget`);
+        event.emit("update-budget");
 
         f7router.back();
       })

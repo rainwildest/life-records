@@ -13,7 +13,7 @@ import {
 } from "./statistical";
 import { fundPlan, fundPlanById } from "./fund-plan";
 import { accountBooks } from "./account-books";
-import { budgets } from "./budgets";
+import { budgets, budgetsTotal } from "./budgets";
 
 export const queries = {
   user,
@@ -36,7 +36,8 @@ export const custom = {
     statistics
   },
   Budget: {
-    expense
+    expense,
+    total: budgetsTotal
   },
   CostDetails: {
     user: userid,

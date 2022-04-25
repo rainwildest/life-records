@@ -49,7 +49,7 @@ type Query {
   statisticalGeneralization(year: String): [GeneralizationField]
   # 支出 或 收入
   statisticalExpenditureOrIncome(date: String, type: String = "pay"): [ExpenditureAndIncomeField]
-  # statisticalBudget 预算
+  # statisticalBudget(date: String): []
   statisticalBooks(bookId: String): StatisticalBooksField
   statisticalFundPlan(input: FundPlanQueryProps): StatisticalFundPlanField
 }

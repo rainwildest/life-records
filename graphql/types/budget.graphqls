@@ -10,6 +10,7 @@ type Budget {
 
   # custom data
   expense: LivingExpenses
+  total(input: BudgetProps): Int
 }
 
 input ModifyBudgetProps {

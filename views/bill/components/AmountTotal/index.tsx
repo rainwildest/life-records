@@ -22,7 +22,7 @@ const AmountTotal: React.FC<AmountTotalProps> = ({ type, amount, total }) => {
         </div>
 
         <div className="text-center">
-          <div className="text-gray-800 font-bold truncate mt-5 mb-2">
+          <div className="text-gray-800 font-bold truncate mt-4 mb-2">
             <span className="text-sm">￥</span>
             <span className="text-2xl">{amount}</span>
           </div>

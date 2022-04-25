@@ -44,3 +44,15 @@ export const getBudgetsData = async (args: any = {}): Promise<BudgetProps & Date
     .andWhere("deleted_at is null")
     .execute("all");
 };
+
+export const getBudgetsTotal = async (args: any = {}): Promise<any> => {
+  const orm = await knex();
+
+  return orm("budgets AS t1 ")
+    .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
+    .select(
+      orm.raw(`
+          SUM(CASE WHEN t2.expense_type='pay' THEN t1.amounts ELSE 0 END) AS amounts
+      `)
+    );
+};

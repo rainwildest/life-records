@@ -18,8 +18,8 @@ export default class Budgets extends SQLCommonField {
   /**
    * @param {string} amounts 金额
    */
-  @Property({ fieldName: "amounts" })
-  amounts: string;
+  @Property({ fieldName: "amounts", default: 0 })
+  amounts: number;
 
   /**
    * @param {string} monthly 按月
