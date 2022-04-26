@@ -33,3 +33,9 @@ query getBudgets($input: BudgetProps) {
     hadEdit
   }
 }
+
+query getBudgetDetail($id: String) {
+  budgetById(id: $id) {
+    ...BudgetOptions
+  }
+}

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Page, PageContent, Navbar, NavRight, Link, BlockTitle } from "framework7-react";
+import { Page, PageContent, Navbar, NavRight, Link, useStore } from "framework7-react";
 import { Icons, SheetDatePicker } from "components";
 import { useGetBudgetsQuery } from "graphql/model/budget.graphql";
 import { getCurrentDate } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
 import event from "lib/apis/framework-event";
+import { RouterProps } from "typings/f7-route";
 
-const Budget: React.FC = () => {
+const Budget: React.FC<RouterProps> = ({ f7router }) => {
+  const token = useStore("token");
+
   const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
@@ -19,6 +22,28 @@ const Budget: React.FC = () => {
 
   const onConfirmDateSheet = (e: string) => {
     setDate(e);
+  };
+
+  const onNavigate = (event?: any) => {
+    const id = (event.target as HTMLElement).getAttribute("data-id");
+
+    const url = f7router.generateUrl({
+      name: "budget-modify",
+      query: { id },
+      params: {}
+    });
+
+    f7router.navigate(url);
+  };
+
+  const onRefresh = (done: () => void) => {
+    if (!token) return done();
+
+    setTimeout(() => {
+      Promise.all([budgetRefetch()]).finally(() => {
+        done();
+      });
+    }, 500);
   };
 
   useEffect(() => {
@@ -41,7 +66,7 @@ const Budget: React.FC = () => {
         </NavRight>
       </Navbar>
 
-      <PageContent ptr className="pt-20">
+      <PageContent ptr className="pt-20" onPtrRefresh={onRefresh}>
         <div className="pt-2 px-6">
           <div className="flex justify-end mb-6">
             <div
@@ -75,13 +100,18 @@ const Budget: React.FC = () => {
             const expense = item.expense;
 
             return (
-              <div className="shadow-3 rounded-lg py-3 px-4 mt-7 flex justify-between" key={item.id}>
-                <div className="budget-title flex items-center flex-shrink-0 text-sm">
-                  <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2" />
+              <div
+                className={`${budgets.hadEdit ? "shadow-active-3" : ""} shadow-3 rounded-lg py-3 px-4 mt-7 flex justify-between`}
+                key={item.id}
+                data-id={item.id}
+                onClick={budgets.hadEdit && onNavigate}
+              >
+                <div className="budget-title flex items-center flex-shrink-0 text-sm pointer-events-none">
+                  <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2 pointer-events-none" />
                   <div className="truncate text-gray-700">{expense.expenseName}</div>
                 </div>
 
-                <div className="shadow-3 rounded-lg flex items-baseline justify-end min-w-20 max-w-36 font-semibold px-3 py-2">
+                <div className="shadow-3 rounded-lg flex items-baseline justify-end min-w-20 max-w-36 font-semibold px-3 py-2 pointer-events-none">
                   <span className="text-xs">￥</span>
                   <span className="text-lg truncate">{thousands(item.amounts || 0)}</span>
                 </div>

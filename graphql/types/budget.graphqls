@@ -30,6 +30,7 @@ input BudgetProps {
 
 type Query {
   budgets(input: BudgetProps): BudgetsData
+  budgetById(id: String): Budget
 }
 
 type Mutation {

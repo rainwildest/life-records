@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Page, PageContent, Navbar, NavRight, Button } from "framework7-react";
 import { Formik, Form, FormikProps } from "formik";
 import { Icons, InputField } from "components";
@@ -6,6 +6,8 @@ import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { useCreateBudgetMutation, useModifyBudgetMutation } from "graphql/model/budget.graphql";
 import { RouterProps } from "typings/f7-route";
 import event from "lib/apis/framework-event";
+import useBudgetDetail from "./utils/useBudgetDetail";
+import _ from "lodash";
 
 const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const { id } = f7route.query;
@@ -17,10 +19,12 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
     expenseId: ""
   };
 
+  const { data: detail } = useBudgetDetail(id);
+
   const { loading, data } = useLivingExpensesQuery();
 
   const [createBudgetMutation] = useCreateBudgetMutation();
-  const [mdifyBudgetMutation] = useModifyBudgetMutation();
+  const [modifyBudgetMutation] = useModifyBudgetMutation();
 
   const payDetails = data?.livingExpenses;
 
@@ -41,7 +45,7 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
   };
 
   const onSave = (data) => {
-    const operation = id ? mdifyBudgetMutation : createBudgetMutation;
+    const operation = id ? modifyBudgetMutation : createBudgetMutation;
     const _param: any = id ? { id, input: data } : { input: data };
     const variables = { ..._param };
 
@@ -55,6 +59,16 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
         setSaving(false);
       });
   };
+
+  useEffect(() => {
+    const $detail = detail?.budgetById;
+
+    if ($detail) {
+      _.keys(fields).forEach((key) => {
+        formik.current.setFieldValue(key, $detail[key]);
+      });
+    }
+  }, [detail]);
 
   return (
     <Page noToolbar pageContent={false}>

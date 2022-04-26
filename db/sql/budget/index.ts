@@ -30,6 +30,10 @@ export const removeBudget = async (id: string): Promise<BudgetProps & DateAndIDF
   return remove("budgets", id);
 };
 
+export const getBudgetById = async (id: string): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
+  return getDatabyId(Budgets, id);
+};
+
 /**
  *@description 获取某年某月的预算记录
  */
