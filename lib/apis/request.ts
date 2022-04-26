@@ -12,13 +12,7 @@ type ResponseOptions = {
 };
 const request = (args: RequestOptions): Promise<ResponseOptions> => {
   const controller = new AbortController();
-  const {
-    url,
-    data,
-    method = "GET",
-    headers = { "Content-Type": "application/json" },
-    time = 30
-  } = args;
+  const { url, data, method = "GET", headers = { "Content-Type": "application/json" }, time = 30 } = args;
 
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {

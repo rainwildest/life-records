@@ -1,11 +1,5 @@
 import React from "react";
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext
-} from "next/document";
+import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<any> {
@@ -18,12 +12,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="96x96"
-            href="/icon/favicon.ico"
-          />
+          <link rel="icon" type="image/png" sizes="96x96" href="/icon/favicon.ico" />
         </Head>
 
         <body>

@@ -1,13 +1,5 @@
 export function colorClasses(props): any {
-  const {
-    color,
-    colorTheme,
-    textColor,
-    bgColor,
-    borderColor,
-    rippleColor,
-    themeDark
-  } = props;
+  const { color, colorTheme, textColor, bgColor, borderColor, rippleColor, themeDark } = props;
 
   return {
     "theme-dark": themeDark,

@@ -4,9 +4,7 @@ export default (array: any): string[] => {
   }
 
   // Turn all elements into strings, including arrays
-  const stringElements: string[] = array.map((key: number | string) =>
-    JSON.stringify(key)
-  );
+  const stringElements: string[] = array.map((key: number | string) => JSON.stringify(key));
 
   // Get the unique elements by using an ES6 Set
   const filterResult = new Set(stringElements);

@@ -11,11 +11,7 @@ const trustProxy = (req, res, next) => {
   }
 
   try {
-    req.hostname =
-      originHostname ||
-      req.headers["x-forwarded-host"] ||
-      req.headers.host ||
-      req.hostname;
+    req.hostname = originHostname || req.headers["x-forwarded-host"] || req.headers.host || req.hostname;
     req.ip = req.headers["x-forwarded-for"] || req.ip;
     req.protocol = originProtocol || req.headers["x-forwarded-proto"] || "http";
     req.secure = req.protocol.startsWith("https");

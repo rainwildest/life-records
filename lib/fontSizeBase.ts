@@ -8,9 +8,7 @@ const fontSizeBace = (e: Window, t: Document): void => {
   }
   if (
     ((function e() {
-      t.body
-        ? (t.body.style.fontSize = "16px")
-        : t.addEventListener("DOMContentLoaded", e);
+      t.body ? (t.body.style.fontSize = "16px") : t.addEventListener("DOMContentLoaded", e);
     })(),
     i(),
     e.addEventListener("resize", i),

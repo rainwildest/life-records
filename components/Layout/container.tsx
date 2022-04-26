@@ -7,12 +7,7 @@ interface ContainerProps {
   user?: any;
 }
 
-const Container: React.FC<ContainerProps> = ({
-  user,
-  hasHeader = false,
-  children,
-  ...props
-}) => {
+const Container: React.FC<ContainerProps> = ({ user, hasHeader = false, children, ...props }) => {
   return (
     <div className="layout h-screen flex items-center">
       {/* {!!hasHeader && <Header user={user} />} */}

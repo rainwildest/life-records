@@ -1,9 +1,4 @@
-import React, {
-  useRef,
-  useImperativeHandle,
-  useEffect,
-  useLayoutEffect
-} from "react";
+import React, { useRef, useImperativeHandle, useEffect, useLayoutEffect } from "react";
 import { classNames, colorClasses, emit } from "components/api/uitls";
 
 interface ToggleProps {
@@ -43,18 +38,7 @@ const Toggle = React.forwardRef((props: ToggleProps, ref) => {
   const elRef = useRef(null);
   const isTouched = useRef(false);
 
-  const {
-    className,
-    id,
-    style,
-    init = true,
-    checked,
-    defaultChecked,
-    disabled,
-    readonly,
-    name,
-    value
-  } = props;
+  const { className, id, style, init = true, checked, defaultChecked, disabled, readonly, name, value } = props;
 
   // useImperativeHandle 可以让父、子组件分别有自己的 ref，
   // 通过 React.forwardRef 将父组件的 ref 透传过来，
