@@ -258,7 +258,7 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
 };
 
 /**
- * @description 统计
+ * @description 统计当月预算花费多少
  * @param {object} args
  */
 export const getStatisticalBudget = async (args: any = {}): Promise<any> => {
@@ -277,4 +277,31 @@ export const getStatisticalBudget = async (args: any = {}): Promise<any> => {
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .whereNull("t1.deleted_at")
     .groupByRaw(`t1.id, t1.amounts, t3.expense_name, t3.expense_icon, to_char(t1.created_at, 'YYYY-MM')`);
+};
+
+/**
+ * @description 统计全年的预算与实际支出费用
+ * @param args
+ */
+export const getStatisticalBudgetByYear = async (args: any = {}): Promise<any> => {
+  const { userId, date } = args;
+
+  const orm = await knex();
+
+  const table = `(SELECT 
+    to_char(purchase_time, 'MM') AS purchase_time, 
+    SUM(CASE WHEN amounts != 0 THEN amounts ELSE 0 END) AS amounts 
+    FROM cost_details 
+    WHERE to_char(purchase_time, 'YYYY')='${date}' 
+    AND user_id='${userId}'
+    AND deleted_at is null
+    GROUP BY to_char(purchase_time, 'MM'))`;
+
+  return orm("budgets AS t1")
+    .select(orm.raw(`SUM(t1.amounts) AS budget_total, t2.amounts AS month_total, to_char(t1.created_at, 'MM') AS created_at`))
+    .joinRaw(`LEFT JOIN ${table} t2 ON t2.purchase_time=to_char(t1.created_at, 'MM')`)
+    .whereRaw(`to_char(t1.created_at, 'YYYY')= ?`, [date])
+    .andWhereRaw(`t1.user_id = ?`, [userId])
+    .whereNull("t1.deleted_at")
+    .groupByRaw(`to_char(t1.created_at, 'MM'), t2.amounts`);
 };
