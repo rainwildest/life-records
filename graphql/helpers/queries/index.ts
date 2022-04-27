@@ -14,11 +14,12 @@ import {
 } from "./statistical";
 import { fundPlan, fundPlanById } from "./fund-plan";
 import { accountBooks } from "./account-books";
-import { budgets } from "./budgets";
+import { budgets, budgetById } from "./budgets";
 
 export const queries = {
   user,
   budgets,
+  budgetById,
   fundPlan,
   costDetails,
   fundPlanById,
