@@ -43,13 +43,23 @@ input StatisticalDetailsProps {
   groupFormat: String
 }
 
+type StatisticalBudgetProps {
+  amounts: Int
+  original: Int
+  expenseName: String
+  expenseIcon: String
+  createdAt: String
+}
+
 type Query {
   statisticalCostDetails(input: StatisticalDetailsProps): StatisticalDetails
   # 概括
   statisticalGeneralization(year: String): [GeneralizationField]
   # 支出 或 收入
   statisticalExpenditureOrIncome(date: String, type: String = "pay"): [ExpenditureAndIncomeField]
-  # statisticalBudget(date: String): []
+  # 预算统计
+  statisticalBudget(date: String, format: String): [StatisticalBudgetProps]
+
   statisticalBooks(bookId: String): StatisticalBooksField
   statisticalFundPlan(input: FundPlanQueryProps): StatisticalFundPlanField
 }

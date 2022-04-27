@@ -20,7 +20,10 @@ const PercentageItem: React.FC<PercentageItemOptins> = ({ index = 0, progress = 
             {name} {progress || 0}%
           </div>
           <div className="flex items-center">
-            <div className="font-bold text-sm leading-none">￥{amount}</div>
+            <div className="font-bold leading-none">
+              <span className="text-xs">￥</span>
+              <span className="text-sm !mx-0">{amount || 0}</span>
+            </div>
             <Icons name="arrowr" className="percentage-icon-right svg-icon-12 ml-1" />
           </div>
         </div>

@@ -4,6 +4,7 @@ import { costDetails } from "./cost-details";
 import { livingExpenses, livingExpensesById } from "./living-expenses";
 import {
   statisticalBooks,
+  statisticalBudget,
   statisticalFundPlan,
   statisticalCostTotal,
   statisticalCostDetails,
@@ -13,12 +14,11 @@ import {
 } from "./statistical";
 import { fundPlan, fundPlanById } from "./fund-plan";
 import { accountBooks } from "./account-books";
-import { budgets, budgetById } from "./budgets";
+import { budgets } from "./budgets";
 
 export const queries = {
   user,
   budgets,
-  budgetById,
   fundPlan,
   costDetails,
   fundPlanById,
@@ -29,7 +29,8 @@ export const queries = {
   statisticalCostDetails,
   statisticalGeneralization,
   statisticalExpenditureOrIncome,
-  statisticalFundPlan
+  statisticalFundPlan,
+  statisticalBudget
 };
 
 export const custom = {

@@ -22,7 +22,10 @@ const ClassificationDetails: React.FC<ClassificationDetailsProps> = ({ name, ico
             {name} {progress || 0}%
           </div>
           <div className="flex items-center">
-            <div className="font-bold text-sm leading-none">￥{amount || 0}</div>
+            <div className="font-bold leading-none">
+              <span className="text-xs">￥</span>
+              <span className="text-sm">{amount || 0}</span>
+            </div>
             {/* <Icons name="arrowr" className="percentage-icon-right svg-icon-12 ml-1" /> */}
           </div>
         </div>

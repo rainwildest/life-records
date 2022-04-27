@@ -49,6 +49,16 @@ query getClassifiedStatistics($date: String, $type: String = "pay") {
   }
 }
 
+query getStatisticalBudget($date: String, $format: String = "YYYY-MM") {
+  statisticalBudget(date: $date, format: $format) {
+    amounts
+    original
+    expenseIcon
+    expenseName
+    createdAt
+  }
+}
+
 query generalization($year: String) {
   statisticalGeneralization(year: $year) {
     pay

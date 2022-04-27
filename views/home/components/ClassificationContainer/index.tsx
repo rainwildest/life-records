@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ClassificationEmpty from "../ClassificationEmpty";
 import ClassificationDetails from "../ClassificationDetails";
 import { GetClassifiedStatisticsQuery } from "graphql/model/statistics.graphql";
@@ -6,11 +6,11 @@ import { thousands, percentage } from "lib/apis/utils";
 
 type ClassificationContainer = {
   type?: string;
-  showAll?: boolean;
   details?: GetClassifiedStatisticsQuery;
-  onShowAll?: () => void;
 };
-const ClassificationContainer: React.FC<ClassificationContainer> = ({ type, showAll, details, onShowAll }) => {
+const ClassificationContainer: React.FC<ClassificationContainer> = ({ type, details }) => {
+  const [showAll, setShowAll] = useState(false);
+
   const original = [];
   const data = details?.statisticalExpenditureOrIncome || [];
 
@@ -26,6 +26,10 @@ const ClassificationContainer: React.FC<ClassificationContainer> = ({ type, show
       progress: percentage(original, index)
     };
   });
+
+  const onShowAll = () => {
+    setShowAll(!showAll);
+  };
 
   return (
     <div className="shadow-3 rounded-lg mt-8 pt-3 pb-4">

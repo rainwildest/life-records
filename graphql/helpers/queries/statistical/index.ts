@@ -5,10 +5,12 @@ import statisticalFundPlan from "./fund-plan";
 import statisticalBooks from "./statistical-books";
 import statisticalGeneralization from "./generalization";
 import statisticalExpenditureOrIncome from "./expenditure-or-income";
+import statisticalBudget from "./budget";
 
 export {
   details,
   statisticalBooks,
+  statisticalBudget,
   statisticalFundPlan,
   statisticalCostTotal,
   statisticalCostDetails,

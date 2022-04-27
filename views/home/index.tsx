@@ -1,16 +1,18 @@
 import React, { memo, useState, useCallback, useEffect } from "react";
 import { Page, PageContent, Link, Navbar, NavRight, useStore } from "framework7-react";
-import { useGetCostTotalDetailsQuery, useGetClassifiedStatisticsQuery } from "graphql/model/statistics.graphql";
+import {
+  useGetCostTotalDetailsQuery,
+  useGetClassifiedStatisticsQuery,
+  useGetStatisticalBudgetQuery
+} from "graphql/model/statistics.graphql";
 import { Amounts, Icons, NotloggedIn, ThemeIcon } from "components";
 import { getCurrentDate, getDaysInMonth } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
-import { PaymentAnalysis } from "./components";
-import { ClassificationContainer } from "./components";
+import { PaymentAnalysis, ClassificationContainer, BudgetContainer } from "./components";
 
 const Home: React.FC = () => {
   const token = useStore("token");
 
-  const [showAll, setShowAll] = useState(false);
   const [costType, setCostType] = useState<keyof AmountType>("pay");
 
   const { data: classifiedData, refetch: classifiedRefetch } = useGetClassifiedStatisticsQuery({
@@ -45,9 +47,10 @@ const Home: React.FC = () => {
     days[index] = item.amounts;
   });
 
-  /* 强制刷新 */
-  // const [, updateState] = useState<any>();
-  // const forceUpdate = useCallback(() => updateState({}), []);
+  const { data: budgetsData, refetch: budgetsRefetch } = useGetStatisticalBudgetQuery({
+    variables: { date: getCurrentDate("YYYY-MM") },
+    fetchPolicy: "network-only"
+  });
 
   const onSetCostType = (e: any) => {
     const target = e.target as HTMLDivElement;
@@ -71,15 +74,11 @@ const Home: React.FC = () => {
     "12": "十二月"
   };
 
-  const onShowAll = () => {
-    setShowAll(!showAll);
-  };
-
   const onRefresh = (done: () => void) => {
     if (!token) return done();
 
     setTimeout(() => {
-      Promise.all([totalRefetch(), classifiedRefetch()]).finally(() => {
+      Promise.all([totalRefetch(), classifiedRefetch(), budgetsRefetch()]).finally(() => {
         done();
       });
     }, 500);
@@ -108,7 +107,7 @@ const Home: React.FC = () => {
       </Navbar>
       <PageContent className="pt-32" ptr onPtrRefresh={onRefresh}>
         {!!token && (
-          <div className="px-6 pb-12">
+          <div className="px-4 pb-12">
             <div className="flex justify-between items-center">
               <div>
                 <span className="font-semibold text-2xl pr-0.5">{contrast[getCurrentDate("MM")]}</span>
@@ -151,7 +150,9 @@ const Home: React.FC = () => {
               <PaymentAnalysis days={days} type={costType} />
             </div>
 
-            <ClassificationContainer details={classifiedData} type={costType} showAll={showAll} onShowAll={onShowAll} />
+            <ClassificationContainer details={classifiedData} type={costType} />
+
+            {costType === "pay" && <BudgetContainer details={budgetsData} />}
           </div>
         )}
       </PageContent>
