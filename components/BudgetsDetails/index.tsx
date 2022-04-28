@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Progressbar } from "framework7-react";
 import { Icons } from "components";
 
@@ -47,4 +47,4 @@ const BudgetsDetails: React.FC<BudgetsDetailsProps> = ({ name, icon, amount, ori
   );
 };
 
-export default BudgetsDetails;
+export default memo(BudgetsDetails);

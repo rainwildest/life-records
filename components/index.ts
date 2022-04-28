@@ -13,6 +13,8 @@ import NotloggedIn from "./NotloggedIn";
 import SheetDatePicker from "./SheetDatePicker";
 import SheetModalPicker from "./SheetModalPicker";
 import ThemeIcon from "./ThemeIcon";
+import BudgetsDetails from "./BudgetsDetails";
+import BudgetContainer from "./BudgetContainer";
 
 export {
   Amounts,
@@ -29,5 +31,7 @@ export {
   NotloggedIn,
   SheetDatePicker,
   ThemeIcon,
-  SheetModalPicker
+  SheetModalPicker,
+  BudgetsDetails,
+  BudgetContainer
 };

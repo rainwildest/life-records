@@ -5,10 +5,10 @@ import {
   useGetClassifiedStatisticsQuery,
   useGetStatisticalBudgetQuery
 } from "graphql/model/statistics.graphql";
-import { Amounts, Icons, NotloggedIn, ThemeIcon } from "components";
+import { Icons, NotloggedIn, ThemeIcon, BudgetContainer } from "components";
 import { getCurrentDate, getDaysInMonth } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
-import { PaymentAnalysis, ClassificationContainer, BudgetContainer } from "./components";
+import { PaymentAnalysis, ClassificationContainer } from "./components";
 
 const Home: React.FC = () => {
   const token = useStore("token");
