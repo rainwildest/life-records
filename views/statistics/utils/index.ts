@@ -55,3 +55,132 @@ export const onSelectDate = (date: string, fullYear = false): string => {
 
   return date.split("-")[0];
 };
+
+export const consumeOptions = (data: FieldCommon[]): FieldCommon => {
+  const paySeries = new Array(12).fill(0);
+  const incomeSeries = new Array(12).fill(0);
+
+  data.forEach((item) => {
+    const month = item.purchaseTime.split("-")[1];
+    const index = Number(month) - 1;
+
+    paySeries[index] = item.pay;
+    incomeSeries[index] = item.income;
+  });
+
+  return {
+    title: {
+      subtext: "单位：元",
+      left: "right"
+    },
+    tooltip: {
+      trigger: "axis"
+    },
+    legend: {
+      data: ["收入", "支出"]
+    },
+    grid: {
+      left: "0%",
+      right: "2%",
+      bottom: "7%",
+      top: "24%",
+      containLabel: true
+    },
+    xAxis: {
+      data: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+    },
+    yAxis: {
+      type: "value",
+      axisLabel: {
+        rotate: 0,
+        interval: "auto"
+      }
+    },
+    series: [
+      {
+        name: "收入",
+        type: "line",
+        data: incomeSeries,
+        smooth: true,
+        itemStyle: {
+          color: "#102b6a"
+        },
+        areaStyle: {}
+      },
+      {
+        name: "支出",
+        type: "line",
+        data: paySeries,
+        smooth: true,
+        itemStyle: {
+          color: "#2a5caa"
+        },
+        areaStyle: {}
+      }
+    ]
+  };
+};
+
+export const budgetOptions = (data: FieldCommon[]): FieldCommon => {
+  const budgetSeries = new Array(12).fill(0);
+  const expenditureSeries = new Array(12).fill(0);
+
+  data.forEach((item) => {
+    const index = Number(item.createdAt) - 1;
+
+    budgetSeries[index] = item.budgetTotal || 0;
+    expenditureSeries[index] = item.monthTotal || 0;
+  });
+
+  return {
+    title: {
+      subtext: "单位：元",
+      left: "right"
+    },
+    tooltip: {
+      trigger: "axis"
+    },
+    legend: {
+      data: ["预算", "支出"]
+    },
+    grid: {
+      left: "0%",
+      right: "2%",
+      bottom: "7%",
+      top: "24%",
+      containLabel: true
+    },
+    xAxis: {
+      data: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+    },
+    yAxis: {
+      type: "value",
+      axisLabel: {
+        rotate: 0,
+        interval: "auto"
+      }
+    },
+    series: [
+      {
+        name: "预算",
+        type: "line",
+        data: budgetSeries,
+        smooth: true,
+        itemStyle: {
+          color: "#be185d"
+        },
+        areaStyle: {}
+      },
+      {
+        name: "支出",
+        type: "line",
+        data: expenditureSeries,
+        smooth: true,
+        itemStyle: {
+          color: "#831843"
+        },
+        areaStyle: {}
+      }
+    ]
+  };
+};

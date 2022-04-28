@@ -104,7 +104,7 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
                 className={`${budgets.hadEdit ? "shadow-active-3" : ""} shadow-3 rounded-lg py-3 px-4 mt-7 flex justify-between`}
                 key={item.id}
                 data-id={item.id}
-                onClick={budgets.hadEdit && onNavigate}
+                onClick={budgets.hadEdit ? onNavigate : null}
               >
                 <div className="budget-title flex items-center flex-shrink-0 text-sm pointer-events-none">
                   <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2 pointer-events-none" />

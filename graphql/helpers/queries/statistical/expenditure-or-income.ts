@@ -1,6 +1,6 @@
 import { AuthenticationError } from "apollo-server-micro";
 import { statisticalExpenditure } from "db/sql/statistical";
-import { format } from "lib/apis/dayjs";
+import { getCurrentDate } from "lib/apis/dayjs";
 import { autoFormatDate } from "lib/apis/utils";
 
 export default async (_parent: unknown, _args: { date: string; type: "pay" | "income" }, context: unknown): Promise<any> => {
@@ -8,7 +8,7 @@ export default async (_parent: unknown, _args: { date: string; type: "pay" | "in
   if (!user?.id) {
     throw new AuthenticationError("Authentication token is invalid, please log in.");
   }
-  const { date = format(new Date().toISOString(), "YYYY"), type } = _args;
+  const { date = getCurrentDate("YYYY"), type } = _args;
 
   const $format = autoFormatDate(date);
 

@@ -262,21 +262,21 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
  * @param {object} args
  */
 export const getStatisticalBudget = async (args: any = {}): Promise<any> => {
-  const { userId, date, format } = args;
+  const { userId, date, format, groupFormat } = args;
 
   const orm = await knex();
 
   return orm("budgets AS t1")
     .select(
       orm.raw(
-        `SUM(CASE WHEN t2.amounts != 0 THEN t2.amounts ELSE 0 END) AS amounts, t1.amounts AS original, t3.expense_name, t3.expense_icon, to_char(t1.created_at, 'YYYY-MM') AS created_at`
+        `SUM(CASE WHEN t2.amounts != 0 THEN t2.amounts ELSE 0 END) AS amounts, t1.amounts AS original, t3.expense_name, t3.expense_icon, to_char(t1.created_at, '${groupFormat}') AS created_at`
       )
     )
     .joinRaw(`LEFT JOIN cost_details t2 ON t1.expense_id=t2.expense_id JOIN living_expenses t3 ON t1.expense_id=t3.id::text`)
     .whereRaw(`to_char(t1.created_at, '${format}') = '${date}'`)
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .whereNull("t1.deleted_at")
-    .groupByRaw(`t1.id, t1.amounts, t3.expense_name, t3.expense_icon, to_char(t1.created_at, 'YYYY-MM')`);
+    .groupByRaw(`t1.id, t1.amounts, t3.expense_name, t3.expense_icon, to_char(t1.created_at, '${groupFormat}')`);
 };
 
 /**

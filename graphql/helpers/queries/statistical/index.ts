@@ -6,6 +6,7 @@ import statisticalBooks from "./statistical-books";
 import statisticalGeneralization from "./generalization";
 import statisticalExpenditureOrIncome from "./expenditure-or-income";
 import statisticalBudget from "./budget";
+import statisticalBudgetByYear from "./budget-by-year";
 
 export {
   details,
@@ -15,5 +16,6 @@ export {
   statisticalCostTotal,
   statisticalCostDetails,
   statisticalGeneralization,
+  statisticalBudgetByYear,
   statisticalExpenditureOrIncome
 };

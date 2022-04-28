@@ -29,3 +29,5 @@ declare type GraphqlContext = {
 };
 
 declare type AmountType = { pay: string; income: string };
+
+declare type FieldCommon = { [key: string]: any };

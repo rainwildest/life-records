@@ -49,12 +49,20 @@ query getClassifiedStatistics($date: String, $type: String = "pay") {
   }
 }
 
-query getStatisticalBudget($date: String, $format: String = "YYYY-MM") {
-  statisticalBudget(date: $date, format: $format) {
+query getStatisticalBudget($input: StatisticalBudgetProps) {
+  statisticalBudget(input: $input) {
     amounts
     original
     expenseIcon
     expenseName
+    createdAt
+  }
+}
+
+query getStatisticalBudgetByYear($date: String) {
+  statisticalBudgetByYear(date: $date) {
+    budgetTotal
+    monthTotal
     createdAt
   }
 }

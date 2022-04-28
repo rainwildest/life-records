@@ -10,7 +10,8 @@ import {
   statisticalCostDetails,
   statisticalGeneralization,
   details as statisticalData,
-  statisticalExpenditureOrIncome
+  statisticalExpenditureOrIncome,
+  statisticalBudgetByYear
 } from "./statistical";
 import { fundPlan, fundPlanById } from "./fund-plan";
 import { accountBooks } from "./account-books";
@@ -29,6 +30,7 @@ export const queries = {
   statisticalBooks,
   statisticalCostDetails,
   statisticalGeneralization,
+  statisticalBudgetByYear,
   statisticalExpenditureOrIncome,
   statisticalFundPlan,
   statisticalBudget

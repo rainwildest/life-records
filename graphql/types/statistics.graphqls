@@ -12,13 +12,13 @@ type TotalField {
   purchaseTime: String
 }
 
-type GeneralizationField {
+type Generalization {
   pay: Int
   income: Int
   purchaseTime: String
 }
 
-type ExpenditureAndIncomeField {
+type ExpenditureAndIncome {
   pay: Int
   income: Int
   expenseIcon: String
@@ -31,7 +31,7 @@ type StatisticalBooksField {
   income: Int
 }
 
-type StatisticalFundPlanField {
+type StatisticalFundPlan {
   total: Int
 }
 
@@ -43,7 +43,13 @@ input StatisticalDetailsProps {
   groupFormat: String
 }
 
-type StatisticalBudgetProps {
+input StatisticalBudgetProps {
+  date: String
+  format: String
+  groupFormat: String
+}
+
+type StatisticalBudget {
   amounts: Int
   original: Int
   expenseName: String
@@ -51,15 +57,22 @@ type StatisticalBudgetProps {
   createdAt: String
 }
 
+type GeneralizationByBudget {
+  budgetTotal: String
+  monthTotal: String
+  createdAt: String
+}
+
 type Query {
   statisticalCostDetails(input: StatisticalDetailsProps): StatisticalDetails
   # 概括
-  statisticalGeneralization(year: String): [GeneralizationField]
+  statisticalGeneralization(year: String): [Generalization]
   # 支出 或 收入
-  statisticalExpenditureOrIncome(date: String, type: String = "pay"): [ExpenditureAndIncomeField]
+  statisticalExpenditureOrIncome(date: String, type: String = "pay"): [ExpenditureAndIncome]
   # 预算统计
-  statisticalBudget(date: String, format: String): [StatisticalBudgetProps]
+  statisticalBudget(input: StatisticalBudgetProps): [StatisticalBudget]
+  statisticalBudgetByYear(date: String): [GeneralizationByBudget]
 
   statisticalBooks(bookId: String): StatisticalBooksField
-  statisticalFundPlan(input: FundPlanQueryProps): StatisticalFundPlanField
+  statisticalFundPlan(input: FundPlanQueryProps): StatisticalFundPlan
 }

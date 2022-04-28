@@ -48,7 +48,9 @@ const Home: React.FC = () => {
   });
 
   const { data: budgetsData, refetch: budgetsRefetch } = useGetStatisticalBudgetQuery({
-    variables: { date: getCurrentDate("YYYY-MM") },
+    variables: {
+      input: { date: getCurrentDate("YYYY-MM") }
+    },
     fetchPolicy: "network-only"
   });
 
@@ -83,6 +85,10 @@ const Home: React.FC = () => {
       });
     }, 500);
   };
+
+  useEffect(() => {
+    if (!budgetsData && !!token) budgetsRefetch();
+  }, [token]);
 
   return (
     <Page pageContent={false}>
@@ -152,7 +158,8 @@ const Home: React.FC = () => {
 
             <ClassificationContainer details={classifiedData} type={costType} />
 
-            {costType === "pay" && <BudgetContainer details={budgetsData} />}
+            {/* {costType === "pay" && <BudgetContainer details={budgetsData} />} */}
+            <BudgetContainer details={budgetsData} />
           </div>
         )}
       </PageContent>
