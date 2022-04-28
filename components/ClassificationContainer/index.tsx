@@ -13,9 +13,9 @@ const ClassificationContainer: React.FC<ClassificationContainer> = ({ type, deta
 
   const original = [];
   const data = details?.statisticalExpenditureOrIncome || [];
-
+  console.log(details);
   data.forEach((detail) => original.push(type === "pay" ? detail.pay : detail.income));
-
+  console.log(original);
   const percentageDetails = data.map((detail, index) => {
     const amount = type === "pay" ? detail.pay : detail.income;
 
@@ -26,7 +26,7 @@ const ClassificationContainer: React.FC<ClassificationContainer> = ({ type, deta
       progress: percentage(original, index)
     };
   });
-
+  console.log(percentageDetails);
   const onShowAll = () => {
     setShowAll(!showAll);
   };

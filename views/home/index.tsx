@@ -1,14 +1,14 @@
-import React, { memo, useState, useCallback, useEffect } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { Page, PageContent, Link, Navbar, NavRight, useStore } from "framework7-react";
 import {
   useGetCostTotalDetailsQuery,
   useGetClassifiedStatisticsQuery,
   useGetStatisticalBudgetQuery
 } from "graphql/model/statistics.graphql";
-import { Icons, NotloggedIn, ThemeIcon, BudgetContainer } from "components";
+import { Icons, NotloggedIn, ThemeIcon, BudgetContainer, ClassificationContainer } from "components";
 import { getCurrentDate, getDaysInMonth } from "lib/apis/dayjs";
 import { thousands } from "lib/apis/utils";
-import { PaymentAnalysis, ClassificationContainer } from "./components";
+import { PaymentAnalysis } from "./components";
 
 const Home: React.FC = () => {
   const token = useStore("token");

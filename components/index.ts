@@ -15,6 +15,7 @@ import SheetModalPicker from "./SheetModalPicker";
 import ThemeIcon from "./ThemeIcon";
 import BudgetsDetails from "./BudgetsDetails";
 import BudgetContainer from "./BudgetContainer";
+import ClassificationContainer from "./ClassificationContainer";
 
 export {
   Amounts,
@@ -33,5 +34,6 @@ export {
   ThemeIcon,
   SheetModalPicker,
   BudgetsDetails,
-  BudgetContainer
+  BudgetContainer,
+  ClassificationContainer
 };
