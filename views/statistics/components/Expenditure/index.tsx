@@ -43,14 +43,12 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
   return (
     <PageContent className="pt-24" ptr onPtrRefresh={onRefresh}>
       <div className="px-4 pt-4 pb-10">
-        <Echarts className="shadow-3 rounded-lg p-4" option={option} />
+        <div className="shadow-3 rounded-lg px-3 py-3 flex justify-between items-center mb-5">
+          <span className="text-gray-600 text-sm">全年比例</span>
+          <Toggle className="h-4 scale-75" checked={toggle} onToggleChange={onToggleChange} />
+        </div>
 
-        <List simpleList noHairlines className="test-statistics shadow-3 rounded-lg mt-14 mb-0">
-          <ListItem className="py-7">
-            <span className="text-gray-600 text-sm">全年比例</span>
-            <Toggle className="h-4" checked={toggle} onToggleChange={onToggleChange} />
-          </ListItem>
-        </List>
+        <Echarts className="shadow-3 rounded-lg p-4" option={option} />
 
         <ClassificationContainer details={data} type="pay" />
 
