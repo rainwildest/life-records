@@ -13,16 +13,11 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
   });
 
   const details = data?.statisticalExpenditureOrIncome || [];
-  const original = [];
 
-  const echartsData = details.map((detail) => {
-    original.push(detail.income);
-
-    return {
-      name: detail.expenseName,
-      value: detail.income
-    };
-  });
+  const echartsData = details.map((detail) => ({
+    name: detail.expenseName,
+    value: detail.income
+  }));
 
   const option = echartsConfig(echartsData, "收入分析");
 

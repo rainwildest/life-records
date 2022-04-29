@@ -13,16 +13,11 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
   });
 
   const details = data?.statisticalExpenditureOrIncome || [];
-  // const original = [];
 
-  const echartsData = details.map((detail) => {
-    // original.push(detail.pay);
-
-    return {
-      name: detail.expenseName,
-      value: detail.pay
-    };
-  });
+  const echartsData = details.map((detail) => ({
+    name: detail.expenseName,
+    value: detail.pay
+  }));
 
   const { data: budgetsData, refetch: budgetsRefetch } = useGetStatisticalBudgetQuery({
     variables: {
