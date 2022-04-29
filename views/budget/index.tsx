@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Page, PageContent, Navbar, NavRight, Link, useStore } from "framework7-react";
+import {
+  Page,
+  PageContent,
+  List,
+  ListItem,
+  Navbar,
+  NavRight,
+  Link,
+  SwipeoutActions,
+  SwipeoutButton,
+  useStore
+} from "framework7-react";
 import { Icons, SheetDatePicker } from "components";
 import { useGetBudgetsQuery } from "graphql/model/budget.graphql";
 import { getCurrentDate } from "lib/apis/dayjs";
@@ -96,28 +107,49 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
             </div>
           </section>
 
-          {budgets?.data?.map((item) => {
-            const expense = item.expense;
+          <List className="swipeout-container pt-2 my-0 ">
+            {budgets?.data?.map((item) => {
+              const expense = item.expense;
 
-            return (
-              <div
-                className={`${budgets.hadEdit ? "shadow-active-3" : ""} shadow-3 rounded-lg py-3 px-4 mt-7 flex justify-between`}
-                key={item.id}
-                data-id={item.id}
-                onClick={budgets.hadEdit ? onNavigate : null}
-              >
-                <div className="budget-title flex items-center flex-shrink-0 text-sm pointer-events-none">
-                  <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2 pointer-events-none" />
-                  <div className="truncate text-gray-700">{expense.expenseName}</div>
-                </div>
+              return (
+                <ListItem
+                  className={`plant-item shadow-3 rounded-lg mt-7 budget-${item.seqId} ${
+                    budgets.hadEdit ? "shadow-active-3" : "overflow-hidden"
+                  }`}
+                  divider={false}
+                  swipeout={budgets.hadEdit}
+                  key={item.id}
+                >
+                  <div
+                    slot="title"
+                    className="flex justify-between py-3 px-4"
+                    key={item.id}
+                    data-id={item.id}
+                    onClick={budgets.hadEdit ? onNavigate : null}
+                  >
+                    <div className="budget-title flex items-center flex-shrink-0 text-sm pointer-events-none">
+                      <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2 pointer-events-none" />
+                      <div className="truncate text-gray-700">{expense.expenseName}</div>
+                    </div>
 
-                <div className="shadow-3 rounded-lg flex items-baseline justify-end min-w-20 max-w-36 font-semibold px-3 py-2 pointer-events-none">
-                  <span className="text-xs">￥</span>
-                  <span className="text-lg truncate">{thousands(item.amounts || 0)}</span>
-                </div>
-              </div>
-            );
-          })}
+                    <div className="flex items-baseline justify-end min-w-20 max-w-36 font-semibold px-3 py-2 pointer-events-none">
+                      <span className="text-xs">￥</span>
+                      <span className="text-lg truncate">{thousands(item.amounts || 0)}</span>
+                    </div>
+                  </div>
+                  <SwipeoutActions className="flex items-center" right>
+                    <SwipeoutButton
+                      color="red"
+                      className="plant-operation link !text-sm !font-bold"
+                      // onClick={onDeletedBefore(detail.id, `plant-${detail.seqId}`)}
+                    >
+                      删 除
+                    </SwipeoutButton>
+                  </SwipeoutActions>
+                </ListItem>
+              );
+            })}
+          </List>
         </div>
 
         <SheetDatePicker

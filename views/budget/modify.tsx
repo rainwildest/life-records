@@ -72,7 +72,7 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
 
   return (
     <Page noToolbar pageContent={false}>
-      <Navbar className="h-12" noHairline backLink title="新增预算">
+      <Navbar className="h-12" noHairline backLink title={`${id ? "编辑" : "新增"}预算`}>
         <NavRight>
           <Button className="w-20" large small fill onClick={onSaveBefore}>
             <Icons

@@ -133,7 +133,7 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
         <Amounts pay={thousands(statistical?.total || 0)} payTitle="预计支出" />
       </div>
 
-      <List className="plant-items-container pt-2 px-6 my-0">
+      <List className="swipeout-container pt-2 px-6 my-0">
         {details.map((detail) => {
           const { expense } = detail;
           const hasOverdue = timeStamp(detail.approximateAt) < serverTime;
