@@ -6,15 +6,23 @@ import { consumeOptions, budgetOptions } from "../../utils";
 
 type GeneralizationOptions = { year: string };
 const Generalization: React.FC<GeneralizationOptions> = ({ year }) => {
-  const { data } = useGeneralizationQuery({ variables: { year } });
+  const { data, refetch } = useGeneralizationQuery({ variables: { year } });
   const generalization = data?.statisticalGeneralization || [];
 
-  const { data: budgetMonth } = useGetStatisticalBudgetByYearQuery({ variables: { date: year } });
+  const { data: budgetMonth, refetch: budgetRefetch } = useGetStatisticalBudgetByYearQuery({ variables: { date: year } });
   const budget = budgetMonth?.statisticalBudgetByYear || [];
 
+  const onRefresh = (done: () => void) => {
+    setTimeout(() => {
+      Promise.all([refetch(), budgetRefetch()]).finally(() => {
+        done();
+      });
+    }, 500);
+  };
+
   return (
-    <PageContent>
-      <div className="px-4 mb-10 mt-7 w-full">
+    <PageContent className="pt-24" ptr onPtrRefresh={onRefresh}>
+      <div className="px-4 pt-4 mb-10 w-full">
         <BlockTitle className="!mb-3 !mt-0">{year} 收入与支出概况</BlockTitle>
         <Echarts className="shadow-3 rounded-lg p-4 w-full" option={consumeOptions(generalization)} />
       </div>

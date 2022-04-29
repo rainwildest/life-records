@@ -1,5 +1,5 @@
 import { AuthenticationError } from "apollo-server-micro";
-import { getStatisticalBudget } from "db/sql/statistical";
+import { getStatisticalBudget, getClassificationBudgetByYear } from "db/sql/statistical";
 import { getCurrentDate } from "lib/apis/dayjs";
 import { autoFormatDate } from "lib/apis/utils";
 import { GetStatisticalBudgetQueryVariables } from "graphql/model/statistics.graphql";
@@ -14,13 +14,9 @@ export default async (_parent: unknown, args: GetStatisticalBudgetQueryVariables
 
   const params = args.input;
 
-  let $format = "";
-  if (!params.format) $format = autoFormatDate(date);
+  let $format = params.format;
+  if (!$format) $format = autoFormatDate(date);
 
-  return getStatisticalBudget({
-    date,
-    userId: user.id,
-    format: params.format || $format,
-    groupFormat: "YYYY-MM"
-  });
+  const $fun = $format.length > 4 ? getStatisticalBudget : getClassificationBudgetByYear;
+  return $fun({ date, userId: user.id });
 };

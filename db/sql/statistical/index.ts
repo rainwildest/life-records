@@ -262,21 +262,58 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
  * @param {object} args
  */
 export const getStatisticalBudget = async (args: any = {}): Promise<any> => {
-  const { userId, date, format, groupFormat } = args;
+  const { userId, date } = args;
 
   const orm = await knex();
 
   return orm("budgets AS t1")
     .select(
       orm.raw(
-        `SUM(CASE WHEN t2.amounts != 0 THEN t2.amounts ELSE 0 END) AS amounts, t1.amounts AS original, t3.expense_name, t3.expense_icon, to_char(t1.created_at, '${groupFormat}') AS created_at`
+        `SUM(CASE WHEN t2.amounts != 0 THEN t2.amounts ELSE 0 END) AS amounts, t1.amounts AS original, t3.expense_name, t3.expense_icon, to_char(t1.created_at, 'YYYY-MM') AS created_at`
       )
     )
-    .joinRaw(`LEFT JOIN cost_details t2 ON t1.expense_id=t2.expense_id JOIN living_expenses t3 ON t1.expense_id=t3.id::text`)
-    .whereRaw(`to_char(t1.created_at, '${format}') = '${date}'`)
+    .joinRaw(
+      `LEFT JOIN cost_details t2 ON t1.expense_id=t2.expense_id AND to_char(t1.created_at, 'YYYY-MM')=to_char(t2.purchase_time, 'YYYY-MM') 
+      JOIN living_expenses t3 ON t1.expense_id=t3.id::text`
+    )
+    .whereRaw(`to_char(t1.created_at, 'YYYY-MM') = '${date}'`)
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .whereNull("t1.deleted_at")
-    .groupByRaw(`t1.id, t1.amounts, t3.expense_name, t3.expense_icon, to_char(t1.created_at, '${groupFormat}')`);
+    .groupByRaw(`t1.id, t1.amounts, t3.expense_name, t3.expense_icon, to_char(t1.created_at, 'YYYY-MM')`);
+};
+
+/**
+ * @description 统计全年预算花费
+ * @param args
+ * @returns Promise
+ */
+export const getClassificationBudgetByYear = async (args: any = {}): Promise<any> => {
+  const { userId, date } = args;
+
+  const orm = await knex();
+
+  const table = `(SELECT 
+    expense_id, SUM(CASE WHEN amounts != 0 THEN amounts ELSE 0 END) AS amounts 
+    FROM cost_details 
+    WHERE to_char(purchase_time, 'YYYY')='${date}' 
+    AND user_id='${userId}'
+    AND deleted_at is null
+    GROUP BY expense_id)`;
+
+  return orm("budgets AS t1")
+    .select(
+      orm.raw(
+        `t1.id, 
+        SUM(CASE WHEN t1.amounts != 0 THEN t1.amounts ELSE 0 END) AS original, 
+        SUM(CASE WHEN t2.amounts != 0 THEN t2.amounts ELSE 0 END) AS amounts, 
+        t3.expense_name, t3.expense_icon, to_char(t1.created_at, 'YYYY')`
+      )
+    )
+    .joinRaw(`LEFT JOIN ${table} t2 ON t2.expense_id = t1.expense_id JOIN living_expenses t3 ON t1.expense_id = t3.id::text`)
+    .whereRaw(`to_char(t1.created_at, 'YYYY')= ?`, [date])
+    .andWhereRaw("t1.user_id = ?", [userId])
+    .whereNull("t1.deleted_at")
+    .groupByRaw("t1.id, t1.amounts, t3.expense_name, t3.expense_icon, to_char(t1.created_at, 'YYYY')");
 };
 
 /**

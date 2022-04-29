@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 import { GetStatisticalBudgetQuery } from "graphql/model/statistics.graphql";
 import BudgetsDetails from "../BudgetsDetails";
-import { thousands, percentage } from "lib/apis/utils";
+import { thousands } from "lib/apis/utils";
 type BudgetContainerProps = {
   details?: GetStatisticalBudgetQuery;
 };

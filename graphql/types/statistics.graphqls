@@ -46,7 +46,7 @@ input StatisticalDetailsProps {
 input StatisticalBudgetProps {
   date: String
   format: String
-  groupFormat: String
+  # groupFormat: String
 }
 
 type StatisticalBudget {

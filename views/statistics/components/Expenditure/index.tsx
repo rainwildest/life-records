@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PageContent, List, ListItem, Toggle } from "framework7-react";
-import { useGetClassifiedStatisticsQuery } from "graphql/model/statistics.graphql";
-import { Echarts, ClassificationContainer } from "components";
+import { useGetClassifiedStatisticsQuery, useGetStatisticalBudgetQuery } from "graphql/model/statistics.graphql";
+import { Echarts, ClassificationContainer, BudgetContainer } from "components";
 import { echartsConfig, onSelectDate } from "../../utils";
 
 type ExpenditureOptions = { date?: string };
@@ -13,15 +13,22 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
   });
 
   const details = data?.statisticalExpenditureOrIncome || [];
-  const original = [];
+  // const original = [];
 
   const echartsData = details.map((detail) => {
-    original.push(detail.pay);
+    // original.push(detail.pay);
 
     return {
       name: detail.expenseName,
       value: detail.pay
     };
+  });
+
+  const { data: budgetsData, refetch: budgetsRefetch } = useGetStatisticalBudgetQuery({
+    variables: {
+      input: { date: onSelectDate(date, toggle) }
+    },
+    fetchPolicy: "network-only"
   });
 
   const option = echartsConfig(echartsData, "支出分析");
@@ -30,10 +37,18 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
     refetch({ date: onSelectDate(date, !e) });
   };
 
+  const onRefresh = (done: () => void) => {
+    setTimeout(() => {
+      Promise.all([refetch(), budgetsRefetch()]).finally(() => {
+        done();
+      });
+    }, 500);
+  };
+
   return (
-    <PageContent>
-      <div className="px-4 pb-10">
-        <Echarts className="shadow-3 rounded-lg mt-7 p-4" option={option} />
+    <PageContent className="pt-24" ptr onPtrRefresh={onRefresh}>
+      <div className="px-4 pt-4 pb-10">
+        <Echarts className="shadow-3 rounded-lg p-4" option={option} />
 
         <List simpleList noHairlines className="test-statistics shadow-3 rounded-lg mt-14 mb-0">
           <ListItem className="py-7">
@@ -43,6 +58,8 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
         </List>
 
         <ClassificationContainer details={data} type="pay" />
+
+        <BudgetContainer details={budgetsData} />
       </div>
     </PageContent>
   );
