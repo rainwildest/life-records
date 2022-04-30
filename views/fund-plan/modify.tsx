@@ -6,7 +6,7 @@ import { toastTip } from "lib/apis/utils";
 import { format, toISOString } from "lib/apis/dayjs";
 import event from "lib/apis/framework-event";
 import { RouterProps } from "typings/f7-route";
-import { Icons, InputField, DatePicker } from "components";
+import { Icons, InputField, SheetDatePicker } from "components";
 import { Formik, Form, FormikProps } from "formik";
 import usePlanData from "./utils/usePlanData";
 import _ from "lodash";
@@ -14,26 +14,23 @@ import _ from "lodash";
 const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
   const { id } = f7route.query;
 
-  const formik = useRef<FormikProps<any>>();
-  const date = useRef<string>();
-  const expenseId = useRef<string>();
-  const picker = useRef(null);
-
   const token = useStore("token");
+
+  const formik = useRef<FormikProps<any>>();
+  const expenseId = useRef<string>();
+
   const { data: detailData } = usePlanData(id);
 
+  const [date, setDate] = useState("");
   const [saving, setSaving] = useState(false);
   const [popupOpened, setPopupOpened] = useState(false);
+  const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
-  const fields = {
-    name: "",
-    amounts: "",
-    expenseId: "",
-    approximateAt: ""
-  };
+  const fields = { name: "", amounts: "", expenseId: "", approximateAt: "" };
 
   const [createFundPlan] = useCreateFundPlanMutation();
   const [modifyFundPlan] = useModifyFundPlanMutation();
+
   const { loading, data } = useLivingExpensesQuery();
 
   const payDetails = data?.livingExpenses;
@@ -43,20 +40,19 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
   };
 
   const onSave = (data: any) => {
-    const _operation = id ? modifyFundPlan : createFundPlan;
+    const $operation = id ? modifyFundPlan : createFundPlan;
 
-    const _param: any = id ? { id, input: data } : { input: data };
-    const variables = { ..._param };
+    const $param: any = id ? { id, input: data } : { input: data };
+    const variables = { ...$param };
 
-    _operation({ variables })
+    $operation({ variables })
       .then(() => {
         // 提送消息更新内容
         event.emit("update-plan");
 
         f7router.back();
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         toastTip("保存失败");
         setSaving(false);
       });
@@ -76,7 +72,7 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
             break;
           case "approximateAt":
             {
-              date.current = detail[key];
+              setDate(detail[key]);
               formik.current.setFieldValue(key, format(detail[key], "YYYY-MM"));
             }
             break;
@@ -86,25 +82,7 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
         }
       });
     }
-
-    const _picker = DatePicker({ hasFullYear: false, value: detail ? format(detail.approximateAt, "YYYY-MM") : "" }, (e) => {
-      const _d = e.split("-").map((item) => parseInt(item));
-      const dateObj = new Date(_d[0], _d[1], 0);
-      const days = dateObj.getDate();
-
-      const $date = `${e}-${days} 23:59:59`;
-
-      formik.current.setFieldValue("approximateAt", $date ? format($date, "YYYY-MM") : "");
-      date.current = toISOString($date);
-    });
-
-    picker.current = _picker;
   }, [detailData, payDetails]);
-
-  const onPickerToggle = () => {
-    picker.current.open();
-  };
-  const openPicker = token && onPickerToggle;
 
   const onSelectType = (e: any) => {
     const target = e.target as HTMLElement;
@@ -124,8 +102,21 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
 
   const onSubmit = (values: any) => {
     setSaving(true);
-    const data = { ...values, expenseId: expenseId.current, approximateAt: date.current };
-    onSave(data);
+    onSave({ ...values, expenseId: expenseId.current, approximateAt: date });
+  };
+
+  const onToggledDateSheet = () => {
+    setSheetDateOpened(!sheetDateOpened);
+  };
+
+  const onConfirmDateSheet = (e: string) => {
+    const _d = e.split("-").map((item) => parseInt(item));
+    const dateObj = new Date(_d[0], _d[1], 0);
+    const days = dateObj.getDate();
+
+    const $date = `${e}-${days} 23:59:59`;
+    formik.current.setFieldValue("approximateAt", format($date, "YYYY-MM"));
+    setDate(toISOString($date));
   };
 
   return (
@@ -193,12 +184,19 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
                 name="approximateAt"
                 readOnly={true}
                 setFieldValue={setFieldValue}
-                onClick={openPicker}
+                onClick={onToggledDateSheet}
               />
             </Form>
           )}
         </Formik>
       </div>
+
+      <SheetDatePicker
+        date={date ? format(date, "YYYY-MM") : ""}
+        sheetOpened={sheetDateOpened}
+        onSheetClosed={onToggledDateSheet}
+        onConfirm={onConfirmDateSheet}
+      />
 
       <Sheet
         className="h-2/3 rounded-t-xl overflow-hidden"

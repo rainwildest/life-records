@@ -183,6 +183,10 @@ const SheetModalPicker: React.FC<SheetProps> = ({
     if (dateType === "year-month") onCreateYearMonth();
   }, [dateType]);
 
+  useEffect(() => {
+    $date.current = date;
+  }, [date]);
+
   return (
     <Sheet
       backdrop
