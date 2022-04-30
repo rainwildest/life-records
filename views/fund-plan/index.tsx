@@ -40,6 +40,7 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
 
   const [modifyFundPlan] = useModifyFundPlanMutation();
   const [removeFundPlan] = useRemoveFundPlanMutation();
+
   const details = data?.fundPlan.data || [];
   const serverTime = data?.fundPlan.time;
   const statistical = statisticalData?.statisticalFundPlan;
@@ -54,11 +55,12 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
       }
     })
       .then(() => {
-        f7.swipeout.delete(`.${el}`);
+        f7.swipeout.delete(el);
         statisticalRefetch();
+        toastTip("修改成功");
       })
       .catch(() => {
-        toastTip("确认失败");
+        toastTip("修改失败");
       });
   };
 
@@ -70,18 +72,19 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
     };
   };
 
-  const onDeleted = (val, el) => {
+  const onDeleted = (val: string, el: string) => {
     removeFundPlan({ variables: { id: val } })
       .then(() => {
-        f7.swipeout.delete(`.${el}`);
+        f7.swipeout.delete(el);
         statisticalRefetch();
+        toastTip("删除成功");
       })
       .catch(() => {
         toastTip("删除失败");
       });
   };
 
-  const onDeletedBefore = (val, el) => {
+  const onDeletedBefore = (val: string, el: string) => {
     return () => {
       f7.dialog.confirm("是否确定删除", "删除提示", function () {
         onDeleted(val, el);
@@ -162,14 +165,14 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
                 <SwipeoutButton
                   color="green"
                   className="swipeout-operation link !text-sm !font-bold"
-                  onClick={onCompleteBefore(detail.id, `plant-${detail.seqId}`)}
+                  onClick={onCompleteBefore(detail.id, `.plant-${detail.seqId}`)}
                 >
                   完 成
                 </SwipeoutButton>
                 <SwipeoutButton
                   color="red"
                   className="swipeout-operation link !text-sm !font-bold"
-                  onClick={onDeletedBefore(detail.id, `plant-${detail.seqId}`)}
+                  onClick={onDeletedBefore(detail.id, `.plant-${detail.seqId}`)}
                 >
                   删 除
                 </SwipeoutButton>
