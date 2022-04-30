@@ -83,16 +83,16 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center shadow-3 rounded-md py-4">
               <div className="text-xs text-gray-700">收入</div>
-              <div className="font-semibold">
-                <span className="text-xs">￥</span>
+              <div className="font-semibold truncate px-1">
+                <span className="text-sm">￥</span>
                 <span className="text-2xl">{thousands(statistical?.income || 0)}</span>
               </div>
             </div>
 
             <div className="text-center shadow-3 rounded-md py-4">
               <div className="text-xs text-gray-700 font-medium">支出</div>
-              <div className="font-semibold">
-                <span className="text-xs">￥</span>
+              <div className="font-semibold truncate px-1">
+                <span className="text-sm">￥</span>
                 <span className="text-2xl">{thousands(statistical?.pay || 0)}</span>
               </div>
             </div>
