@@ -45,7 +45,7 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
   const serverTime = data?.fundPlan.time;
   const statistical = statisticalData?.statisticalFundPlan;
 
-  const onComplete = (val, el) => {
+  const onComplete = (val: string, el: string) => {
     modifyFundPlan({
       variables: {
         id: val,
@@ -64,7 +64,7 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
       });
   };
 
-  const onCompleteBefore = (val, el) => {
+  const onCompleteBefore = (val: string, el: string) => {
     return () => {
       f7.dialog.confirm("是否确定完成", "确定提示", function () {
         onComplete(val, el);
