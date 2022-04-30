@@ -132,11 +132,25 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
         </div>
       </BlockTitle>
 
-      <div className="px-6 mt-5">
-        <Amounts pay={thousands(statistical?.total || 0)} payTitle="预计支出" />
-      </div>
+      <section className="px-4 pt-3">
+        <div className="shadow-3 py-3 px-4 rounded-lg ">
+          <div className="relative overflow-hidden flex items-center flex-shrink-0">
+            <div className="flex items-center">
+              <Icons name="statistics-01" className="svg-icon-36 pb-0.5" />
+              <span className="pl-0.5 leading-6 font-bold text-lg">预计支出</span>
+            </div>
+          </div>
 
-      <List className="swipeout-container pt-2 px-6 my-0">
+          <div className="text-center">
+            <div className="text-gray-800 font-bold truncate mt-4 mb-2">
+              <span className="text-sm">￥</span>
+              <span className="text-2xl">{thousands(statistical?.total || 0)}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <List className="swipeout-container pt-2 px-4 my-0">
         {details.map((detail) => {
           const { expense } = detail;
           const hasOverdue = timeStamp(detail.approximateAt) < serverTime;
@@ -154,7 +168,7 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
             >
               <DetailItem
                 slot="title"
-                icon="budget"
+                icon={expense.expenseIcon}
                 status={status}
                 name={detail.name}
                 type={expense.expenseName}
