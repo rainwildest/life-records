@@ -141,7 +141,7 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
 
           return (
             <ListItem
-              className={`plant-item shadow-3 shadow-active-3 rounded-lg mt-7 plant-${detail.seqId}`}
+              className={`swipeout-item shadow-3 shadow-active-3 rounded-lg mt-7 plant-${detail.seqId}`}
               divider={false}
               swipeout
               key={detail.id}
@@ -161,14 +161,14 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
               <SwipeoutActions className="flex items-center" right>
                 <SwipeoutButton
                   color="green"
-                  className="plant-operation link !text-sm !font-bold"
+                  className="swipeout-operation link !text-sm !font-bold"
                   onClick={onCompleteBefore(detail.id, `plant-${detail.seqId}`)}
                 >
                   完 成
                 </SwipeoutButton>
                 <SwipeoutButton
                   color="red"
-                  className="plant-operation link !text-sm !font-bold"
+                  className="swipeout-operation link !text-sm !font-bold"
                   onClick={onDeletedBefore(detail.id, `plant-${detail.seqId}`)}
                 >
                   删 除

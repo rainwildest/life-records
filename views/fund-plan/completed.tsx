@@ -120,7 +120,7 @@ const Completed: React.FC = () => {
 
             return (
               <ListItem
-                className={`plant-item shadow-3 rounded-lg mt-8 plant-${detail.seqId}`}
+                className={`swipeout-item shadow-3 rounded-lg mt-8 plant-${detail.seqId}`}
                 divider={false}
                 swipeout
                 key={detail.id}
@@ -137,7 +137,7 @@ const Completed: React.FC = () => {
                 <SwipeoutActions className="flex items-center" right>
                   <SwipeoutButton
                     color="red"
-                    className="plant-operation link !text-sm !font-bold"
+                    className="swipeout-operation link !text-sm !font-bold"
                     onClick={onDeletedBefore(detail.id, `plant-${detail.seqId}`)}
                   >
                     删 除

@@ -61,8 +61,7 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
   const onDeleted = (val: string, el: string) => {
     removeBudget({
       variables: { id: val },
-      update: (cache, mutationResult) => {
-        const { data } = mutationResult;
+      update: (cache, { data }) => {
         if (!data) return;
 
         const query = cache.readQuery({
@@ -161,7 +160,7 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
 
               return (
                 <ListItem
-                  className={`plant-item shadow-3 rounded-lg mt-7 budget-${item.seqId} ${
+                  className={`swipeout-item shadow-3 rounded-lg mt-7 budget-${item.seqId} ${
                     budgets.hadEdit ? "shadow-active-3" : "overflow-hidden"
                   }`}
                   divider={false}
@@ -188,7 +187,7 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
                   <SwipeoutActions className="flex items-center" right>
                     <SwipeoutButton
                       color="red"
-                      className="plant-operation link !text-sm !font-bold"
+                      className="swipeout-operation link !text-sm !font-bold"
                       onClick={onDeletedBefore(item.id, `.budget-${item.seqId}`)}
                     >
                       删 除
