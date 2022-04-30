@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, f7 } from "framework7-react";
 import { RouterProps } from "typings/f7-route";
-import { thousands } from "lib/apis/utils";
+import { thousands, toastTip } from "lib/apis/utils";
 import { getCalendar } from "lib/apis/dayjs";
 import event from "lib/apis/framework-event";
 import { Amounts, Icons, CostCard } from "components";
@@ -28,11 +28,13 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
     })
       .then(() => {
         // 提送消息更新内容
+        toastTip("删除成功");
+
         event.emit("update-books");
         f7router.back();
       })
       .catch((e) => {
-        console.log(e);
+        toastTip("删除失败");
       });
   };
   const onDelConfirm = () => {
@@ -73,7 +75,29 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
       </Navbar>
 
       <PageContent className="pt-20 px-6 pb-28">
-        <Amounts pay={thousands(statistical?.pay || 0)} income={thousands(statistical?.income || 0)} />
+        <section className="shadow-3 rounded-lg py-4 px-4">
+          <div className="flex items-center pb-2">
+            <Icons name="statistics-01" className="svg-icon-36 pb-0.5" />
+            <span className="pl-0.5 leading-6 font-bold text-lg">概括统计</span>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center shadow-3 rounded-md py-4">
+              <div className="text-xs text-gray-700">收入</div>
+              <div className="font-semibold">
+                <span className="text-xs">￥</span>
+                <span className="text-2xl">{thousands(statistical?.income || 0)}</span>
+              </div>
+            </div>
+
+            <div className="text-center shadow-3 rounded-md py-4">
+              <div className="text-xs text-gray-700 font-medium">支出</div>
+              <div className="font-semibold">
+                <span className="text-xs">￥</span>
+                <span className="text-2xl">{thousands(statistical?.pay || 0)}</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {details.map((detail) => {
           return (
