@@ -1,6 +1,6 @@
 import React, { useState, useRef, memo } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, useStore } from "framework7-react";
-import { Icons, CostCard, SheetModalPicker, SheetDatePicker } from "components";
+import { CostCard, SheetModalPicker, SheetDatePicker } from "components";
 import { RouterProps } from "typings/f7-route";
 import { thousands } from "lib/apis/utils";
 import { getCurrentDate, getCalendar } from "lib/apis/dayjs";

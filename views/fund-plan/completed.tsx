@@ -1,34 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Page, PageContent, Navbar, List, ListItem, SwipeoutActions, SwipeoutButton, BlockTitle, f7 } from "framework7-react";
-import { format } from "lib/apis/dayjs";
+import { getCurrentDate, getCalendar } from "lib/apis/dayjs";
 import { thousands, timeStamp, toastTip } from "lib/apis/utils";
-import { DetailItem, Select } from "./components";
-import { Amounts } from "components";
+import { DetailItem } from "./components";
+import { Icons, Amounts, SheetModalPicker, SheetDatePicker } from "components";
 import { useFundPlanQuery, useRemoveFundPlanMutation } from "graphql/model/fund-plan.graphql";
 import { useStatisticalFundPlanQuery } from "graphql/model/statistics.graphql";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 
 const Completed: React.FC = () => {
-  const today = new Date();
-  /* years */
-  const years = [];
-  const ColValuesYears = { values: years };
-  const currentYear = today.getFullYear();
-  for (let i = 0; i < currentYear - 1995 + 5; ++i) years.push(1995 + i);
-  const [year, setYear] = useState(currentYear);
-  const [type, setType] = useState("");
-  const [expenseIds, setExpenseIds] = useState([""]);
-  const [expenseDisplay, setExpenseDisplay] = useState([""]);
+  const expenseId = useRef("");
+
+  const [date, setDate] = useState(getCurrentDate("YYYY"));
+  const [typeName, setTypeName] = useState("全部");
+  const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
+  const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
   const { data } = useFundPlanQuery({
     variables: {
-      input: { type: "complete", year: `${year}`, expenseId: type || null }
+      input: { type: "complete", year: date, expenseId: expenseId.current }
     },
     fetchPolicy: "network-only"
   });
   const { data: statisticalData, refetch } = useStatisticalFundPlanQuery({
     variables: {
-      input: { year: `${year}`, expenseId: type || null }
+      input: { year: date, expenseId: expenseId.current }
     },
     fetchPolicy: "network-only"
   });
@@ -39,22 +35,18 @@ const Completed: React.FC = () => {
   const statistical = statisticalData?.statisticalFundPlan;
   const expense = expenseData?.livingExpenses || [];
 
-  const ids = [];
-  const displays = [];
-  expense.forEach((item) => {
-    ids.push(item.id);
-    displays.push(item.expenseName);
+  const expenseIds = [""];
+  const expenseDisplays = ["全部"];
+
+  expense?.forEach((item) => {
+    expenseIds.push(item.id);
+    expenseDisplays.push(item.expenseName);
   });
 
-  useEffect(() => {
-    setExpenseIds(["", ...ids]);
-    setExpenseDisplay(["全部", ...displays]);
-  }, [expenseData]);
-
-  const onDeleted = (val, el) => {
+  const onDeleted = (val: string, el: string) => {
     removeFundPlan({ variables: { id: val } })
       .then(() => {
-        f7.swipeout.delete(`.${el}`);
+        f7.swipeout.delete(el);
         refetch();
       })
       .catch(() => {
@@ -62,7 +54,7 @@ const Completed: React.FC = () => {
       });
   };
 
-  const onDeletedBefore = (val, el) => {
+  const onDeletedBefore = (val: string, el: string) => {
     return () => {
       f7.dialog.confirm("是否确定删除", "删除提示", function () {
         onDeleted(val, el);
@@ -70,47 +62,65 @@ const Completed: React.FC = () => {
     };
   };
 
+  const onToggleTypeSheet = () => {
+    setSheetTypeOpened(!sheetTypeOpened);
+  };
+
+  const onToggledDateSheet = () => {
+    setSheetDateOpened(!sheetDateOpened);
+  };
+
+  const onTypeConfirm = (values, indexs) => {
+    const name = expenseDisplays[indexs[0]];
+    expenseId.current = values[0];
+    setTypeName(name);
+  };
+
+  const onConfirmDateSheet = (e: string) => {
+    setDate(e);
+  };
+
   return (
     <Page noToolbar pageContent={false}>
       <Navbar className="h-12" backLink noHairline title="完成的计划"></Navbar>
       <PageContent>
-        <BlockTitle className="px-6 mx-0 mt-10 mb-0 flex justify-between items-center text-gray-700 text-xl overflow-visible">
-          已完成
+        <div className="px-6 mx-0 mt-10 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
           <div className="flex items-center">
-            <Select
-              cols={[
-                {
-                  textAlign: "center",
-                  ...ColValuesYears
-                }
-              ]}
-              values={[year]}
-              onComfire={(val) => {
-                setYear(val[0]);
-              }}
-            />
+            <div
+              className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1.5 rounded-full items-center"
+              onClick={onToggledDateSheet}
+            >
+              <span>{date}</span>
+              <div className="ml-2 w-0 h-0 triangle" />
+            </div>
 
-            <Select
-              className="ml-3"
-              cols={[
-                {
-                  textAlign: "center",
-                  displayValues: expenseDisplay,
-                  values: expenseIds
-                }
-              ]}
-              values={[type]}
-              format={(values, displayValues, index) => displayValues[index]}
-              onComfire={(val) => {
-                setType(val[0]);
-              }}
-            />
+            <div
+              onClick={onToggleTypeSheet}
+              className="shadow-active-2 ml-3 select-container text-xs inline-flex shadow-2 px-3 py-1 rounded-full items-center"
+            >
+              <span>{typeName}</span>
+              <div className="ml-2 w-0 h-0 triangle" />
+            </div>
           </div>
-        </BlockTitle>
-
-        <div className="px-6 mt-5">
-          <Amounts pay={thousands(statistical?.total || 0)} payTitle="支出" />
         </div>
+
+        <section className="px-5 pt-6">
+          <div className="shadow-3 py-3 px-4 rounded-lg ">
+            <div className="relative overflow-hidden flex items-center flex-shrink-0">
+              <div className="flex items-center">
+                <Icons name="statistics-01" className="svg-icon-36 pb-0.5" />
+                <span className="pl-0.5 leading-6 font-bold text-lg">支出统计</span>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <div className="text-gray-800 font-bold truncate mt-4 mb-2">
+                <span className="text-sm">￥</span>
+                <span className="text-2xl">{thousands(statistical?.total || 0)}</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <List className="swipeout-container pt-2 px-6 my-0">
           {details.map((detail) => {
@@ -120,7 +130,7 @@ const Completed: React.FC = () => {
 
             return (
               <ListItem
-                className={`swipeout-item shadow-3 rounded-lg mt-8 plant-${detail.seqId}`}
+                className={`swipeout-item shadow-3 rounded-lg mt-5 plant-${detail.seqId}`}
                 divider={false}
                 swipeout
                 key={detail.id}
@@ -132,13 +142,13 @@ const Completed: React.FC = () => {
                   name={detail.name}
                   type={expense.expenseName}
                   amounts={thousands(detail.amounts)}
-                  date={format(detail.completeAt)}
+                  date={getCalendar(detail.completeAt)}
                 />
                 <SwipeoutActions className="flex items-center" right>
                   <SwipeoutButton
                     color="red"
                     className="swipeout-operation link !text-sm !font-bold"
-                    onClick={onDeletedBefore(detail.id, `plant-${detail.seqId}`)}
+                    onClick={onDeletedBefore(detail.id, `.plant-${detail.seqId}`)}
                   >
                     删 除
                   </SwipeoutButton>
@@ -147,6 +157,27 @@ const Completed: React.FC = () => {
             );
           })}
         </List>
+
+        <SheetModalPicker
+          sheetOpened={sheetTypeOpened}
+          cols={[
+            {
+              textAlign: "center",
+              displayValues: expenseDisplays,
+              values: expenseIds
+            }
+          ]}
+          onConfirm={onTypeConfirm}
+          onSheetClosed={onToggleTypeSheet}
+        />
+
+        <SheetDatePicker
+          date={date}
+          type="full-year"
+          sheetOpened={sheetDateOpened}
+          onSheetClosed={onToggledDateSheet}
+          onConfirm={onConfirmDateSheet}
+        />
       </PageContent>
     </Page>
   );

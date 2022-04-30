@@ -11,6 +11,7 @@ import { f7, Sheet } from "framework7-react";
  */
 type SheetProps = {
   date?: string;
+  type?: "year-month" | "full-year";
   sheetOpened?: boolean;
   hasFullYears?: boolean;
   isCurrnetYear?: boolean;
@@ -73,6 +74,7 @@ const getMonthsColumn = (isCurrnet = false) => {
 
 const SheetModalPicker: React.FC<SheetProps> = ({
   date,
+  type = "year-month",
   hasFullYears = false,
   isCurrnetYear = false,
   isCurrentMonth = false,
@@ -86,7 +88,7 @@ const SheetModalPicker: React.FC<SheetProps> = ({
   const $date = useRef<string | null>(date || "");
   const hasConfirm = useRef(false);
   const insideClosed = useRef(false);
-  const [dateType, setDateType] = useState("year-month");
+  const [dateType, setDateType] = useState(type);
 
   const onConfirmPicker = () => {
     const value = formatDate(picker.current.value);
