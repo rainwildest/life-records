@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Page, PageContent, Navbar, List, ListItem, SwipeoutActions, SwipeoutButton, BlockTitle, f7 } from "framework7-react";
+import { Page, PageContent, Navbar, List, ListItem, SwipeoutActions, SwipeoutButton, useStore, f7 } from "framework7-react";
 import { getCurrentDate, getCalendar } from "lib/apis/dayjs";
 import { thousands, timeStamp, toastTip } from "lib/apis/utils";
 import { DetailItem } from "./components";
@@ -9,6 +9,7 @@ import { useStatisticalFundPlanQuery } from "graphql/model/statistics.graphql";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 
 const Completed: React.FC = () => {
+  const token = useStore("token");
   const expenseId = useRef("");
 
   const [date, setDate] = useState(getCurrentDate("YYYY"));
@@ -16,13 +17,13 @@ const Completed: React.FC = () => {
   const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
-  const { data } = useFundPlanQuery({
+  const { data, refetch } = useFundPlanQuery({
     variables: {
       input: { type: "complete", year: date, expenseId: expenseId.current }
     },
     fetchPolicy: "network-only"
   });
-  const { data: statisticalData, refetch } = useStatisticalFundPlanQuery({
+  const { data: statisticalData, refetch: statisticalRefetch } = useStatisticalFundPlanQuery({
     variables: {
       input: { year: date, expenseId: expenseId.current }
     },
@@ -80,11 +81,21 @@ const Completed: React.FC = () => {
     setDate(e);
   };
 
+  const onRefresh = (done: () => void) => {
+    if (!token) return done();
+
+    setTimeout(() => {
+      Promise.all([refetch(), statisticalRefetch()]).finally(() => {
+        done();
+      });
+    }, 2000);
+  };
+
   return (
     <Page noToolbar pageContent={false}>
       <Navbar className="h-12" backLink noHairline title="完成的计划"></Navbar>
-      <PageContent>
-        <div className="px-6 mx-0 mt-10 mb-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
+      <PageContent className="pt-16" ptr onPtrRefresh={onRefresh}>
+        <div className="px-6 pt-5 m-0 flex justify-end items-center text-gray-700 text-xl overflow-visible">
           <div className="flex items-center">
             <div
               className="shadow-active-2 select-container text-xs inline-flex shadow-2 px-3 py-1.5 rounded-full items-center"
@@ -137,10 +148,10 @@ const Completed: React.FC = () => {
               >
                 <DetailItem
                   slot="title"
-                  icon="budget"
+                  icon={expense?.expenseIcon}
                   status={status}
                   name={detail.name}
-                  type={expense.expenseName}
+                  type={expense?.expenseName}
                   amounts={thousands(detail.amounts)}
                   date={getCalendar(detail.completeAt)}
                 />

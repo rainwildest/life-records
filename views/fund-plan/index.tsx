@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import {
   Page,
+  PageContent,
   Navbar,
   NavRight,
   List,
@@ -114,87 +115,99 @@ const FundPlan: React.FC<RouterProps> = ({ f7router }) => {
     };
   }, []);
 
+  const onRefresh = (done: () => void) => {
+    if (!token) return done();
+
+    setTimeout(() => {
+      Promise.all([dataRefetch(), statisticalRefetch()]).finally(() => {
+        done();
+      });
+    }, 2000);
+  };
+
   return (
-    <Page noToolbar pageContent={true}>
+    <Page noToolbar pageContent={false}>
       <Navbar className="h-12" backLink noHairline title="资金计划">
         <NavRight className="link">
           <Icons name="add-01" className="svg-icon-26 px-2" onClick={onCreatePlan} />
         </NavRight>
       </Navbar>
 
-      <BlockTitle className="px-6 mx-0 mt-10 mb-0 flex justify-between items-center text-gray-700 text-xl">
-        计划中
-        <div className="plan-icons flex items-center">
-          <Link href="/fund-plan-completed">
-            <Icons name="complete-01" className="svg-icon-30 mr-2" />
-          </Link>
-          {/* <Icons name="overdue-01" className="svg-icon-28 link" /> */}
-        </div>
-      </BlockTitle>
+      <PageContent className="pt-20" ptr onPtrRefresh={onRefresh}>
+        <BlockTitle className="px-6 mx-0 mt-0 mb-0 flex justify-between items-center text-gray-700 text-xl">
+          计划中
+          <div className="plan-icons flex items-center">
+            <Link href="/fund-plan-completed">
+              <Icons name="complete-01" className="svg-icon-30 mr-2" />
+            </Link>
+            {/* <Icons name="overdue-01" className="svg-icon-28 link" /> */}
+          </div>
+        </BlockTitle>
 
-      <section className="px-4 pt-3">
-        <div className="shadow-3 py-3 px-4 rounded-lg ">
-          <div className="relative overflow-hidden flex items-center flex-shrink-0">
-            <div className="flex items-center">
-              <Icons name="statistics-01" className="svg-icon-36 pb-0.5" />
-              <span className="pl-0.5 leading-6 font-bold text-lg">预计支出</span>
+        <section className="px-4 pt-3">
+          <div className="shadow-3 py-3 px-4 rounded-lg ">
+            <div className="relative overflow-hidden flex items-center flex-shrink-0">
+              <div className="flex items-center">
+                <Icons name="statistics-01" className="svg-icon-36 pb-0.5" />
+                <span className="pl-0.5 leading-6 font-bold text-lg">预计支出</span>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <div className="text-gray-800 font-bold truncate mt-4 mb-2">
+                <span className="text-sm">￥</span>
+                <span className="text-2xl">{thousands(statistical?.total || 0)}</span>
+              </div>
             </div>
           </div>
+        </section>
 
-          <div className="text-center">
-            <div className="text-gray-800 font-bold truncate mt-4 mb-2">
-              <span className="text-sm">￥</span>
-              <span className="text-2xl">{thousands(statistical?.total || 0)}</span>
-            </div>
-          </div>
-        </div>
-      </section>
+        <List className="swipeout-container pt-2 px-4 my-0">
+          {details.map((detail) => {
+            const { expense } = detail;
+            const hasOverdue = timeStamp(detail.approximateAt) < serverTime;
+            const status = hasOverdue ? "overdue-02" : "";
 
-      <List className="swipeout-container pt-2 px-4 my-0">
-        {details.map((detail) => {
-          const { expense } = detail;
-          const hasOverdue = timeStamp(detail.approximateAt) < serverTime;
-          const status = hasOverdue ? "overdue-02" : "";
-
-          return (
-            <ListItem
-              className={`swipeout-item shadow-3 shadow-active-3 rounded-lg mt-7 plant-${detail.seqId}`}
-              divider={false}
-              swipeout
-              key={detail.id}
-              onClick={() => {
-                onNavigate(detail.id);
-              }}
-            >
-              <DetailItem
-                slot="title"
-                icon={expense.expenseIcon}
-                status={status}
-                name={detail.name}
-                type={expense.expenseName}
-                amounts={thousands(detail.amounts)}
-                date={relative(detail.approximateAt)}
-              />
-              <SwipeoutActions className="flex items-center" right>
-                <SwipeoutButton
-                  color="green"
-                  className="swipeout-operation link !text-sm !font-bold"
-                  onClick={onCompleteBefore(detail.id, `.plant-${detail.seqId}`)}
-                >
-                  完 成
-                </SwipeoutButton>
-                <SwipeoutButton
-                  color="red"
-                  className="swipeout-operation link !text-sm !font-bold"
-                  onClick={onDeletedBefore(detail.id, `.plant-${detail.seqId}`)}
-                >
-                  删 除
-                </SwipeoutButton>
-              </SwipeoutActions>
-            </ListItem>
-          );
-        })}
-      </List>
+            return (
+              <ListItem
+                className={`swipeout-item shadow-3 shadow-active-3 rounded-lg mt-7 plant-${detail.seqId}`}
+                divider={false}
+                swipeout
+                key={detail.id}
+                onClick={() => {
+                  onNavigate(detail.id);
+                }}
+              >
+                <DetailItem
+                  slot="title"
+                  icon={expense?.expenseIcon}
+                  status={status}
+                  name={detail.name}
+                  type={expense?.expenseName}
+                  amounts={thousands(detail.amounts)}
+                  date={relative(detail.approximateAt)}
+                />
+                <SwipeoutActions className="flex items-center" right>
+                  <SwipeoutButton
+                    color="green"
+                    className="swipeout-operation link !text-sm !font-bold"
+                    onClick={onCompleteBefore(detail.id, `.plant-${detail.seqId}`)}
+                  >
+                    完 成
+                  </SwipeoutButton>
+                  <SwipeoutButton
+                    color="red"
+                    className="swipeout-operation link !text-sm !font-bold"
+                    onClick={onDeletedBefore(detail.id, `.plant-${detail.seqId}`)}
+                  >
+                    删 除
+                  </SwipeoutButton>
+                </SwipeoutActions>
+              </ListItem>
+            );
+          })}
+        </List>
+      </PageContent>
     </Page>
   );
 };
