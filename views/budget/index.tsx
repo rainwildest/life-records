@@ -9,12 +9,13 @@ import {
   Link,
   SwipeoutActions,
   SwipeoutButton,
+  f7,
   useStore
 } from "framework7-react";
 import { Icons, SheetDatePicker } from "components";
-import { useGetBudgetsQuery } from "graphql/model/budget.graphql";
+import { useGetBudgetsQuery, useRemoveBudgetMutation, GetBudgetsDocument, GetBudgetsQuery } from "graphql/model/budget.graphql";
 import { getCurrentDate } from "lib/apis/dayjs";
-import { thousands } from "lib/apis/utils";
+import { thousands, toastTip } from "lib/apis/utils";
 import event from "lib/apis/framework-event";
 import { RouterProps } from "typings/f7-route";
 
@@ -26,6 +27,8 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
 
   const { data: budgetsData, refetch: budgetRefetch } = useGetBudgetsQuery({ variables: { input: { date } } });
   const budgets = budgetsData?.budgets;
+
+  const [removeBudget] = useRemoveBudgetMutation();
 
   const onToggledDateSheet = () => {
     setSheetDateOpened(!sheetDateOpened);
@@ -45,6 +48,51 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
     });
 
     f7router.navigate(url);
+  };
+
+  const onDeletedBefore = (val: string, el: string) => {
+    return () => {
+      f7.dialog.confirm("是否确定删除", "删除提示", function () {
+        onDeleted(val, el);
+      });
+    };
+  };
+
+  const onDeleted = (val: string, el: string) => {
+    removeBudget({
+      variables: { id: val },
+      update: (cache, mutationResult) => {
+        const { data } = mutationResult;
+        if (!data) return;
+
+        const query = cache.readQuery({
+          query: GetBudgetsDocument,
+          variables: { input: { date } }
+        }) as GetBudgetsQuery;
+
+        const { data: queryData, total } = query.budgets;
+        const remove = data.removeBudget;
+        let $total = total;
+
+        const $data = queryData.filter((item) => {
+          if (item.id === remove.id) $total = total - item.amounts;
+          return item.id !== remove.id;
+        });
+
+        cache.writeQuery({
+          query: GetBudgetsDocument,
+          variables: { input: { date } },
+          data: { budgets: { ...budgets, data: $data, total: $total } }
+        });
+      }
+    })
+      .then(() => {
+        f7.swipeout.delete(el);
+        toastTip("删除成功");
+      })
+      .catch(() => {
+        toastTip("删除失败");
+      });
   };
 
   const onRefresh = (done: () => void) => {
@@ -141,7 +189,7 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
                     <SwipeoutButton
                       color="red"
                       className="plant-operation link !text-sm !font-bold"
-                      // onClick={onDeletedBefore(detail.id, `plant-${detail.seqId}`)}
+                      onClick={onDeletedBefore(item.id, `.budget-${item.seqId}`)}
                     >
                       删 除
                     </SwipeoutButton>
