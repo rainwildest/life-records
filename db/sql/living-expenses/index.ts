@@ -50,10 +50,11 @@ export const getUserLivingExpense = async (
 ): Promise<LivingExpensesSnakeProps & DateAndIDFieldSnakeProps> => {
   const orm = await MikrotOrm();
 
+  const $type = type ? `expense_type = '${type}'` : "expense_type='pay' OR expense_type='income'";
   return orm
     .createQueryBuilder(LivingExpenses)
     .where("user_id=? or user_id is null", [id])
-    .andWhere({ expense_type: type })
+    .andWhere($type)
     .andWhere("deleted_at is null")
     .execute("all");
 };

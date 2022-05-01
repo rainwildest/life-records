@@ -158,7 +158,9 @@ export const statisticalUserConsumption = async (args: {
  * @param {string} bookId 账簿ID
  * @returns Promise
  */
-export const statisticalCostByBooks = async (userId: string, bookId: string): Promise<any> => {
+export const statisticalCostByBooks = async (args: any = {}): Promise<any> => {
+  const { userId, bookId, expenseId } = args;
+
   const orm = await knex();
 
   return orm("cost_details AS t1")
@@ -169,6 +171,9 @@ export const statisticalCostByBooks = async (userId: string, bookId: string): Pr
         SUM(CASE WHEN t2.expense_type='income' THEN t1.amounts ELSE 0 END) AS income
     `)
     )
+    .andWhere((builder: any) => {
+      expenseId && builder.andWhere({ "t2.id": expenseId });
+    })
     .andWhereRaw(`t1.user_id = ?`, [userId])
     .andWhereRaw(`t1.book_id = ?`, [bookId])
     .whereNull("t1.deleted_at")
