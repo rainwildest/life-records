@@ -19,8 +19,8 @@ type CostDetails {
 }
 
 input CostDetailsProps {
-  userId: String
   bookId: String
+  expenseId: String
 }
 
 type Query {

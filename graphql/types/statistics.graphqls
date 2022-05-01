@@ -49,6 +49,11 @@ input StatisticalBudgetProps {
   # groupFormat: String
 }
 
+input StatisticalBooksProps {
+  bookId: String
+  expenseId: String
+}
+
 type StatisticalBudget {
   amounts: Int
   original: Int
@@ -73,6 +78,6 @@ type Query {
   statisticalBudget(input: StatisticalBudgetProps): [StatisticalBudget]
   statisticalBudgetByYear(date: String): [GeneralizationByBudget]
 
-  statisticalBooks(bookId: String): StatisticalBooksField
+  statisticalBooks(input: StatisticalBooksProps): StatisticalBooksField
   statisticalFundPlan(input: FundPlanQueryProps): StatisticalFundPlan
 }
