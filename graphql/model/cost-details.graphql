@@ -15,3 +15,9 @@ query costDetails($input: CostDetailsProps) {
     }
   }
 }
+
+mutation modifyAccountDetail($id: String!, $bookId: String = "") {
+  modifyAccountDetail(id: $id, bookId: $bookId) {
+    ...CostDetailsOptions
+  }
+}

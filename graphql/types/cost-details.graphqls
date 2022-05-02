@@ -43,5 +43,6 @@ input ModifyCostProps {
 type Mutation {
   createCostDetail(input: CreateCostProps): CostDetails
   modifyCostDetail(id: String!, input: ModifyCostProps): CostDetails
+  modifyAccountDetail(id: String!, bookId: String): CostDetails
   removeCostDetail(id: String!): CostDetails
 }

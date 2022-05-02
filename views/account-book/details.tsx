@@ -1,12 +1,24 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Page, PageContent, Navbar, NavTitle, NavRight, f7, useStore } from "framework7-react";
+import {
+  Page,
+  PageContent,
+  Navbar,
+  NavTitle,
+  NavRight,
+  List,
+  ListItem,
+  SwipeoutActions,
+  SwipeoutButton,
+  f7,
+  useStore
+} from "framework7-react";
 import { RouterProps } from "typings/f7-route";
 import { thousands, toastTip } from "lib/apis/utils";
 import { getCalendar } from "lib/apis/dayjs";
 import event from "lib/apis/framework-event";
 import { Amounts, Icons, CostCard, SheetModalPicker } from "components";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
-import { useCostDetailsQuery } from "graphql/model/cost-details.graphql";
+import { useCostDetailsQuery, useModifyAccountDetailMutation } from "graphql/model/cost-details.graphql";
 import { useGetStatisticalBooksQuery } from "graphql/model/statistics.graphql";
 import { useRemoveAccountBooksMutation } from "graphql/model/account-books.graphql";
 
@@ -19,6 +31,7 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const [bookName, setBookName] = useState(name);
   const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
 
+  const [modifyAccountDetail] = useModifyAccountDetailMutation();
   const [removeAccountBooks] = useRemoveAccountBooksMutation();
 
   const { data, refetch } = useCostDetailsQuery({
@@ -53,7 +66,7 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
     setTypeName(name);
   };
 
-  const onDelete = () => {
+  const onDeleteBook = () => {
     removeAccountBooks({
       variables: { id }
     })
@@ -71,7 +84,7 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
 
   const onDelConfirm = () => {
     f7.dialog.confirm(`是否确定删除 ${name}`, "删除提示", function () {
-      onDelete();
+      onDeleteBook();
     });
   };
 
@@ -90,6 +103,26 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
 
   const onToggleTypeSheet = () => {
     setSheetTypeOpened(!sheetTypeOpened);
+  };
+
+  const onDeletedBefore = (val: string, el: string) => {
+    return () => {
+      f7.dialog.confirm("是否确定删除", "删除提示", function () {
+        onDeleteDetail(val, el);
+      });
+    };
+  };
+
+  const onDeleteDetail = (val: string, el: string) => {
+    modifyAccountDetail({ variables: { id: val } })
+      .then(() => {
+        toastTip("删除成功");
+
+        f7.swipeout.delete(el);
+      })
+      .catch(() => {
+        toastTip("删除失败");
+      });
   };
 
   const onRefresh = (done: () => void) => {
@@ -155,21 +188,46 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
           </section>
         </div>
 
-        <section className="px-4">
+        <List className="swipeout-container pt-2 px-4 my-0">
           {details.map((detail) => {
             return (
-              <CostCard
-                className="mt-8"
+              <ListItem
+                swipeout
+                className={`swipeout-item shadow-3 rounded-lg mt-7 book-${detail.seqId}`}
+                divider={false}
                 key={detail.id}
-                type={detail.expense.expenseType}
-                typeName={detail.expense.expenseName}
-                time={getCalendar(detail.purchaseTime)}
-                amounts={thousands(detail.amounts)}
-                remarks={detail.remarks}
-              />
+              >
+                <CostCard
+                  // className="mt-8"
+                  slot="title"
+                  key={detail.id}
+                  type={detail.expense.expenseType}
+                  typeName={detail.expense.expenseName}
+                  time={getCalendar(detail.purchaseTime)}
+                  amounts={thousands(detail.amounts)}
+                  remarks={detail.remarks}
+                />
+
+                <SwipeoutActions className="flex items-center" right>
+                  <SwipeoutButton
+                    color="blue"
+                    className="swipeout-operation link !text-sm !font-bold"
+                    // onClick={onCompleteBefore(detail.id, `.plant-${detail.seqId}`)}
+                  >
+                    更换账簿
+                  </SwipeoutButton>
+                  <SwipeoutButton
+                    color="red"
+                    className="swipeout-operation link !text-sm !font-bold"
+                    onClick={onDeletedBefore(detail.id, `.book-${detail.seqId}`)}
+                  >
+                    删 除
+                  </SwipeoutButton>
+                </SwipeoutActions>
+              </ListItem>
             );
           })}
-        </section>
+        </List>
 
         <SheetModalPicker
           sheetOpened={sheetTypeOpened}

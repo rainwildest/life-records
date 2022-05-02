@@ -149,7 +149,7 @@ const Bill: React.FC<RouterProps> = () => {
                 time={getCalendar(detail.purchaseTime)}
                 amounts={thousands(detail.amounts)}
                 remarks={detail.remarks}
-                className="mt-6"
+                className="mt-6 shadow-3"
               />
             );
           })}
