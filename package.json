@@ -75,6 +75,7 @@
     "@graphql-codegen/typescript-resolvers": "^2.6.1",
     "@tailwindcss/line-clamp": "^0.3.1",
     "@types/cookie": "^0.4.1",
+    "@types/graphql-date": "^1.0.5",
     "@types/lodash": "^4.14.173",
     "@types/node": "^16.9.6",
     "@types/react": "^17.0.24",
