@@ -90,7 +90,7 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
             onClick={onSignUp || null}
           >
             {!submitting && btnText}
-            {submitting && <Icons name="spinner" className="animate-spin svg-icon-25" />}
+            {submitting && <Icons name="spinner" className="animate-spin svg-icon-20" />}
           </Button>
         </div>
       </section>

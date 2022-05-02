@@ -107,10 +107,10 @@ export const statisticalExpenditure = async (args: {
     .joinRaw("JOIN living_expenses t2 ON t1.expense_id=t2.id::text")
     .select(
       orm.raw(`
-        SUM(CASE WHEN t2.expense_type='${type}' THEN t1.amounts ELSE 0 END) AS ${type}, 
+        SUM(CASE WHEN t2.expense_type='${type}' THEN t1.amounts ELSE 0 END) AS ${type},
         t2.expense_name,
         t2.expense_icon,
-        to_char(purchase_time, '${format}') as purchase_time 
+        to_char(purchase_time, '${format}') as purchase_time
       `)
     )
     .whereRaw(`to_char(t1.purchase_time, '${format}') = ?`, [date])
@@ -240,8 +240,8 @@ export const getStatisticalCostTotalByDate = async (args: any = {}): Promise<any
   return orm("cost_details AS t1")
     .select(
       orm.raw(
-        `to_char(purchase_time, '${groupFormat}') as purchase_time, 
-        COUNT(*) AS total, 
+        `to_char(purchase_time, '${groupFormat}') as purchase_time,
+        COUNT(*) AS total,
         SUM(CASE WHEN t2.expense_type='${type}' THEN t1.amounts ELSE 0 END) AS amounts`
       )
     )
@@ -278,7 +278,7 @@ export const getStatisticalBudget = async (args: any = {}): Promise<any> => {
       )
     )
     .joinRaw(
-      `LEFT JOIN cost_details t2 ON t1.expense_id=t2.expense_id AND to_char(t1.created_at, 'YYYY-MM')=to_char(t2.purchase_time, 'YYYY-MM') 
+      `LEFT JOIN cost_details t2 ON t1.expense_id=t2.expense_id AND to_char(t1.created_at, 'YYYY-MM')=to_char(t2.purchase_time, 'YYYY-MM')
       JOIN living_expenses t3 ON t1.expense_id=t3.id::text`
     )
     .whereRaw(`to_char(t1.created_at, 'YYYY-MM') = '${date}'`)
@@ -297,10 +297,10 @@ export const getClassificationBudgetByYear = async (args: any = {}): Promise<any
 
   const orm = await knex();
 
-  const table = `(SELECT 
-    expense_id, SUM(CASE WHEN amounts != 0 THEN amounts ELSE 0 END) AS amounts 
-    FROM cost_details 
-    WHERE to_char(purchase_time, 'YYYY')='${date}' 
+  const table = `(SELECT
+    expense_id, SUM(CASE WHEN amounts != 0 THEN amounts ELSE 0 END) AS amounts
+    FROM cost_details
+    WHERE to_char(purchase_time, 'YYYY')='${date}'
     AND user_id='${userId}'
     AND deleted_at is null
     GROUP BY expense_id)`;
@@ -308,9 +308,9 @@ export const getClassificationBudgetByYear = async (args: any = {}): Promise<any
   return orm("budgets AS t1")
     .select(
       orm.raw(
-        `t1.id, 
-        SUM(CASE WHEN t1.amounts != 0 THEN t1.amounts ELSE 0 END) AS original, 
-        SUM(CASE WHEN t2.amounts != 0 THEN t2.amounts ELSE 0 END) AS amounts, 
+        `t1.id,
+        SUM(CASE WHEN t1.amounts != 0 THEN t1.amounts ELSE 0 END) AS original,
+        SUM(CASE WHEN t2.amounts != 0 THEN t2.amounts ELSE 0 END) AS amounts,
         t3.expense_name, t3.expense_icon, to_char(t1.created_at, 'YYYY')`
       )
     )
@@ -330,11 +330,11 @@ export const getStatisticalBudgetByYear = async (args: any = {}): Promise<any> =
 
   const orm = await knex();
 
-  const table = `(SELECT 
-    to_char(purchase_time, 'MM') AS purchase_time, 
-    SUM(CASE WHEN amounts != 0 THEN amounts ELSE 0 END) AS amounts 
-    FROM cost_details 
-    WHERE to_char(purchase_time, 'YYYY')='${date}' 
+  const table = `(SELECT
+    to_char(purchase_time, 'MM') AS purchase_time,
+    SUM(CASE WHEN amounts != 0 THEN amounts ELSE 0 END) AS amounts
+    FROM cost_details
+    WHERE to_char(purchase_time, 'YYYY')='${date}'
     AND user_id='${userId}'
     AND deleted_at is null
     GROUP BY to_char(purchase_time, 'MM'))`;

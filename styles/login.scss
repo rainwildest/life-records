@@ -1,4 +1,4 @@
-// .login-container, 
+// .login-container,
 // .login-container input{
 //   font-family: 'Poppins', sans-serif;
 // }
@@ -72,8 +72,8 @@
 //     padding: 0 1.5rem 0 0.6rem;
 //     overflow: hidden;
 
-//     box-shadow: 
-//       inset -5px -5px 10px rgba(255, 255, 255, 0.8), 
+//     box-shadow:
+//       inset -5px -5px 10px rgba(255, 255, 255, 0.8),
 //       inset 5px 5px 10px rgba(0,0,0,0.2);
 
 //     input {
@@ -159,13 +159,13 @@
 //       font-size: 1.1rem;
 //       border-radius: 50%;
 
-//       box-shadow: 
+//       box-shadow:
 //         5px 5px 12px rgba(0, 0, 0, 0.2),
 //         -5px -5px 12px rgba(255, 255, 255, 0.8);
-      
+
 //         &:active {
 //           color: #4481ed;
-//           box-shadow: 
+//           box-shadow:
 //             inset 5px 5px 4px rgba(0, 0, 0, 0.2),
 //             inset -5px -5px 4px rgba(255, 255, 255, 0.8);
 //         }
@@ -192,12 +192,12 @@
 //   .panels-container {
 //     .btn {
 //       box-shadow:
-//         8px 8px 16px rgba(0, 0, 0, 0.1), 
+//         8px 8px 16px rgba(0, 0, 0, 0.1),
 //         -8px -8px 16px rgba(5, 219, 255, 0.1);
 
 //       &:active {
 //         box-shadow:
-//           inset 5px 5px 8px rgba(0, 0, 0, 0.1), 
+//           inset 5px 5px 8px rgba(0, 0, 0, 0.1),
 //           inset -5px -5px 8px rgba(5, 219, 255, 0.1);
 //       }
 //     }
@@ -268,20 +268,20 @@
 
 //     .btn{
 //       background: transparent;
-//       box-shadow: 
+//       box-shadow:
 //         10px 10px 20px rgba(0, 0, 0, 0.2),
 //         -10px -10px 20px rgba(255, 255, 255, 1);
 
 //       &:active {
 //         color: #4d84e2;
-//         box-shadow: 
+//         box-shadow:
 //           inset 5px 5px 8px rgba(0, 0, 0, 0.2),
 //           inset -5px -5px 8px rgba(255, 255, 255, 1);
 //       }
 
 //       &.disabled {
 //         color: #4d84e2;
-//         box-shadow: 
+//         box-shadow:
 //           inset 5px 5px 8px rgba(0, 0, 0, 0.2),
 //           inset -5px -5px 8px rgba(255, 255, 255, 1);
 //         svg {
@@ -354,12 +354,12 @@
 //     border-radius: 50px;
 
 //     color: #fff;
-//     box-shadow: 
-//       8px 8px 16px rgba(0, 0, 0, 0.1), 
+//     box-shadow:
+//       8px 8px 16px rgba(0, 0, 0, 0.1),
 //       -8px -8px 16px rgba(78, 148, 255, 0.1);
 
 //     &:active {
-//       box-shadow: 
+//       box-shadow:
 //         inset 5px 5px 8px rgba(0, 0, 0, 0.1),
 //         inset -5px -5px 8px  rgba(78, 148, 255, 0.8);
 //     }
@@ -448,7 +448,7 @@
 //       bottom: inherit;
 //       transform: translateY(-50%);
 //     }
-    
+
 //     .image {
 //       width: 100%;
 //       flex-grow: 1;
@@ -468,7 +468,7 @@
 //     .content {
 //       padding: 0;
 //     }
-    
+
 //     .panel {
 //       flex-direction: column;
 //       align-items: flex-end;
@@ -518,7 +518,7 @@
 //           transform: translateX(-800px);
 //         }
 //       }
-  
+
 //       .right-panel{
 //         .image, .content{
 //           transform: translateX(0px);
@@ -537,7 +537,7 @@
 // @media (max-width: 1024px) {
 //   .panel-text{
 //     overflow: hidden;
-//     text-overflow: ellipsis; 
+//     text-overflow: ellipsis;
 //     display: -webkit-box;
 //     -webkit-line-clamp: 3;
 //     -webkit-box-orient: vertical;
