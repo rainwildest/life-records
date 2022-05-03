@@ -225,7 +225,7 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
                     key={item.id}
                   >
                     <div className="flex justify-center pointer-events-none">
-                      <Icons name="moon" className="svg-icon-30" />
+                      <Icons name={item.expenseIcon} className="svg-icon-30" />
                     </div>
                     <div className="text-center mt-2 text-xs pointer-events-none">{item.expenseName}</div>
                   </div>
