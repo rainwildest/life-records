@@ -14,7 +14,7 @@ import {
 } from "framework7-react";
 import { Icons, SheetDatePicker } from "components";
 import { useGetBudgetsQuery, useRemoveBudgetMutation, GetBudgetsDocument, GetBudgetsQuery } from "graphql/model/budget.graphql";
-import { getCurrentDate } from "lib/apis/dayjs";
+import { getCalendar, getCurrentDate } from "lib/apis/dayjs";
 import { thousands, toastTip } from "lib/apis/utils";
 import event from "lib/apis/framework-event";
 import { RouterProps } from "typings/f7-route";
@@ -136,20 +136,18 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
             </div>
           </div>
 
-          <section className="">
-            <div className="shadow-3 py-3 px-4 rounded-lg ">
-              <div className="relative overflow-hidden flex items-center flex-shrink-0">
-                <div className="flex items-center">
-                  <Icons name="statistics-01" className="svg-icon-36 pb-0.5" />
-                  <span className="pl-0.5 leading-6 font-bold text-lg">预算总金额</span>
-                </div>
+          <section className="shadow-3 py-3 px-4 rounded-lg">
+            <div className="relative overflow-hidden flex items-center flex-shrink-0">
+              <div className="flex items-center">
+                <Icons name="statistics-01" className="svg-icon-36 pb-0.5" />
+                <span className="pl-0.5 leading-6 font-bold text-lg">预算总金额</span>
               </div>
+            </div>
 
-              <div className="text-center">
-                <div className="text-gray-800 font-bold truncate mt-4 mb-2">
-                  <span className="text-sm">￥</span>
-                  <span className="text-2xl">{thousands(budgets?.total || 0)}</span>
-                </div>
+            <div className="text-center">
+              <div className="text-gray-800 font-bold truncate mt-4 mb-2">
+                <span className="text-sm">￥</span>
+                <span className="text-2xl">{thousands(budgets?.total || 0)}</span>
               </div>
             </div>
           </section>
@@ -169,19 +167,24 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
                 >
                   <div
                     slot="title"
-                    className="flex justify-between py-3 px-4"
+                    className="py-3 px-4"
                     key={item.id}
                     data-id={item.id}
                     onClick={budgets.hadEdit ? onNavigate : null}
                   >
-                    <div className="budget-title flex items-center flex-shrink-0 text-sm pointer-events-none">
-                      <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2 pointer-events-none" />
-                      <div className="truncate text-gray-700">{expense.expenseName}</div>
-                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="budget-title flex items-center flex-shrink-0 text-sm pointer-events-none">
+                        <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2 pointer-events-none" />
+                        <div className="truncate text-gray-700">{expense.expenseName}</div>
+                      </div>
 
-                    <div className="flex items-baseline justify-end min-w-20 max-w-36 font-semibold px-3 py-2 pointer-events-none">
-                      <span className="text-xs">￥</span>
-                      <span className="text-lg truncate">{thousands(item.amounts || 0)}</span>
+                      <section>
+                        <div className="text-xs text-gray-500 text-right pb-1.5">{getCalendar(item.createdAt)}</div>
+                        <div className="flex items-baseline justify-end min-w-20 max-w-36 font-semibold pointer-events-none">
+                          <span className="text-xs">￥</span>
+                          <span className="text-lg truncate">{thousands(item.amounts || 0)}</span>
+                        </div>
+                      </section>
                     </div>
                   </div>
                   <SwipeoutActions className="flex items-center" right>
