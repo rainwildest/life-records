@@ -18,8 +18,8 @@ mutation removeAccountBooks($id: String!) {
   }
 }
 
-query accountBooks {
-  accountBooks {
+query accountBooks($input: AccountBooksProps) {
+  accountBooks(input: $input) {
     ...AccountBooksOptions
   }
 }

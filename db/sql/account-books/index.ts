@@ -44,12 +44,22 @@ export const removeAccountBooks = async (id: string): Promise<AccountBooksSnakeP
  * @param {string} userId
  * @returns Promise
  */
-export const getAccountBooksByUserId = async (userId: string): Promise<AccountBooksSnakeProps & DateAndIDFieldSnakeProps> => {
+export const getAccountBooksByUserId = async (args: any = {}): Promise<AccountBooksSnakeProps & DateAndIDFieldSnakeProps> => {
+  const { userId, isNotIn = true, ids } = args;
+
+  let str = "";
+  ids?.forEach((key) => {
+    str += `${str ? "," : ""}'${key}'`;
+  });
+
+  const inSQL = ids ? `id ${isNotIn ? "not" : ""} in (${str})` : "";
+  const sql = `${inSQL ? `${inSQL} AND ` : ""}user_id='${userId}'`;
+
   const orm = await MikrotOrm();
 
   return orm
     .createQueryBuilder(AccountBooks)
-    .where({ user_id: userId })
+    .where(sql)
     .andWhere("deleted_at is null")
     .orderBy({ ["created_at"]: "DESC" })
     .execute("all");

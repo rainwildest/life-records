@@ -1,4 +1,4 @@
-import { createCostDetail, modifyCostDetail, removeCostDetail } from "./cost-details";
+import { createCostDetail, modifyCostDetail, modifyAccountDetail, removeCostDetail } from "./cost-details";
 import { createLivingExpenses, modifyLivingExpenses, removeLivingExpenses } from "./living-expenses";
 import { createFundPlan, modifyFundPlan, removeFundPlan } from "./fund-plan";
 import { createAccountBooks, modifyAccountBooks, removeAccountBooks } from "./account-books";
@@ -13,6 +13,7 @@ export const mutations = {
   removeLivingExpenses,
   createCostDetail,
   modifyCostDetail,
+  modifyAccountDetail,
   removeCostDetail,
   createFundPlan,
   modifyFundPlan,

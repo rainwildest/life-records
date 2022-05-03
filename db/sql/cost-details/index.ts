@@ -43,7 +43,7 @@ export const removeCostDetail = async (id: string): Promise<CostDetailsSnakeProp
  * @param {string} userId 用户id
  * @returns Promise
  */
-export const getCostDetails = async (args: any): Promise<CostDetailsSnakeProps & DateAndIDFieldSnakeProps> => {
+export const getCostDetails = async (args: any = {}): Promise<CostDetailsSnakeProps & DateAndIDFieldSnakeProps> => {
   const orm = await MikrotOrm();
   return orm
     .createQueryBuilder(CostDetails)

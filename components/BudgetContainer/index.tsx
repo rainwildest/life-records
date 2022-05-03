@@ -2,6 +2,8 @@ import React, { memo, useState } from "react";
 import { GetStatisticalBudgetQuery } from "graphql/model/statistics.graphql";
 import BudgetsDetails from "../BudgetsDetails";
 import { thousands } from "lib/apis/utils";
+import ClassificationEmpty from "../ClassificationEmpty";
+
 type BudgetContainerProps = {
   details?: GetStatisticalBudgetQuery;
 };
@@ -26,6 +28,8 @@ const BudgetContainer: React.FC<BudgetContainerProps> = ({ details }) => {
       <div className="font-medium text-base mb-3 px-4">已用预算</div>
 
       <div className={`px-2 overflow-hidden min-h-61 ${!showAll ? "max-h-61" : "h-auto"}`}>
+        {!budgetData.length && <ClassificationEmpty className="pt-9" text="暂无已用预算" src="/images/menhera-03.webp" />}
+
         {budgetData.map((item) => (
           <BudgetsDetails
             name={item.expenseName}

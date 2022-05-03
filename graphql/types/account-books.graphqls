@@ -17,8 +17,13 @@ type AccountBooks {
 #   data: [AccountBooks]
 # }
 
+input AccountBooksProps {
+  ids: [String]
+  isNotIn: Boolean
+}
+
 type Query {
-  accountBooks: [AccountBooks]
+  accountBooks(input: AccountBooksProps): [AccountBooks]
 }
 
 type Mutation {

@@ -3,6 +3,7 @@ import Icons from "components/Icons";
 import { mergeClassName } from "lib/apis/utils";
 
 type CostCardOptions = {
+  slot?: string;
   useBook?: boolean;
   icon?: string;
   type: string;
@@ -26,7 +27,7 @@ const CostCard: React.FC<CostCardOptions> = ({
   useBook = false
 }) => {
   const color = type === "pay" ? "text-green-500" : "text-red-700";
-  const defaultClassName = "shadow-3 rounded-lg py-3 px-4 relative overflow-hidden w-full";
+  const defaultClassName = "rounded-lg py-3 px-4 relative overflow-hidden w-full";
 
   return (
     <div className={mergeClassName(className, defaultClassName)}>

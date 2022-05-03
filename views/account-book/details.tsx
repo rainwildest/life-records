@@ -16,35 +16,48 @@ import { RouterProps } from "typings/f7-route";
 import { thousands, toastTip } from "lib/apis/utils";
 import { getCalendar } from "lib/apis/dayjs";
 import event from "lib/apis/framework-event";
-import { Amounts, Icons, CostCard, SheetModalPicker } from "components";
+import { Icons, CostCard, SheetModalPicker } from "components";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { useCostDetailsQuery, useModifyAccountDetailMutation } from "graphql/model/cost-details.graphql";
 import { useGetStatisticalBooksQuery } from "graphql/model/statistics.graphql";
-import { useRemoveAccountBooksMutation } from "graphql/model/account-books.graphql";
+import { useAccountBooksQuery, useRemoveAccountBooksMutation } from "graphql/model/account-books.graphql";
 
 const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const { id, name } = f7route.query;
   const token = useStore("token");
 
-  const testId = useRef("");
+  const bookId = useRef({ id: "", el: "" });
+  const expenseId = useRef("");
   const [typeName, setTypeName] = useState("全部");
   const [bookName, setBookName] = useState(name);
   const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
+  const [sheetBookOpened, setSheetBookOpened] = useState(false);
 
   const [modifyAccountDetail] = useModifyAccountDetailMutation();
   const [removeAccountBooks] = useRemoveAccountBooksMutation();
 
   const { data, refetch } = useCostDetailsQuery({
-    variables: { input: { bookId: id, expenseId: testId.current } },
+    variables: { input: { bookId: id, expenseId: expenseId.current } },
     fetchPolicy: "network-only"
   });
   const details = data?.costDetails || [];
 
-  const { data: bookData, refetch: bookRefetch } = useGetStatisticalBooksQuery({
-    variables: { input: { bookId: id, expenseId: testId.current } },
+  const { data: bookData, refetch: statisticalRefetch } = useGetStatisticalBooksQuery({
+    variables: { input: { bookId: id, expenseId: expenseId.current } },
     fetchPolicy: "network-only"
   });
   const statistical = bookData?.statisticalBooks;
+
+  const { data: bookList } = useAccountBooksQuery({ variables: { input: { ids: [id] } }, fetchPolicy: "network-only" });
+  const books = bookList?.accountBooks;
+
+  const bookIds = [];
+  const bookDisplays = [];
+
+  books?.forEach((item) => {
+    bookIds.push(item.id);
+    bookDisplays.push(item.name);
+  });
 
   const { data: expenseData, refetch: expenseReftch } = useLivingExpensesQuery({
     variables: { type: "" },
@@ -62,7 +75,7 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
 
   const onTypeConfirm = (values, indexs) => {
     const name = expenseDisplays[indexs[0]];
-    testId.current = values[0];
+    expenseId.current = values[0];
     setTypeName(name);
   };
 
@@ -82,12 +95,6 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
       });
   };
 
-  const onDelConfirm = () => {
-    f7.dialog.confirm(`是否确定删除 ${name}`, "删除提示", function () {
-      onDeleteBook();
-    });
-  };
-
   const onNavigate = () => {
     const url = f7router.generateUrl({
       name: "account-book-modify",
@@ -105,6 +112,31 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
     setSheetTypeOpened(!sheetTypeOpened);
   };
 
+  const onToggleBookSheet = () => {
+    setSheetBookOpened(!sheetBookOpened);
+  };
+
+  const onDelConfirm = () => {
+    f7.dialog.confirm(`是否确定删除 ${name}`, "删除提示", function () {
+      onDeleteBook();
+    });
+  };
+
+  const onBookConfirm = (values) => {
+    const { id, el } = bookId.current;
+
+    modifyAccountDetail({ variables: { id, bookId: values[0] } })
+      .then(() => {
+        toastTip("更换成功");
+
+        statisticalRefetch();
+        f7.swipeout.delete(el);
+      })
+      .catch(() => {
+        toastTip("更换失败");
+      });
+  };
+
   const onDeletedBefore = (val: string, el: string) => {
     return () => {
       f7.dialog.confirm("是否确定删除", "删除提示", function () {
@@ -113,10 +145,18 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
     };
   };
 
+  const onModifyBefore = (val: string, el: string) => {
+    return () => {
+      bookId.current = { id: val, el };
+      onToggleBookSheet();
+    };
+  };
+
   const onDeleteDetail = (val: string, el: string) => {
     modifyAccountDetail({ variables: { id: val } })
       .then(() => {
         toastTip("删除成功");
+        statisticalRefetch();
 
         f7.swipeout.delete(el);
       })
@@ -128,7 +168,7 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const onRefresh = (done: () => void) => {
     if (!token) return done();
     setTimeout(() => {
-      Promise.all([refetch(), bookRefetch(), expenseReftch()]).finally(() => {
+      Promise.all([refetch(), statisticalRefetch(), expenseReftch()]).finally(() => {
         done();
       });
     }, 2000);
@@ -212,7 +252,7 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
                   <SwipeoutButton
                     color="blue"
                     className="swipeout-operation link !text-sm !font-bold"
-                    // onClick={onCompleteBefore(detail.id, `.plant-${detail.seqId}`)}
+                    onClick={onModifyBefore(detail.id, `.book-${detail.seqId}`)}
                   >
                     更换账簿
                   </SwipeoutButton>
@@ -240,6 +280,19 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
           ]}
           onConfirm={onTypeConfirm}
           onSheetClosed={onToggleTypeSheet}
+        />
+
+        <SheetModalPicker
+          sheetOpened={sheetBookOpened}
+          cols={[
+            {
+              textAlign: "center",
+              displayValues: bookDisplays,
+              values: bookIds
+            }
+          ]}
+          onConfirm={onBookConfirm}
+          onSheetClosed={onToggleBookSheet}
         />
       </PageContent>
     </Page>
