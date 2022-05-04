@@ -1,22 +1,21 @@
 import React, { useState, memo } from "react";
 import ClassificationEmpty from "../ClassificationEmpty";
 import ClassificationDetails from "../ClassificationDetails";
-import { GetClassifiedStatisticsQuery } from "graphql/model/statistics.graphql";
 import { thousands, percentage } from "lib/apis/utils";
+import { ExpenditureAndIncome } from "@graphql-types@";
 
 type ClassificationContainer = {
   type?: string;
-  details?: GetClassifiedStatisticsQuery;
+  details?: Array<ExpenditureAndIncome>;
 };
 const ClassificationContainer: React.FC<ClassificationContainer> = ({ type, details }) => {
   const [showAll, setShowAll] = useState(false);
 
   const original = [];
-  const data = details?.statisticalExpenditureOrIncome || [];
 
-  data.forEach((detail) => original.push(type === "pay" ? detail.pay : detail.income));
+  details.forEach((detail) => original.push(type === "pay" ? detail.pay : detail.income));
 
-  const percentageDetails = data.map((detail, index) => {
+  const percentageDetails = details.map((detail, index) => {
     const amount = type === "pay" ? detail.pay : detail.income;
 
     return {

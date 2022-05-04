@@ -156,7 +156,7 @@ const Home: React.FC = () => {
               <PaymentAnalysis days={days} type={costType} />
             </div>
 
-            <ClassificationContainer details={classifiedData} type={costType} />
+            <ClassificationContainer details={classifiedData?.statisticalExpenditureOrIncome || []} type={costType} />
 
             {costType === "pay" && <BudgetContainer details={budgetsData?.statisticalBudget || []} />}
           </div>

@@ -50,7 +50,7 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
 
         <Echarts className="shadow-3 rounded-lg p-4" option={option} />
 
-        <ClassificationContainer details={data} type="pay" />
+        <ClassificationContainer details={data?.statisticalExpenditureOrIncome || []} type="pay" />
 
         <BudgetContainer details={budgetsData?.statisticalBudget || []} />
       </div>
