@@ -158,7 +158,10 @@ const Home: React.FC = () => {
 
             <ClassificationContainer details={classifiedData?.statisticalExpenditureOrIncome || []} type={costType} />
 
-            {costType === "pay" && <BudgetContainer details={budgetsData?.statisticalBudget || []} />}
+            {/* 如果预算为空则不显示 */}
+            {costType === "pay" && !!(budgetsData?.statisticalBudget || []).length && (
+              <BudgetContainer details={budgetsData?.statisticalBudget || []} />
+            )}
           </div>
         )}
       </PageContent>

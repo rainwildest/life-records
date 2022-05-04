@@ -27,10 +27,12 @@ const Generalization: React.FC<GeneralizationOptions> = ({ year }) => {
         <Echarts className="shadow-3 rounded-lg p-4 w-full" option={consumeOptions(generalization)} />
       </div>
 
-      <div className="px-4 mb-10 w-full">
-        <BlockTitle className="!mb-3 !mt-0">{year} 预算与支出概况</BlockTitle>
-        <Echarts className="shadow-3 rounded-lg p-4 w-full" option={budgetOptions(budget)} />
-      </div>
+      {!!budget.length && (
+        <div className="px-4 mb-10 w-full">
+          <BlockTitle className="!mb-3 !mt-0">{year} 预算与支出概况</BlockTitle>
+          <Echarts className="shadow-3 rounded-lg p-4 w-full" option={budgetOptions(budget)} />
+        </div>
+      )}
     </PageContent>
   );
 };
