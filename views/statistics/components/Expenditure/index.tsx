@@ -52,7 +52,7 @@ const Expenditure: React.FC<ExpenditureOptions> = ({ date = "" }) => {
 
         <ClassificationContainer details={data} type="pay" />
 
-        <BudgetContainer details={budgetsData} />
+        <BudgetContainer details={budgetsData?.statisticalBudget || []} />
       </div>
     </PageContent>
   );

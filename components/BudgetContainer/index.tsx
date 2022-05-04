@@ -1,19 +1,17 @@
 import React, { memo, useState } from "react";
-import { GetStatisticalBudgetQuery } from "graphql/model/statistics.graphql";
+import { StatisticalBudget } from "@graphql-types@";
 import BudgetsDetails from "../BudgetsDetails";
 import { thousands } from "lib/apis/utils";
 import ClassificationEmpty from "../ClassificationEmpty";
 
 type BudgetContainerProps = {
-  details?: GetStatisticalBudgetQuery;
+  details?: Array<StatisticalBudget>;
 };
 
 const BudgetContainer: React.FC<BudgetContainerProps> = ({ details }) => {
   const [showAll, setShowAll] = useState(false);
 
-  const data = details?.statisticalBudget || [];
-
-  const budgetData = data.map((item) => {
+  const budgetData = details.map((item) => {
     const progress = ((item.amounts / item.original) * 100).toFixed(2);
 
     return { ...item, progress: parseFloat(progress) };
