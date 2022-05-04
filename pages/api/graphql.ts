@@ -35,6 +35,7 @@ const getApolloServerHandler = async () => {
       schema,
       async context(_ctx) {
         const user = await getLoginSession(_ctx.req);
+
         return {
           ..._ctx,
           loaders: createLoaders,

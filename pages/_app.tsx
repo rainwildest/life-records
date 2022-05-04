@@ -39,12 +39,17 @@ export default MyApp;
 
 MyApp.getInitialProps = async ({ ctx }) => {
   if (ctx && ctx.req && ctx.req.headers) {
-    const { getTokenCookie } = require("lib/apis/auth-cookies");
-    return {
-      pageProps: {
-        token: getTokenCookie(ctx.req) || null
-      }
-    };
+    const { getLoginSession } = require("lib/apis/auth");
+    const { getTokenCookie, removeTokenCookie } = require("lib/apis/auth-cookies");
+
+    const user = await getLoginSession(ctx.req);
+    const cookie = getTokenCookie(ctx.req) || null;
+
+    /* 如果 token 被修改过或失效找不到用户则移除 token */
+    if (!user?.id && !!cookie) removeTokenCookie(ctx.res);
+
+    return { pageProps: { token: user?.id ? cookie : null } };
   }
+
   return {};
 };
