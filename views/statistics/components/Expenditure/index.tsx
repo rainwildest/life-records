@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PageContent, List, ListItem, Toggle } from "framework7-react";
+import { PageContent, Toggle } from "framework7-react";
 import { useGetClassifiedStatisticsQuery, useGetStatisticalBudgetQuery } from "graphql/model/statistics.graphql";
 import { Echarts, ClassificationContainer, BudgetContainer } from "components";
 import { echartsConfig, onSelectDate } from "../../utils";
