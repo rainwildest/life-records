@@ -10,6 +10,7 @@ import {
   SwipeoutActions,
   SwipeoutButton,
   f7,
+  Sheet,
   useStore
 } from "framework7-react";
 import { RouterProps } from "typings/f7-route";
@@ -21,6 +22,7 @@ import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { useCostDetailsQuery, useModifyAccountDetailMutation } from "graphql/model/cost-details.graphql";
 import { useGetStatisticalBooksQuery } from "graphql/model/statistics.graphql";
 import { useAccountBooksQuery, useRemoveAccountBooksMutation } from "graphql/model/account-books.graphql";
+import { BookSheet } from "./components";
 
 const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const { id, name } = f7route.query;
@@ -48,16 +50,11 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
   });
   const statistical = bookData?.statisticalBooks;
 
-  const { data: bookList } = useAccountBooksQuery({ variables: { input: { ids: [id] } }, fetchPolicy: "network-only" });
-  const books = bookList?.accountBooks;
-
-  const bookIds = [];
-  const bookDisplays = [];
-
-  books?.forEach((item) => {
-    bookIds.push(item.id);
-    bookDisplays.push(item.name);
+  const { data: bookList, refetch: bookRefetch } = useAccountBooksQuery({
+    variables: { input: { ids: [id] } },
+    fetchPolicy: "network-only"
   });
+  const books = bookList?.accountBooks;
 
   const { data: expenseData, refetch: expenseReftch } = useLivingExpensesQuery({
     variables: { type: "" },
@@ -79,22 +76,7 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
     setTypeName(name);
   };
 
-  const onDeleteBook = () => {
-    removeAccountBooks({
-      variables: { id }
-    })
-      .then(() => {
-        // 提送消息更新内容
-        toastTip("删除成功");
-
-        event.emit("update-books");
-        f7router.back();
-      })
-      .catch((e) => {
-        toastTip("删除失败");
-      });
-  };
-
+  /* 跳转账簿编辑界面 */
   const onNavigate = () => {
     const url = f7router.generateUrl({
       name: "account-book-modify",
@@ -116,39 +98,35 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
     setSheetBookOpened(!sheetBookOpened);
   };
 
+  /* 确认删除整个账簿 */
   const onDelConfirm = () => {
     f7.dialog.confirm(`是否确定删除 ${name}`, "删除提示", function () {
       onDeleteBook();
     });
   };
 
-  const onBookConfirm = (values) => {
-    const { id, el } = bookId.current;
-
-    modifyAccountDetail({ variables: { id, bookId: values[0] } })
+  const onDeleteBook = () => {
+    removeAccountBooks({
+      variables: { id }
+    })
       .then(() => {
-        toastTip("更换成功");
+        // 提送消息更新内容
+        toastTip("删除成功");
 
-        statisticalRefetch();
-        f7.swipeout.delete(el);
+        event.emit("update-books");
+        f7router.back();
       })
-      .catch(() => {
-        toastTip("更换失败");
+      .catch((e) => {
+        toastTip("删除失败");
       });
   };
 
+  /* 删除账簿中的详情 */
   const onDeletedBefore = (val: string, el: string) => {
     return () => {
       f7.dialog.confirm("是否确定删除", "删除提示", function () {
         onDeleteDetail(val, el);
       });
-    };
-  };
-
-  const onModifyBefore = (val: string, el: string) => {
-    return () => {
-      bookId.current = { id: val, el };
-      onToggleBookSheet();
     };
   };
 
@@ -165,10 +143,37 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
       });
   };
 
+  /* 打开需要切换账簿的列表 */
+  const onModifyBefore = (val: string, el: string) => {
+    return () => {
+      bookId.current = { id: val, el };
+      onToggleBookSheet();
+    };
+  };
+
+  /* 确认更换账簿 */
+  const onBookConfirm = (val: string) => {
+    const { id, el } = bookId.current;
+
+    modifyAccountDetail({ variables: { id, bookId: val } })
+      .then(() => {
+        toastTip("更换成功");
+
+        onToggleBookSheet();
+        statisticalRefetch();
+        f7.swipeout.delete(el);
+      })
+      .catch(() => {
+        toastTip("更换失败");
+      });
+  };
+
+  /* 下拉刷新 */
   const onRefresh = (done: () => void) => {
     if (!token) return done();
+
     setTimeout(() => {
-      Promise.all([refetch(), statisticalRefetch(), expenseReftch()]).finally(() => {
+      Promise.all([refetch(), statisticalRefetch(), expenseReftch(), bookRefetch()]).finally(() => {
         done();
       });
     }, 2000);
@@ -282,18 +287,7 @@ const Details: React.FC<RouterProps> = ({ f7route, f7router }) => {
           onSheetClosed={onToggleTypeSheet}
         />
 
-        <SheetModalPicker
-          sheetOpened={sheetBookOpened}
-          cols={[
-            {
-              textAlign: "center",
-              displayValues: bookDisplays,
-              values: bookIds
-            }
-          ]}
-          onConfirm={onBookConfirm}
-          onSheetClosed={onToggleBookSheet}
-        />
+        <BookSheet data={books} sheetBookOpened={sheetBookOpened} onConfirm={onBookConfirm} onSheetClosed={onToggleBookSheet} />
       </PageContent>
     </Page>
   );

@@ -1,3 +1,4 @@
 import Book from "./Book";
+import BookSheet from "./BookSheet";
 
-export { Book };
+export { Book, BookSheet };
