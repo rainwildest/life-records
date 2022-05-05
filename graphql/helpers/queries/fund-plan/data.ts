@@ -1,6 +1,7 @@
 import { AuthenticationError } from "apollo-server-micro";
 import { getPlannedByUserId, getCompleted } from "db/sql/fund-plan";
 import { timeStamp } from "lib/apis/utils";
+import code from "lib/apis/code-comparison";
 
 const getCurrentDate = (type?: "year" | "date") => {
   const date = new Date();
@@ -16,7 +17,7 @@ export default (_parent: unknown, _args: { input: { type: string; year: string; 
   const { type, year = getCurrentDate("year"), expenseId } = _args.input;
 
   if (!user?.id) {
-    throw new AuthenticationError("Authentication token is invalid, please log in.");
+    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
   }
 
   let _fun = null;

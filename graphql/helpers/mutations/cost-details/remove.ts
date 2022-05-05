@@ -1,11 +1,12 @@
 import { UserInputError, AuthenticationError } from "apollo-server-micro";
 import { removeCostDetail } from "db/sql/cost-details";
+import code from "lib/apis/code-comparison";
 
 export default (_: unknown, args: { id: string }, context: unknown): Promise<any> => {
   const { user } = context as GraphqlContext;
 
   if (!user?.id) {
-    throw new AuthenticationError("Authentication token is invalid, please log in.");
+    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
   }
 
   if (!args.id) {

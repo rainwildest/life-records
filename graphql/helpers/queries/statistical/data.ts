@@ -3,12 +3,13 @@ import { getAmountStatisticsByTimeSlot, getAmountStatisticsByDate } from "db/sql
 import { GetCostTotalDetailsQueryVariables } from "graphql/model/statistics.graphql";
 import { autoFormatDate } from "lib/apis/utils";
 import { getSameDayTimeSlot } from "./utils";
+import code from "lib/apis/code-comparison";
 
 export default async (_parent: unknown, args: GetCostTotalDetailsQueryVariables, context: unknown): Promise<any> => {
   const { user } = context as GraphqlContext;
 
   if (!user?.id) {
-    throw new AuthenticationError("Authentication token is invalid, please log in.");
+    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
   }
 
   const params = args.input;
