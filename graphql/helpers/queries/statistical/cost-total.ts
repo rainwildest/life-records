@@ -7,9 +7,7 @@ import code from "lib/apis/code-comparison";
 export default (_parent: unknown, args: GetCostTotalDetailsQueryVariables, context: unknown): Promise<any> => {
   const { user } = context as GraphqlContext;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
 
   const params = args.input;
   const date: string = params?.date || "";

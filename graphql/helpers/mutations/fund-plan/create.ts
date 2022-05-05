@@ -12,7 +12,7 @@ export default (_: unknown, args: { input: any }, _context: unknown): Promise<an
   }
 
   if (!expenseId || !amounts) {
-    throw new UserInputError("Consumption type and consumption amounts cannot be empty.");
+    throw new UserInputError(JSON.stringify({ code: 4000, msg: "Consumption type and consumption amounts cannot be empty." }));
   }
 
   return createFundPlan(

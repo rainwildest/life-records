@@ -8,7 +8,6 @@ export default (parent: unknown, args: GetStatisticalBooksQueryVariables, contex
   const { user } = context as GraphqlContext;
 
   if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-
   if (!args.input?.bookId) throw new UserInputError("Account book information cannot be blank.");
 
   const params = args.input;

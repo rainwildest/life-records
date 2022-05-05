@@ -16,9 +16,7 @@ export default (_parent: unknown, _args: { input: { type: string; year: string; 
   const { user } = context as GraphqlContext;
   const { type, year = getCurrentDate("year"), expenseId } = _args.input;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
 
   let _fun = null;
   switch (type) {

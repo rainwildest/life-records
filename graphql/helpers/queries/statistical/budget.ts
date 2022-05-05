@@ -8,14 +8,13 @@ import code from "lib/apis/code-comparison";
 export default async (_parent: unknown, args: GetStatisticalBudgetQueryVariables, context: unknown): Promise<any> => {
   const { user } = context as GraphqlContext;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
+
   const { date = getCurrentDate("YYYY-MM") } = args.input;
 
   const params = args.input;
-
   let $format = params.format;
+
   if (!$format) $format = autoFormatDate(date);
 
   const $fun = $format.length > 4 ? getStatisticalBudget : getClassificationBudgetByYear;

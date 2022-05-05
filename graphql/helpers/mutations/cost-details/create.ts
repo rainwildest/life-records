@@ -7,12 +7,9 @@ export default (_: unknown, args: { input: CostDetailsProps }, context: unknown)
   const { expenseId, amounts } = args.input;
   const { user } = context as GraphqlContext;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
-
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
   if (!expenseId || !amounts) {
-    throw new UserInputError("Consumption type and consumption amounts cannot be empty.");
+    throw new UserInputError(JSON.stringify({ code: 4000, msg: "Consumption type and consumption amounts cannot be empty." }));
   }
 
   return createCostDetail(

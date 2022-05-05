@@ -8,9 +8,7 @@ export default (_parent: unknown, args: GetBudgetsQueryVariables, context: unkno
   const { user } = context as GraphqlContext;
   const props = args.input;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
 
   const date = props?.date || getCurrentDate("YYYY-MM");
   return {

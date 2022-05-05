@@ -7,16 +7,14 @@ export default (_: unknown, args: { input: LivingExpensesProps & { isAddUserId: 
   const { expenseType, expenseName, expenseIcon, isAddUserId = false } = args.input;
   const { user } = _context as GraphqlContext;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
-
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
   if (!expenseType || !expenseType) {
-    throw new UserInputError("Consumption name and type cannot be empty.");
+    throw new UserInputError(JSON.stringify({ code: 4000, msg: "Consumption name and type cannot be empty." }));
   }
 
   let fields: LivingExpensesProps = { expenseType, expenseName, expenseIcon };
 
   if (isAddUserId) fields = { ...fields, userId: user.id };
+
   return createLivingExpenses(tanslateSnake(fields));
 };

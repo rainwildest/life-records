@@ -6,13 +6,8 @@ import code from "lib/apis/code-comparison";
 export default (_: unknown, args: { name: string }, _context: unknown): Promise<any> => {
   const { user } = _context as GraphqlContext;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
-
-  if (!args.name) {
-    throw new UserInputError("Account book name cannot be blank.");
-  }
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
+  if (!args.name) throw new UserInputError(JSON.stringify({ code: 4000, msg: "Account book name cannot be blank." }));
 
   return createAccountBooks(
     tanslateSnake({

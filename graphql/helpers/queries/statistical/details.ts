@@ -20,12 +20,12 @@ export default (_parent: unknown, args: GetCostTotalDetailsQueryVariables, conte
   /* 按日期搜索 */
 
   let $args: any = { userId: user?.id, type: params.type, date, format, expenseId: params.expenseId };
-
   if (date.length) return getCostDetailsByDate($args);
 
   /* 获取当日数据 */
   const { start, end } = getSameDayTimeSlot();
 
   $args = { userId: user?.id, type: params.type, start, end };
+
   return getCostDetailsByTimeSlot($args);
 };

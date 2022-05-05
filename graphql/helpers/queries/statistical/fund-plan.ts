@@ -9,9 +9,7 @@ type FundPlanParam = {
 export default async (_parent: unknown, _args: FundPlanParam, context: unknown): Promise<any> => {
   const { user } = context as GraphqlContext;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
 
   // "complete"
   return statisticalFundPlan({ userId: user.id, ..._args.input });

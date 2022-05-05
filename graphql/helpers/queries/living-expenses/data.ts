@@ -6,9 +6,7 @@ export default (_parent: unknown, _args: { type: string }, context: unknown): Pr
   const { user } = context as GraphqlContext;
   const { type = "pay" } = _args;
 
-  if (!user?.id) {
-    throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
-  }
+  if (!user?.id) throw new AuthenticationError(JSON.stringify({ code: 3000, msg: code["3000"] }));
 
   return getUserLivingExpense(user?.id || "", type);
 };
