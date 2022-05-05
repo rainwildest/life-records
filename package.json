@@ -9,10 +9,12 @@
     "test-export": "next build && next export",
     "orm-migration:create": "npx mikro-orm migration:create",
     "orm-migration:up": "npx mikro-orm migration:up",
+    "orm-migration-dev:up": "cross-env NODE_ENV=development npx mikro-orm migration:up",
     "orm-migration:down": "npx mikro-orm migration:down",
     "orm-migration:list": "npx mikro-orm migration:list",
     "orm-seed:make": "knex seed:make",
     "orm-seed:run": "knex seed:run",
+    "orm-seed-dev:run": "cross-env NODE_ENV=development knex seed:run",
     "lint": "eslint ./**/*.{js,ts,tsx} --quiet --fix"
   },
   "dependencies": {
