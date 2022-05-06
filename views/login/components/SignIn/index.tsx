@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Link, f7 } from "framework7-react";
 import ThirdParty from "../ThirdParty";
-import Field from "../Field";
-import { Icons } from "components";
+import LoginField from "../Field";
+import { Icons, InputField } from "components";
 import request from "lib/apis/request";
+import { Formik, Form, FormikProps } from "formik";
+import * as Yup from "yup";
 
 const Toast = (text = "") => {
   f7.toast
@@ -24,9 +26,19 @@ type SignInOptions = {
 };
 
 const SignIn: React.FC<SignInOptions> = ({ btnText = "", isSignIn, onSignUp, onSuccess }) => {
+  const formik = useRef<FormikProps<any>>();
   const [email, setEmail] = useState("rainwildest@163.com");
   const [password, setPassword] = useState("12345678");
   const [submitting, setSubmitting] = useState(false);
+
+  const fields = {
+    email: "rainwildest@163.com",
+    password: "12345678"
+  };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().max(20, "账簿名称至少1到20个字").required("请输入账簿名称")
+  });
 
   const onSignIn = () => {
     setSubmitting(true);
@@ -62,6 +74,9 @@ const SignIn: React.FC<SignInOptions> = ({ btnText = "", isSignIn, onSignUp, onS
     setPassword(value);
   };
 
+  const onSubmit = () => {
+    console.log("sdfsd");
+  };
   return (
     <div className={`signin-content mt-10 flex flex-col justify-center items-center z-50${isSignIn ? " active" : ""}`}>
       <section className="signin-container relative mb-5">
@@ -70,9 +85,21 @@ const SignIn: React.FC<SignInOptions> = ({ btnText = "", isSignIn, onSignUp, onS
         </div>
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <Field clear value={email} label="邮&nbsp;箱" onInput={onEmailInput} />
-          <Field clear value={password} label="密&nbsp;码" type="password" onInput={onPassword} />
-
+          <Formik innerRef={formik} initialValues={fields} onSubmit={onSubmit}>
+            {/* <Field clear value={email} label="邮&nbsp;箱" onInput={onEmailInput} />
+            <Field clear value={password} label="密&nbsp;码" type="password" onInput={onPassword} /> */}
+            {({ values, setFieldValue }) => (
+              <Form>
+                <LoginField
+                  placeholder="请输入账簿名称"
+                  autoComplete="off"
+                  value={values.name}
+                  name="name"
+                  setFieldValue={setFieldValue}
+                />
+              </Form>
+            )}
+          </Formik>
           <div className="text-center mt-6 text-xs">
             <Link className="text-gray-500" href="/tabs/">
               忘记密码？(〃'▽'〃)

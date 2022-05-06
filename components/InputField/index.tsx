@@ -1,5 +1,5 @@
-import React, { useState, memo, Fragment, HTMLInputTypeAttribute, MouseEventHandler } from "react";
-import { Field, FormikProps } from "formik";
+import React, { memo, Fragment, HTMLInputTypeAttribute, MouseEventHandler } from "react";
+import { Field } from "formik";
 import Icons from "components/Icons";
 
 type InputFieldProps = {
@@ -31,7 +31,7 @@ const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <Fragment>
-      <div className="text-gray-700 font-bold text-sm mt-5 mb-3 pl-2">{label}</div>
+      {label && <div className="text-gray-700 font-bold text-sm mt-5 mb-3 pl-2">{label}</div>}
       <div
         className={`relative h-14 w-full ${value ? "pl-3" : "px-3"} shadow-3 rounded-lg text-gray-600 text-xs flex items-center`}
       >

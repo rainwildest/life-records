@@ -1,22 +1,33 @@
-import React, { useState, memo } from "react";
+import React, { memo, HTMLInputTypeAttribute, MouseEventHandler } from "react";
 import { Icons } from "components";
+import { Field } from "formik";
 
-type FieldOptions = {
-  value?: any;
+type LoginFieldProps = {
+  value: any;
+  name: string;
+  type?: HTMLInputTypeAttribute;
   label?: string;
-  required?: boolean;
-  clear?: boolean;
-  className?: string;
-  type?: React.HTMLInputTypeAttribute;
+  readOnly?: boolean;
   placeholder?: string;
-  onInput?: (value: string) => void;
-  onVerify?: (value: boolean) => void;
+  autoComplete?: "off" | "on";
+  setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-const Field: React.FC<FieldOptions> = ({ value, label, clear, required, type = "text", placeholder, onInput }) => {
-  const [verify, setVerify] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [inputValue, setInputVaule] = useState(value || "");
+const LoginField: React.FC<LoginFieldProps> = ({
+  name,
+  value,
+  type = "text",
+  label = "",
+  readOnly = false,
+  placeholder = "",
+  autoComplete = "on",
+  setFieldValue,
+  onClick = null
+}) => {
+  const onClearField = () => {
+    setFieldValue && setFieldValue(name, "");
+  };
 
   return (
     <div className="flex items-center py-1 mb-5">
@@ -24,7 +35,7 @@ const Field: React.FC<FieldOptions> = ({ value, label, clear, required, type = "
         {label || ""}
       </div>
       <div className="relative bg-gray-200 text-gray-600 h-10 rounded w-full text-xs flex items-center">
-        <input
+        {/* <input
           className={`text-right w-full h-full${clear && !!inputValue ? " !pl-3" : " !px-3"}`}
           value={inputValue}
           type={type}
@@ -34,24 +45,25 @@ const Field: React.FC<FieldOptions> = ({ value, label, clear, required, type = "
             onInput && onInput(value);
             setInputVaule(value);
           }}
+        /> */}
+        <Field
+          className="bg-transparent text-sm w-full h-full"
+          readOnly={readOnly}
+          autoComplete={autoComplete}
+          placeholder={placeholder}
+          name={name}
+          type={type}
+          onClick={onClick}
         />
 
-        {clear && !!inputValue && (
-          <Icons
-            name="close"
-            className="field-clear svg-icon-15 px-2"
-            onClick={() => {
-              setInputVaule("");
-            }}
-          />
-        )}
-
-        {verify && required && (
-          <div className="error-message absolute top-10 left-1 break-all transform scale-90">{errorMessage}</div>
+        {value && (
+          <div className="h-full px-2 w-11 flex items-center justify-center flex-shrink-0" onClick={onClearField}>
+            <Icons name="close" className="field-clear svg-icon-15" />
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-export default memo(Field);
+export default memo(LoginField);

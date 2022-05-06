@@ -75,9 +75,9 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
         </div>
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <Field clear value={username} label="用户名" onInput={onUsername} />
+          {/* <Field clear value={username} label="用户名" onInput={onUsername} />
           <Field clear value={email} label="邮&emsp;箱" onInput={onEmailInput} />
-          <Field clear value={password} label="密&emsp;码" onInput={onPassword} type="password" />
+          <Field clear value={password} label="密&emsp;码" onInput={onPassword} type="password" /> */}
         </div>
 
         <div className="outer w-full h-full relative">
