@@ -49,25 +49,6 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
     });
   };
 
-  const onSave = (data: any) => {
-    const $operation = id ? modifyFundPlan : createFundPlan;
-
-    const $param: any = id ? { id, input: data } : { input: data };
-    const variables = { ...$param };
-
-    $operation({ variables })
-      .then(() => {
-        // 提送消息更新内容
-        event.emit("update-plan");
-
-        f7router.back();
-      })
-      .catch(() => {
-        toastTip("保存失败");
-        setSaving(false);
-      });
-  };
-
   useEffect(() => {
     const detail = detailData?.fundPlanById;
     if (detail && payDetails?.length) {
@@ -110,9 +91,24 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
     setPopupOpened(false);
   };
 
-  const onSubmit = (values: any) => {
-    setSaving(true);
-    onSave({ ...values, expenseId: expenseId.current, approximateAt: date });
+  const onSubmit = (values: typeof fields) => {
+    const data = { ...values, expenseId: expenseId.current, approximateAt: date };
+    const $param: any = id ? { id, input: data } : { input: data };
+    const variables = { ...$param };
+
+    const $operation = id ? modifyFundPlan : createFundPlan;
+
+    $operation({ variables })
+      .then(() => {
+        // 提送消息更新内容
+        event.emit("update-plan");
+
+        f7router.back();
+      })
+      .catch(() => {
+        toastTip("保存失败");
+        setSaving(false);
+      });
   };
 
   const onToggledDateSheet = () => {
