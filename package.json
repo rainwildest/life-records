@@ -64,7 +64,8 @@
     "sass": "^1.42.1",
     "socket.io": "^4.2.0",
     "type-graphql": "^1.1.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.15.4",
