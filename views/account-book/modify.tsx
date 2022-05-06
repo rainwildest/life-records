@@ -8,11 +8,7 @@ import { toastTip } from "lib/apis/utils";
 import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
 import _ from "lodash";
-/**
- *
- * @param param0
- * @returns
- */
+
 const AccountBook: React.FC<RouterProps> = ({ f7router, f7route }) => {
   const { id, name } = f7route.query;
   const formik = useRef<FormikProps<any>>();
