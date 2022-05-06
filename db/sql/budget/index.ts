@@ -7,7 +7,7 @@ import { create, modify, remove, getDatabyId } from "../common";
  * @param {Object} options
  * @returns Promise
  */
-export const createBudget = async (options: BudgetProps): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
+export const createBudget = async (options: BudgetSnakeProps): Promise<BudgetSnakeProps & DateAndIDFieldSnakeProps> => {
   return create("budgets", { ...options });
 };
 
@@ -17,7 +17,10 @@ export const createBudget = async (options: BudgetProps): Promise<BudgetProps & 
  * @param options
  * @returns Promise
  */
-export const modifyBudget = async (id: string, options: BudgetProps): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
+export const modifyBudget = async (
+  id: string,
+  options: BudgetSnakeProps
+): Promise<BudgetSnakeProps & DateAndIDFieldSnakeProps> => {
   return modify("budgets", id, { ...options });
 };
 
@@ -26,18 +29,56 @@ export const modifyBudget = async (id: string, options: BudgetProps): Promise<Bu
  * @param id
  * @returns Promise
  */
-export const removeBudget = async (id: string): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
+export const removeBudget = async (id: string): Promise<BudgetSnakeProps & DateAndIDFieldSnakeProps> => {
   return remove("budgets", id);
 };
 
-export const getBudgetById = async (id: string): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
+export const getBudgetById = async (id: string): Promise<BudgetSnakeProps & DateAndIDFieldSnakeProps> => {
   return getDatabyId(Budgets, id);
+};
+
+/**
+ * @description 获取当月存在的预算信息
+ * @param args
+ * @returns Promise
+ */
+export const getBudgetByDateAndExpense = async (args: any = {}): Promise<BudgetSnakeProps & DateAndIDFieldSnakeProps> => {
+  const { userId, date, expenseId } = args;
+  const orm = await MikrotOrm();
+
+  return orm
+    .createQueryBuilder(Budgets)
+    .where({ user_id: userId })
+    .andWhere(`to_char(created_at, 'YYYY-MM') = ?`, [date])
+    .andWhere({ expense_id: expenseId })
+    .andWhere("deleted_at is null")
+    .execute("get");
+};
+
+/**
+ * @description 获取当月存在的预算信息 (除开当前信息)
+ * @param args
+ * @returns Promise
+ */
+export const getBudgetByExceptId = async (args: any = {}): Promise<BudgetSnakeProps & DateAndIDFieldSnakeProps> => {
+  const { id, userId, date, expenseId } = args;
+
+  const orm = await MikrotOrm();
+
+  return orm
+    .createQueryBuilder(Budgets)
+    .where({ user_id: userId })
+    .andWhere(`id != ?`, [id])
+    .andWhere(`to_char(created_at, 'YYYY-MM') = ?`, [date])
+    .andWhere({ expense_id: expenseId })
+    .andWhere("deleted_at is null")
+    .execute("get");
 };
 
 /**
  *@description 获取某年某月的预算记录
  */
-export const getBudgetsData = async (args: any = {}): Promise<BudgetProps & DateAndIDFieldSnakeProps> => {
+export const getBudgetsData = async (args: any = {}): Promise<BudgetSnakeProps & DateAndIDFieldSnakeProps> => {
   const { userId, date } = args;
   const orm = await MikrotOrm();
 
