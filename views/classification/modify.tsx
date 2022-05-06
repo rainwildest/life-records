@@ -6,7 +6,9 @@ import { Formik, Form, FormikProps } from "formik";
 import { Icons, InputField } from "components";
 import event from "lib/apis/framework-event";
 import useExpenseData from "./utils/useExpenseData";
+import { toastTip } from "lib/apis/utils";
 import _ from "lodash";
+import * as Yup from "yup";
 
 const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const { type, id } = f7route.query;
@@ -15,7 +17,6 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
   const [saving, setSaving] = useState(false);
 
   const { data } = useExpenseData(id);
-
   const [createLivingExpensesMutation] = useCreateLivingExpensesMutation();
   const [modifyLivingExpensesMutation] = useModifyLivingExpensesMutation();
 
@@ -30,13 +31,30 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
     expenseIcon: icons[0]
   };
 
+  const validationSchema = Yup.object().shape({
+    expenseType: Yup.string().required("分类类型"),
+    expenseName: Yup.string().required("请输入类型名称")
+  });
+
   const onSaveBefore = () => {
-    formik.current.submitForm();
+    formik.current.submitForm().then(() => {
+      const errors = formik.current.errors;
+      const keys = _.keys(errors);
+
+      if (!keys.length) return setSaving(true);
+
+      toastTip(errors[keys[0]] as string);
+    });
   };
 
-  const onSave = (data) => {
+  const onSetExpenseIcon = (e: any) => {
+    const icon = (e.target as HTMLElement).getAttribute("data-icon");
+    formik.current.setFieldValue("expenseIcon", icon);
+  };
+
+  const onSubmit = (values: typeof fields) => {
     const _operation = id ? modifyLivingExpensesMutation : createLivingExpensesMutation;
-    const _param: any = id ? { id, input: data } : { input: data };
+    const _param: any = id ? { id, input: values } : { input: values };
     const variables = { ..._param };
 
     _operation({ variables })
@@ -48,16 +66,6 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
       .catch(() => {
         setSaving(false);
       });
-  };
-
-  const onSetExpenseIcon = (e: any) => {
-    const icon = (e.target as HTMLElement).getAttribute("data-icon");
-    formik.current.setFieldValue("expenseIcon", icon);
-  };
-
-  const onSubmit = (values: any) => {
-    setSaving(true);
-    onSave(values);
   };
 
   useEffect(() => {
@@ -85,8 +93,8 @@ const Modify: React.FC<RouterProps> = ({ f7route, f7router }) => {
         </NavRight>
       </Navbar>
 
-      <Formik innerRef={formik} initialValues={fields} onSubmit={onSubmit}>
-        {({ errors, touched, values, setFieldValue }) => (
+      <Formik innerRef={formik} initialValues={fields} validationSchema={validationSchema} onSubmit={onSubmit}>
+        {({ values, setFieldValue }) => (
           <Form>
             <div className="px-4 pt-5">
               <div>
