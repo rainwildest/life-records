@@ -21,7 +21,7 @@ input FieldFundPlanProps {
   name: String
   expenseId: String
   approximateAt: Date
-  completeAt: Boolean
+  completeAt: Date
 }
 
 input FundPlanQueryProps {

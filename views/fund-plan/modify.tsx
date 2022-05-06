@@ -10,24 +10,27 @@ import { Icons, InputField, SheetDatePicker } from "components";
 import { Formik, Form, FormikProps } from "formik";
 import usePlanData from "./utils/usePlanData";
 import _ from "lodash";
+import * as Yup from "yup";
 
 const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
   const { id } = f7route.query;
-
   const token = useStore("token");
-
   const formik = useRef<FormikProps<any>>();
   const expenseId = useRef<string>();
-
-  const { data: detailData } = usePlanData(id);
-
   const [date, setDate] = useState("");
   const [saving, setSaving] = useState(false);
   const [popupOpened, setPopupOpened] = useState(false);
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
   const fields = { name: "", amounts: "", expenseId: "", approximateAt: "" };
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("请输入计划名称"),
+    amounts: Yup.number().required("请输入金额"),
+    expenseId: Yup.string().required("请选择计划类型"),
+    approximateAt: Yup.date().required("请输入大概完成时间")
+  });
 
+  const { data: detailData } = usePlanData(id);
   const [createFundPlan] = useCreateFundPlanMutation();
   const [modifyFundPlan] = useModifyFundPlanMutation();
 
@@ -36,7 +39,14 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
   const payDetails = data?.livingExpenses;
 
   const onSaveBefore = () => {
-    formik.current.submitForm();
+    formik.current.submitForm().then(() => {
+      const errors = formik.current.errors;
+      const keys = _.keys(errors);
+
+      if (!keys.length) return setSaving(true);
+
+      toastTip(errors[keys[0]] as string);
+    });
   };
 
   const onSave = (data: any) => {
@@ -134,17 +144,8 @@ const Modify: React.FC<RouterProps> = ({ f7router, f7route }) => {
       </Navbar>
 
       <div className="px-7 mt-10">
-        <Formik
-          innerRef={formik}
-          initialValues={{
-            name: "",
-            amounts: "",
-            expenseId: "",
-            approximateAt: ""
-          }}
-          onSubmit={onSubmit}
-        >
-          {({ errors, touched, values, setFieldValue }) => (
+        <Formik innerRef={formik} initialValues={fields} validationSchema={validationSchema} onSubmit={onSubmit}>
+          {({ values, setFieldValue }) => (
             <Form>
               <InputField
                 label="计划类型"
