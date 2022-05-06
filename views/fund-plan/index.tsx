@@ -16,7 +16,6 @@ import {
 import { relative } from "lib/apis/dayjs";
 import { thousands, timeStamp, toastTip } from "lib/apis/utils";
 import Icons from "components/Icons";
-import Amounts from "components/Amounts";
 import DetailItem from "./components/DetailItem";
 import { useFundPlanQuery, useModifyFundPlanMutation, useRemoveFundPlanMutation } from "graphql/model/fund-plan.graphql";
 import { useStatisticalFundPlanQuery } from "graphql/model/statistics.graphql";
