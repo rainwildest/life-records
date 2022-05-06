@@ -38,16 +38,16 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
     setDate(e);
   };
 
-  const onNavigate = (event?: any) => {
-    const id = (event.target as HTMLElement).getAttribute("data-id");
+  const onNavigate = (id: string) => {
+    return () => {
+      const url = f7router.generateUrl({
+        name: "budget-modify",
+        query: { id },
+        params: {}
+      });
 
-    const url = f7router.generateUrl({
-      name: "budget-modify",
-      query: { id },
-      params: {}
-    });
-
-    f7router.navigate(url);
+      f7router.navigate(url);
+    };
   };
 
   const onDeletedBefore = (val: string, el: string) => {
@@ -165,13 +165,7 @@ const Budget: React.FC<RouterProps> = ({ f7router }) => {
                   swipeout={budgets.hadEdit}
                   key={item.id}
                 >
-                  <div
-                    slot="title"
-                    className="py-3 px-4"
-                    key={item.id}
-                    data-id={item.id}
-                    onClick={budgets.hadEdit ? onNavigate : null}
-                  >
+                  <div slot="title" className="py-3 px-4" key={item.id} onClick={budgets.hadEdit ? onNavigate(item.id) : null}>
                     <div className="flex justify-between items-center">
                       <div className="budget-title flex items-center flex-shrink-0 text-sm pointer-events-none">
                         <Icons name={expense.expenseIcon} className="svg-icon-30 pr-2 pointer-events-none" />

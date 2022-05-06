@@ -25,15 +25,9 @@ const AccountBook: React.FC<RouterProps> = ({ f7router, f7route }) => {
       const errors = formik.current.errors;
       const keys = _.keys(errors);
 
-      if (!keys.length) {
-        setSaving(true);
-        return;
-      }
+      if (!keys.length) return setSaving(true);
 
-      for (let i = 0; i < keys.length; ++i) {
-        toastTip(errors[keys[i]] as string);
-        break;
-      }
+      toastTip(errors[keys[0]] as string);
     });
   };
 
