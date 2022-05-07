@@ -28,9 +28,6 @@ const Mine: React.FC = () => {
 
   return (
     <Page pageContent={false}>
-      {/* <Navbar noHairline className="mine-nav-color">
-        <NavRight></NavRight>
-      </Navbar> */}
       <PageContent>
         <MineDetails />
 

@@ -24,8 +24,8 @@ const MineDetails: React.FC = () => {
   return (
     <Fragment>
       <div className="mine-bg-color flex flex-col items-center p-16 mx-3 rounded-3xl mt-5 shadow-3">
-        <div className="svg-icon-72 w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
-          <Icons name="moon" />
+        <div className="p-2.5 w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+          <Icons className="svg-icon-full" name={token && user?.avatar ? user?.avatar : "avatar-11"} />
         </div>
         <section className={`mt-5 text-center ${accClassName}`}>
           <div className="text-xl font-bold">{hasLogged ? user?.username : "xxxxxxxx"}</div>
