@@ -1,19 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, f7 } from "framework7-react";
 import ThirdParty from "../ThirdParty";
-import Field from "../Field";
+import LoginField from "../LoginField";
 import { Icons } from "components";
 import request from "lib/apis/request";
-
-const Toast = (text = "") => {
-  f7.toast
-    .create({
-      text,
-      position: "center",
-      closeTimeout: 2000
-    })
-    .open();
-};
+import { toastTip } from "lib/apis/utils";
+import * as Yup from "yup";
+import _ from "lodash";
+import { Formik, Form, FormikProps } from "formik";
 
 type SignUpOptions = {
   className?: string;
@@ -22,14 +16,39 @@ type SignUpOptions = {
   onSignIn?: () => void;
   onSuccess?: (value: any) => void;
 };
+const isDev = process.env.NODE_ENV === "development";
+
 const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSuccess }) => {
+  const formik = useRef<FormikProps<any>>();
   const [submitting, setSubmitting] = useState(false);
-  const [email, setEmail] = useState("rainwildest@163.com");
-  const [password, setPassword] = useState("12345678");
-  const [username, setUsername] = useState("test");
+
+  const fields = {
+    username: isDev ? "test" : "",
+    email: isDev ? "rainwildest@163.com" : "",
+    password: isDev ? "12345678" : ""
+  };
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("请输入用户名"),
+    email: Yup.string().email("请输入有效邮箱").required("请输入邮箱"),
+    password: Yup.string().min(6, "密码至少6位").max(32, "密码最多32位").required("请输入密码")
+  });
 
   const onSignUp = () => {
-    setSubmitting(true);
+    formik.current.submitForm().then(() => {
+      const errors = formik.current.errors;
+      const keys = _.keys(errors);
+
+      if (!keys.length) return setSubmitting(true);
+
+      toastTip(errors[keys[0]] as string);
+    });
+  };
+
+  const onSubmit = (values: typeof fields) => {
+    if (submitting) return;
+
+    const { email, password, username } = values;
     const md5 = require("md5");
 
     setTimeout(() => {
@@ -45,26 +64,15 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
         .then((val) => {
           setSubmitting(false);
           const { code, error, data } = val;
-          if (code === 4001) return Toast("该账号已存在");
-          if (code !== 2000) return Toast("1001: 注册失败");
-
+          if (code === 4001) return toastTip("该账号已存在");
+          if (code !== 2000) return toastTip("1001: 注册失败");
           onSuccess && onSuccess(data.token);
         })
         .catch((error) => {
           setSubmitting(false);
-          Toast("1002: 注册失败");
+          toastTip("1002: 注册失败");
         });
     }, 1000 * 0.5);
-  };
-
-  const onEmailInput = (value: string) => {
-    setEmail(value);
-  };
-  const onPassword = (value: string) => {
-    setPassword(value);
-  };
-  const onUsername = (value: string) => {
-    setUsername(value);
   };
 
   return (
@@ -75,9 +83,37 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
         </div>
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          {/* <Field clear value={username} label="用户名" onInput={onUsername} />
-          <Field clear value={email} label="邮&emsp;箱" onInput={onEmailInput} />
-          <Field clear value={password} label="密&emsp;码" onInput={onPassword} type="password" /> */}
+          <Formik innerRef={formik} initialValues={fields} validationSchema={validationSchema} onSubmit={onSubmit}>
+            {({ values, setFieldValue }) => (
+              <Form>
+                <LoginField
+                  name="username"
+                  icon="user-01"
+                  value={values.username}
+                  placeholder="请输入用户名"
+                  autoComplete="off"
+                  setFieldValue={setFieldValue}
+                />
+                <LoginField
+                  name="email"
+                  icon="email"
+                  value={values.email}
+                  placeholder="请输入邮箱账号"
+                  autoComplete="off"
+                  setFieldValue={setFieldValue}
+                />
+                <LoginField
+                  name="password"
+                  icon="lock-01"
+                  type="password"
+                  value={values.password}
+                  placeholder="请输入密码"
+                  autoComplete="off"
+                  setFieldValue={setFieldValue}
+                />
+              </Form>
+            )}
+          </Formik>
         </div>
 
         <div className="outer w-full h-full relative">

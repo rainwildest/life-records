@@ -21,11 +21,12 @@ export const localInitAuthentication = (isSignUp = false): void => {
             /* 用户存在则报错 */
             if (user) {
               const error = codeComparison["4001"];
-              const info = { code: 4001, data: null, error };
+              const info = { code: 4001, data: null, msg: error };
+
               return cb(info, null);
             }
           } catch (err) {
-            return cb({ code: 4000, data: null, error: err }, null);
+            return cb({ code: 4000, data: null, mgs: err }, null);
           }
 
           /* 确认没有该用户 */
@@ -43,7 +44,7 @@ export const localInitAuthentication = (isSignUp = false): void => {
           })
           .catch((err) => {
             console.log("sdfsdf", err);
-            const info = { code: 4000, data: null, error: err };
+            const info = { code: 4000, data: null, msg: err };
             return cb(info, null);
           });
       }

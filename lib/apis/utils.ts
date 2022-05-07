@@ -2,6 +2,20 @@ import { snakeCase } from "lodash";
 import { f7 } from "framework7-react";
 import { format } from "./dayjs";
 
+/* 数据类型判断 */
+export const typeOf = (value: any): string => {
+  /* 使用原型链来实现这一方法 */
+  let res = Object.prototype.toString.call(value);
+
+  /* 字符串分割 */
+  res = res.split(" ")[1];
+
+  /* 字符串切割 */
+  res = res.substring(0, res.length - 1);
+
+  return res.toLowerCase();
+};
+
 export const tanslateSnake = <T>(feilds: { [P in keyof T]?: any }): any => {
   const value: any = {};
   Object.keys(feilds).forEach((key) => {

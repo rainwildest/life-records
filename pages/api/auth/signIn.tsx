@@ -17,7 +17,7 @@ const main = (req, res, next) => {
 
     /* 如果用户为null 或 没有用户ID 以及创建时间的话则视为没有登录成功 */
     if ((!!user && !user.id) || !user) {
-      return res.end(JSON.stringify({ code: 4002, data: null, error: codeComparison[4002] }));
+      return res.end(JSON.stringify({ code: 4002, data: null, msg: codeComparison[4002] }));
     }
 
     try {
@@ -25,11 +25,11 @@ const main = (req, res, next) => {
       const session = { ...user };
       token = await setLoginSession(res, session);
     } catch (error) {
-      return res.end(JSON.stringify({ code: 4000, data: null, error }));
+      return res.end(JSON.stringify({ code: 4000, data: null, msg: error }));
     }
 
     req.logIn(user, (err) => {
-      const info = err ? { code: 4000, data: null, error: err } : { code: 2000, data: { token }, error: null };
+      const info = err ? { code: 4000, data: null, msg: err } : { code: 2000, data: { token }, msg: null };
 
       return res.end(JSON.stringify(info));
     });

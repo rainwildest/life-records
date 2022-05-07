@@ -10,5 +10,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<any> =
 
   (req as passport).logout();
   removeTokenCookie(res);
-  return res.end(JSON.stringify({ code: 2000, error: null, data: null }));
+
+  return res.end(JSON.stringify({ code: 2000, msg: null, data: null }));
 };
