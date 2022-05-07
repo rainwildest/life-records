@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Fragment } from "react";
 import { Button, f7 } from "framework7-react";
 import ThirdParty from "../ThirdParty";
 import LoginField from "../LoginField";
+import AvatarSheet from "../AvatarSheet";
 import { Icons } from "components";
 import request from "lib/apis/request";
 import { toastTip } from "lib/apis/utils";
@@ -21,8 +22,11 @@ const isDev = process.env.NODE_ENV === "development";
 const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSuccess }) => {
   const formik = useRef<FormikProps<any>>();
   const [submitting, setSubmitting] = useState(false);
+  const [sheetAvatarOpened, setSheetAvatarOpened] = useState(false);
+  const avatars = new Array(11).fill(0).map((item, index) => `avatar-${index < 9 ? `0${index + 1}` : index + 1}`);
 
   const fields = {
+    avatar: avatars[0],
     username: isDev ? "test" : "",
     email: isDev ? "rainwildest@163.com" : "",
     password: isDev ? "12345678" : ""
@@ -45,10 +49,18 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
     });
   };
 
+  const onToggleAvatarSheet = () => {
+    setSheetAvatarOpened(!sheetAvatarOpened);
+  };
+
+  const onConfirmAvatar = (val: string) => {
+    formik.current.setFieldValue("avatar", val);
+  };
+
   const onSubmit = (values: typeof fields) => {
     if (submitting) return;
 
-    const { email, password, username } = values;
+    const { email, password, username, avatar } = values;
     const md5 = require("md5");
 
     setTimeout(() => {
@@ -56,6 +68,7 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
         url: "/api/auth/signUp",
         method: "POST",
         data: JSON.stringify({
+          avatar,
           email: email.trim(),
           password: md5(password.trim()),
           username: username.trim()
@@ -78,43 +91,48 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
   return (
     <div className={`signup-content mt-10 flex flex-col justify-center items-center z-50${isSignUp ? " active" : ""}`}>
       <section className="signup-container relative mb-5">
-        <div className="signup-avatar rounded-full overflow-hidden absolute flex justify-center items-center left-1/2 transform -translate-x-1/2 z-50">
-          <Icons name="avatar-05" className="svg-icon-60" />
-        </div>
+        <Formik innerRef={formik} initialValues={fields} validationSchema={validationSchema} onSubmit={onSubmit}>
+          {({ values, setFieldValue }) => (
+            <Fragment>
+              <div
+                className="signup-avatar p-2 rounded-full overflow-hidden absolute flex justify-center items-center left-1/2 transform -translate-x-1/2 z-50"
+                onClick={onToggleAvatarSheet}
+              >
+                <Icons name={values.avatar} className="svg-icon-full" />
+              </div>
 
-        <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <Formik innerRef={formik} initialValues={fields} validationSchema={validationSchema} onSubmit={onSubmit}>
-            {({ values, setFieldValue }) => (
-              <Form>
-                <LoginField
-                  name="username"
-                  icon="user-01"
-                  value={values.username}
-                  placeholder="请输入用户名"
-                  autoComplete="off"
-                  setFieldValue={setFieldValue}
-                />
-                <LoginField
-                  name="email"
-                  icon="email"
-                  value={values.email}
-                  placeholder="请输入邮箱账号"
-                  autoComplete="off"
-                  setFieldValue={setFieldValue}
-                />
-                <LoginField
-                  name="password"
-                  icon="lock-01"
-                  type="password"
-                  value={values.password}
-                  placeholder="请输入密码"
-                  autoComplete="off"
-                  setFieldValue={setFieldValue}
-                />
-              </Form>
-            )}
-          </Formik>
-        </div>
+              <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+                <Form>
+                  <LoginField
+                    name="username"
+                    icon="user-01"
+                    value={values.username}
+                    placeholder="请输入用户名"
+                    autoComplete="off"
+                    setFieldValue={setFieldValue}
+                  />
+                  <LoginField
+                    name="email"
+                    icon="email"
+                    value={values.email}
+                    placeholder="请输入邮箱账号"
+                    autoComplete="off"
+                    setFieldValue={setFieldValue}
+                  />
+                  <LoginField
+                    name="password"
+                    icon="lock-01"
+                    type="password"
+                    value={values.password}
+                    placeholder="请输入密码"
+                    autoComplete="off"
+                    setFieldValue={setFieldValue}
+                  />
+                </Form>
+              </div>
+            </Fragment>
+          )}
+        </Formik>
 
         <div className="outer w-full h-full relative">
           <Button
@@ -136,6 +154,8 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
       </Button>
 
       <ThirdParty />
+
+      <AvatarSheet sheetOpened={sheetAvatarOpened} onSheetClosed={onToggleAvatarSheet} onConfirm={onConfirmAvatar} />
     </div>
   );
 };

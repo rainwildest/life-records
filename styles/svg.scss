@@ -42,6 +42,13 @@
   width: math.div(230rem, $font-size-base);
 }
 
+.svg-icon-full {
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .svg-icon-12 {
   svg {
     width: 12px;

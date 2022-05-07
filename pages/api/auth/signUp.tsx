@@ -14,7 +14,7 @@ let token = null;
 const main = (req, res, next) => {
   passport.authenticate("local", async (err, user) => {
     if (err) return res.end(JSON.stringify({ ...err }));
-    console.log("body", req.body);
+
     try {
       /* 新增用户 */
       user = await addUserBySignUp(req.body);

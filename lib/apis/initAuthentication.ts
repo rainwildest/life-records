@@ -43,7 +43,6 @@ export const localInitAuthentication = (isSignUp = false): void => {
             return user;
           })
           .catch((err) => {
-            console.log("sdfsdf", err);
             const info = { code: 4000, data: null, msg: err };
             return cb(info, null);
           });

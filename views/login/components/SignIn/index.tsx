@@ -73,8 +73,8 @@ const SignIn: React.FC<SignInOptions> = ({ btnText = "", isSignIn, onSignUp, onS
   return (
     <div className={`signin-content mt-10 flex flex-col justify-center items-center z-50${isSignIn ? " active" : ""}`}>
       <section className="signin-container relative mb-5">
-        <div className="signin-avatar rounded-full overflow-hidden absolute flex justify-center items-center left-1/2 transform -translate-x-1/2 z-50">
-          <Icons name="avatar-05" className="svg-icon-60" />
+        <div className="signup-avatar p-3 rounded-full overflow-hidden absolute flex justify-center items-center left-1/2 transform -translate-x-1/2 z-50">
+          <Icons name="avatar-11" className="svg-icon-full" />
         </div>
 
         <div className="input-container absolute text-sm left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
