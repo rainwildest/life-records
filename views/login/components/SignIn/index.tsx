@@ -64,8 +64,12 @@ const SignIn: React.FC<SignInOptions> = ({ btnText = "", isSignIn, onSignUp, onS
           onSuccess && onSuccess(data.token);
         })
         .catch(() => {
-          setSubmitting(false);
           toastTip("登录失败");
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 1000 * 0.3);
         });
     }, 1000 * 0.5);
   };

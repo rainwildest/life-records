@@ -75,15 +75,19 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
         })
       })
         .then((val) => {
-          setSubmitting(false);
           const { code, error, data } = val;
           if (code === 4001) return toastTip("该账号已存在");
           if (code !== 2000) return toastTip("1001: 注册失败");
+
           onSuccess && onSuccess(data.token);
         })
-        .catch((error) => {
-          setSubmitting(false);
+        .catch(() => {
           toastTip("1002: 注册失败");
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 1000 * 0.3);
         });
     }, 1000 * 0.5);
   };
