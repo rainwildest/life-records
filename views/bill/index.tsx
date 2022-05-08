@@ -1,39 +1,52 @@
-import React, { useState, useRef, memo } from "react";
+import React, { useState, useRef, memo, useEffect } from "react";
 import { Page, PageContent, Navbar, NavTitle, NavRight, useStore } from "framework7-react";
-import { CostCard, SheetModalPicker, SheetDatePicker } from "components";
+import { CostCard, SheetModalPicker, SheetDatePicker, NotloggedIn } from "components";
 import { RouterProps } from "typings/f7-route";
-import { thousands } from "lib/apis/utils";
+import { thousands, isJSON } from "lib/apis/utils";
 import { getCurrentDate, getCalendar } from "lib/apis/dayjs";
 import { useLivingExpensesQuery } from "graphql/model/living-expenses.graphql";
 import { useGetCostDataDetailsQuery, useGetCostTotalQuery } from "graphql/model/statistics.graphql";
 import { AmountTotal } from "./components";
+import _ from "lodash";
+import store from "lib/store";
 
 const Bill: React.FC<RouterProps> = () => {
   const token = useStore("token");
 
+  const hadAuthInvalid = useRef(false);
   const expenseId = useRef("");
 
   const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
   const [costType, setCostType] = useState<keyof AmountType>("pay");
-
   const [typeName, setTypeName] = useState("全部");
+  // const [authInvalid, setAuthInvalid] = useState(false);
 
   const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
-  const { loading, data, refetch } = useGetCostDataDetailsQuery({
+  const { loading, data, refetch, error } = useGetCostDataDetailsQuery({
     variables: { input: { date, type: costType, expenseId: expenseId.current } },
     fetchPolicy: "network-only"
   });
   const costDetails = data?.statisticalCostDetails;
 
-  const { data: totalData, refetch: totalRefetch } = useGetCostTotalQuery({
+  const {
+    data: totalData,
+    loading: totalLoading,
+    refetch: totalRefetch,
+    error: totalError
+  } = useGetCostTotalQuery({
     variables: { input: { date, type: costType, expenseId: expenseId.current, groupFormat: date.length === 4 ? "YYYY" : "MM" } },
     fetchPolicy: "network-only"
   });
   const statistics = totalData?.statisticalCostDetails;
 
-  const { data: expenseData, refetch: expenseReftch } = useLivingExpensesQuery({
+  const {
+    data: expenseData,
+    loading: expenseLoading,
+    refetch: expenseReftch,
+    error: expenseError
+  } = useLivingExpensesQuery({
     variables: { type: costType },
     fetchPolicy: "network-only"
   });
@@ -77,15 +90,36 @@ const Bill: React.FC<RouterProps> = () => {
     setDate(e);
   };
 
-  const onRefresh = (done: () => void) => {
+  const onRefresh = (done?: () => void) => {
     if (!token) return done();
 
     setTimeout(() => {
       Promise.all([refetch(), totalRefetch(), expenseReftch()]).finally(() => {
-        done();
+        done && done();
       });
     }, 2000);
   };
+
+  useEffect(() => {
+    const hadLoading = !loading && !totalLoading && !expenseLoading;
+    console.log([expenseError?.message, error?.message, totalError?.message], loading, totalLoading, expenseLoading);
+    if ((expenseError?.message || error?.message || totalError?.message) && hadLoading) {
+      const isInvalid = [error?.message, expenseError?.message, totalError?.message].some(
+        (item) => isJSON(item) && _.has(JSON.parse(item), "code")
+      );
+      console.log("sdfsdff", isInvalid);
+      isInvalid && store.dispatch("setToken", "");
+      hadAuthInvalid.current = isInvalid;
+      // setAuthInvalid(isInvalid);
+    }
+  }, [expenseError, error, totalError]);
+
+  useEffect(() => {
+    console.log("sfsdfsdfsfsdfsdf");
+    if (!hadAuthInvalid.current) return;
+    token && onRefresh();
+    token && (hadAuthInvalid.current = false);
+  }, [token]);
 
   return (
     <Page noToolbar pageContent={false}>
@@ -129,31 +163,36 @@ const Bill: React.FC<RouterProps> = () => {
           </div>
         </section>
 
-        <AmountTotal
-          type={costType}
-          total={thousands(statistics?.total || 0)}
-          amount={thousands((costType === "pay" ? statistics?.pay : statistics?.income) || 0)}
-        />
+        {token && (
+          <AmountTotal
+            type={costType}
+            total={thousands(statistics?.total || 0)}
+            amount={thousands((costType === "pay" ? statistics?.pay : statistics?.income) || 0)}
+          />
+        )}
 
-        <section className="px-5">
-          {costDetails?.details?.map((detail) => {
-            const expense = detail.expense;
+        {token && (
+          <section className="px-5">
+            {costDetails?.details?.map((detail) => {
+              const expense = detail.expense;
 
-            return (
-              <CostCard
-                icon={expense.expenseIcon}
-                key={detail.id}
-                book={detail.book?.name}
-                type={expense.expenseType}
-                typeName={expense.expenseName}
-                time={getCalendar(detail.purchaseTime)}
-                amounts={thousands(detail.amounts)}
-                remarks={detail.remarks}
-                className="mt-6 shadow-3"
-              />
-            );
-          })}
-        </section>
+              return (
+                <CostCard
+                  icon={expense.expenseIcon}
+                  key={detail.id}
+                  book={detail.book?.name}
+                  type={expense.expenseType}
+                  typeName={expense.expenseName}
+                  time={getCalendar(detail.purchaseTime)}
+                  amounts={thousands(detail.amounts)}
+                  remarks={detail.remarks}
+                  className="mt-6 shadow-3"
+                />
+              );
+            })}
+          </section>
+        )}
+        {!token && <NotloggedIn />}
 
         <SheetModalPicker
           sheetOpened={sheetTypeOpened}
