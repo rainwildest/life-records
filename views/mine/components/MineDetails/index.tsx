@@ -1,5 +1,5 @@
 import React, { memo, Fragment, useEffect } from "react";
-import { BlockHeader, useStore } from "framework7-react";
+import { BlockHeader, Link, useStore } from "framework7-react";
 import { useUserQuery } from "graphql/model/user.graphql";
 import _ from "lodash";
 import Icons from "components/Icons";
@@ -27,9 +27,19 @@ const MineDetails: React.FC = () => {
         <div className="p-2.5 w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
           <Icons className="svg-icon-full" name={token && user?.avatar ? user?.avatar : "avatar-11"} />
         </div>
-        <section className={`mt-5 text-center ${accClassName}`}>
-          <div className="text-xl font-bold">{hasLogged ? user?.username : "xxxxxxxx"}</div>
-          <div className="text-sm mt-1 font-medium">{hasLogged ? user?.email : "xxxxxxxxxxxxxxxx"}</div>
+
+        <section className="relative mt-5">
+          {!token && (
+            <section className="absolute top-0 left-1/2 -translate-x-1/2 w-full z-10">
+              <Link href="/login">
+                <div className="inline-block w-28 rounded-full text-center bg-white text-sm py-2">登 录</div>
+              </Link>
+            </section>
+          )}
+          <section className={`text-center ${accClassName}`}>
+            <div className="text-xl font-bold">{hasLogged ? user?.username : "xxxxxxxx"}</div>
+            <div className="text-sm mt-1 font-medium">{hasLogged ? user?.email : "xxxxxxxxxxxxxxxx"}</div>
+          </section>
         </section>
       </div>
 
