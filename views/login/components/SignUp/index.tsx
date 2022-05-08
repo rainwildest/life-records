@@ -105,7 +105,7 @@ const SignUp: React.FC<SignUpOptions> = ({ btnText, isSignUp, onSignIn, onSucces
                 <Form>
                   <LoginField
                     name="username"
-                    icon="user-01"
+                    icon="avatar-11"
                     value={values.username}
                     placeholder="请输入用户名"
                     autoComplete="off"
