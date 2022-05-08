@@ -16,6 +16,20 @@ export const typeOf = (value: any): string => {
   return res.toLowerCase();
 };
 
+export const isJSON = (str: string): boolean => {
+  if (typeof str === "string") {
+    try {
+      const obj = JSON.parse(str);
+      return typeof obj === "object" && obj ? true : false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return typeOf(str) === "object";
+  // throw "parameter should be a string";
+};
+
 export const tanslateSnake = <T>(feilds: { [P in keyof T]?: any }): any => {
   const value: any = {};
   Object.keys(feilds).forEach((key) => {
