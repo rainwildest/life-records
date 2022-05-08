@@ -77,23 +77,6 @@ const Mine: React.FC = () => {
             </div>
           )}
         </div>
-        {/* <List inset>
-          <ListItem link="/setting" title="设置">
-            <Icons slot="media" name="moon" className="svg-icon-28" />
-          </ListItem>
-          <ListItem link="/setting" disabled title="我的账本">
-            <Icons slot="media" name="moon" className="svg-icon-28" />
-          </ListItem>
-          <ListItem link="/setting" disabled title="分类管理">
-            <Icons slot="media" name="moon" className="svg-icon-28" />
-          </ListItem>
-        </List>
-
-        <List inset>
-          <ListItem link="/about" title="关于">
-            <Icons slot="media" name="moon" className="svg-icon-28" />
-          </ListItem>
-        </List> */}
       </PageContent>
     </Page>
   );
