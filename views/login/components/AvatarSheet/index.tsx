@@ -2,12 +2,12 @@ import React, { useRef } from "react";
 import { Sheet, Page, Navbar, NavRight, PageContent } from "framework7-react";
 import { Icons } from "components";
 
-type BookSheetProps = {
+type AvatarSheetProps = {
   sheetOpened?: boolean;
   onConfirm?: (val: string) => void;
   onSheetClosed?: () => void;
 };
-const BookSheet: React.FC<BookSheetProps> = ({ sheetOpened, onConfirm, onSheetClosed }) => {
+const AvatarSheet: React.FC<AvatarSheetProps> = ({ sheetOpened, onConfirm, onSheetClosed }) => {
   const hasConfirm = useRef(false);
   const insideClosed = useRef(false);
   const avatars = new Array(11).fill(0).map((item, index) => `avatar-${index < 9 ? `0${index + 1}` : index + 1}`);
@@ -58,6 +58,7 @@ const BookSheet: React.FC<BookSheetProps> = ({ sheetOpened, onConfirm, onSheetCl
               <div
                 className="shadow-3 shadow-active-3 rounded-lg flex py-3 px-2 justify-center items-center"
                 onClick={onBookConfirm(avatar)}
+                key={avatar}
               >
                 <Icons name={avatar} className="pointer-events-none" />
               </div>
@@ -69,4 +70,4 @@ const BookSheet: React.FC<BookSheetProps> = ({ sheetOpened, onConfirm, onSheetCl
   );
 };
 
-export default BookSheet;
+export default AvatarSheet;
