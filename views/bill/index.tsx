@@ -19,12 +19,11 @@ const Bill: React.FC<RouterProps> = () => {
   const [date, setDate] = useState(getCurrentDate("YYYY-MM"));
   const [costType, setCostType] = useState<keyof AmountType>("pay");
   const [typeName, setTypeName] = useState("全部");
-  // const [authInvalid, setAuthInvalid] = useState(false);
 
   const [sheetTypeOpened, setSheetTypeOpened] = useState(false);
   const [sheetDateOpened, setSheetDateOpened] = useState(false);
 
-  const { loading, data, refetch, error } = useGetCostDataDetailsQuery({
+  const { data, refetch, error } = useGetCostDataDetailsQuery({
     variables: { input: { date, type: costType, expenseId: expenseId.current } },
     fetchPolicy: "network-only"
   });
@@ -32,7 +31,6 @@ const Bill: React.FC<RouterProps> = () => {
 
   const {
     data: totalData,
-    loading: totalLoading,
     refetch: totalRefetch,
     error: totalError
   } = useGetCostTotalQuery({
@@ -43,7 +41,6 @@ const Bill: React.FC<RouterProps> = () => {
 
   const {
     data: expenseData,
-    loading: expenseLoading,
     refetch: expenseReftch,
     error: expenseError
   } = useLivingExpensesQuery({
@@ -83,6 +80,8 @@ const Bill: React.FC<RouterProps> = () => {
   };
 
   const onToggledDateSheet = () => {
+    if (!token) return;
+
     setSheetDateOpened(!sheetDateOpened);
   };
 
@@ -94,29 +93,40 @@ const Bill: React.FC<RouterProps> = () => {
     if (!token) return done();
 
     setTimeout(() => {
-      Promise.all([refetch(), totalRefetch(), expenseReftch()]).finally(() => {
-        done && done();
-      });
+      Promise.all([refetch(), totalRefetch(), expenseReftch()])
+        .finally(() => {
+          done && done();
+        })
+        .catch((e) => {
+          if (!isJSON(e?.message)) return false;
+
+          const $obj = JSON.parse(e?.message);
+          if (_.has($obj, "code") && $obj.code === 3000) {
+            store.dispatch("setToken", "");
+            hadAuthInvalid.current = true;
+          }
+        });
     }, 2000);
   };
 
   useEffect(() => {
-    const hadLoading = !loading && !totalLoading && !expenseLoading;
-    console.log([expenseError?.message, error?.message, totalError?.message], loading, totalLoading, expenseLoading);
-    if ((expenseError?.message || error?.message || totalError?.message) && hadLoading) {
-      const isInvalid = [error?.message, expenseError?.message, totalError?.message].some(
-        (item) => isJSON(item) && _.has(JSON.parse(item), "code")
-      );
-      console.log("sdfsdff", isInvalid);
-      isInvalid && store.dispatch("setToken", "");
-      hadAuthInvalid.current = isInvalid;
-      // setAuthInvalid(isInvalid);
-    }
-  }, [expenseError, error, totalError]);
+    const errors = [expenseError?.message, error?.message, totalError?.message];
+    if (!errors.every((item) => !!item)) return;
+
+    const isInvalid = errors.some((item) => {
+      if (!isJSON(item)) return false;
+
+      const $obj = JSON.parse(item);
+      return _.has($obj, "code") && $obj.code === 3000;
+    });
+
+    isInvalid && store.dispatch("setToken", "");
+    hadAuthInvalid.current = isInvalid;
+  }, [error, expenseError, totalError]);
 
   useEffect(() => {
-    console.log("sfsdfsdfsfsdfsdf");
     if (!hadAuthInvalid.current) return;
+
     token && onRefresh();
     token && (hadAuthInvalid.current = false);
   }, [token]);
@@ -192,7 +202,6 @@ const Bill: React.FC<RouterProps> = () => {
             })}
           </section>
         )}
-        {!token && <NotloggedIn />}
 
         <SheetModalPicker
           sheetOpened={sheetTypeOpened}
@@ -217,6 +226,7 @@ const Bill: React.FC<RouterProps> = () => {
           onConfirm={onConfirmDateSheet}
         />
       </PageContent>
+      {!token && <NotloggedIn />}
     </Page>
   );
 };
